@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const addAnimal = require("../../Controllers/getBrands.js");
-
+const getBrands = require("../Controllers/getBrands.js");
 
 router.get("/brand", (req, res) => {
   const { brand } = req.params;
@@ -10,6 +9,5 @@ router.get("/brand", (req, res) => {
     res.status(400).send({ err: "Esta Marca no existe" });
   }
 });
-
 
 module.exports = router;
