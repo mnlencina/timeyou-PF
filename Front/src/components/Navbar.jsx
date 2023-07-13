@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { BsSearch } from "react-icons/bs";
+import { BiUser } from "react-icons/bi";
+import { FiShoppingCart } from "react-icons/fi";
 
 export const Navbar = () => {
   return (
@@ -10,13 +13,26 @@ export const Navbar = () => {
         </h1>
       </header>
       <nav className="navigation">
-        <ul>
-          <li>hola1</li>
-          <li>hola2</li>
-          <li>hola3</li>
-          <li>hola4</li>
+        <ul className="nav">
+          <li>Ver todo</li>
+          <li>Casio</li>
+          <li>g-shock</li>
+          <li>mistral</li>
+          <li>prÜne</li>
         </ul>
-        <div className="icons"></div>
+        <div className="icons">
+          <ul className="icon">
+            <li>
+              <BsSearch />
+            </li>
+            <li>
+              <BiUser />
+            </li>
+            <li>
+              <FiShoppingCart />
+            </li>
+          </ul>
+        </div>
       </nav>
     </Container>
   );
@@ -38,32 +54,51 @@ const Container = styled.div`
     justify-content: center;
     h1 {
       text-transform: uppercase;
-      font-size: 3rem;
+      font-size: 2.4rem;
       span {
         font-weight: 300;
       }
     }
   }
   .navigation {
+    margin: 0 auto;
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     ul {
+      list-style: none;
+    }
+    li{
+      text-transform: uppercase;
+      font-weight:300;
+    }
+    .nav {
+      margin: 0 auto;
       width: 70%;
       height: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-evenly;
     }
     .icons {
       width: 30%;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 30px;
+      .icon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        li {
+          font-size: 1.4rem;
+          font-weight: 500;
+        }
+      }
     }
   }
 `;
