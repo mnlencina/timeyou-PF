@@ -10,7 +10,7 @@ export const Navbar = () => {
       <header className="header">
         <h1>
           Times<span>You</span>
-        </h1>
+        </h1> 
       </header>
       <nav className="navigation">
         <ul className="nav">
