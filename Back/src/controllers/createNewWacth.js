@@ -11,6 +11,7 @@ const createNewWatch = async (model, color, price, gender) => {
     gender,
   });
   return newWatch;
+  console.log("hola");
 };
 
 module.exports = createNewWatch;
