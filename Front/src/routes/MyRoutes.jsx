@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
-import { HomePage, DetailPage } from "../pages/index";
+import HomePage from "../pages/HomePage";
+import DetailPage from "../pages/DetailPage";
 
 const MyRoutes = () => {
   const location = useLocation();

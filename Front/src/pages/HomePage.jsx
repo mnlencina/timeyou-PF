@@ -6,10 +6,12 @@ export default function HomePage() {
 
   return (
     <Container show={show}>
-      <div className="btn-filter">
-        <button onClick={() => setShow(!show)}>Open</button>
+      <div className="cja1">
+        {" "}
+        <div className="btn-filter">
+          <button onClick={() => setShow(!show)}>filtros</button>
+        </div>
       </div>
-      <div className="cja1"></div>
       <div className="caja2"></div>
     </Container>
   );
@@ -18,19 +20,41 @@ export default function HomePage() {
 const Container = styled.main`
   width: 100vw;
   height: 100vh;
-  display: grid;
-  grid-template-rows: ${(props) => (props.show ? "300px auto" : "100%")};
-  position: sticky;
-  .btn-filter {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .cja1 {
+    width: ${(props) => (props.show ? "200px" : "0")};
+    height: 100%;
     background-color: red;
-   
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    .btn-filter {
+      position: absolute;
+      left: ${(props) => (props.show ? "200px" : "0px")};
+      top: 30px;
+      transition: all 0.3s ease-in-out;
+      button {
+        width: 40px;
+        height: 150px;
+        background-color: #111;
+        border: none;
+        border-radius: 0 10px 10px 0;
+        color: #fff;
+        writing-mode: vertical-lr;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        opacity: 0.5;
+        transition: 0.3s;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
   }
   .caja2 {
-    background-color: green;
+    width: ${(props) => (props.show ? "calc(100% - 200px)" : "100%")};
+    height: 100%;
+    transition: all 0.3s ease-in-out;
   }
 `;
