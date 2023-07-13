@@ -58,16 +58,12 @@ Watch.hasOne(Strap, { through: "watch_strap" });
 Watch.hasOne(Style, { through: "watch_style" });
 Watch.belongsToMany(Function, { through: "watch_function" });
 Watch.belongsToMany(User, { through: "watch_user" });
-Watch.belongsTo(Admin, { through: "watch_admin" });
+
 
 // User.-
 User.hasOne(Buy, { through: "user_buy" });
 User.belongsToMany(Watch, { through: "watch_user" });
 
-
-//Admin.-
-Admin.hasOne(User);
-Admin.hasMany(Watch);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
