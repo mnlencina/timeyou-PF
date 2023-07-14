@@ -1,4 +1,4 @@
-[
+const database = [
     {
      "idProduct": 1,
      "brand ": "festina ",
@@ -559,4 +559,6 @@
      "function": "iluminacion led, temporizador, cronometro",
      "description": "caja de acero con reserva de carga "
     }
-   ]
+   ];
+
+   module.exports = database;
