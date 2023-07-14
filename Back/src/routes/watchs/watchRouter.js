@@ -35,4 +35,4 @@ watchRouter.get("/", async (req, res) => {
   }
 })
 
-module.export= watchRouter
+module.exports= watchRouter
