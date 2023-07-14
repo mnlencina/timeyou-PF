@@ -29,6 +29,18 @@ router.post("/admin", (req, res) => {
 });
 
 
+router.post("/admin/addStrap", async (req, res) => {
+  const { name } = req.body;
+
+  try {
+    const newStrap = await createStrap(name);
+    res.status(200).json(newStrap);
+    
+    } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+});
+
 router.post("/admin/addStyle", async (req, res) => {
   const { name } = req.body;
   try {
