@@ -22,7 +22,7 @@ export const Card = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.article`
   width: 250px;
   height: 350px;
   display: flex;
@@ -61,7 +61,7 @@ const Container = styled.div`
       width: 100%;
       height: 100%;
       display: flex;
-      background-color: red;
+  
       align-items: flex-end;
       justify-content: flex-end;
       overflow: hidden;

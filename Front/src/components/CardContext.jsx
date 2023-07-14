@@ -23,7 +23,7 @@ export const CardContext = () => {
   );
 };
 
-const Container = styled.main`
+const Container = styled.section`
   width: 90%;
   min-height: 100%;
   height: 100%;

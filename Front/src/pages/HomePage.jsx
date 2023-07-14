@@ -5,28 +5,36 @@ import { CardContext, Drawer } from "../components/index.js";
 export default function HomePage() {
   const [show, setShow] = useState(false);
 
-  return (
-    <Container show={show}>
-      <div className="cja1">
+  
+
+  const renderMostrador = () => (
+    <ContainerMostrador show={show}>
+      <div className="sidebar">
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
         <Drawer show={show} />
       </div>
-      <div className="caja2">
-      <CardContext/>
-      </div>
-    </Container>
+      <section className="main-card">
+        <CardContext />
+      </section>
+    </ContainerMostrador>
+  );
+
+  return (
+    <>
+    {renderMostrador()}
+    </>
   );
 }
 
-const Container = styled.main`
+const ContainerMostrador = styled.div`
   width: 100vw;
-  height: 100vw;
+  height: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  .cja1 {
+  .sidebar {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
     background: #111;
@@ -47,7 +55,7 @@ const Container = styled.main`
         writing-mode: vertical-lr;
         text-transform: uppercase;
         letter-spacing: 3px;
-        
+
         transition: 0.3s;
         &:hover {
           transform: scale(1.1);
@@ -56,7 +64,7 @@ const Container = styled.main`
       }
     }
   }
-  .caja2 {
+  .main-card {
     width: ${(props) => (props.show ? "calc(100% - 200px)" : "100%")};
     height: 100%;
     transition: all 0.3s ease-in-out;
@@ -64,10 +72,10 @@ const Container = styled.main`
     align-items: center;
     justify-content: center;
   }
-  @media (max-width:768px) {
-    height:1600px;
+  @media (max-width: 768px) {
+    height: 1600px;
   }
-  @media (max-width:500px) {
-    height:2400px;
+  @media (max-width: 500px) {
+    height: 2400px;
   }
 `;
