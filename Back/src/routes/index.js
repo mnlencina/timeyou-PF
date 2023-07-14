@@ -3,7 +3,7 @@ const createNewWatch = require("../controllers/postNewWacth");
 
 const router = express.Router();
 
-router.get("/admin", async (req, res) => {
+router.post("/admin", async (req, res) => {
   const { model, color, price, gender, brands, style, strap, functions } =
     req.body;
   try {
