@@ -1,6 +1,9 @@
-const getColors = (color) => {
+const { Color } = require("../db");
 
-    return getColors;
+
+const getColors = async () => {
+    const colors= await Color.findAll()
+    return colors;
     };
     
     
