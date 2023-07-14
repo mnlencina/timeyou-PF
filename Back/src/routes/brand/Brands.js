@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const getBrands = require("../Controllers/getBrands.js");
+const getBrands = require("../../Controllers/getBrands.js");
 
 router.get("/brand", (req, res) => {
   const { brand } = req.params;

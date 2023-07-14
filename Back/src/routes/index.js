@@ -1,29 +1,10 @@
 const express = require("express");
 const createNewWatch = require("../controllers/postNewWacth");
+const watchRouter = require("../routes/watchs/watchRouter");
 
 const router = express.Router();
 
-router.post("/admin", async (req, res) => {
-  const { model, color, price, gender, brands, style, strap, functions } =
-    req.body;
-  try {
-    const newWatch = await createNewWatch(
-      model,
-      color,
-      price,
-      gender,
-      brands,
-      style,
-      strap,
-      functions
-    );
-    res.status(200).json(newWatch);
-  } catch (error) {
-    res.status(500).json({ Error: error.message });
-  }
- });
-
-
+router.use("/watches", watchRouter)
 
 router.post("/admin/addFunction", (req, res) => {
   const { name } = req.body;
