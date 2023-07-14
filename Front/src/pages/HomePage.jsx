@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { CardContext, Drawer } from "../components/index.js";
 
 export default function HomePage() {
   const [show, setShow] = useState(false);
@@ -7,26 +8,28 @@ export default function HomePage() {
   return (
     <Container show={show}>
       <div className="cja1">
-        {" "}
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
+        <Drawer show={show} />
       </div>
-      <div className="caja2"></div>
+      <div className="caja2">
+      <CardContext/>
+      </div>
     </Container>
   );
 }
 
 const Container = styled.main`
   width: 100vw;
-  height: 100vh;
+  height: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   .cja1 {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
-    background-color: red;
+    background: #111;
     transition: all 0.3s ease-in-out;
     position: relative;
     .btn-filter {
@@ -44,10 +47,11 @@ const Container = styled.main`
         writing-mode: vertical-lr;
         text-transform: uppercase;
         letter-spacing: 3px;
-        opacity: 0.5;
+        
         transition: 0.3s;
         &:hover {
-          opacity: 1;
+          transform: scale(1.1);
+          border-right: none;
         }
       }
     }
@@ -56,5 +60,14 @@ const Container = styled.main`
     width: ${(props) => (props.show ? "calc(100% - 200px)" : "100%")};
     height: 100%;
     transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width:768px) {
+    height:1600px;
+  }
+  @media (max-width:500px) {
+    height:2400px;
   }
 `;
