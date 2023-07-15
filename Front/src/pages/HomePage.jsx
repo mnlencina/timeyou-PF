@@ -5,8 +5,6 @@ import { CardContext, Drawer } from "../components/index.js";
 export default function HomePage() {
   const [show, setShow] = useState(false);
 
-  
-
   const renderMostrador = () => (
     <ContainerMostrador show={show}>
       <div className="sidebar">
@@ -21,19 +19,16 @@ export default function HomePage() {
     </ContainerMostrador>
   );
 
-  return (
-    <>
-    {renderMostrador()}
-    </>
-  );
+  return <>{renderMostrador()}</>;
 }
 
 const ContainerMostrador = styled.div`
   width: 100vw;
-  height: 1200px;
+  height: 160vh;
   display: flex;
   align-items: center;
   justify-content: center;
+ 
   .sidebar {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
