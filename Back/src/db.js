@@ -2,23 +2,23 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env;
 
-//const sequelize = new Sequelize( 
-//`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/timeyou`,
-//    {
-//       logging: false,
-//       native: false, 
-//    }
-// );
-
-const sequelize = new Sequelize(
-  DB_DEPLOY,
-  {
-    logging: false,
-    native: false,
-  }
+const sequelize = new Sequelize( 
+`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+   {
+      logging: false,
+      native: false, 
+   }
 );
+
+// const sequelize = new Sequelize(
+//   DB_DEPLOY,
+//   {
+//     logging: false,
+//     native: false,
+//   }
+// );
 
 const basename = path.basename(__filename);
 
@@ -48,21 +48,25 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Para relacionarlos hacemos un destructuring
-const { Watch, User, Brand, Admin, Buy, Function, Strap, Style } = sequelize.models;
-
-
+const { Watch, User, Brand, Buy, Function, Strap, Style, Color } = sequelize.models;
 
 //Product.-
-Watch.hasOne(Brand, { through: "watch_brand" });
-Watch.hasOne(Strap, { through: "watch_strap" });
-Watch.hasOne(Style, { through: "watch_style" });
-Watch.belongsToMany(Function, { through: "watch_function" });
-Watch.belongsToMany(User, { through: "watch_user" });
+Watch.belongsTo(Brand);
+Brand.hasMany(Watch);
+Watch.belongsTo(Color);
+Color.hasMany(Watch);
+Watch.belongsTo(Style);
+Style.hasMany(Watch);
+Watch.belongsTo(Strap);
+Strap.hasMany(Watch);
+
+Function.belongsToMany(Watch, { through: "FunctionWatch" });
+Watch.belongsToMany(Function, { through: "FunctionWatch" });
 
 
-// User.-
-User.hasOne(Buy, { through: "user_buy" });
-User.belongsToMany(Watch, { through: "watch_user" });
+Buy.belongsTo(User);
+User.hasMany(Buy);
+
 
 
 module.exports = {

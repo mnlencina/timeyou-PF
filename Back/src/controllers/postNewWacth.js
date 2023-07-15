@@ -1,39 +1,48 @@
-const { watch, Function, brand, Style, Strap } = require("../db");
+const { Watch, Brand, Function, Strap, Style, Color } = require("../db");
 
 const createNewWatch = async (
+  brand,
   model,
+  style,
   color,
+  image,
+  strap,
   price,
   gender,
-  brands,
-  style,
-  strap,
-  functions
+  review,
+  functions,
+  description,
+  del
 ) => {
   // evaluamos que recibimos los datos completos para crear el nuevo reloj
-  if (!model || !color || price || gender) throw new Error("missing data");
+  if (!model || !style || !color || !image || !strap || !price || !gender || !review || !functions || !description ) throw new Error("missing data");
 
-  const newWatch = await watch.Create({
+  const newWatch = await Watch.create({
     model,
-    color,
+    image,
     price,
     gender,
+    review,
+    description,
   });
 
-  const brandModel = await brand.findOne({ where: { name: brands } });
+  const brandModel = await Brand.findOne({ where: { name: brand } });
 
-  const styleModel = await Style.findOne({ where: { name: style } });
+  const colorModel = await Color.findOne({ where: { name: color } });
 
-  const strapModel = await Strap.findOne({ where: { name: strap } });
+  // const styleModel = await Style.findOne({ where: { name: style } });
 
-  const functModels = await functions.map((funct) => {
-    return Function.findOne({ where: { name: funct } });
-  });
+  // const strapModel = await Strap.findOne({ where: { name: strap } });
 
-  await newWatch.setFunctions(functModels);
-  await newWatch.setStyles(styleModel);
-  await newWatch.setBrands(brandModel);
-  await newWatch.setStraps(strapModel);
+  // const functModels = await functions.map((funct) => {
+  //   return Function.findOne({ where: { name: funct } });
+  // });
+
+  // await newWatch.setFunctions(functModels);
+  // await newWatch.setStyle(styleModel);
+  await newWatch.setBrand(brandModel);
+  await newWatch.setColor(colorModel);
+  // await newWatch.setStrap(strapModel);
 
   return newWatch;
 };

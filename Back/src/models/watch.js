@@ -14,10 +14,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    color: {
-        type: DataTypes.JSON,
-        allowNull: false,
-    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -26,13 +22,21 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM('Male','Female','Unisex'),
         allowNull: false,
     },
-    reviews: {
+    review: {
         type: DataTypes.ENUM('0','1','2','3','4','5'),
-        allowNull: true,
+        defaultValue:'0',
     },
-    delete: {
+    del: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: true,
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    image: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
   },{
