@@ -3,12 +3,14 @@ const createNewWatch = require("../controllers/postNewWacth");
 const watchRouter = require("../routes/watchs/watchRouter");
 const brandsRouter = require("./brand/brandsRouter");
 const strapsRouter = require("./strap/strapsRouter");
+const genderRouter = require("./gender/genderRouter");
 
 const router = express.Router();
 
 router.use("/watches", watchRouter);
 router.use("/brands", brandsRouter);
 router.use("/straps", strapsRouter);
+router.use("/gender", genderRouter);
 
 router.post("/admin/addFunction", (req, res) => {
   const { name } = req.body;
