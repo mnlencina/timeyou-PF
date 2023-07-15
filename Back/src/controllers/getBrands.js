@@ -1,8 +1,10 @@
+const { Brand } = require("../db");
 
-const getBrand = (brand) => {
+const allBrand = async () => {
+  const allBrands = await Brand.findAll();
 
-return getBrand;
+  if (!allBrands) throw new Error("That brand does not exist");
+  return allBrands;
 };
 
-
-module.exports = getBrand;
+module.exports = allBrand;
