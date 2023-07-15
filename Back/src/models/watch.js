@@ -14,23 +14,23 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    color: {
-        type: DataTypes.JSON,
-        allowNull: false,
-    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
     gender: {
-        type: DataTypes.ENUM('Male','Female','Unisex'),
-        allowNull: false,
+        type: DataTypes.ENUM('male','female','unisex'),
+        defaultValue: 'unisex',
     },
-    reviews: {
+    review: {
         type: DataTypes.ENUM('0','1','2','3','4','5'),
         defaultValue: '0',
     },
-    delete: {
+    description: {
+        type: DataTypes.STRING,
+        default: 'NOT DESCRIPTION'
+    },
+    del: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
