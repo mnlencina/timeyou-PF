@@ -30,19 +30,24 @@ const createNewWatch = async (
 
   const colorModel = await Color.findOne({ where: { name: color } });
 
-  // const styleModel = await Style.findOne({ where: { name: style } });
+  const styleModel = await Style.findOne({ where: { name: style } });
 
-  // const strapModel = await Strap.findOne({ where: { name: strap } });
+  const strapModel = await Strap.findOne({ where: { name: strap } });
 
   // const functModels = await functions.map((funct) => {
   //   return Function.findOne({ where: { name: funct } });
   // });
-
-  // await newWatch.setFunctions(functModels);
-  // await newWatch.setStyle(styleModel);
+  const functModels = await Promise.all(functions.map( (funct) => {
+        
+    return  Function.findOne({ where: { name: funct} });
+  }));
+  
+  
+  await newWatch.setFunctions(functModels);
+  await newWatch.setStyle(styleModel);
   await newWatch.setBrand(brandModel);
   await newWatch.setColor(colorModel);
-  // await newWatch.setStrap(strapModel);
+  await newWatch.setStrap(strapModel);
 
   return newWatch;
 };

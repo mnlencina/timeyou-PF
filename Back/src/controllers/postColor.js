@@ -1,10 +1,7 @@
 const { Color } = require("../db");
 
-
-const createNewColor = async (name) => {
-    const newColor= await Color.Create({
-        name
-    })
+const createNewColor = async (color) => {
+    const newColor= await Color.create({ name: color })
     return newColor;
     };
     
