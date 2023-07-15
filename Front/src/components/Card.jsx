@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const Card = () => {
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate("/product/:id")}>
       <div className="top-content">
         <span className="span-title">Envio gratis</span>
         <picture className="img-box">
@@ -61,7 +63,7 @@ const Container = styled.article`
       width: 100%;
       height: 100%;
       display: flex;
-  
+
       align-items: flex-end;
       justify-content: flex-end;
       overflow: hidden;
