@@ -48,21 +48,25 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Para relacionarlos hacemos un destructuring
-const { Watch, User, Brand, Admin, Buy, Function, Strap, Style } = sequelize.models;
+const { Watch, User, Brand, Color, Buy, Function, Strap, Style } = sequelize.models;
 
 
 
 //Product.-
-Watch.hasOne(Brand, { through: "watch_brand" });
-Watch.hasOne(Strap, { through: "watch_strap" });
-Watch.hasOne(Style, { through: "watch_style" });
-Watch.belongsToMany(Function, { through: "watch_function" });
-Watch.belongsToMany(User, { through: "watch_user" });
+Watch.belongsTo(Brand);
+Brand.hasMany(Watch);
+Color.belongsTo(Watch);
+Watch.hasMany(Color);
+Style.belongsTo(Watch);
+Watch.hasMany(Style);
+Strap.belongsTo(Watch);
+Watch.hasMany(Strap);
 
+Function.belongsToMany(Watch, { through: "FunctionWatch" });
+Watch.belongsToMany(Function, { through: "FunctionWatch" });
 
-// User.-
-User.hasOne(Buy, { through: "user_buy" });
-User.belongsToMany(Watch, { through: "watch_user" });
+User.hasMany(Buy);
+Buy.belongsTo(User);
 
 
 module.exports = {
