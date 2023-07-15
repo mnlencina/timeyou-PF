@@ -28,12 +28,11 @@ module.exports = (sequelize) => {
     },
     reviews: {
         type: DataTypes.ENUM('0','1','2','3','4','5'),
-        allowNull: true,
+        defaultValue: '0',
     },
     delete: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-        allowNull: true,
     },
   },{
     timestamps: false, // Desactivar timestamps
