@@ -1,23 +1,25 @@
-import React from "react";
-import {Card} from '../components/index.js'
+import React, { useEffect, useState } from "react";
+import { Card } from "../components/index.js";
 import styled from "styled-components";
+import { getProducts } from "../redux/Actions.js";
+import { useDispatch, useSelector } from "react-redux";
 
 export const CardContext = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.Clocks);
+  const loading = useSelector(state=> state.isLoading);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
   return (
     <Container>
       <div className="context-card">
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+      {
+        loading ? (<h1>Cargando...</h1>):(state.slice(0,12).map(e=>(
+          <Card key={e.idProduct} watch={e}/>
+        )))
+      }
       </div>
     </Container>
   );
@@ -25,28 +27,29 @@ export const CardContext = () => {
 
 const Container = styled.section`
   width: 90%;
-  min-height: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   .context-card {
     width: 100%;
     height: 100%;
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   align-items: center;
-   justify-items: center;
+    /* display: grid;
+    grid-template-columns: repeat(4, 1fr); */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
   }
-  @media (max-width: 768px){
-    .context-card{
+  @media (max-width: 768px) {
+    .context-card {
       grid-template-columns: repeat(3, 1fr);
     }
   }
-  @media (max-width: 500px){
-    .context-card{
+  @media (max-width: 500px) {
+    .context-card {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
 `;
