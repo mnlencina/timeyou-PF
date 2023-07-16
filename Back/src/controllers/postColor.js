@@ -9,4 +9,4 @@ const createNewColor = async (name) => {
     };
     
     
-    module.exports = createNewColor;
+    module.exports = createpostColor;
