@@ -15,7 +15,7 @@ const createNewWatch = async ({
   del  
 }) => {
   // evaluamos que recibimos los datos completos para crear el nuevo reloj
-  if (!model || !color || !price ) throw new Error("missing data");
+  if (!model || !style || !image || !color || !price || !functions) throw new Error("missing data");
 
   const newWatch = await Watch.Create({
     model,
@@ -35,9 +35,13 @@ const createNewWatch = async ({
 
   const strapModel = await Strap.findOne({ where: { name: strap } });
 
-  const functModels = await functions.map((funct) => {
-    return Function.findOne({ where: { name: funct } });
-  });
+  //const functModels = await functions.map((funct) => {
+  //  return Function.findOne({ where: { name: funct } });
+  //});
+  const functModels = await Promise.all(functions.map( (funct) => {
+        
+    return  Function.findOne({ where: { name: funct} });
+  }));
 
   await newWatch.setFunctions(functModels);
   await newWatch.setStyles(styleModel);

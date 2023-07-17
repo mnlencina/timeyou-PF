@@ -14,6 +14,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    image: {
+        type: DataTypes.ARRAY,
+        allowNull: false,
+    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -28,7 +32,7 @@ module.exports = (sequelize) => {
     },
     description: {
         type: DataTypes.STRING,
-        default: 'NOT DESCRIPTION'
+        defaultValue: 'NOT DESCRIPTION'
     },
     del: {
         type: DataTypes.BOOLEAN,
