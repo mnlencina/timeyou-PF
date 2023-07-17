@@ -2,23 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-export const Card = () => {
+export const Card = ({ watch }) => {
   const navigate = useNavigate();
+  const cleanedWatch = {};
+  Object.keys(watch).forEach((key) => {
+    const cleanedKey = key.trim();
+    cleanedWatch[cleanedKey] = watch[key];
+  });
+
   return (
     <Container onClick={() => navigate("/product/:id")}>
       <div className="top-content">
         <span className="span-title">Envio gratis</span>
         <picture className="img-box">
-          <img
-            src="https://watchlandsa.vtexassets.com/arquivos/ids/165441-500-auto?v=1773761650&width=500&height=auto&aspect=true"
-            alt="algo"
-          />
+          <img src={cleanedWatch.image} alt={cleanedWatch.brand} />
         </picture>
       </div>
       <div className="section-content">
-        <h3>reloj prune prg-5026v-01</h3>
-        <h4>ecb-tt4de-ssaddd</h4>
-        <h5>$350,00</h5>
+        <h3>{cleanedWatch.brand}</h3>
+        <h4>{cleanedWatch.model}</h4>
+        <h5>${cleanedWatch.price}</h5>
       </div>
     </Container>
   );
@@ -63,13 +66,12 @@ const Container = styled.article`
       width: 100%;
       height: 100%;
       display: flex;
-
-      align-items: flex-end;
-      justify-content: flex-end;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
       img {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
         object-fit: cover;
       }
     }

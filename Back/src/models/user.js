@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      emai: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -39,7 +39,6 @@ module.exports = (sequelize) => {
       role: {
         type: DataTypes.ENUM("user", "admin"),
         defaultValue: "user",
-        allowNull: false,
       },
     },
     {

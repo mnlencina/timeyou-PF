@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
+import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 
 function DetailPage() {
   return (
@@ -43,12 +44,12 @@ function DetailPage() {
                 </div>
               </div>
               <div className="btn-cart">
-                <button>
+                <BTNCarritoDeCompras>
                   <span>
                     <FiShoppingCart />
                   </span>
                   agregar al carrito
-                </button>
+                </BTNCarritoDeCompras>
               </div>
               <div className="detail-compra"></div>
             </section>
@@ -68,9 +69,39 @@ function DetailPage() {
               Centro- Envío a domicilio gratis desde $20000
             </p>
           </article>
-          <article className="ficha-tecnica"></article>
+          <article className="ficha-tecnica">
+            <div className="title-description">
+              <h3>ficha tecnica</h3>
+            </div>
+            <div className="body-content">
+              <div className="container-mesh">
+                <div className="mesh">
+                  <h3>Malla</h3>
+                  <ul>
+                    <li>mallita</li>
+                  </ul>
+                </div>
+                <div className="gender">
+                  <h3>genero</h3>
+                  <ul>
+                    <li>masculino</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="container-functions">
+                <h3>funciones</h3>
+                <ul>
+                  <li>funcion 1</li>
+                  <li>funcion 2</li>
+                  <li>funcion 3</li>
+                  <li>funcion 4</li>
+                </ul>
+              </div>
+            </div>
+          </article>
         </section>
         <hr />
+        <section className="reviews"></section>
       </div>
     </Container>
   );
@@ -99,6 +130,7 @@ const Container = styled.main`
     display: flex;
     flex-direction: column;
     .title {
+      margin: 10px 0;
       width: 100%;
       height: 40px;
       display: flex;
@@ -243,26 +275,6 @@ const Container = styled.main`
             display: flex;
             align-items: center;
             justify-content: center;
-            button {
-              width: 100%;
-              height: 100%;
-              border: none;
-              border-radius: 10px;
-              background-color: #4ebcc7;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 1.4rem;
-              gap: 10px;
-              color: #fff;
-              text-transform: capitalize;
-              transition: 0.5s ease-in-out;
-              &:hover {
-                transform: scale(1.1);
-                background-color: #35838a;
-                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-              }
-            }
           }
           .detail-compra {
             width: 90%;
@@ -273,7 +285,8 @@ const Container = styled.main`
       }
     }
     .descriptions {
-      width: 100%;
+      margin: 0 auto;
+      width: 90%;
       height: 250px;
       display: flex;
       align-items: center;
@@ -306,8 +319,79 @@ const Container = styled.main`
         height: 100%;
         display: flex;
         flex-direction: column;
-        background-color: yellow;
+        align-items: center;
+        justify-content: space-around;
+        .title-description {
+          width: 90%;
+          height: 35px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          border-bottom: 1px solid #333;
+          h3 {
+            text-transform: uppercase;
+          }
+        }
+        .body-content {
+          width: 100%;
+          height: 62%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 50px;
+          margin-left: 100px;
+          .container-mesh {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            .mesh,
+            .gender {
+              h3 {
+                text-transform: capitalize;
+              }
+              ul {
+                li {
+                  opacity: 0.8;
+                  text-transform: uppercase;
+                }
+              }
+            }
+          }
+          .container-functions {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            h3 {
+              text-transform: capitalize;
+            }
+            ul {
+              margin-top: 10px;
+              width: 50%;
+              height: auto;
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              align-items: center;
+              justify-items: center;
+              gap: 10px;
+              li {
+                text-transform: uppercase;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
       }
+    }
+    .reviews {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 20px;
+      background-color: red;
     }
   }
 `;
