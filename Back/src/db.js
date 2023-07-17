@@ -2,23 +2,23 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env;
 
-//const sequelize = new Sequelize( 
-//`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/timeyou`,
-//    {
-//       logging: false,
-//       native: false, 
-//    }
-// );
-
-const sequelize = new Sequelize(
-  DB_DEPLOY,
-  {
-    logging: false,
-    native: false,
-  }
+const sequelize = new Sequelize( 
+`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+   {
+      logging: false,
+      native: false, 
+   }
 );
+
+// const sequelize = new Sequelize(
+//   DB_DEPLOY,
+//   {
+//     logging: false,
+//     native: false,
+//   }
+// );
 
 const basename = path.basename(__filename);
 
@@ -48,25 +48,25 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Para relacionarlos hacemos un destructuring
-const { Watch, User, Brand, Color, Buy, Function, Strap, Style } = sequelize.models;
-
-
+const { Watch, User, Brand, Buy, Function, Strap, Style, Color } = sequelize.models;
 
 //Product.-
-Watch.belongsTo(Brand);
-Brand.hasMany(Watch);
-Color.belongsTo(Watch);
-Watch.hasMany(Color);
-Style.belongsTo(Watch);
-Watch.hasMany(Style);
-Strap.belongsTo(Watch);
-Watch.hasMany(Strap);
+Watch.belongsTo(Brand, { foreignKey: "brandName", targetKey: "name" });
+Brand.hasMany(Watch, { foreignKey: "brandName", sourceKey: "name" });
+Watch.belongsTo(Color, { foreignKey: "colorName", targetKey: "name" });
+Color.hasMany(Watch, { foreignKey: "colorName", sourceKey: "name" });
+Watch.belongsTo(Style, { foreignKey: "styleName", targetKey: "name" });
+Style.hasMany(Watch, { foreignKey: "styleName", sourceKey: "name" });
+Watch.belongsTo(Strap, { foreignKey: "strapName", targetKey: "name" });
+Strap.hasMany(Watch, { foreignKey: "strapName", sourceKey: "name" });
 
 Function.belongsToMany(Watch, { through: "FunctionWatch" });
 Watch.belongsToMany(Function, { through: "FunctionWatch" });
 
-User.hasMany(Buy);
+
 Buy.belongsTo(User);
+User.hasMany(Buy);
+
 
 
 module.exports = {

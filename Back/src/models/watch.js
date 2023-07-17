@@ -14,29 +14,31 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    image: {
-        type: DataTypes.ARRAY,
-        allowNull: false,
-    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
     gender: {
-        type: DataTypes.ENUM('male','female','unisex'),
-        defaultValue: 'unisex',
+        type: DataTypes.ENUM('Male','Female','Unisex'),
+        defaultValue:'Unisex',
+        allowNull: false,
     },
     review: {
         type: DataTypes.ENUM('0','1','2','3','4','5'),
-        defaultValue: '0',
-    },
-    description: {
-        type: DataTypes.STRING,
-        defaultValue: 'NOT DESCRIPTION'
+        defaultValue:'0',
     },
     del: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: true,
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    image: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
     },
   },{
     timestamps: false, // Desactivar timestamps

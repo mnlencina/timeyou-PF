@@ -1,9 +1,13 @@
-const { Strap } = require("../db");
+const { Strap, Watch} = require("../db");
 
-const allStrap = async () => {
-  const allStraps = await Strap.findAll();
-  if (!allStraps) throw new Error("That strap does not exist");
-  return allStraps;
-};
 
-module.exports = allStrap;
+const getStraps = async (strapName) => {
+    const Straps= await Strap.findOne({
+        where: { name: strapName },
+        include: Watch // Incluir la relación de los relojes asociados al color
+      });
+    return Straps;
+    };
+    
+    
+    module.exports = getStraps;

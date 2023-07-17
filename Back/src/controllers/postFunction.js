@@ -1,9 +1,8 @@
 const { Function } = require("../db");
 
-const createNewFunction = (functions) => {
-  if (!functions) throw new Error("Missing data");
-  const newFuntion = Function.create({ name: functions });
-  return newFuntion;
-};
+const createFunction = async (functionName) => {
+  const newFunction= await Function.create({ name: functionName })
+  return newFunction;
+  };
 
-module.exports = createNewFunction;
+module.exports = createFunction;
