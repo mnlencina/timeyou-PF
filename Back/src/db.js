@@ -51,14 +51,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Watch, User, Brand, Buy, Function, Strap, Style, Color } = sequelize.models;
 
 //Product.-
-Watch.belongsTo(Brand);
-Brand.hasMany(Watch);
-Watch.belongsTo(Color);
-Color.hasMany(Watch);
-Watch.belongsTo(Style);
-Style.hasMany(Watch);
-Watch.belongsTo(Strap);
-Strap.hasMany(Watch);
+Watch.belongsTo(Brand, { foreignKey: "brandName", targetKey: "name" });
+Brand.hasMany(Watch, { foreignKey: "brandName", sourceKey: "name" });
+Watch.belongsTo(Color, { foreignKey: "colorName", targetKey: "name" });
+Color.hasMany(Watch, { foreignKey: "colorName", sourceKey: "name" });
+Watch.belongsTo(Style, { foreignKey: "styleName", targetKey: "name" });
+Style.hasMany(Watch, { foreignKey: "styleName", sourceKey: "name" });
+Watch.belongsTo(Strap, { foreignKey: "strapName", targetKey: "name" });
+Strap.hasMany(Watch, { foreignKey: "strapName", sourceKey: "name" });
 
 Function.belongsToMany(Watch, { through: "FunctionWatch" });
 Watch.belongsToMany(Function, { through: "FunctionWatch" });

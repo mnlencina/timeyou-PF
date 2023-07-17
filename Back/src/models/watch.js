@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
     },
     gender: {
         type: DataTypes.ENUM('Male','Female','Unisex'),
+        defaultValue:'Unisex',
         allowNull: false,
     },
     review: {
@@ -36,7 +37,7 @@ module.exports = (sequelize) => {
         allowNull: true,
     },
     image: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
     },
   },{

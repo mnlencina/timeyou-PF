@@ -25,7 +25,11 @@ watchRouter.post("/", async (req, res) => {
     );
     res.status(200).json(newWatch);
   } catch (error) {
-    res.status(500).json({ Error: error.message });
+    if (error.status === 404) {
+      res.status(404).json({ Error: error.message });
+    } else {
+      res.status(500).json({ Error: error.message });
+    }
   }
 });
 
@@ -35,7 +39,11 @@ watchRouter.get("/", async (req, res) => {
     res.status(200).json(allWatch)
 
   } catch (error) {
-    res.status(500).json({ Error: error.message })
+    if (error.status === 404) {
+      res.status(404).json({ Error: error.message });
+    } else {
+      res.status(500).json({ Error: error.message });
+    }
   }
 })
 
