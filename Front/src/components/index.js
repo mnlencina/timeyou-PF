@@ -1,3 +1,4 @@
+export * from './BannerSlider';
 export * from './Card';
 export * from './CardContext';
 export * from './CardSlider';
