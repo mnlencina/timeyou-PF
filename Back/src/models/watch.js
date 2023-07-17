@@ -19,8 +19,8 @@ module.exports = (sequelize) => {
         allowNull: false,
     },
     gender: {
-        type: DataTypes.ENUM('Male','Female','Unisex'),
-        defaultValue:'Unisex',
+        type: DataTypes.ENUM('male','female','unisex'),
+        defaultValue:'unisex',
         allowNull: false,
     },
     review: {
