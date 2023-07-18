@@ -47,4 +47,29 @@ watchRouter.get("/", async (req, res) => {
   }
 })
 
+
+watchRouter.get("/:model", async (req, res) => {
+
+  try {
+
+    const {model} = req.params
+    
+    let allWatches = await getWatches();
+
+    if (model || typeof model !== 'string' || model.trim() === '') {
+      let watchByModel = await allWatches.filter(watch => watch.model == model)
+
+      watchByModel.length ?
+        res.status(200).send(watchByModel) :
+        res.status(404).send('Watch not found!');
+    }
+    } catch (error) {
+      if (error.status === 404) {
+        res.status(404).json({ Error: error.message });
+      } else {
+        res.status(500).json({ Error: error.message });
+      }
+    }
+  })
+
 module.exports= watchRouter
