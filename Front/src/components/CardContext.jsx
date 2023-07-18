@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { getProducts } from "../redux/Actions.js";
 import { useDispatch, useSelector } from "react-redux";
 
-export const CardContext = () => {
+export const CardContext = ({pagination}) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.Clocks);
+ 
   const loading = useSelector(state=> state.isLoading);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const CardContext = () => {
     <Container>
       <div className="context-card">
       {
-        loading ? (<h1>Cargando...</h1>):(state.slice(0,12).map(e=>(
+        loading ? (<h1>Cargando...</h1>):(pagination.map(e=>(
           <Card key={e.idProduct} watch={e}/>
         )))
       }
