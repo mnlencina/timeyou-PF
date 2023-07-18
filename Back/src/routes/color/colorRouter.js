@@ -1,26 +1,28 @@
-const express = require("express");
-const getColor = require("../../controllers/getColors");
-const createColor = require("../../controllers/postColor");
-const colorRouter = express.Router();
 
+const { Router } = require('express');
+const createColor= require("../../controllers/postColor");
+const allColor = require("../../controllers/getColor");
+
+const colorRouter = Router();
 colorRouter.post("/", async (req, res) => {
-  const { name } = req.body;
-  try {
-    const newBrands = await createColor(name);
-    res.status(200).json(newBrands);
-  } catch (error) {
+    const { name } = req.body;
+    try {
+    if (!name) res.status(400).json({ Error: error.message });
+    const newColor = await createColor(name);
+    res.status(200).json(newColor);
+    } catch (error) {
     res.status(500).json({ Error: error.message });
-  }
+    }
 });
 
-colorRouter.get("/:colorName", async (req, res) => {
-  const {colorName} = req.params;
-  try {
-    const allColors = await getColor(colorName);
+
+colorRouter.get("/", async (req, res) => {
+    try {
+    const allColors = await allColor();
     res.status(200).json(allColors);
-  } catch (error) {
+    } catch (error) {
     res.status(500).json({ Error: error.message });
-  }
+    }
 });
 
 module.exports = colorRouter;

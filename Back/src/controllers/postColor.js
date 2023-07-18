@@ -1,9 +1,10 @@
 const { Color } = require("../db");
 
-const createNewColor = async (color) => {
+const createpostColor = async (color) => {
     const newColor= await Color.create({ name: color })
+
     return newColor;
-    };
+    };    
     
-    
-    module.exports = createNewColor;
+
+module.exports = createpostColor;

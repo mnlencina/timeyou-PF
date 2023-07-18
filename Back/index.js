@@ -9,4 +9,3 @@ conn.sync({ force: false }).then(() => {
     console.log(`server on PORT ${PORT}`);
   });
 });
-
