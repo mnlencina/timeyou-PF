@@ -19,9 +19,8 @@ module.exports = (sequelize) => {
         allowNull: false,
     },
     gender: {
-        type: DataTypes.ENUM('Male','Female','Unisex'),
-        defaultValue:'Unisex',
-        allowNull: false,
+        type: DataTypes.ENUM('male','female','unisex'),
+        defaultValue:'unisex',
     },
     review: {
         type: DataTypes.ENUM('0','1','2','3','4','5'),
@@ -30,15 +29,14 @@ module.exports = (sequelize) => {
     del: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-        allowNull: true,
     },
     description: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull: false,
     },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
+        allowNull: false,
     },
   },{
     timestamps: false, // Desactivar timestamps
