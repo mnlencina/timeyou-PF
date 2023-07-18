@@ -109,9 +109,10 @@ const Container = styled.div`
       z-index: 10;
       img {
         width: 100%;
+        min-height: 200px;
         height: 100%;
         vertical-align: top;
-        object-fit: cover;
+        
       }
     }
   }
