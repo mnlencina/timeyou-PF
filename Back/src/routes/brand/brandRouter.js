@@ -2,9 +2,9 @@ const express = require("express");
 const allBrand = require("../../controllers/getBrands");
 const createBrand = require("../../controllers/postBrands");
 
-const brandsRouter = express.Router();
+const brandRouter = express.Router();
 
-brandsRouter.post("/", async (req, res) => {
+brandRouter.post("/", async (req, res) => {
   const { name } = req.body;
   try {
     const newBrands = await createBrand(name);
@@ -14,7 +14,7 @@ brandsRouter.post("/", async (req, res) => {
   }
 });
 
-brandsRouter.get("/", async (req, res) => {
+brandRouter.get("/", async (req, res) => {
   try {
     const allBrands = await allBrand();
     res.status(200).json(allBrands);
@@ -23,4 +23,4 @@ brandsRouter.get("/", async (req, res) => {
   }
 });
 
-module.exports = brandsRouter;
+module.exports = brandRouter;
