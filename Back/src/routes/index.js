@@ -7,7 +7,7 @@ const strapsRouter = require("./strap/strapsRouter");
 const colorRouter = require("./color/colorRouter");
 const styleRouter = require('./style/styleRouter');
 const functionRouter = require('./Functions/functionRouter');
-const genderRouter = require('./Gender/genderRouter');
+const genderRouter = require('./gender/genderRouter');
 
 // Rutas para el filtrado en la pagina
 router.use("/colors", colorRouter);
