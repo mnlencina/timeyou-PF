@@ -4,9 +4,8 @@ const PORT = process.env.PORT || 3001;
 
 //server.listen(PORT, () => console.log(`server on PORT ${PORT}`));
 
-conn.sync({ alter: false }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(PORT, () => {
     console.log(`server on PORT ${PORT}`);
   });
 });
-
