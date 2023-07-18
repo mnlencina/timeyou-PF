@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const allPrice= require("../../controllers/getPrices");
 
-PriceRouter.get("/", async (req, res) => {
+priceRouter.get("/", async (req, res) => {
     try {
     const allPrice = await allPrice();
     res.status(200).json(allPrice);
@@ -10,4 +10,4 @@ PriceRouter.get("/", async (req, res) => {
     }
 });
 
-module.exports = PriceRouter;
+module.exports = priceRouter;
