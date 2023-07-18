@@ -1,9 +1,9 @@
 const express = require("express");
 const createStrap = require("../../controllers/postStrap");
 const getStraps = require("../../controllers/getStraps");
-const strapsRouter = express.Router();
+const strapRouter = express.Router();
 
-strapsRouter.post("/", async (req, res) => {
+strapRouter.post("/", async (req, res) => {
   const { name } = req.body;
   try {
     if (!name) res.status(404).json({ Error: error.message });
@@ -14,7 +14,7 @@ strapsRouter.post("/", async (req, res) => {
   }
 });
 
-strapsRouter.get("/:strapName", async (req, res) => {
+strapRouter.get("/:strapName", async (req, res) => {
   const {strapName} = req.params;
   try {
     const allFunctions = await getStraps(strapName);
@@ -24,4 +24,4 @@ strapsRouter.get("/:strapName", async (req, res) => {
   }
 });
 
-module.exports = strapsRouter;
+module.exports = strapRouter;

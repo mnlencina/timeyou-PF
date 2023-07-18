@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const watchRouter = require("../routes/watchs/watchRouter");
-const brandsRouter = require("./brand/brandsRouter");
-const strapsRouter = require("./strap/strapsRouter");
+const watchRouter = require("./watch/watchRouter");
+const brandRouter = require("./brand/brandRouter");
+const strapRouter = require("./strap/strapRouter");
 const colorRouter = require("./color/colorRouter");
 const styleRouter = require('./style/styleRouter');
-const functionRouter = require('./Functions/functionRouter');
+const functionRouter = require('./functions/functionRouter');
 const genderRouter = require('./gender/genderRouter');
 
 // Rutas para el filtrado en la pagina
@@ -14,10 +14,10 @@ router.use("/colors", colorRouter);
 router.use("/styles", styleRouter);
 router.use("/functions", functionRouter);
 router.use("/gender", genderRouter);
-router.use("/straps", strapsRouter);
+router.use("/straps", strapRouter);
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
-router.use("/brands", brandsRouter);
+router.use("/brands", brandRouter);
 
 
 // router.post("/admin/addFunction", (req, res) => {
