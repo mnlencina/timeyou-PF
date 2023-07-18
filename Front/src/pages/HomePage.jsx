@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CardContext, Drawer } from "../components/index.js";
+import { CardContext, Drawer, BannerSlider } from "../components/index.js";
 
 export default function HomePage() {
   const [show, setShow] = useState(false);
+
+  const slideContainer = () => (
+    <ContainerSlide>
+      <div className="slide-container">
+        <BannerSlider />
+      </div>
+    </ContainerSlide>
+  );
 
   const renderMostrador = () => (
     <ContainerMostrador show={show}>
@@ -19,22 +27,53 @@ export default function HomePage() {
     </ContainerMostrador>
   );
 
-  return <>{renderMostrador()}</>;
+  return (
+    <ContainerGeneral>
+      {slideContainer()}
+      {renderMostrador()}
+    </ContainerGeneral>
+  );
 }
 
-const ContainerMostrador = styled.div`
+const ContainerGeneral = styled.main`
   width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ContainerSlide = styled.section`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .slide-container {
+    width: 80%;
+    height: 80%;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+`;
+
+const ContainerMostrador = styled.div`
+  width: 100%;
   height: 160vh;
   display: flex;
   align-items: center;
   justify-content: center;
- 
   .sidebar {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
     background: #111;
     transition: all 0.3s ease-in-out;
     position: relative;
+    border-radius: 0 10px 0 0;
     .btn-filter {
       position: absolute;
       left: ${(props) => (props.show ? "200px" : "0px")};

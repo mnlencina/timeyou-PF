@@ -1,21 +1,10 @@
-//const { Watch } = require("../db");
-const getWatches = require("./getWatches");
+const { Gender } = require("../db");
 
+const allGender = async () => {
+  const allGenders = await Gender.findAll();
 
-const getGender = async () => {
-  try {
-    const allWatches = await getWatches();
-    const allGender = await allWatches.map((watch) => {
-      return watch["gender "]
-    });
-    const genders = await allGender.filter((gender, index) => {
-      return allGender.indexOf(gender) === index;
-    })
-    return genders;
+  if (!allGenders) throw new Error("That brand does not exist");
+  return allGenders;
+};
 
-  } catch (error) {
-    console.log(error.message)
-  }
-}
-
-module.exports = getGender;
+module.exports = allGender;

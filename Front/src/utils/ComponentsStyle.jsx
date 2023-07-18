@@ -20,3 +20,24 @@ export const BTNCarritoDeCompras = styled.button`
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   }
 `;
+
+export const BTNHover = styled.button`
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 50px;
+  color: #fff;
+  transition: 0.3s ease-in all;
+  pointer-events: none;
+  pointer-events: all;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    transform: scale(1.2);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+`;
