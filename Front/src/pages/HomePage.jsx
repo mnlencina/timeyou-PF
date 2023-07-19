@@ -85,24 +85,23 @@ const ContainerGeneral = styled.main`
 
 const ContainerSlide = styled.section`
   width: 100%;
-  height: 80vh;
+  height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   .slide-container {
     width: 80%;
     height: 80%;
-    background-color: red;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius:20px;
     overflow: hidden;
   }
 `;
-
 const ContainerMostrador = styled.div`
   width: 100%;
-  height: 120vh;
+  height: 110vh;
   display: flex;
   align-items: center;
   justify-content: center;
