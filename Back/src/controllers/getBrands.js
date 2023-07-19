@@ -1,10 +1,11 @@
-const { Brand } = require("../db");
+const { Brand, Watch } = require("../db");
 
-const allBrand = async () => {
-  const allBrands = await Brand.findAll();
-
-  if (!allBrands) throw new Error("That brand does not exist");
+const getBrand = async (brandName) => {
+  const allBrands = await Brand.findOne({
+    where: {name: brandName},
+    include: Watch
+    });
   return allBrands;
 };
 
-module.exports = allBrand;
+module.exports = getBrand;
