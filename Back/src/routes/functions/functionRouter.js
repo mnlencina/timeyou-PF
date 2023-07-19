@@ -1,6 +1,6 @@
 const express = require("express");
 const createFunction = require("../../controllers/postFunction");
-const getFunctions = require("../../controllers/getFunction");
+const { getFunctions, getAllFunctions } = require("../../controllers/getFunction");
 const functionRouter = express.Router();
 
 functionRouter.post("/", async (req, res) => {
@@ -22,5 +22,14 @@ functionRouter.get("/:functionName", async (req, res) => {
     res.status(500).json({ Error: error.message });
   }
 });
+
+functionRouter.get("/", async (req, res) => {
+  try {
+    const allFunctions = await getAllFunctions();
+    res.status(200).json(allFunctions);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+})
 
 module.exports = functionRouter;
