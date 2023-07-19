@@ -17,7 +17,9 @@ colorRouter.post("/", async (req, res) => {
 
 
 colorRouter.get("/", async (req, res) => {
-    try {
+
+  try {
+      
     const allColors = await allColor();
     res.status(200).json(allColors);
     } catch (error) {
