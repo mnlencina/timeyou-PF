@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       phone_number: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         unique: true,
       },
       role: {
