@@ -8,6 +8,7 @@ const colorRouter = require("./color/colorRouter");
 const styleRouter = require('./style/styleRouter');
 const functionRouter = require('./Functions/functionRouter');
 const genderRouter = require('./Gender/genderRouter');
+const enviarCorreoUsuariosRouter = require("./Notificaciones/enviarCorreoUsuarios");
 
 // Rutas para el filtrado en la pagina
 router.use("/colors", colorRouter);
@@ -18,6 +19,7 @@ router.use("/straps", strapsRouter);
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
 router.use("/brands", brandsRouter);
+router.use('/enviar-mensaje', enviarCorreoUsuariosRouter);
 
 
 // router.post("/admin/addFunction", (req, res) => {

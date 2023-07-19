@@ -1,7 +1,6 @@
 const express = require("express");
 const allBrand = require("../../controllers/getBrands");
 const createBrand = require("../../controllers/postBrands");
-
 const brandsRouter = express.Router();
 
 brandsRouter.post("/", async (req, res) => {
