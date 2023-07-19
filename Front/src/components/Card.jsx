@@ -15,7 +15,7 @@ export const Card = ({ watch }) => {
       <div className="top-content">
         <span className="span-title">Envio gratis</span>
         <picture className="img-box">
-          <img src={cleanedWatch.image} alt={cleanedWatch.brand} />
+          <img src={cleanedWatch.image[0]} alt={cleanedWatch.brand} />
         </picture>
       </div>
       <div className="section-content">

@@ -1,7 +1,7 @@
-
 const { Router } = require('express');
 const createColor= require("../../controllers/postColor");
-const allColor = require("../../controllers/getColors");
+const getColors = require("../../controllers/getColors");
+const allColors = require('../../controllers/allColors');
 
 const colorRouter = Router();
 colorRouter.post("/", async (req, res) => {
@@ -15,12 +15,20 @@ colorRouter.post("/", async (req, res) => {
     }
 });
 
-
 colorRouter.get("/", async (req, res) => {
+    try {
+    const getColors = await allColors();
+    res.status(200).json(getColors);
+    } catch (error) {
+    res.status(500).json({ Error: error.message });
+    }
+});
 
-  try {
-      
-    const allColors = await allColor();
+colorRouter.get("/:colorName", async (req, res) => {
+    const {colorName} = req.params;
+    console.log(colorName);
+    try {
+    const allColors = await getColors(colorName);
     res.status(200).json(allColors);
     } catch (error) {
     res.status(500).json({ Error: error.message });

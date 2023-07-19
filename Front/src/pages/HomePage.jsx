@@ -1,9 +1,42 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CardContext, Drawer, BannerSlider } from "../components/index.js";
+import {
+  CardContext,
+  Drawer,
+  BannerSlider,
+  Pagination,
+} from "../components/index.js";
+import { useSelector } from "react-redux";
 
 export default function HomePage() {
+  const whatches = useSelector((state) => state.Clocks);
+
   const [show, setShow] = useState(false);
+
+  //funciones de paginacion
+  const [page, setPage] = useState(1);
+  const itemPerPage = 8;
+  const totalPages = Math.ceil(whatches.length / itemPerPage);
+
+  const paginacion = () => {
+    const startIndex = (page - 1) * itemPerPage;
+    const endIndex = startIndex + itemPerPage;
+    if (whatches.length) return whatches.slice(startIndex, endIndex);
+  };
+
+  const PaginacionRelojes = paginacion();
+
+  const onNextPage = () => {
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const onPreviusPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
 
   const slideContainer = () => (
     <ContainerSlide>
@@ -22,7 +55,7 @@ export default function HomePage() {
         <Drawer show={show} />
       </div>
       <section className="main-card">
-        <CardContext />
+        <CardContext pagination={PaginacionRelojes} />
       </section>
     </ContainerMostrador>
   );
@@ -31,6 +64,12 @@ export default function HomePage() {
     <ContainerGeneral>
       {slideContainer()}
       {renderMostrador()}
+      <Pagination
+        totalPages={totalPages}
+        page={page}
+        onPrev={onPreviusPage}
+        onNext={onNextPage}
+      />
     </ContainerGeneral>
   );
 }
@@ -46,34 +85,34 @@ const ContainerGeneral = styled.main`
 
 const ContainerSlide = styled.section`
   width: 100%;
-  height: 400px;
+  height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   .slide-container {
     width: 80%;
     height: 80%;
-    background-color: red;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius:20px;
     overflow: hidden;
   }
 `;
-
 const ContainerMostrador = styled.div`
   width: 100%;
-  height: 160vh;
+  height: 110vh;
   display: flex;
   align-items: center;
   justify-content: center;
+
   .sidebar {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
     background: #111;
     transition: all 0.3s ease-in-out;
     position: relative;
-    border-radius: 0 10px 0 0;
+    border-radius: 0 10px 10px 0;
     .btn-filter {
       position: absolute;
       left: ${(props) => (props.show ? "200px" : "0px")};
