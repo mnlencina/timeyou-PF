@@ -16,9 +16,11 @@ colorRouter.post("/", async (req, res) => {
 });
 
 
-colorRouter.get("/", async (req, res) => {
+colorRouter.get("/:colorName", async (req, res) => {
+    const {colorName} = req.params;
+    console.log(colorName);
     try {
-    const allColors = await allColor();
+    const allColors = await allColor(colorName);
     res.status(200).json(allColors);
     } catch (error) {
     res.status(500).json({ Error: error.message });

@@ -12,7 +12,6 @@ const createNewWatch = async (
   review,
   functions,
   description,
-  del
 ) => {
     
     // evaluamos que recibimos los datos completos para crear el nuevo reloj

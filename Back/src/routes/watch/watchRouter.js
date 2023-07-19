@@ -1,6 +1,7 @@
 const express = require("express");
 const createNewWatch = require("../../controllers/postNewWacth");
 const getWatches = require("../../controllers/getWatches");
+const createNewWatches = require('../../controllers/postBulkWatch');
 
 const watchRouter = express.Router();
 
@@ -24,6 +25,21 @@ watchRouter.post("/", async (req, res) => {
       del
     );
     res.status(200).json(newWatch);
+  } catch (error) {
+    if (error.status === 404) {
+      res.status(404).json({ Error: error.message });
+    } else {
+      res.status(500).json({ Error: error.message });
+    }
+  }
+});
+
+watchRouter.post("/bulk", async (req, res) => {
+  // console.log(req.body);
+  const watchesData = req.body;
+  try {
+    const newbulk = await createNewWatches(watchesData);
+    res.status(200).json(newbulk);
   } catch (error) {
     if (error.status === 404) {
       res.status(404).json({ Error: error.message });
