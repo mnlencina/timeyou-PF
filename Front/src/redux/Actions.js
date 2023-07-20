@@ -1,7 +1,8 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  GET_PRODUCTS_DETAIL,
+  GET_PRODUCTS_DETAIL, 
+  RESET_DETAIL,
   ADD_TO_CART,
   REMOVE_FROM_CART,
   CLEAR_CART
@@ -36,8 +37,13 @@ export function addModel(model) {
   };
 }
 
-/* Carrito de compras */
+export function resetDetail(){
+  return{
+    type: RESET_DETAIL,
+  }
+}
 
+//funciones del carrito
 
 export const addToCart = (product) => ({
   type: ADD_TO_CART,
@@ -49,7 +55,6 @@ export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
 });
-
 
 export const clearCart = () => ({
   type: CLEAR_CART,

@@ -1,3 +1,4 @@
+
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -5,6 +6,7 @@ import {
   CLEAR_CART,
   REMOVE_FROM_CART,
 } from "./actionTypes";
+
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");
@@ -59,6 +61,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         Cart: { items: [] },
       };
+     case RESET_DETAIL:
+       return {
+         ...state,
+         detailClock: [],
+       }
     default:
       return state;
   }
