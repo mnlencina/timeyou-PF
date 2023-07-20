@@ -43,3 +43,22 @@ export function resetDetail(payload){
     payload
   }
 }
+
+//funciones del carrito
+
+export const addCart = (id) => ({
+  type: ADD_TO_CART,
+  payload: id,
+});
+
+export const clearCart = (id, all = false) => {
+  if (all === true) {
+    return dispatch({
+      type: CLEAR_CART,
+      payload: id
+    });
+  } else {
+    return dispatch
+  }
+};
+
