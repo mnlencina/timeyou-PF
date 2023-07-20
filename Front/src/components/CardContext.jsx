@@ -37,13 +37,13 @@ const Container = styled.section`
   .context-card {
     width: 100%;
     height: 100%;
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr); */
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+   /*  display: flex;
+    flex-wrap: wrap; */
     align-items: center;
-    justify-content: center;
-    gap: 40px;
+    justify-items: center;
+    
   }
   @media (max-width: 768px) {
     .context-card {

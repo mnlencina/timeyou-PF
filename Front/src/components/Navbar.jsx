@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const cart = useSelector((state) => state.Cart);
+
+  const itemCount = cart.items?.length;
+
   return (
-    <Container>
+    <Container itemcount={itemCount}>
       <header className="header">
         <h1>
           Times<span>You</span>
@@ -31,7 +36,7 @@ export const Navbar = () => {
             </li>
             <li>
               <Link to="/shopping">
-                <span>{1}</span>
+                <span>{itemCount}</span>
                 <FiShoppingCart />
               </Link>
             </li>
@@ -103,11 +108,13 @@ const Container = styled.div`
           font-size: 1.4rem;
           font-weight: 500;
           position: relative;
-          a{
-            text-decoration:none;
-            color:#111;
+          a {
+            text-decoration: none;
+            color: #111;
           }
           span {
+            visibility: ${(props) =>
+              props.itemcount === 0 ? "hidden" : "visible"};
             position: absolute;
             right: -10px;
             bottom: 0;

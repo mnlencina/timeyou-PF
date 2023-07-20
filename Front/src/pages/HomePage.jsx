@@ -12,6 +12,7 @@ export default function HomePage() {
   const whatches = useSelector((state) => state.Clocks);
 
   const [show, setShow] = useState(false);
+  const showOpen = show.toString()
 
   //funciones de paginacion
   const [page, setPage] = useState(1);
@@ -47,7 +48,7 @@ export default function HomePage() {
   );
 
   const renderMostrador = () => (
-    <ContainerMostrador show={show}>
+    <ContainerMostrador show={show.toString()}>
       <div className="sidebar">
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
@@ -63,6 +64,12 @@ export default function HomePage() {
   return (
     <ContainerGeneral>
       {slideContainer()}
+      <Pagination
+        totalPages={totalPages}
+        page={page}
+        onPrev={onPreviusPage}
+        onNext={onNextPage}
+      />
       {renderMostrador()}
       <Pagination
         totalPages={totalPages}
@@ -95,18 +102,18 @@ const ContainerSlide = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius:20px;
+    border-radius: 20px;
     overflow: hidden;
   }
 `;
 const ContainerMostrador = styled.div`
   width: 100%;
-  height: ${(props)=> props.show?"170vh":"120vh"};
+  height: ${(props) => (props.show==="true" ? "200vh" : "120vh")};
   display: flex;
   align-items: center;
   justify-content: center;
   .sidebar {
-    width: ${(props) => (props.show ? "200px" : "0")};
+    width: ${(props) => (props.show==="true" ? "200px" : "0")};
     height: 100%;
     background: #111;
     transition: all 0.3s ease-in-out;
@@ -114,7 +121,7 @@ const ContainerMostrador = styled.div`
     border-radius: 0 10px 10px 0;
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show ? "200px" : "0px")};
+      left: ${(props) => (props.show==="true" ? "200px" : "0px")};
       top: 30px;
       transition: all 0.3s ease-in-out;
       button {
@@ -137,12 +144,13 @@ const ContainerMostrador = styled.div`
     }
   }
   .main-card {
-    width: ${(props) => (props.show ? "calc(100% - 200px)" : "100%")};
-    height: 100%;
+    width: ${(props) => (props.show ==="true"? "calc(100% - 200px)" : "100%")};
+    height: ${(props) => (props.show ==="true"? "200vh" : "120vh")};
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
   @media (max-width: 768px) {
     height: 1600px;

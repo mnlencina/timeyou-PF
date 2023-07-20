@@ -9,20 +9,20 @@ const MyRoutes = () => {
   const location = useLocation();
   //mostrar NavBar
   const showNav =
-    location.pathname === "/" || location.pathname === "/product/:id";
+    location.pathname === "/" || location.pathname === "/product/:model";
 
   const showFoot =
-    location.pathname === "/" || location.pathname === "/product/:id";
+    location.pathname === "/" || location.pathname === "/product/:model";
 
   return (
     <>
-      {showNav && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:model" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
       </Routes>
-      {showFoot && <Footer />}
+ 
     </>
   );
 };

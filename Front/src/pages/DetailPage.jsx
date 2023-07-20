@@ -6,6 +6,7 @@ import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addModel } from "../redux/Actions";
+import { addToCart } from "../redux/Actions";
 
 function DetailPage() {
   const [color, setColor] = useState(0);
@@ -13,6 +14,14 @@ function DetailPage() {
   const { model } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
   const loading = useSelector((state) => state.detailLoading);
+ 
+
+  
+
+  const handleAddToCart = () => {
+   
+    dispatch(addToCart(detailClock[color]));
+  };
 
   useEffect(() => {
     dispatch(addModel(model));
@@ -64,7 +73,7 @@ function DetailPage() {
                 </div>
               </div>
               <div className="btn-cart">
-                <BTNCarritoDeCompras>
+                <BTNCarritoDeCompras onClick={handleAddToCart}>
                   <span>
                     <FiShoppingCart />
                   </span>

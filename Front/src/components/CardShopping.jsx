@@ -1,44 +1,55 @@
 import React from "react";
 import styled from "styled-components";
 import { AppendBTN } from "../utils/ComponentsStyle";
+import { removeFromCart } from "../redux/Actions";
+import { useDispatch } from "react-redux";
 
-export const CardShopping = () => {
+export const CardShopping = ({reloj}) => {
+const dispatch = useDispatch()
+  const handleRemove =() =>{
+    dispatch(removeFromCart(reloj.id))
+  }
   return (
     <Container>
       <div className="section-card">
         <div className="top-content">
           <picture className="img-box">
             <img
-              src="https://watchlandsa.vteximg.com.br/arquivos/ids/165967-200-200/MQ-24S-2B.jpg?v=1689800145533"
-              alt=""
+              src={reloj.image[0]}
+              alt={reloj.name}
             />
           </picture>
           <div className="marca-modelo">
-            <h5>Cassio</h5>
-            <h4>modelo de la hostia</h4>
+            <h5>{reloj.brandName}</h5>
+            <h4>{reloj.model}</h4>
           </div>
         </div>
 
         <section className="content">
-          <h4>$26330.00</h4>
+          <h4>${reloj.price}</h4>
           <div className="inputs">
             <AppendBTN alter>+</AppendBTN>
             <span className="visor">1</span>
             <AppendBTN alter>-</AppendBTN>
           </div>
         </section>
+        <div className="clear">
+          <AppendBTN alter onClick={handleRemove}>X</AppendBTN>
+        </div>
       </div>
     </Container>
   );
 };
 
 const Container = styled.div`
+position: relative;
   margin: 5px 0;
   width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #333;
  
   .section-card {
     width: 100%;
@@ -47,6 +58,7 @@ const Container = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 5px;
     .top-content{
         width: 30%;
         height:100%;
@@ -60,7 +72,6 @@ const Container = styled.div`
             justify-content: center;
             img{
                 width: 100%;
-                object-fit: contain;
             }
         }
         .marca-modelo{
@@ -105,3 +116,4 @@ const Container = styled.div`
     }
   }
 `;
+

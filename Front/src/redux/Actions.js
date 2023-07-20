@@ -4,8 +4,8 @@ import {
   GET_PRODUCTS_DETAIL, 
   RESET_DETAIL,
   ADD_TO_CART,
-  CLEAR_CART,
-  CLEAR_ONE_PRODUCT,
+  REMOVE_FROM_CART,
+  CLEAR_CART
 } from "./actionTypes";
 
 export const getProducts = () => async (dispatch) => {
@@ -37,28 +37,25 @@ export function addModel(model) {
   };
 }
 
-export function resetDetail(payload){
+export function resetDetail(){
   return{
     type: RESET_DETAIL,
-    payload
   }
 }
 
 //funciones del carrito
 
-export const addCart = (id) => ({
+export const addToCart = (product) => ({
   type: ADD_TO_CART,
-  payload: id,
+  payload: product,
 });
 
-export const clearCart = (id, all = false) => {
-  if (all === true) {
-    return dispatch({
-      type: CLEAR_CART,
-      payload: id
-    });
-  } else {
-    return dispatch
-  }
-};
 
+export const removeFromCart = (productId) => ({
+  type: REMOVE_FROM_CART,
+  payload: productId,
+});
+
+export const clearCart = () => ({
+  type: CLEAR_CART,
+});
