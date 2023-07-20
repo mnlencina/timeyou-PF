@@ -19,7 +19,7 @@ function DetailPage() {
   
   console.log(detailClock);
   
-  return !detailClock ? (<div>loanding</div>) : (
+  return !detailClock ? (<h1>Cargando...</h1>) : (
     <Container>
       <div className="main_container">
         <header className="title">
