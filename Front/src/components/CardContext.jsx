@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect } from "react";
 import { Card } from "../components/index.js";
 import styled from "styled-components";
 import { getProducts } from "../redux/Actions.js";
