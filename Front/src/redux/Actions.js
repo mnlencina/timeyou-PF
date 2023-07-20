@@ -1,7 +1,8 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  GET_PRODUCTS_DETAIL,
+  GET_PRODUCTS_DETAIL, 
+  RESET_DETAIL,
   ADD_TO_CART,
   CLEAR_CART,
   CLEAR_ONE_PRODUCT,
@@ -53,3 +54,4 @@ export const clearCart = (id, all = false) => {
     return dispatch
   }
 };
+

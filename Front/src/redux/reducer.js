@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_DETAIL } from "./actionTypes";
+import { GET_PRODUCTS, GET_PRODUCTS_DETAIL, RESET_DETAIL } from "./actionTypes";
 
 const initialstate = {
   Clocks: [],
@@ -22,6 +22,11 @@ export const rootReducer = (state = initialstate, { type, payload }) => {
         detailClock: payload,
         detailLoading: false,
       }
+     case RESET_DETAIL:
+       return {
+         ...state,
+         detailClock: [],
+       }
     default:
       return state;
   }
