@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
@@ -8,18 +8,19 @@ import { useParams } from "react-router-dom";
 import { addModel } from "../redux/Actions";
 
 function DetailPage() {
-  const [color, setColor] = useState(0)
-  const dispatch = useDispatch()
-  const {model} = useParams()  
-  const detailClock = useSelector((state)=> state.detailClock)
-  
-  useEffect(()=>{
-    dispatch(addModel(model))
-  },[dispatch])
-  
-  console.log(detailClock);
-  
-  return !detailClock ? (<div>loanding</div>) : (
+  const [color, setColor] = useState(0);
+  const dispatch = useDispatch();
+  const { model } = useParams();
+  const detailClock = useSelector((state) => state.detailClock);
+  const loading = useSelector((state) => state.detailLoading);
+
+  useEffect(() => {
+    dispatch(addModel(model));
+  }, [dispatch]);
+
+  return loading ? (
+    <div>loanding</div>
+  ) : (
     <Container>
       <div className="main_container">
         <header className="title">
@@ -32,24 +33,33 @@ function DetailPage() {
         </header>
         <section className="show-clocks">
           <picture className="img-box">
-            <img
-              src={detailClock[color].image[0]}
-              alt='imgD'
-            />
+            <img src={detailClock[color].image[0]} alt="imgD" />
           </picture>
           <article className="show-cart">
             <section className="body-cart">
               <header className="title-body">
-                <h3>{`${detailClock[0].model} - ${detailClock[color].colorName.toUpperCase()}`}</h3>
-                <h1>{`${detailClock[0].brandName.toUpperCase()} | ${detailClock[0].model}`}</h1>
+                <h3>{`${detailClock[0].model} - ${detailClock[
+                  color
+                ].colorName.toUpperCase()}`}</h3>
+                <h1>{`${detailClock[0].brandName.toUpperCase()} | ${
+                  detailClock[0].model
+                }`}</h1>
               </header>
               <hr />
               <div className="price">
-                <h1>$ {detailClock[0].price*500}.- </h1>
+                <h1>$ {detailClock[0].price * 500}.- </h1>
                 <div className="colors">
                   <h3>Colores:</h3>
                   <div className="color">
-                     {detailClock.map((wat, i)=> <span onClick={()=>setColor(i)} key={i+wat.colorName} className={wat.colorName}>{i}</span>)}
+                    {detailClock.map((wat, i) => (
+                      <span
+                        onClick={() => setColor(i)}
+                        key={i + wat.colorName}
+                        className={wat.colorName}
+                      >
+                        {i}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -95,7 +105,9 @@ function DetailPage() {
               <div className="container-functions">
                 <h3>funciones</h3>
                 <ul>
-                 {detailClock[0].Functions.map((fun, i)=> <li key={i+fun}>{fun.name}</li>)}
+                  {detailClock[0].Functions.map((fun, i) => (
+                    <li key={i + fun}>{fun.name}</li>
+                  ))}
                 </ul>
               </div>
             </div>

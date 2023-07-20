@@ -1,5 +1,11 @@
-import axios from 'axios';
-import { GET_PRODUCTS, GET_PRODUCTS_DETAIL, RESET_DETAIL } from "./actionTypes";
+import axios from "axios";
+import {
+  GET_PRODUCTS,
+  GET_PRODUCTS_DETAIL, RESET_DETAIL,
+  ADD_TO_CART,
+  CLEAR_CART,
+  CLEAR_ONE_PRODUCT,
+} from "./actionTypes";
 
 export const getProducts = () => async (dispatch) => {
   const URL = "http://localhost:3001/watches";
@@ -15,21 +21,17 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 
-export function addModel(model){
-  const endpoint = `http://localhost:3001/watches/${model}`
-  return async function (dispatch){
+export function addModel(model) {
+  const endpoint = `http://localhost:3001/watches/${model}`;
+  return async function (dispatch) {
     try {
-      let {data} = await axios(endpoint)
+      let { data } = await axios(endpoint);
       dispatch({
-        type:GET_PRODUCTS_DETAIL,
-        payload: data
-      })
-    } catch (error) { console.log(error) }
-  }
-}
-
-export function resetDetail(){
-  return{
-    type: RESET_DETAIL,
-  }
+        type: GET_PRODUCTS_DETAIL,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
