@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
@@ -10,7 +11,7 @@ export const Navbar = () => {
       <header className="header">
         <h1>
           Times<span>You</span>
-        </h1> 
+        </h1>
       </header>
       <nav className="navigation">
         <ul className="nav">
@@ -29,7 +30,10 @@ export const Navbar = () => {
               <BiUser />
             </li>
             <li>
-              <FiShoppingCart />
+              <Link to="/shopping">
+                <span>{1}</span>
+                <FiShoppingCart />
+              </Link>
             </li>
           </ul>
         </div>
@@ -71,9 +75,9 @@ const Container = styled.div`
     ul {
       list-style: none;
     }
-    li{
+    li {
       text-transform: uppercase;
-      font-weight:300;
+      font-weight: 300;
     }
     .nav {
       margin: 0 auto;
@@ -98,6 +102,25 @@ const Container = styled.div`
         li {
           font-size: 1.4rem;
           font-weight: 500;
+          position: relative;
+          a{
+            text-decoration:none;
+            color:#111;
+          }
+          span {
+            position: absolute;
+            right: -10px;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #111;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+          }
         }
       }
     }

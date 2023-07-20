@@ -3,11 +3,15 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
+import Shopping from "../pages/Shopping";
 
 const MyRoutes = () => {
   const location = useLocation();
   //mostrar NavBar
   const showNav =
+    location.pathname === "/" || location.pathname === "/product/:id";
+
+  const showFoot =
     location.pathname === "/" || location.pathname === "/product/:id";
 
   return (
@@ -16,8 +20,9 @@ const MyRoutes = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
+        <Route path="/shopping" element={<Shopping />} />
       </Routes>
-      <Footer />
+      {showFoot && <Footer />}
     </>
   );
 };

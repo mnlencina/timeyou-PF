@@ -26,11 +26,13 @@ export const CardContext = ({pagination}) => {
 };
 
 const Container = styled.section`
+
   width: 90%;
-  height: auto;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   .context-card {
     width: 100%;
     height: 100%;

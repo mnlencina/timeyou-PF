@@ -1,22 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { AppendBTN } from "../utils/ComponentsStyle";
 
 export const Pagination = ({ totalPages, page, onPrev, onNext }) => {
   return (
     <Container>
       {page > 1 && (
-        <button onClick={onPrev}>
+        <AppendBTN onClick={onPrev}>
           <AiOutlineLeft />
-        </button>
+        </AppendBTN>
       )}
       <h4>
         {page} de {totalPages}
       </h4>
       {page !== totalPages && (
-        <button onClick={onNext}>
+        <AppendBTN onClick={onNext}>
           <AiOutlineRight />
-        </button>
+        </AppendBTN>
       )}
     </Container>
   );
@@ -30,21 +31,4 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  button {
-    width: 30px;
-    height: 30px;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s ease-in-out all;
-    &:hover {
-      transform: scale(1.2);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: #fff;
-    }
-  }
 `;

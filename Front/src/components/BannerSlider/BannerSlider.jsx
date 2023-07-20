@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
-import { imageCarrousel } from "../utils/Constant";
+import { imageCarrousel } from "../../utils/Constant";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { BTNHover } from "../utils/ComponentsStyle";
+import { BTNHover } from "../../utils/ComponentsStyle";
+import { Container } from "./Style";
 
 export const BannerSlider = () => {
   const slideShow = useRef(null);
@@ -93,39 +94,3 @@ export const BannerSlider = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  .container-slide {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    .slide {
-      min-width: 100%;
-      min-height: 100%;
-      z-index: 10;
-      img {
-        width: 100%;
-        min-height: 200px;
-        height: 100%;
-        vertical-align: top;
-        
-      }
-    }
-  }
-
-  .controles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 20;
-  }
-`;

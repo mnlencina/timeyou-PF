@@ -101,11 +101,10 @@ const ContainerSlide = styled.section`
 `;
 const ContainerMostrador = styled.div`
   width: 100%;
-  height: 110vh;
+  height: ${(props)=> props.show?"170vh":"120vh"};
   display: flex;
   align-items: center;
   justify-content: center;
-
   .sidebar {
     width: ${(props) => (props.show ? "200px" : "0")};
     height: 100%;
