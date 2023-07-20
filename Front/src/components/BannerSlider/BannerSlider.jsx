@@ -10,7 +10,7 @@ export const BannerSlider = () => {
   const slideShow = useRef(null);
   const timerRef = useRef(null);
 
-  console.log(slideShow.current);
+ 
   const handleNext = () => {
     resetTimer();
     if (slideShow.current.children.length > 0) {

@@ -4,10 +4,14 @@ import { BTNHover } from "../utils/ComponentsStyle";
 import { useNavigate } from "react-router-dom";
 import { BsBagCheck, BsBag } from "react-icons/bs";
 import { CardShopping } from "../components/CardShopping";
+import { useSelector } from "react-redux";
+import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 
 function Shopping() {
   const navigate = useNavigate();
-  return (
+  const cart = useSelector((state) => state.Cart);
+
+  const renderCart = () => (
     <Container>
       <div className="btn-goback">
         <BTNHover alter onClick={() => navigate("/")}>
@@ -31,16 +35,18 @@ function Shopping() {
         <div className="main-card">
           <div className="main-products">
             <div className="products">
-              <CardShopping/>
-              <CardShopping/>
-              <CardShopping/>
-              <CardShopping/>
-              <CardShopping/>
-            
+              {cart.items.length === 0 ? (
+                <ContainerEmpty>
+                  <h1>No tienes elementos cargados en el carrito</h1>
+   
+                </ContainerEmpty>
+                
+              ) : (
+                cart.items.map((e, index) => (
+                  <CardShopping key={index} reloj={e} />
+                ))
+              )}
             </div>
-          </div>
-          <div className="main-resumen">
-            <div className="resumen"></div>
           </div>
         </div>
         <footer className="footer-shopping">
@@ -51,6 +57,8 @@ function Shopping() {
       </div>
     </Container>
   );
+
+  return <>{renderCart()}</>;
 }
 
 export default Shopping;
@@ -88,6 +96,7 @@ const Container = styled.main`
         align-items: center;
         justify-content: space-between;
         h1 {
+          visibility: hidden;
           text-transform: uppercase;
           span {
             font-weight: 300;
@@ -108,40 +117,24 @@ const Container = styled.main`
     .main-card {
       margin: 40px 0;
       width: 100%;
-      height: calc(100vh - 18%);
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 20px;
       .main-products {
-        width: 65%;
+        width: 80%;
         height: 100%;
         display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
+        align-items: flex-start;
+        justify-content: center;
         .products {
           width: 90%;
           height: auto;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center ;
-        }
-      }
-      .main-resumen {
-        width: 35%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center:;
-        .resumen {
-          width: 90%;
-          height: 600px;
-          border-radius: 20px;
-          box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
-          overflow: hidden;
-          display: flex;
-          align-items: flex-start; justify-content: flex-start;
+          align-items: flex-start;
+          justify-content: center;
         }
       }
     }
@@ -160,4 +153,14 @@ const Container = styled.main`
       }
     }
   }
+`;
+
+const ContainerEmpty = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
 `;

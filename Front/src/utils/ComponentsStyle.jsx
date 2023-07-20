@@ -56,6 +56,7 @@ export const AppendBTN = styled.button`
   justify-content: center;
   transition: 0.3s ease-in-out all;
   color: ${(props) => props.alter && "#fff"};
+  cursor: pointer;
   &:hover {
     background-color: ${(props) => (props.alter ? "#888" : "rgba(0,0,0,0.8)")};
     transform: scale(1.2);
