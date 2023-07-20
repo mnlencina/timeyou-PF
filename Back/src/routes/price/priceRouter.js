@@ -4,6 +4,7 @@ const getPrices = require("../../controllers/getPrices");
 const priceRouter = express.Router();
 
 priceRouter.get("/", async (req, res) => {
+    
     try {
     const allPrice = await getPrices();
     res.status(200).json(allPrice);
