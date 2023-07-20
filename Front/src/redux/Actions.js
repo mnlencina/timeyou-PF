@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_PRODUCTS, GET_PRODUCTS_DETAIL } from "./actionTypes";
+import { GET_PRODUCTS, GET_PRODUCTS_DETAIL, RESET_DETAIL } from "./actionTypes";
 
 export const getProducts = () => async (dispatch) => {
   const URL = "http://localhost:3001/watches";
@@ -25,5 +25,11 @@ export function addModel(model){
         payload: data
       })
     } catch (error) { console.log(error) }
+  }
+}
+
+export function resetDetail(){
+  return{
+    type: RESET_DETAIL,
   }
 }
