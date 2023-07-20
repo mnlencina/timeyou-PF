@@ -5,6 +5,7 @@ const initialstate = {
   Clock: {},
   detailClock:[],
   isLoading: true,
+  detailLoading: true,
 };
 
 export const rootReducer = (state = initialstate, { type, payload }) => {
@@ -19,6 +20,7 @@ export const rootReducer = (state = initialstate, { type, payload }) => {
       return {
         ...state,
         detailClock: payload,
+        detailLoading: false,
       }
      case RESET_DETAIL:
        return {
