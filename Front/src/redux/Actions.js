@@ -37,6 +37,13 @@ export function addModel(model) {
   };
 }
 
+export function resetDetail(payload){
+  return{
+    type: RESET_DETAIL,
+    payload
+  }
+}
+
 //funciones del carrito
 
 export const addCart = (id) => ({
