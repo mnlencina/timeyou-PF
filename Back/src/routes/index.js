@@ -5,9 +5,10 @@ const watchRouter = require("./watch/watchRouter");
 const brandRouter = require("./brand/brandRouter");
 const strapRouter = require("./strap/strapRouter");
 const colorRouter = require("./color/colorRouter");
-const styleRouter = require('./style/styleRouter');
-const functionRouter = require('./functions/functionRouter');
-const genderRouter = require('./gender/genderRouter');
+const styleRouter = require("./style/styleRouter");
+const functionRouter = require("./functions/functionRouter");
+const genderRouter = require("./gender/genderRouter");
+const userRouter = require("./users/userRouter");
 
 // Rutas para el filtrado en la pagina
 router.use("/colors", colorRouter);
@@ -18,7 +19,7 @@ router.use("/straps", strapRouter);
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
 router.use("/brands", brandRouter);
-
+router.use("/users", userRouter);
 
 // router.post("/admin/addFunction", (req, res) => {
 //   const { name } = req.body;
