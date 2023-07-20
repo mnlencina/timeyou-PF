@@ -105,3 +105,6 @@ const Container = styled.div`
     }
   }
 `;
+const textContainer = styled.h1`
+  
+`
