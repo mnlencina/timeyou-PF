@@ -1,45 +1,55 @@
-import React from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addModel } from "../redux/Actions";
 
 function DetailPage() {
-  return (
+  const [color, setColor] = useState(0)
+  const dispatch = useDispatch()
+  const {model} = useParams()  
+  const detailClock = useSelector((state)=> state.detailClock)
+  
+  useEffect(()=>{
+    dispatch(addModel(model))
+  },[dispatch])
+  
+  console.log(detailClock);
+  
+  return !detailClock ? (<div>loanding</div>) : (
     <Container>
       <div className="main_container">
         <header className="title">
           <h3>
             <span>
-              TimesYou {">"} RELOJES {">"}
+              TimesYou {">"} {detailClock[0].brandName} {">"}
             </span>{" "}
-            reloj demo{" "}
+            {`${detailClock[0].model}`}
           </h3>
         </header>
         <section className="show-clocks">
           <picture className="img-box">
             <img
-              src="https://watchlandsa.vtexassets.com/arquivos/ids/165441-500-auto?v=1773761650&width=500&height=auto&aspect=true"
-              alt="algo"
+              src={detailClock[color].image[0]}
+              alt='imgD'
             />
           </picture>
           <article className="show-cart">
             <section className="body-cart">
               <header className="title-body">
-                <h3>4562132-213as</h3>
-                <h1>Reloj demo</h1>
+                <h3>{`${detailClock[0].model} - ${detailClock[color].colorName.toUpperCase()}`}</h3>
+                <h1>{`${detailClock[0].brandName.toUpperCase()} | ${detailClock[0].model}`}</h1>
               </header>
               <hr />
               <div className="price">
-                <h1>$17066.00</h1>
+                <h1>$ {detailClock[0].price*500}.- </h1>
                 <div className="colors">
                   <h3>Colores:</h3>
                   <div className="color">
-                    <span className="rojo"></span>
-                    <span className="amarillo"></span>
-                    <span className="azul"></span>
-                    <span className="rojo"></span>
-                    <span className="amarillo"></span>
-                    <span className="azul"></span>
+                     {detailClock.map((wat, i)=> <span onClick={()=>setColor(i)} key={i+wat.colorName} className={wat.colorName}>{i}</span>)}
                   </div>
                 </div>
               </div>
@@ -61,13 +71,7 @@ function DetailPage() {
             <div className="title-description">
               <h3>Descripcion</h3>
             </div>
-            <p>
-              RELOJ ANALOGO, CON CAJA DE ACERO, MALLA DE METAL RODINADA EN DOS
-              TONOS, PLATA Y ORO ROSA. CUADRANTE AL TONO CON MARCADORES DE
-              MINUTOS CON STRASS EN COLORES. SUMERGIBLE 50M. Tamaño de la caja:
-              35 x 40 x 8 mm RETIRALO GRATIS en los puntos de Unicenter y
-              Centro- Envío a domicilio gratis desde $20000
-            </p>
+            <p>{detailClock[0].description}</p>
           </article>
           <article className="ficha-tecnica">
             <div className="title-description">
@@ -78,23 +82,20 @@ function DetailPage() {
                 <div className="mesh">
                   <h3>Malla</h3>
                   <ul>
-                    <li>mallita</li>
+                    <li>{detailClock[0].strapName}</li>
                   </ul>
                 </div>
                 <div className="gender">
                   <h3>genero</h3>
                   <ul>
-                    <li>masculino</li>
+                    <li>{detailClock[0].gender}</li>
                   </ul>
                 </div>
               </div>
               <div className="container-functions">
                 <h3>funciones</h3>
                 <ul>
-                  <li>funcion 1</li>
-                  <li>funcion 2</li>
-                  <li>funcion 3</li>
-                  <li>funcion 4</li>
+                 {detailClock[0].Functions.map((fun, i)=> <li key={i+fun}>{fun.name}</li>)}
                 </ul>
               </div>
             </div>

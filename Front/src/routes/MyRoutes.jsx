@@ -19,7 +19,7 @@ const MyRoutes = () => {
       {showNav && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<DetailPage />} />
+        <Route path="/product/:model" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
       </Routes>
       {showFoot && <Footer />}

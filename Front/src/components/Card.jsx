@@ -11,7 +11,7 @@ export const Card = ({ watch }) => {
   });
 
   return (
-    <Container onClick={() => navigate("/product/:id")}>
+    <Container onClick={() => navigate(`/product/${cleanedWatch.model}`)}>
       <div className="top-content">
         <span className="span-title">Envio gratis</span>
         <picture className="img-box">
@@ -19,9 +19,9 @@ export const Card = ({ watch }) => {
         </picture>
       </div>
       <div className="section-content">
-        <h3>{cleanedWatch.brand}</h3>
-        <h4>{cleanedWatch.model}</h4>
-        <h5>${cleanedWatch.price}</h5>
+        <h3>{cleanedWatch.brandName}</h3>
+        <h4>{cleanedWatch.model +' - '+ cleanedWatch.colorName}</h4>
+        <h5>${cleanedWatch.price * 500}</h5>
       </div>
     </Container>
   );
