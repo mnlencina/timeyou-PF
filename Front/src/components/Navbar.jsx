@@ -1,13 +1,27 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { Searchbar } from "./index.js"
 
 export const Navbar = () => {
+
+
   const cart = useSelector((state) => state.Cart);
+
+
+  const [showSearchbar, setShowSearchbar] = useState(false);
+
+  const handleSearchClick = () => {
+    setShowSearchbar(!showSearchbar);
+  };
+
+  const handleCloseSearch = () => {
+    setShowSearchbar(!!showSearchbar);
+  };
 
   const itemCount = cart.items?.length;
 
@@ -28,9 +42,13 @@ export const Navbar = () => {
         </ul>
         <div className="icons">
           <ul className="icon">
-            <li>
-              <BsSearch />
-            </li>
+            {showSearchbar ? (
+              <Searchbar onClose={handleCloseSearch} />
+            ) : (
+              <li onClick={handleSearchClick}>
+                <BsSearch />
+              </li>
+            )}
             <li>
               <BiUser />
             </li>
