@@ -13,11 +13,11 @@ export default function HomePage() {
   const whatches = searchActive ? searchClocks : Clocks;
 
   const [show, setShow] = useState(false);
-  const showOpen = show.toString()
+  const showOpen = show.toString();
 
   //funciones de paginacion
   const [page, setPage] = useState(1);
-  const itemPerPage = 8;
+  const itemPerPage = 12;
   const totalPages = Math.ceil(whatches.length / itemPerPage);
 
   const paginacion = () => {
@@ -63,7 +63,7 @@ export default function HomePage() {
   );
 
   return (
-    <ContainerGeneral>
+    <>
       {slideContainer()}
       <Pagination
         totalPages={totalPages}
@@ -78,18 +78,9 @@ export default function HomePage() {
         onPrev={onPreviusPage}
         onNext={onNextPage}
       />
-    </ContainerGeneral>
+    </>
   );
 }
-
-const ContainerGeneral = styled.main`
-  width: 100vw;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 const ContainerSlide = styled.section`
   width: 100%;
@@ -109,12 +100,13 @@ const ContainerSlide = styled.section`
 `;
 const ContainerMostrador = styled.div`
   width: 100%;
-  height: ${(props) => (props.show==="true" ? "200vh" : "120vh")};
+  min-height: 500px;
+  height: 180vh;
   display: flex;
   align-items: center;
   justify-content: center;
   .sidebar {
-    width: ${(props) => (props.show==="true" ? "200px" : "0")};
+    width: ${(props) => (props.show === "true" ? "200px" : "0")};
     height: 100%;
     background: #111;
     transition: all 0.3s ease-in-out;
@@ -122,7 +114,7 @@ const ContainerMostrador = styled.div`
     border-radius: 0 10px 10px 0;
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show==="true" ? "200px" : "0px")};
+      left: ${(props) => (props.show === "true" ? "200px" : "0px")};
       top: 30px;
       transition: all 0.3s ease-in-out;
       button {
@@ -145,8 +137,10 @@ const ContainerMostrador = styled.div`
     }
   }
   .main-card {
-    width: ${(props) => (props.show ==="true"? "calc(100% - 200px)" : "100%")};
-    height: ${(props) => (props.show ==="true"? "200vh" : "120vh")};
+    width: ${(props) =>
+      props.show === "true" ? "calc(100% - 200px)" : "100%"};
+    min-height: 500px;
+    height: 100%;
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
