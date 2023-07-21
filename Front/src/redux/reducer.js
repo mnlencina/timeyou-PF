@@ -5,6 +5,7 @@ import {
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_FROM_CART,
+  RESET_DETAIL
 } from "./actionTypes";
 
 
