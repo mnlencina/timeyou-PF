@@ -8,7 +8,9 @@ import {
   CLEAR_CART,
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
-  SEARCH_PRODUCT_FAILURE
+  SEARCH_PRODUCT_FAILURE,
+  FILTERS
+ 
 } from "./actionTypes";
 
 export const getProducts = () => async (dispatch) => {
@@ -103,7 +105,10 @@ export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
               return func.name.toLowerCase().includes(term.toLowerCase());
             }
             return false;
-          })
+          }) || 
+          (term.toLowerCase() === "femenino" && ["female", "unisex"].includes(product.gender.toLowerCase())) ||
+          (term.toLowerCase() === "masculino" && ["male", "unisex"].includes(product.gender.toLowerCase())) ||
+          (term.toLowerCase() === "unisex" && product.gender.toLowerCase() === "unisex")
         );
       });
 
@@ -129,3 +134,45 @@ export const searchProductFailure = (error) => ({
   type: SEARCH_PRODUCT_FAILURE,
   payload: error,
 });
+
+
+
+// Filters
+export const filtersAll = (filterBrands) => (dispatch, getState) => {
+  const state = getState();
+  console.log("estado:", state, "filterBrands:", filterBrands);
+  const { Clocks } = state;
+
+  const filterActive = Object.values(filterBrands).some((selected) => selected);
+
+  // Realiza el filtrado adicional si hay categorías seleccionadas
+  let filteredClocks = Clocks;
+  if (filterActive) {
+    filteredClocks = Clocks.filter((product) => {
+      let matchesAllCategories = true;
+      for (const fieldName in filterBrands) {
+        const selectedValue = filterBrands[fieldName];
+        if (selectedValue && product[fieldName] !== selectedValue) {
+          matchesAllCategories = false;
+          break;
+        }
+      }
+      return matchesAllCategories;
+    });
+  }
+
+  dispatch({
+    type: FILTERS,
+    payload: filteredClocks,
+  });
+};
+
+
+// Acción para limpiar los filtros
+export const clearFilters = () => (dispatch) => {
+  // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
+  dispatch(filtersAll({}));
+};
+
+
+
