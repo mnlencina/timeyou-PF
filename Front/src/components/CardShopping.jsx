@@ -26,7 +26,7 @@ const dispatch = useDispatch()
         </div>
 
         <section className="content">
-          <h4>${reloj.price}</h4>
+          <h4>${reloj.price * 500}</h4>
           <div className="inputs">
             <AppendBTN alter>+</AppendBTN>
             <span className="visor">1</span>
