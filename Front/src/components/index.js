@@ -8,3 +8,4 @@ export * from "./Navbar";
 export * from "./Pagination";
 export * from "./CardShopping";
 export * from "./Searchbar";
+export * from "./filters/Filters";

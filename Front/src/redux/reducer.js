@@ -1,4 +1,3 @@
-
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -8,7 +7,9 @@ import {
   RESET_DETAIL,
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
-  SEARCH_PRODUCT_FAILURE
+  SEARCH_PRODUCT_FAILURE,
+  FILTERS
+
 } from "./actionTypes";
 
 
@@ -19,7 +20,8 @@ const initialState = {
   Clocks: [],
   Clock: {},
   searchClocks: [],
-  searchActive: false, 
+  searchActive: false,
+  filteredClocks: [],
   Cart: storedCart ? JSON.parse(storedCart) : { items: [] },
   detailClock: [],
   isLoading: true,
@@ -53,12 +55,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: null,
       };
     case SEARCH_PRODUCT_SUCCESS:
-      const filteredProducts = payload;
-      const searchActive = filteredProducts.length > 0;
+      const searchedProducts = payload;
+      const searchActive = searchedProducts.length > 0;
 
       return {
         ...state,
-        searchClocks: filteredProducts,
+        searchClocks: searchedProducts,
         isLoading: false,
         error: null,
         searchActive,
@@ -91,13 +93,44 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         Cart: { items: [] },
       };
-     case RESET_DETAIL:
-       return {
-         ...state,
-         detailClock: [],
-       }
+    case RESET_DETAIL:
+      return {
+        ...state,
+        detailClock: [],
+      };
+    case FILTERS:
+      const filterBrands = payload || {};
+      console.log("filterBrands", filterBrands)
+     
+      const filterActive = Object.values(filterBrands).some((selected) => selected);
+      console.log(filterActive)
+
+      let filteredClocks = state.Clocks;
+      if (filterActive) {
+        filteredClocks = state.Clocks.filter((product) => {
+          let matchesAllCategories = true;
+          for (const fieldName in filterBrands) {
+            const selectedValue = filterBrands[fieldName];
+            if (selectedValue && product[fieldName] !== selectedValue) {
+              matchesAllCategories = false;
+              break;
+            }
+          }
+          return matchesAllCategories;
+        });
+      }
+
+      return {
+        ...state,
+        searchClocks: filterBrands,
+        isLoading: false,
+        error: null,
+        searchActive: filterActive,
+        filteredClocks: filteredClocks,
+      };
     default:
       return state;
   }
-};
+  }
+    
 
