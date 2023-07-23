@@ -8,7 +8,13 @@ import {
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
-  FILTERS
+  FILTERS,
+  ALL_BRANDS,
+  ALL_STYLES,
+  ALL_COLORS,
+  ALL_STRAPS,
+  ALL_FUNCTIONS,
+  POST_WATCH
 
 } from "./actionTypes";
 
@@ -26,6 +32,11 @@ const initialState = {
   detailClock: [],
   isLoading: true,
   detailLoading: true,
+  BRANDS:[],
+  STYLES:[],
+  COLORS:[],
+  STRAPS:[],
+  FUNCTIONS:[],
 };
 
 // Función para guardar el carrito en el localStorage
@@ -128,6 +139,35 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchActive: filterActive,
         filteredClocks: filteredClocks,
       };
+      case ALL_BRANDS:
+        return {
+          ...state,
+          BRANDS: payload,
+        }; 
+      case ALL_STYLES:
+        return {
+          ...state,
+          STYLES: payload,
+        };
+      case ALL_COLORS:
+        return {
+          ...state,
+          COLORS: payload,
+        };
+      case ALL_STRAPS:
+        return {
+          ...state,
+          STRAPS: payload,
+        };
+      case ALL_FUNCTIONS:
+        return {
+          ...state,
+          FUNCTIONS: payload,
+        };
+      case POST_WATCH:
+        return {
+          ...state,
+        }
     default:
       return state;
   }
