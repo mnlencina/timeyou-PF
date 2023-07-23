@@ -15,3 +15,15 @@ export const SEARCH_PRODUCT_FAILURE = "SEARCH_PRODUCT_FAILURE";
 
 //Filters
 export const FILTERS = "FILTERS";
+
+//todos los datos de las tablas
+export const ALL_BRANDS = "ALL_BRANDS";
+export const ALL_STYLES = "ALL_STYLES";
+export const ALL_COLORS = "ALL_COLORS";
+export const ALL_STRAPS = "ALL_STRAPS";
+export const ALL_FUNCTIONS = "ALL_FUNCTIONS";
+
+//post watch
+export const POST_WATCH = "POST_WATCH";
+
+
