@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  GET_PRODUCTS_DETAIL, 
+  GET_PRODUCTS_DETAIL,
   RESET_DETAIL,
   ADD_TO_CART,
   REMOVE_FROM_CART,
@@ -9,9 +9,12 @@ import {
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
-  FILTERS
- 
+  FILTERS,
+  TOTAL_PRICE,
+  UPDATE_PRICE,
 } from "./actionTypes";
+
+//fetch de productos
 
 export const getProducts = () => async (dispatch) => {
   const URL = "http://localhost:3001/watches";
@@ -26,7 +29,7 @@ export const getProducts = () => async (dispatch) => {
     console.log(error);
   }
 };
-
+//fetch de un producto segun su modelo
 export function addModel(model) {
   const endpoint = `http://localhost:3001/watches/${model}`;
   return async function (dispatch) {
@@ -42,10 +45,10 @@ export function addModel(model) {
   };
 }
 
-export function resetDetail(){
-  return{
+export function resetDetail() {
+  return {
     type: RESET_DETAIL,
-  }
+  };
 }
 
 //funciones del carrito
@@ -55,7 +58,6 @@ export const addToCart = (product) => ({
   payload: product,
 });
 
-
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
@@ -64,8 +66,14 @@ export const removeFromCart = (productId) => ({
 export const clearCart = () => ({
   type: CLEAR_CART,
 });
-
-
+//Price
+export const totalPrice = (payload) => ({
+  type: TOTAL_PRICE,
+  payload,
+});
+export const updatePrice = () => ({
+  type: UPDATE_PRICE,
+});
 //Searchbar
 
 export const searchProductRequest = () => ({
@@ -79,7 +87,7 @@ export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
   dispatch(searchProductRequest());
 
   const state = getState();
-  console.log(state)
+  console.log(state);
   const { Clocks } = state;
 
   if (searchTerms.length === 0) {
@@ -105,10 +113,13 @@ export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
               return func.name.toLowerCase().includes(term.toLowerCase());
             }
             return false;
-          }) || 
-          (term.toLowerCase() === "femenino" && ["female", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "masculino" && ["male", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "unisex" && product.gender.toLowerCase() === "unisex")
+          }) ||
+          (term.toLowerCase() === "femenino" &&
+            ["female", "unisex"].includes(product.gender.toLowerCase())) ||
+          (term.toLowerCase() === "masculino" &&
+            ["male", "unisex"].includes(product.gender.toLowerCase())) ||
+          (term.toLowerCase() === "unisex" &&
+            product.gender.toLowerCase() === "unisex")
         );
       });
 
@@ -121,7 +132,7 @@ export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
 
       return foundMatch; // Si encontramos coincidencia en campos anteriores, retornamos el resultado
     });
-    console.log("Filtered products:", filteredProducts); 
+    console.log("Filtered products:", filteredProducts);
 
     dispatch({
       type: SEARCH_PRODUCT_SUCCESS,
@@ -134,8 +145,6 @@ export const searchProductFailure = (error) => ({
   type: SEARCH_PRODUCT_FAILURE,
   payload: error,
 });
-
-
 
 // Filters
 export const filtersAll = (filterBrands) => (dispatch, getState) => {
@@ -167,12 +176,8 @@ export const filtersAll = (filterBrands) => (dispatch, getState) => {
   });
 };
 
-
 // Acción para limpiar los filtros
 export const clearFilters = () => (dispatch) => {
   // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
   dispatch(filtersAll({}));
 };
-
-
-

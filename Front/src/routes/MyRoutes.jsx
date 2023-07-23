@@ -4,6 +4,7 @@ import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
 import Shopping from "../pages/Shopping";
+import Checkout from "../pages/Checkout";
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const MyRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:model" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/shopping/checkout" element={<Checkout />} />
       </Routes>
       {showFoot && <Footer />}
     </>
