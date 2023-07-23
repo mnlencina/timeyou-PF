@@ -9,15 +9,15 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
+  TOTAL_PRICE,
+  UPDATE_PRICE,
   ALL_BRANDS,
   ALL_STYLES,
   ALL_COLORS,
   ALL_STRAPS,
   ALL_FUNCTIONS,
   POST_WATCH
-
 } from "./actionTypes";
-
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");
@@ -29,6 +29,7 @@ const initialState = {
   searchActive: false,
   filteredClocks: [],
   Cart: storedCart ? JSON.parse(storedCart) : { items: [] },
+  price: 0,
   detailClock: [],
   isLoading: true,
   detailLoading: true,
@@ -104,6 +105,16 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         Cart: { items: [] },
       };
+    case TOTAL_PRICE:
+      return {
+        ...state,
+        price: payload,
+      };
+    case UPDATE_PRICE:
+      return {
+        ...state,
+        price: 0, 
+      };
     case RESET_DETAIL:
       return {
         ...state,
@@ -111,10 +122,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       };
     case FILTERS:
       const filterBrands = payload || {};
-      console.log("filterBrands", filterBrands)
-     
-      const filterActive = Object.values(filterBrands).some((selected) => selected);
-      console.log(filterActive)
+      console.log("filterBrands", filterBrands);
+
+      const filterActive = Object.values(filterBrands).some(
+        (selected) => selected
+      );
+      console.log(filterActive);
 
       let filteredClocks = state.Clocks;
       if (filterActive) {
@@ -171,6 +184,4 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     default:
       return state;
   }
-  }
-    
-
+};

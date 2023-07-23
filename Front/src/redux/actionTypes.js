@@ -4,10 +4,11 @@ export const RESET_DETAIL = "RESET_DETAIL";
 
 //funciones de carrito de compras
 
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const CLEAR_CART = 'CLEAR_CART';
-
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
+export const TOTAL_PRICE = "TOTAL_PRICE";
+export const UPDATE_PRICE = "UPDATE_PRICE";
 //Searchbar
 export const SEARCH_PRODUCT_REQUEST = "SEARCH_PRODUCT_REQUEST";
 export const SEARCH_PRODUCT_SUCCESS = "SEARCH_PRODUCT_SUCCESS";

@@ -5,7 +5,8 @@ export const BTNCarritoDeCompras = styled.button`
   height: 100%;
   border: none;
   border-radius: 10px;
-  background-color: #4ebcc7;
+  background-color: /* #4ebcc7 */ ${(props) =>
+    props.alter ? "rgba(0,0,0,0.4)" : "#4ebcc7"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +17,8 @@ export const BTNCarritoDeCompras = styled.button`
   transition: 0.5s ease-in-out;
   &:hover {
     transform: scale(1.1);
-    background-color: #35838a;
+    background-color: /* #35838a */ ${(props) =>
+      props.alter ? "rgba(0,0,0,0.8)" : "#35838a"};
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   }
 `;
