@@ -12,6 +12,12 @@ import {
   FILTERS,
   TOTAL_PRICE,
   UPDATE_PRICE,
+  ALL_BRANDS,
+  ALL_STYLES,
+  ALL_COLORS,
+  ALL_STRAPS,
+  ALL_FUNCTIONS,
+  POST_WATCH
 } from "./actionTypes";
 
 //fetch de productos
@@ -181,3 +187,55 @@ export const clearFilters = () => (dispatch) => {
   // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
   dispatch(filtersAll({}));
 };
+
+
+//TRAER TODOS LAS PROPIEDADES DE RELOJES
+
+export function allPropWatches(prop) {
+  const endpoint = `http://localhost:3001/${prop}`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+      prop === 'brands' && dispatch({
+        type: ALL_BRANDS,
+        payload: data,
+      });
+      prop === 'styles' && dispatch({
+        type: ALL_STYLES,
+        payload: data,
+      });
+      prop === 'colors' && dispatch({
+        type: ALL_COLORS,
+        payload: data,
+      });
+      prop === 'straps' && dispatch({
+        type: ALL_STRAPS,
+        payload: data,
+      });
+      prop === 'functions' && dispatch({
+        type: ALL_FUNCTIONS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postWatch(watch) {
+  const endpoint = `http://localhost:3001/watches/`;
+  return async function (dispatch) {
+    try {
+      let newWatch = await axios.post(endpoint, watch);
+      console.log(newWatch);
+      dispatch({
+        type: POST_WATCH,
+        payload: newWatch,
+      });
+      alert ("La Carga del WATCH fue con Exito!!")
+    } catch (error) {
+      alert ('Verifique si el MODELO en ese COLOR ya Existe')
+    }
+  };
+}
+
