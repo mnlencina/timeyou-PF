@@ -1,10 +1,12 @@
-const express = require("express");
-const app = express();
+require('dotenv').config();
+const server = require("./src/App");
+const { conn } = require("./src/db.js");
+const PORT = process.env.PORT || 3001;
 
-app.listen(3001, () => console.log("Responsive"));
+//server.listen(PORT, () => console.log(`server on PORT ${PORT}`));
 
-//probando
-//probando otra vez
-
-// probando cambio Milward
-// prueba rama miguel
+conn.sync({ force: false }).then(() => {
+  server.listen(PORT, () => {
+    console.log(`server on PORT ${PORT}`);
+  });
+});
