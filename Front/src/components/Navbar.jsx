@@ -16,7 +16,7 @@ export const Navbar = () => {
     <Container itemcount={itemCount}>
       <header className="header">
         <h1>
-          Times<span>You</span>
+          Time<span>You</span>
         </h1>
       </header>
       <nav className="navigation">
