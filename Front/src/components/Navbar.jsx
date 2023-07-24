@@ -1,27 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
+
 import { BiUser } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useSelector } from "react-redux";
-import { Searchbar } from "./index.js"
+import { Searchbar } from "./index.js";
 
 export const Navbar = () => {
-
-
   const cart = useSelector((state) => state.Cart);
-
-
-  const [showSearchbar, setShowSearchbar] = useState(false);
-
-  const handleSearchClick = () => {
-    setShowSearchbar(!showSearchbar);
-  };
-
-  const handleCloseSearch = () => {
-    setShowSearchbar(!!showSearchbar);
-  };
 
   const itemCount = cart.items?.length;
 
@@ -40,15 +27,10 @@ export const Navbar = () => {
           <li>mistral</li>
           <li>prÜne</li>
         </ul>
+        <div className="serch-container"><Searchbar /></div>
         <div className="icons">
           <ul className="icon">
-            {showSearchbar ? (
-              <Searchbar onClose={handleCloseSearch} />
-            ) : (
-              <li onClick={handleSearchClick}>
-                <BsSearch />
-              </li>
-            )}
+          
             <li>
               <BiUser />
             </li>
@@ -97,6 +79,7 @@ const Container = styled.div`
     justify-content: center;
     ul {
       list-style: none;
+      position: relative;
     }
     li {
       text-transform: uppercase;
@@ -109,6 +92,11 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-evenly;
+    }
+    .serch-container{
+      width:25%;
+      height: auto;
+      position: relative;
     }
     .icons {
       width: 30%;
