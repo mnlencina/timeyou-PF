@@ -17,7 +17,9 @@ import {
   ALL_COLORS,
   ALL_STRAPS,
   ALL_FUNCTIONS,
-  POST_WATCH
+  POST_WATCH,
+  CREATE_USER,
+  LOGIN_USER
 } from "./actionTypes";
 
 //fetch de productos
@@ -63,7 +65,7 @@ export const addToCart = (product) => ({
   type: ADD_TO_CART,
   payload: product,
 });
- 
+
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
@@ -188,7 +190,6 @@ export const clearFilters = () => (dispatch) => {
   dispatch(filtersAll({}));
 };
 
-
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
 export function allPropWatches(prop) {
@@ -196,26 +197,31 @@ export function allPropWatches(prop) {
   return async function (dispatch) {
     try {
       let { data } = await axios(endpoint);
-      prop === 'brands' && dispatch({
-        type: ALL_BRANDS,
-        payload: data,
-      });
-      prop === 'styles' && dispatch({
-        type: ALL_STYLES,
-        payload: data,
-      });
-      prop === 'colors' && dispatch({
-        type: ALL_COLORS,
-        payload: data,
-      });
-      prop === 'straps' && dispatch({
-        type: ALL_STRAPS,
-        payload: data,
-      });
-      prop === 'functions' && dispatch({
-        type: ALL_FUNCTIONS,
-        payload: data,
-      });
+      prop === "brands" &&
+        dispatch({
+          type: ALL_BRANDS,
+          payload: data,
+        });
+      prop === "styles" &&
+        dispatch({
+          type: ALL_STYLES,
+          payload: data,
+        });
+      prop === "colors" &&
+        dispatch({
+          type: ALL_COLORS,
+          payload: data,
+        });
+      prop === "straps" &&
+        dispatch({
+          type: ALL_STRAPS,
+          payload: data,
+        });
+      prop === "functions" &&
+        dispatch({
+          type: ALL_FUNCTIONS,
+          payload: data,
+        });
     } catch (error) {
       console.log(error);
     }
@@ -232,11 +238,40 @@ export function postWatch(watch) {
         type: POST_WATCH,
         payload: newWatch,
       });
-      alert ("La Carga del WATCH fue con Exito!!")
+      alert("La Carga del WATCH fue con Exito!!");
       //location.reload();
     } catch (error) {
-      alert ('Verifique si el MODELO en ese COLOR ya Existe')
+      alert("Verifique si el MODELO en ese COLOR ya Existe");
     }
   };
 }
 
+//funcion de registro
+
+export const createUser = (user) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/users/register";
+  try {
+    const newUser = await axios.post(endpoint, user);
+    console.log(newUser.data);
+    dispatch({
+      type: CREATE_USER,
+      payload: newUser,
+    });
+  } catch (error) {
+    alert("no pudo crearse el usuario")
+  }
+};
+
+export const loginUser = (user)=> async(dispatch) =>{
+const endpoint = "http://localhost:3001/users/login"
+try {
+  const data= await axios.post(endpoint, user);
+  console.log(data);
+  dispatch({
+    type: LOGIN_USER,
+    payload: data
+  })
+} catch (error) {
+  console.log(error)
+}
+}

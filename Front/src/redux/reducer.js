@@ -16,7 +16,9 @@ import {
   ALL_COLORS,
   ALL_STRAPS,
   ALL_FUNCTIONS,
-  POST_WATCH
+  POST_WATCH,
+  CREATE_USER,
+  LOGIN_USER,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -33,11 +35,12 @@ const initialState = {
   detailClock: [],
   isLoading: true,
   detailLoading: true,
-  BRANDS:[],
-  STYLES:[],
-  COLORS:[],
-  STRAPS:[],
-  FUNCTIONS:[],
+  BRANDS: [],
+  STYLES: [],
+  COLORS: [],
+  STRAPS: [],
+  FUNCTIONS: [],
+  user: {},
 };
 
 // Función para guardar el carrito en el localStorage
@@ -113,7 +116,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case UPDATE_PRICE:
       return {
         ...state,
-        price: 0, 
+        price: 0,
       };
     case RESET_DETAIL:
       return {
@@ -152,35 +155,44 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchActive: filterActive,
         filteredClocks: filteredClocks,
       };
-      case ALL_BRANDS:
-        return {
-          ...state,
-          BRANDS: payload,
-        }; 
-      case ALL_STYLES:
-        return {
-          ...state,
-          STYLES: payload,
-        };
-      case ALL_COLORS:
-        return {
-          ...state,
-          COLORS: payload,
-        };
-      case ALL_STRAPS:
-        return {
-          ...state,
-          STRAPS: payload,
-        };
-      case ALL_FUNCTIONS:
-        return {
-          ...state,
-          FUNCTIONS: payload,
-        };
-      case POST_WATCH:
-        return {
-          ...state,
-        }
+    case ALL_BRANDS:
+      return {
+        ...state,
+        BRANDS: payload,
+      };
+    case ALL_STYLES:
+      return {
+        ...state,
+        STYLES: payload,
+      };
+    case ALL_COLORS:
+      return {
+        ...state,
+        COLORS: payload,
+      };
+    case ALL_STRAPS:
+      return {
+        ...state,
+        STRAPS: payload,
+      };
+    case ALL_FUNCTIONS:
+      return {
+        ...state,
+        FUNCTIONS: payload,
+      };
+    case POST_WATCH:
+      return {
+        ...state,
+      };
+    case CREATE_USER:
+      return {
+        ...state,
+      };
+    case LOGIN_USER:
+      return {
+        ...state,
+        user: payload,
+      };
     default:
       return state;
   }
