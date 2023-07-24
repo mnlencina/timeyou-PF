@@ -6,6 +6,7 @@ import DetailPage from "../pages/DetailPage";
 import Shopping from "../pages/Shopping";
 import Checkout from "../pages/Checkout";
 import FormWatch from "../pages/Form/FormWatch";
+import RegisterAndLogin from "../pages/RegisterAndLogin";
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -19,11 +20,12 @@ const MyRoutes = () => {
     <>
       <Navbar />
       <Routes>
+        <Route path="/auth" element={<RegisterAndLogin/>}/>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:model" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/shopping/checkout" element={<Checkout />} />
-        <Route path="/newwatch" element={<FormWatch/>}/>
+        <Route path="/newwatch" element={<FormWatch />} />
       </Routes>
       {showFoot && <Footer />}
     </>
