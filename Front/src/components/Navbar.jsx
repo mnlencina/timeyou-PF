@@ -27,12 +27,15 @@ export const Navbar = () => {
           <li>mistral</li>
           <li>prÜne</li>
         </ul>
-        <div className="serch-container"><Searchbar /></div>
+        <div className="serch-container">
+          <Searchbar />
+        </div>
         <div className="icons">
           <ul className="icon">
-          
             <li>
-              <BiUser />
+              <Link to="/auth">
+                <BiUser />
+              </Link>
             </li>
             <li>
               <Link to="/shopping">
@@ -55,7 +58,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-
   .header {
     width: 100%;
     height: 60px;
@@ -93,8 +95,8 @@ const Container = styled.div`
       align-items: center;
       justify-content: space-evenly;
     }
-    .serch-container{
-      width:25%;
+    .serch-container {
+      width: 25%;
       height: auto;
       position: relative;
     }
