@@ -6,7 +6,7 @@ const userRouter = express.Router();
 userRouter.post("/register", async (req, res) => {
   const { userName, email, password } = req.body;
   try {
-    const newUser = await createUser;
+    const newUser = await createUser(userName, email, password);
     if (newUser) res.status(200).json({ message: "user created successfully" });
   } catch (error) {
     if (error.message.includes("not available")) {
