@@ -269,8 +269,9 @@ try {
   console.log(data);
   dispatch({
     type: LOGIN_USER,
-    payload: data
+    payload: data,
   })
+
 } catch (error) {
   console.log(error)
 }
