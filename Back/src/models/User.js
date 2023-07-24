@@ -9,10 +9,6 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -26,6 +22,14 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      role: {
+        type: DataTypes.ENUM("user", "admin"),
+        defaultValue: "user",
+      },
+      provider: {
+        type: DataTypes.ENUM("local", "google", "facebook"),
+        defaultValue: "local",
       },
     },
     {
