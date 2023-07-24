@@ -39,6 +39,8 @@ const Container = styled.article`
   overflow: hidden;
   opacity: 0.8;
   transition: 0.3s;
+  z-index: 20;
+  pointer-events: all;
   &:hover {
     transform: translateY(-10px) translateX(5px);
     opacity: 1;

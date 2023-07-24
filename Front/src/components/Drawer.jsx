@@ -7,15 +7,6 @@ export const Drawer = ({ show }) => {
     <Container show={show}>
       <ul>
         <li><FiltersAll /></li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
       </ul>
     </Container>
   );

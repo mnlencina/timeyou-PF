@@ -5,6 +5,7 @@ import {
   Drawer,
   BannerSlider,
   Pagination,
+  CardSlider,
 } from "../components/index.js";
 import { useSelector } from "react-redux";
 
@@ -65,6 +66,7 @@ export default function HomePage() {
   return (
     <>
       {slideContainer()}
+      <CardSlider/>
       <Pagination
         totalPages={totalPages}
         page={page}
