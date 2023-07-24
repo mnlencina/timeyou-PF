@@ -227,12 +227,13 @@ export function postWatch(watch) {
   return async function (dispatch) {
     try {
       let newWatch = await axios.post(endpoint, watch);
-      console.log(newWatch);
+      console.log(newWatch.data);
       dispatch({
         type: POST_WATCH,
         payload: newWatch,
       });
       alert ("La Carga del WATCH fue con Exito!!")
+      //location.reload();
     } catch (error) {
       alert ('Verifique si el MODELO en ese COLOR ya Existe')
     }
