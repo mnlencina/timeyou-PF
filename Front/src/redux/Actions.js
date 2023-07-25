@@ -20,6 +20,7 @@ import {
   POST_WATCH,
   CREATE_USER,
   LOGIN_USER,
+  LOGOUT_USER
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
@@ -247,3 +248,9 @@ export const loginUser = (user) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const logOut = ()=>{
+  return {
+    type: LOGOUT_USER,
+  }
+}
