@@ -15,6 +15,7 @@ function RegisterAndLogin() {
   const [loginAcount, setLoginAcount] = useState({
     email: "",
     password: "",
+    provider: "local"
   });
 
   const handleChangeRegister = (e) => {
@@ -44,9 +45,21 @@ function RegisterAndLogin() {
     });
   };
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = async(e) => {
     e.preventDefault;
-    dispatch(loginUser(loginAcount))
+    const endpoint = "http://localhost:3001/users/login"
+    try {
+      
+      const {data}= await axios.post(endpoint, loginAcount,
+        {
+          header: {'Content-Type': 'application/json'}
+        });
+      console.log(data);
+      dispatch(loginUser(data))
+    } catch (error) {
+      console.log(error);
+    }
+    
   };
 
   const renderRegister = () => (
@@ -90,7 +103,7 @@ function RegisterAndLogin() {
   return (
     <ContainerLogin>
       <div className="login-container">
-        <form action="GET" className="login">
+        <form method="POST" className="login" onSubmit={handleSubmitLogin}>
           <span>email:</span>
           <input
             type="text"

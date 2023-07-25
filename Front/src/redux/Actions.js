@@ -262,10 +262,10 @@ export const createUser = (user) => async (dispatch) => {
   }
 };
 
-export const loginUser = (user)=> async(dispatch) =>{
-const endpoint = "http://localhost:3001/users/login"
+export const loginUser = (data)=> (dispatch) =>{
+//const endpoint = "http://localhost:3001/users/login"
 try {
-  const data= await axios.post(endpoint, user);
+  //const {data}= await axios.post(endpoint, user);
   console.log(data);
   dispatch({
     type: LOGIN_USER,

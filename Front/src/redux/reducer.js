@@ -124,6 +124,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailClock: [],
       };
     case FILTERS:
+      // eslint-disable-next-line no-case-declarations
       const filterBrands = payload || {};
       console.log("filterBrands", filterBrands);
 
