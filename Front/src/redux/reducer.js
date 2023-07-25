@@ -34,7 +34,7 @@ const initialState = {
   searchActive: false,
   filteredClocks: [],
   Cart: storedCart ? JSON.parse(storedCart) : { items: [] },
-  price: 0,
+  price: 500,
   detailClock: [],
   isLoading: true,
   detailLoading: true,
