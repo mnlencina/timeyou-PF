@@ -43,7 +43,7 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: {token: ""},
+  user: { token: "" },
 };
 
 // Función para guardar el carrito en el localStorage
@@ -67,20 +67,18 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailLoading: false,
       };
     //Searchbar
-     case SEARCH_PRODUCT_REQUEST:
+    case SEARCH_PRODUCT_REQUEST:
       return {
         ...state,
         isLoading: true,
-        error: null, 
+        error: null,
       };
     case SEARCH_PRODUCT_SUCCESS:
-
-
       return {
         ...state,
-        searchClocks: payload, 
+        searchClocks: payload,
         isLoading: false,
-        searchActive: payload.length > 0, 
+        searchActive: payload.length > 0,
         error: null,
       };
     case SEARCH_PRODUCT_FAILURE:
@@ -195,7 +193,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: {token: payload},
+        user: { token: payload },
       };
     //lINKS DEL NAVBAR
     case GET_WATCHES_BY_BRAND:
@@ -209,7 +207,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGOUT_USER:
       return {
         ...state,
+        user: { token: "" },
+              }
         user: {token: ""}
+development
       };
     default:
       return state;

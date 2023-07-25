@@ -10,6 +10,7 @@ import { addToCart } from "../redux/Actions";
 
 function DetailPage() {
   const [color, setColor] = useState(0);
+  const [color2, setColor2] = useState(0);
   const dispatch = useDispatch();
   const { model } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
@@ -31,6 +32,9 @@ function DetailPage() {
     <div>loanding</div>
   ) : (
     <Container>
+     
+     
+     
       <div className="main_container">
         <header className="title">
           <h3>
@@ -41,8 +45,13 @@ function DetailPage() {
           </h3>
         </header>
         <section className="show-clocks">
+        <div className="navVert">
+ {(detailClock[color].image).map((img, i)=>
+   <img onClick={()=> setColor2(i)} key={i+50} src={img} alt="imgB" />
+ )}
+ </div>
           <picture className="img-box">
-            <img src={detailClock[color].image[0]} alt="imgD" />
+            <img src={detailClock[color].image[color2]} alt="imgD" />
           </picture>
           <article className="show-cart">
             <section className="body-cart">
@@ -61,13 +70,11 @@ function DetailPage() {
                   <h3>Colores:</h3>
                   <div className="color">
                     {detailClock.map((wat, i) => (
-                      <span
-                        onClick={() => setColor(i)}
-                        key={i + wat.colorName}
-                        className={wat.colorName}
-                      >
-                        {i}
-                      </span>
+                      <img 
+                        src={wat.image[0]} alt="" 
+                        onClick={() => {setColor(i); setColor2(0)}}
+                        key={i + wat.colorName}                                              
+                      />
                     ))}
                   </div>
                 </div>
@@ -135,7 +142,7 @@ const Container = styled.main`
   width: 100vw;
   height: auto;
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   align-items: center;
   justify-content: center;
   background: linear-gradient(to bottom #f1f1f1, #fff);
@@ -145,6 +152,15 @@ const Container = styled.main`
     background: #111;
     opacity: 0.5;
     margin: 20px auto;
+  }
+  .navVert{
+    width: 60px;
+    height: 450px;
+    img{
+      width:50px;
+      padding: 3px;
+      cursor: pointer;
+    }
   }
   .main_container {
     width: 90%;
@@ -176,7 +192,7 @@ const Container = styled.main`
       height: 500px;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       .img-box {
         width: 50%;
@@ -258,15 +274,13 @@ const Container = styled.main`
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                .rojo {
-                  background-color: red;
-                }
-                .amarillo {
-                  background-color: yellow;
-                }
-                .azul {
-                  background-color: blue;
-                }
+                
+                img{
+                  width:70px;
+                  margin: 10px;
+                  cursor: pointer;
+                }                                         
+                                              
                 span {
                   position: relative;
                   display: inline-block;
