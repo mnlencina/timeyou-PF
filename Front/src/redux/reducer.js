@@ -1,3 +1,4 @@
+
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -204,12 +205,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         searchActive: payload.length > 0,
         error: null,
+      };
     case LOGOUT_USER:
       return {
         ...state,
-        user: {token: ""},
-      }
+        user: {token: ""}
+      };
     default:
       return state;
-  }
+    }
 };
