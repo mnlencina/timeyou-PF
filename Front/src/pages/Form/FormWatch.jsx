@@ -244,6 +244,9 @@ const Container1 = styled.main`
   .optionDiv{
     margin: 5px 5px 5px 0;
   }
+  button {
+    cursor: pointer;
+  }
 `;
   
 const Container2 = styled.main`
@@ -271,5 +274,7 @@ const Container2 = styled.main`
     color: #fff;
     cursor: pointer;
 }
+   
+  
 `;
 
