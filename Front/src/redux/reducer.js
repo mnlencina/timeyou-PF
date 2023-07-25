@@ -19,6 +19,7 @@ import {
   POST_WATCH,
   CREATE_USER,
   LOGIN_USER,
+  LOGOUT_USER,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -40,7 +41,7 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: {},
+  user: {token: ""},
 };
 
 // Función para guardar el carrito en el localStorage
@@ -63,22 +64,21 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailLoading: false,
       };
     //Searchbar
-    case SEARCH_PRODUCT_REQUEST:
+     case SEARCH_PRODUCT_REQUEST:
       return {
         ...state,
         isLoading: true,
-        error: null,
+        error: null, 
       };
     case SEARCH_PRODUCT_SUCCESS:
-      const searchedProducts = payload;
-      const searchActive = searchedProducts.length > 0;
+
 
       return {
         ...state,
-        searchClocks: searchedProducts,
+        searchClocks: payload, 
         isLoading: false,
+        searchActive: payload.length > 0, 
         error: null,
-        searchActive,
       };
     case SEARCH_PRODUCT_FAILURE:
       return {
@@ -124,6 +124,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailClock: [],
       };
     case FILTERS:
+      // eslint-disable-next-line no-case-declarations
       const filterBrands = payload || {};
       console.log("filterBrands", filterBrands);
 
@@ -191,8 +192,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: payload,
+        user: {token: payload},
       };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: {token: ""},
+      }
     default:
       return state;
   }
