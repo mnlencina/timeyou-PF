@@ -19,6 +19,7 @@ import {
   POST_WATCH,
   CREATE_USER,
   LOGIN_USER,
+  GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
 } from "./actionTypes";
 
@@ -55,6 +56,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         Clocks: payload,
+        searchClocks: payload,
         isLoading: false,
       };
     case GET_PRODUCTS_DETAIL:
@@ -194,6 +196,14 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         user: {token: payload},
       };
+    //lINKS DEL NAVBAR
+    case GET_WATCHES_BY_BRAND:
+      return {
+        ...state,
+        searchClocks: payload,
+        isLoading: false,
+        searchActive: payload.length > 0,
+        error: null,
     case LOGOUT_USER:
       return {
         ...state,
