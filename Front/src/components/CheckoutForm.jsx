@@ -19,14 +19,14 @@ export const CheckoutForm = () => {
         card: elemets.getElement(CardElement),
       });
       const {id} = paymentMethod;
-      const response = await axios.post("http://localhost:3001/buy/checkouts",{
+      const response = await axios.post("http://localhost:3001/buy/checkout",{
         id,
-        useName:"cristian",
-        amount:price,
+        userName:"mnlencina",
+        amount:+price,
         model:"lasdjsad",
         colorName:"red"
       })
-      if(response.ok){
+      if(response.status === 200){
         alert("compra registrada con exito");
       }
     } catch (error) {
