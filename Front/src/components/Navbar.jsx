@@ -2,17 +2,19 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
-import { BiUser } from "react-icons/bi";
+import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getWatchesByBrand } from "../redux/Actions.js";
 import { Searchbar } from "./index.js";
+import { logOut, getProducts, getWatchesByBrand } from "../redux/Actions.js";
 
 
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
-
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
+console.log(user);
   const itemCount = cart.items?.length;
 
 
@@ -53,7 +55,8 @@ export const Navbar = () => {
           <ul className="icon">
             <li>
               <Link to="/auth">
-                <BiUser />
+                {!user.token.length ? <BiUser /> :                 
+                <BiUserX onClick={()=> dispatch(logOut())}/>}                
               </Link>
             </li>
             <li>

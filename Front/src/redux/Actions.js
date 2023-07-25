@@ -21,6 +21,7 @@ import {
   CREATE_USER,
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
+  LOGOUT_USER
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
@@ -237,7 +238,9 @@ export const createUser = (user) => async (dispatch) => {
 export const loginUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/login";
   try {
-    const { data } = await axios.post(endpoint, user);
+    const { data } = await axios.post(endpoint, user,{
+      header: {'Content-Type': 'application/json',}
+    });
     console.log(data);
     dispatch({
       type: LOGIN_USER,
@@ -248,9 +251,6 @@ export const loginUser = (user) => async (dispatch) => {
   }
 };
 
-
-
-/////////////////////////////////////////////
 // Peticiones para cada una de las Brand en el Navbar //
 export const getWatchesByBrand = (brand) => async (dispatch) => {
   const URL = `http://localhost:3001/brands/${brand}`;
@@ -264,6 +264,12 @@ export const getWatchesByBrand = (brand) => async (dispatch) => {
     console.log(data)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const logOut = ()=>{
+  return {
+    type: LOGOUT_USER,
   }
 }
 

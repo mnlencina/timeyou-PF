@@ -20,6 +20,7 @@ import {
   CREATE_USER,
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
+  LOGOUT_USER,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -41,7 +42,7 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: {},
+  user: {token: ""},
 };
 
 // Función para guardar el carrito en el localStorage
@@ -125,6 +126,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailClock: [],
       };
     case FILTERS:
+      // eslint-disable-next-line no-case-declarations
       const filterBrands = payload || {};
       console.log("filterBrands", filterBrands);
 
@@ -192,7 +194,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: payload,
+        user: {token: payload},
       };
     //lINKS DEL NAVBAR
     case GET_WATCHES_BY_BRAND:
@@ -202,6 +204,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         searchActive: payload.length > 0,
         error: null,
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: {token: ""},
       }
     default:
       return state;
