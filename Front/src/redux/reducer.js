@@ -19,6 +19,7 @@ import {
   POST_WATCH,
   CREATE_USER,
   LOGIN_USER,
+  LOGOUT_USER,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -40,7 +41,7 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: {},
+  user: {token: ""},
 };
 
 // Función para guardar el carrito en el localStorage
@@ -191,8 +192,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: payload,
+        user: {token: payload},
       };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: {token: ""},
+      }
     default:
       return state;
   }
