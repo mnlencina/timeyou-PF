@@ -1,7 +1,6 @@
 //import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-
 import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +15,7 @@ export const Navbar = () => {
   const dispatch = useDispatch()
 console.log(user);
   const itemCount = cart.items?.length;
-
-
-  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
 
   const handleLinkClick = async (brand) => {
