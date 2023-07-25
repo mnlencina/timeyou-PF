@@ -22,6 +22,8 @@ import {
   LOGIN_USER
 } from "./actionTypes";
 
+import { searchClient } from "../settings_algolia/settingsAlgolia";
+
 //fetch de productos
 
 export const getProducts = () => async (dispatch) => {
@@ -88,64 +90,32 @@ export const searchProductRequest = () => ({
   type: SEARCH_PRODUCT_REQUEST,
 });
 
-export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
+export const searchProduct = (searchTerms) => async (dispatch) => {
   console.log("Search terms:", searchTerms);
+  dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
-  // Agregar searchProductRequest para indicar que se ha iniciado la búsqueda
-  dispatch(searchProductRequest());
+  try {
+    const algoliaIndex = searchClient.initIndex('timeyou_PF'); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
+    const searchResults = await algoliaIndex.search(searchTerms);
 
-  const state = getState();
-  console.log(state);
-  const { Clocks } = state;
-
-  if (searchTerms.length === 0) {
-    // Si no hay términos de búsqueda, devuelve todos los relojes sin filtrar
-    dispatch({
-      type: SEARCH_PRODUCT_SUCCESS,
-      payload: [],
-    });
-  } else {
-    // Filtra los relojes que cumplen con todas las palabras de búsqueda
-    const filteredProducts = Clocks.filter((product) => {
-      let foundMatch = false; // Variable para indicar si se encontró una coincidencia en algún campo anterior
-
-      foundMatch = searchTerms.every((term) => {
-        // Verifica que al menos uno de los campos contenga el término de búsqueda
-        return (
-          product.brandName.toLowerCase().includes(term.toLowerCase()) ||
-          product.colorName.toLowerCase().includes(term.toLowerCase()) ||
-          product.styleName.toLowerCase().includes(term.toLowerCase()) ||
-          product.strapName.toLowerCase().includes(term.toLowerCase()) ||
-          product.Functions.some((func) => {
-            if (typeof func.name === "string") {
-              return func.name.toLowerCase().includes(term.toLowerCase());
-            }
-            return false;
-          }) ||
-          (term.toLowerCase() === "femenino" &&
-            ["female", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "masculino" &&
-            ["male", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "unisex" &&
-            product.gender.toLowerCase() === "unisex")
-        );
+    console.log("Algolia search results:", searchResults.hits);
+    if (searchResults.hits.length === 0) {
+      // Si no se encontraron coincidencias, enviar un mensaje al cliente
+      dispatch({
+        type: SEARCH_PRODUCT_SUCCESS,
+        payload: [], // Envía un array vacío como payload para indicar que no se encontraron resultados
+        message: "No se encontraron coincidencias...",
       });
-
-      // Si no se encontró coincidencia en campos anteriores, buscamos en product.description
-      if (!foundMatch) {
-        return product.description
-          .toLowerCase()
-          .includes(searchTerms.join(" ").toLowerCase()); // Búsqueda en la descripción con todos los términos
-      }
-
-      return foundMatch; // Si encontramos coincidencia en campos anteriores, retornamos el resultado
-    });
-    console.log("Filtered products:", filteredProducts);
-
-    dispatch({
-      type: SEARCH_PRODUCT_SUCCESS,
-      payload: filteredProducts,
-    });
+    } else {
+      // Si se encontraron resultados, envía los hits al estado como antes
+      dispatch({
+        type: SEARCH_PRODUCT_SUCCESS,
+        payload: searchResults.hits,
+      });
+    }
+  } catch (error) {
+    console.error("Algolia search error:", error);
+    dispatch(searchProductFailure("Error al realizar la búsqueda."));
   }
 };
 
