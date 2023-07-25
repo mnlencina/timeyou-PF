@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { createUser, loginUser } from "../redux/Actions";
 import { useDispatch } from "react-redux";
 
 function RegisterAndLogin() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [registerValues, setRegisterValues] = useState({
     userName: "",
@@ -15,7 +16,7 @@ function RegisterAndLogin() {
   const [loginAcount, setLoginAcount] = useState({
     email: "",
     password: "",
-    provider: "local"
+    provider: "local",
   });
 
   const handleChangeRegister = (e) => {
@@ -45,21 +46,11 @@ function RegisterAndLogin() {
     });
   };
 
-  const handleSubmitLogin = async(e) => {
-    e.preventDefault;
-    const endpoint = "http://localhost:3001/users/login"
-    try {
-      
-      const {data}= await axios.post(endpoint, loginAcount,
-        {
-          header: {'Content-Type': 'application/json'}
-        });
-      console.log(data);
-      dispatch(loginUser(data))
-    } catch (error) {
-      console.log(error);
-    }
-    
+
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(loginAcount));
+    navigate('/')
   };
 
   const renderRegister = () => (
@@ -100,10 +91,10 @@ function RegisterAndLogin() {
     </ContainerRegister>
   );
 
-  return (
+  const renderLogin = () => (
     <ContainerLogin>
-      <div className="login-container">
-        <form method="POST" className="login" onSubmit={handleSubmitLogin}>
+      <div className="login-container" >
+        <form method="POST" onSubmit={handleSubmitLogin} className="login">
           <span>email:</span>
           <input
             type="text"
@@ -123,50 +114,68 @@ function RegisterAndLogin() {
       </div>
     </ContainerLogin>
   );
+  return (
+    <Container>
+      {renderRegister()}
+      {renderLogin()}
+    </Container>
+  );
 }
 
 export default RegisterAndLogin;
 
-const ContainerRegister = styled.main`
+const Container = styled.div`
   width: 100vw;
-  min-height: 400px;
   height: 100vh;
-  .login-container {
-    width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+`;
+
+const ContainerRegister = styled.main`
+  width: 50%;
+  height: 100%;
+  .register-container {
+    width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    .login {
-      background-color: red;
+    .register {
+      position: absolute;
+      top: 150px;
+      right: 150px;
       width: 350px;
       height: 350px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      border-radius: 30px;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
     }
   }
 `;
 
 const ContainerLogin = styled.div`
-  width: 100vw;
-  min-height: 400px;
-  height: 100vh;
+  width: 50%;
+  height: 100%;
   .login-container {
-    width: 50%;
+    width: 100%%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
     .login {
-      background-color: red;
+      position: absolute;
+      top: 150px;
+      left: 150px;
       width: 350px;
       height: 350px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      border-radius: 30px;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
     }
   }
 `;

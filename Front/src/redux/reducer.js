@@ -63,22 +63,21 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailLoading: false,
       };
     //Searchbar
-    case SEARCH_PRODUCT_REQUEST:
+     case SEARCH_PRODUCT_REQUEST:
       return {
         ...state,
         isLoading: true,
-        error: null,
+        error: null, 
       };
     case SEARCH_PRODUCT_SUCCESS:
-      const searchedProducts = payload;
-      const searchActive = searchedProducts.length > 0;
+
 
       return {
         ...state,
-        searchClocks: searchedProducts,
+        searchClocks: payload, 
         isLoading: false,
+        searchActive: payload.length > 0, 
         error: null,
-        searchActive,
       };
     case SEARCH_PRODUCT_FAILURE:
       return {
