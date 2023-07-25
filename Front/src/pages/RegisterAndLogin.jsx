@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { createUser, loginUser } from "../redux/Actions";
@@ -7,6 +7,10 @@ import { useDispatch } from "react-redux";
 function RegisterAndLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [inModeLogin, setInModeLogin] = useState(false);
+  const handleInMode = () => {
+    setInModeLogin(!inModeLogin);
+  };
   const [registerValues, setRegisterValues] = useState({
     userName: "",
     email: "",
@@ -18,6 +22,11 @@ function RegisterAndLogin() {
     password: "",
     provider: "local",
   });
+
+  const handleClickTransition = () => {
+    // Mostrar el div "transition" cuando se hace clic en el botón
+    toogle.current.style.display = "block";
+  };
 
   const handleChangeRegister = (e) => {
     const { name, value } = e.target;
@@ -50,11 +59,12 @@ function RegisterAndLogin() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(loginAcount));
-    navigate('/')
+    navigate("/");
   };
 
   const renderRegister = () => (
     <ContainerRegister>
+      <h1>registrarse</h1>
       <div className="register-container">
         <form
           action="POST"
@@ -93,8 +103,9 @@ function RegisterAndLogin() {
 
   const renderLogin = () => (
     <ContainerLogin>
-      <div className="login-container" >
-        <form method="POST" onSubmit={handleSubmitLogin} className="login">
+      <h1>Iniciar sesion</h1>
+      <div className="login-container">
+        <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <span>email:</span>
           <input
             type="text"
@@ -117,6 +128,8 @@ function RegisterAndLogin() {
   return (
     <Container>
       {renderRegister()}
+      <button style={{zIndex:300}} onClick={handleInMode}>click</button>
+      <TransitionDiv inModeLogin={inModeLogin}/>
       {renderLogin()}
     </Container>
   );
@@ -125,6 +138,7 @@ function RegisterAndLogin() {
 export default RegisterAndLogin;
 
 const Container = styled.div`
+  position: relative;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -137,6 +151,12 @@ const Container = styled.div`
 const ContainerRegister = styled.main`
   width: 50%;
   height: 100%;
+  h1 {
+    width:100%;
+    text-align: center;
+    margin-top:60px;
+    text-transform: uppercase;
+  }
   .register-container {
     width: 100%;
     height: 100%;
@@ -144,7 +164,7 @@ const ContainerRegister = styled.main`
     .register {
       position: absolute;
       top: 150px;
-      right: 150px;
+      left: 150px;
       width: 350px;
       height: 350px;
       display: flex;
@@ -160,6 +180,12 @@ const ContainerRegister = styled.main`
 const ContainerLogin = styled.div`
   width: 50%;
   height: 100%;
+  h1 {
+    width:100%;
+    text-align: center;
+    margin-top:60px;
+    text-transform: uppercase;
+  }
   .login-container {
     width: 100%%;
     height: 100%;
@@ -167,7 +193,7 @@ const ContainerLogin = styled.div`
     .login {
       position: absolute;
       top: 150px;
-      left: 150px;
+      right: 150px;
       width: 350px;
       height: 350px;
       display: flex;
@@ -179,3 +205,17 @@ const ContainerLogin = styled.div`
     }
   }
 `;
+
+const TransitionDiv = styled.div`
+  width: 1500px;
+  height: 1500px;
+  position: absolute;
+  top:-700px;
+  left:-800px;
+  background-color: #111 ;
+  backdrop-filter: blur(5px);
+  border-radius:50%;
+  transform:${(props)=>props.inModeLogin?"translateX(calc(107vw))":"translateX(0)"} ;
+  transition: all 2s ease-in-out;
+  z-index: 10;
+`
