@@ -13,13 +13,11 @@ export const Navbar = () => {
   const dispatch = useDispatch();
 
   const itemCount = cart.items?.length;
-  const navigate = useNavigate();
 
   const handleLinkClick = async (brand) => {
     const brandLowerCase = brand.toLowerCase();
     if (brandLowerCase === "ver todo") {
       await dispatch(getProducts());
-      navigate("/home");
     } else {
       await dispatch(getWatchesByBrand(brandLowerCase));
     }
@@ -37,28 +35,28 @@ export const Navbar = () => {
       <nav className="navigation">
         <ul className="nav">
           <li>
-            <StyledLink to="/" onClick={() => handleLinkClick("ver todo")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("ver todo")}>
               ver todo
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="#" onClick={() => handleLinkClick("festina")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("festina")}>
               festina
             </StyledLink>
           </li>
           <li>
             {" "}
-            <StyledLink to="#" onClick={() => handleLinkClick("citizen")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("citizen")}>
               citizen
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="#" onClick={() => handleLinkClick("mistral")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
               mistral
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="#" onClick={() => handleLinkClick("prune")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
               prÜne
             </StyledLink>
           </li>
