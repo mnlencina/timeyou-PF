@@ -20,9 +20,11 @@ import {
   POST_WATCH,
   CREATE_USER,
   LOGIN_USER,
+  GET_WATCHES_BY_BRAND,
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
+import { BsDisplayport } from "react-icons/bs";
 
 //fetch de productos
 
@@ -40,7 +42,7 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 //fetch de un producto segun su modelo
-export function addModel(model) {
+export function addModel (model) {
   const endpoint = `http://localhost:3001/watches/${model}`;
   return async function (dispatch) {
     try {
@@ -55,7 +57,7 @@ export function addModel(model) {
   };
 }
 
-export function resetDetail() {
+export function resetDetail () {
   return {
     type: RESET_DETAIL,
   };
@@ -162,7 +164,7 @@ export const clearFilters = () => (dispatch) => {
 
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
-export function allPropWatches(prop) {
+export function allPropWatches (prop) {
   const endpoint = `http://localhost:3001/${prop}`;
   return async function (dispatch) {
     try {
@@ -198,7 +200,7 @@ export function allPropWatches(prop) {
   };
 }
 
-export function postWatch(watch) {
+export function postWatch (watch) {
   const endpoint = `http://localhost:3001/watches/`;
   return async function (dispatch) {
     try {
@@ -245,3 +247,23 @@ export const loginUser = (user) => async (dispatch) => {
     console.log(error);
   }
 };
+
+
+
+/////////////////////////////////////////////
+// Peticiones para cada una de las Brand en el Navbar //
+export const getWatchesByBrand = (brand) => async (dispatch) => {
+  const URL = `http://localhost:3001/brands/${brand}`;
+  try {
+    let { data } = await axios.get(URL);
+    console.log("data.Watches", data.Watches)
+    dispatch({
+      type: GET_WATCHES_BY_BRAND,
+      payload: data.Watches,
+    });
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
