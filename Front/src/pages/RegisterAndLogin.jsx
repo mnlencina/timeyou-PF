@@ -187,7 +187,7 @@ const ContainerLogin = styled.div`
     text-transform: uppercase;
   }
   .login-container {
-    width: 100%%;
+    width: 100%;
     height: 100%;
     display: flex;
     .login {

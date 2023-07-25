@@ -54,6 +54,7 @@ const Container = styled.div`
   height: 400px;
   position: relative;
   margin: 0 auto;
+  margin-bottom: 50px;
   .bodyContainer {
     width: 80%;
     height: 100%;

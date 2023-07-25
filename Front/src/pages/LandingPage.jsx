@@ -8,9 +8,11 @@ import {
   CardSlider,
 } from "../components/index.js";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-export default function HomePage() {
-  const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
+export default function LandingPage() {
+
+    const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
   const whatches = searchActive ? searchClocks : Clocks;
 
   const [show, setShow] = useState(false);
@@ -29,17 +31,17 @@ export default function HomePage() {
 
   const PaginacionRelojes = paginacion();
 
-  const onNextPage = () => {
-    if (page < totalPages) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
+//   const onNextPage = () => {
+//     if (page < totalPages) {
+//       setPage((prevPage) => prevPage + 1);
+//     }
+//   };
 
-  const onPreviusPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
+//   const onPreviusPage = () => {
+//     if (page > 1) {
+//       setPage((prevPage) => prevPage - 1);
+//     }
+//   };
 
   const slideContainer = () => (
     <ContainerSlide>
@@ -63,26 +65,23 @@ export default function HomePage() {
     </ContainerMostrador>
   );
 
+
   return (
     <>
-      {/* {slideContainer()} */}
-      {/* <CardSlider/> */}
-      <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      />
-      {renderMostrador()}
-      <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      />
+      {slideContainer()}
+       {/* <Link to={'/home'}>
+        <button className="Explore">
+            Explore
+        </button>
+       </Link> */}
+      <CardSlider />
     </>
   );
 }
+
+const Explore = styled.section`
+
+`;
 
 const ContainerSlide = styled.section`
   width: 100%;

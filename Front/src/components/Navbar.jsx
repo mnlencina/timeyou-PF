@@ -19,7 +19,7 @@ export const Navbar = () => {
     const brandLowerCase = brand.toLowerCase();
     if (brandLowerCase === "ver todo") {
       await dispatch(getProducts());
-      navigate("/");
+      navigate("/home");
     } else {
       await dispatch(getWatchesByBrand(brandLowerCase));
     }
