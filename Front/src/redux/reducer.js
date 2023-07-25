@@ -209,10 +209,8 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         user: { token: "" },
               }
-        user: {token: ""}
-development
-      };
+
     default:
       return state;
-    }
-};
+            }
+          }
