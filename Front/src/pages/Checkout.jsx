@@ -1,12 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import { CheckoutForm } from "../components/CheckoutForm";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromesi = loadStripe(
+  "pk_test_51NXTZvJNuW9C7TohwGweiekffN0KDNdIR2BxwRgfJPAKeYU9ehDMrm7n4qVSXh5eFZNi08vHD0j5gLmIVNhqGSEv00Ayi13ds1"
+);
 
 function Checkout() {
+
   return (
     <Container>
       <div className="cuadrado"></div>
       <div className="main-container">
-          
+        <Elements stripe={stripePromesi}>
+          <CheckoutForm />
+        </Elements>
       </div>
     </Container>
   );
@@ -33,11 +48,23 @@ const Container = styled.main`
     left: -20%;
     z-index: -5;
   }
-  .main-container{
+  .main-container {
     width: 60%;
     height: 90%;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.8);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
     border-radius: 30px;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    .container {
+      width: 90%;
+      height: 90%;
+    }
   }
+`;
+
+const CheckoutContainer = styled.form`
+  width: 90%;
+  height: auto;
 `;
