@@ -49,6 +49,7 @@ function RegisterAndLogin() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(loginAcount));
+    navigate('/')
   };
 
   const renderRegister = () => (
@@ -92,7 +93,7 @@ function RegisterAndLogin() {
   const renderLogin = () => (
     <ContainerLogin>
       <div className="login-container" >
-        <form action="GET" onSubmit={handleSubmitLogin} className="login">
+        <form method="POST" onSubmit={handleSubmitLogin} className="login">
           <span>email:</span>
           <input
             type="text"
