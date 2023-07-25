@@ -80,7 +80,7 @@ function RegisterAndLogin() {
           <LoginSocialGoogle
             client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
             onResolve={(Response) => {
-              console.log(Response);
+              console.log(Response.data);
             }}
             onReject={(error) => {
               console.log(error);
