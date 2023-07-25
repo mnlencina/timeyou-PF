@@ -204,6 +204,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         searchActive: payload.length > 0,
         error: null,
+      }
     case LOGOUT_USER:
       return {
         ...state,
