@@ -119,7 +119,7 @@ export const FiltersAll = () => {
           <label htmlFor={color}>{color}</label>
         </div>
       ))}
-      <h2>Tipo de malla:</h2>
+      <h2>Malla:</h2>
       {uniqueStraps.map((malla, index) => (
         <div key={index}>
           <input
