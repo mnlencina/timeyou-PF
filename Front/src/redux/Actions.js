@@ -19,7 +19,7 @@ import {
   ALL_FUNCTIONS,
   POST_WATCH,
   CREATE_USER,
-  LOGIN_USER
+  LOGIN_USER,
 } from "./actionTypes";
 
 //fetch de productos
@@ -258,20 +258,20 @@ export const createUser = (user) => async (dispatch) => {
       payload: newUser,
     });
   } catch (error) {
-    alert("no pudo crearse el usuario")
+    alert("no pudo crearse el usuario");
   }
 };
 
-export const loginUser = (user)=> async(dispatch) =>{
-const endpoint = "http://localhost:3001/users/login"
-try {
-  const data= await axios.post(endpoint, user);
-  console.log(data);
-  dispatch({
-    type: LOGIN_USER,
-    payload: data
-  })
-} catch (error) {
-  console.log(error)
-}
-}
+export const loginUser = (user) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/users/login";
+  try {
+    const { data } = await axios.post(endpoint, user);
+    console.log(data);
+    dispatch({
+      type: LOGIN_USER,
+      payload: data.token,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
