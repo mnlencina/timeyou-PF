@@ -1,3 +1,4 @@
+
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -207,8 +208,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         user: { token: "" },
+              }
+        user: {token: ""}
+development
       };
     default:
       return state;
-  }
+    }
 };
