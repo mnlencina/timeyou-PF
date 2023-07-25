@@ -69,25 +69,12 @@ export default function LandingPage() {
   return (
     <>
       {slideContainer()}
-       <Link to={'/home'}>
+       {/* <Link to={'/home'}>
         <button className="Explore">
             Explore
         </button>
-       </Link>
+       </Link> */}
       <CardSlider />
-      {/* <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      /> */}
-      {/* {renderMostrador()} */}
-      {/* <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      /> */}
     </>
   );
 }

@@ -1,38 +1,60 @@
-import { useState } from "react";
+//import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-
-import { BiUser } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
+import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
+import { logOut, getProducts, getWatchesByBrand } from "../redux/Actions.js";
+
+
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
-
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
+console.log(user);
   const itemCount = cart.items?.length;
+  
+  const navigate = useNavigate();
+
+  const handleLinkClick = async (brand) => {
+    const brandLowerCase = brand.toLowerCase();
+    if (brandLowerCase === "ver todo") {
+      await dispatch(getProducts())
+      navigate("/")
+    } else {
+      await dispatch(getWatchesByBrand(brandLowerCase))
+    }
+  }
+
+
 
   return (
     <Container itemcount={itemCount}>
       <header className="header">
         <h1>
-          Time<span>You</span>
+          <StyledLink2 to="/">Time<span>You</span></StyledLink2>
         </h1>
       </header>
       <nav className="navigation">
         <ul className="nav">
-          <li>Ver todo</li>
-          <li>Casio</li>
-          <li>g-shock</li>
-          <li>mistral</li>
-          <li>prÜne</li>
+          <li><StyledLink to="/" onClick={() => handleLinkClick('ver todo')} >ver todo</StyledLink></li>
+          <li><StyledLink to="#" onClick={() => handleLinkClick('festina')}>festina</StyledLink></li>
+          <li> <StyledLink to="#" onClick={() => handleLinkClick('citizen')}>citizen</StyledLink></li>
+          <li><StyledLink to="#" onClick={() => handleLinkClick('mistral')}>mistral</StyledLink></li>
+          <li><StyledLink to="#" onClick={() => handleLinkClick('prune')}>prÜne</StyledLink></li>
         </ul>
-        <div className="serch-container"><Searchbar /></div>
+        <div className="serch-container">
+          <Searchbar />
+        </div>
         <div className="icons">
           <ul className="icon">
-          
             <li>
-              <BiUser />
+              <Link to="/auth">
+                {!user.token.length ? <BiUser /> :                 
+                <BiUserX onClick={()=> dispatch(logOut())}/>}                
+              </Link>
             </li>
             <li>
               <Link to="/shopping">
@@ -55,7 +77,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-
   .header {
     width: 100%;
     height: 60px;
@@ -93,8 +114,8 @@ const Container = styled.div`
       align-items: center;
       justify-content: space-evenly;
     }
-    .serch-container{
-      width:25%;
+    .serch-container {
+      width: 25%;
       height: auto;
       position: relative;
     }
@@ -120,7 +141,7 @@ const Container = styled.div`
           }
           span {
             visibility: ${(props) =>
-              props.itemcount === 0 ? "hidden" : "visible"};
+    props.itemcount === 0 ? "hidden" : "visible"};
             position: absolute;
             right: -10px;
             bottom: 0;
@@ -139,3 +160,16 @@ const Container = styled.div`
     }
   }
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-weight: bolder;
+  font-size:20px;
+  color: #111;
+  `;
+
+const StyledLink2 = styled(Link)`
+  text-decoration: none;
+  font-size:50px;
+  color: #111;
+  `;
