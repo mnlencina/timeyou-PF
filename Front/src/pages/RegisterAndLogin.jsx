@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { createUser, loginUser } from "../redux/Actions";
 import { useDispatch } from "react-redux";
+import { FaFacebookF } from "react-icons/fa";
+import { BsGoogle } from "react-icons/bs";
+import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
 
 function RegisterAndLogin() {
   const navigate = useNavigate();
@@ -22,11 +25,6 @@ function RegisterAndLogin() {
     password: "",
     provider: "local",
   });
-
-  const handleClickTransition = () => {
-    // Mostrar el div "transition" cuando se hace clic en el botón
-    toogle.current.style.display = "block";
-  };
 
   const handleChangeRegister = (e) => {
     const { name, value } = e.target;
@@ -55,7 +53,6 @@ function RegisterAndLogin() {
     });
   };
 
-
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(loginAcount));
@@ -66,6 +63,34 @@ function RegisterAndLogin() {
     <ContainerRegister>
       <h1>registrarse</h1>
       <div className="register-container">
+        <div className="container-btn">
+          <LoginSocialFacebook
+            appId="822002286033548"
+            onResolve={(Response) => {
+              console.log(Response);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <FaFacebookF />
+            </button>
+          </LoginSocialFacebook>
+          <LoginSocialGoogle
+            client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
+            onResolve={(Response) => {
+              console.log(Response.data);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <BsGoogle />
+            </button>
+          </LoginSocialGoogle>
+        </div>
         <form
           action="POST"
           onSubmit={handleSubmitRegister}
@@ -128,8 +153,10 @@ function RegisterAndLogin() {
   return (
     <Container>
       {renderRegister()}
-      <button style={{zIndex:300}} onClick={handleInMode}>click</button>
-      <TransitionDiv inModeLogin={inModeLogin}/>
+      <button style={{ zIndex: 300 }} onClick={handleInMode}>
+        click
+      </button>
+      <TransitionDiv inModeLogin={inModeLogin} />
       {renderLogin()}
     </Container>
   );
@@ -152,15 +179,40 @@ const ContainerRegister = styled.main`
   width: 50%;
   height: 100%;
   h1 {
-    width:100%;
+    width: 100%;
     text-align: center;
-    margin-top:60px;
+    margin-top: 60px;
     text-transform: uppercase;
   }
   .register-container {
     width: 100%;
     height: 100%;
-    display: flex;
+    .container-btn {
+      position: absolute;
+      bottom: 90px;
+      left: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      button {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: none;
+        border: #111;;
+        transition: 0.3s ease;
+        font-size: 25px;
+        &:hover {
+          transform: scale(1.2);
+          background-color: white;
+          border: 1px solid red;
+        }
+      }
+    }
     .register {
       position: absolute;
       top: 150px;
@@ -181,9 +233,9 @@ const ContainerLogin = styled.div`
   width: 50%;
   height: 100%;
   h1 {
-    width:100%;
+    width: 100%;
     text-align: center;
-    margin-top:60px;
+    margin-top: 60px;
     text-transform: uppercase;
   }
   .login-container {
@@ -210,12 +262,13 @@ const TransitionDiv = styled.div`
   width: 1500px;
   height: 1500px;
   position: absolute;
-  top:-700px;
-  left:-800px;
-  background-color: #111 ;
+  top: -700px;
+  left: -800px;
+  background-color: #111;
   backdrop-filter: blur(5px);
-  border-radius:50%;
-  transform:${(props)=>props.inModeLogin?"translateX(calc(107vw))":"translateX(0)"} ;
+  border-radius: 50%;
+  transform: ${(props) =>
+    props.inModeLogin ? "translateX(calc(107vw))" : "translateX(0)"};
   transition: all 2s ease-in-out;
   z-index: 10;
-`
+`;
