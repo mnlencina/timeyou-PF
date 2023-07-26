@@ -93,7 +93,7 @@ export const Searchbar = () => {
       alert("Debes ingresar al menos un dato para realizar una búsqueda");
       return;
     }
-    navigate("/");
+    navigate("/home");
     setSearchTerm("");
   };
 

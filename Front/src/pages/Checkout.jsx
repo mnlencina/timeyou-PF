@@ -10,7 +10,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromesi = loadStripe(
-  "pk_test_51NXTZvJNuW9C7TohwGweiekffN0KDNdIR2BxwRgfJPAKeYU9ehDMrm7n4qVSXh5eFZNi08vHD0j5gLmIVNhqGSEv00Ayi13ds1"
+  "pk_test_51NVgnTAYvuvU8SQ49gIo7GAYFVsJvzbxM4nYtK4dTWvvmSTBQgssGmwQbzqlWvznnEtmq7AMt8eVMuG3ZDy5Ex4L00Pkqqwp0w"
 );
 
 function Checkout() {

@@ -11,7 +11,7 @@ export const Card = ({ watch }) => {
   });
 
   return (
-    <Container onClick={() => navigate(`/product/${cleanedWatch.model}`)}>
+    <Container onClick={() => navigate(`/product/${cleanedWatch.id}`)}>
       <div className="top-content">
         <span className="span-title">Envio gratis</span>
         <picture className="img-box">

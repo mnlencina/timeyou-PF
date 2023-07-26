@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../redux/Actions";
 
 export const CheckoutForm = () => {
-
-  const price = useSelector(state=> state.price)
+  const dispatch = useDispatch();
+  const price = useSelector((state) => state.price);
   const stripe = useStripe();
   const elemets = useElements();
 
@@ -18,17 +19,19 @@ export const CheckoutForm = () => {
         type: "card",
         card: elemets.getElement(CardElement),
       });
-      const {id} = paymentMethod;
-      const response = await axios.post("http://localhost:3001/buy/checkouts",{
+      const { id } = paymentMethod;
+      const response = await axios.post("http://localhost:3001/buy/checkout", {
         id,
-        useName:"cristian",
-        amount:price,
-        model:"lasdjsad",
-        colorName:"red"
-      })
-      if(response.ok){
+        userName: "mnlencina",
+        amount: +price,
+        model: "Prune",
+        colorName: "anaranjado",
+      });
+      if (response.status === 200) {
         alert("compra registrada con exito");
       }
+      elemets.getElement(CardElement).clear();
+      dispatch(clearCart());
     } catch (error) {
       console.log(error);
     }

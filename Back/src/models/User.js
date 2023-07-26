@@ -31,6 +31,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM("local", "google", "facebook"),
         defaultValue: "local",
       },
+      del: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       timestamps: false,

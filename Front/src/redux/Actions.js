@@ -43,11 +43,12 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 //fetch de un producto segun su modelo
-export function addModel (model) {
-  const endpoint = `http://localhost:3001/watches/${model}`;
+export function addModel (id) {
+  const endpoint = `http://localhost:3001/watches/${id}`;
   return async function (dispatch) {
     try {
       let { data } = await axios(endpoint);
+      console.log(data);
       dispatch({
         type: GET_PRODUCTS_DETAIL,
         payload: data,

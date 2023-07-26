@@ -10,9 +10,9 @@ export const CardContext = ({pagination}) => {
  
   const loading = useSelector(state=> state.isLoading);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  //useEffect(() => {
+  //  dispatch(getProducts());
+  //}, []);
   return (
     <Container>
       <div className="context-card">

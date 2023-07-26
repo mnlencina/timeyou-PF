@@ -29,12 +29,12 @@ const storedCart = localStorage.getItem("cart");
 
 const initialState = {
   Clocks: [],
-  Clock: {},
+  allClocks: [],
   searchClocks: [],
   searchActive: false,
   filteredClocks: [],
   Cart: storedCart ? JSON.parse(storedCart) : { items: [] },
-  price: 0,
+  price: 500,
   detailClock: [],
   isLoading: true,
   detailLoading: true,
@@ -57,6 +57,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         Clocks: payload,
+        allClocks: payload,
         searchClocks: payload,
         isLoading: false,
       };
@@ -88,6 +89,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: payload,
       };
     case ADD_TO_CART:
+      // eslint-disable-next-line no-case-declarations
       const updatedCart = [...state.Cart.items, payload];
       saveCartToLocalStorage({ items: updatedCart });
       return {
@@ -95,6 +97,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         Cart: { items: updatedCart },
       };
     case REMOVE_FROM_CART:
+      // eslint-disable-next-line no-case-declarations
       const filteredCart = state.Cart.items.filter(
         (item) => item.id !== payload
       ); // Aquí accedemos al array 'items'
@@ -122,6 +125,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case RESET_DETAIL:
       return {
         ...state,
+        detailLoading: true,
         detailClock: [],
       };
     case FILTERS:
@@ -129,14 +133,16 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       const filterBrands = payload || {};
       console.log("filterBrands", filterBrands);
 
+      // eslint-disable-next-line no-case-declarations
       const filterActive = Object.values(filterBrands).some(
         (selected) => selected
       );
       console.log(filterActive);
 
-      let filteredClocks = state.Clocks;
+      // eslint-disable-next-line no-case-declarations
+      let filteredClocks = state.allClocks;
       if (filterActive) {
-        filteredClocks = state.Clocks.filter((product) => {
+        filteredClocks = state.allClocks.filter((product) => {
           let matchesAllCategories = true;
           for (const fieldName in filterBrands) {
             const selectedValue = filterBrands[fieldName];
