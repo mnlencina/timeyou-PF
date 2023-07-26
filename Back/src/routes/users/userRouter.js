@@ -56,10 +56,14 @@ userRouter.put("/update/password", async (req, res) => {
   const { email } = req.query;
   const { password } = req.body;
   try {
-    const updatePassword = await newPassword(email, password);
-    res.status(200).json(updatePassword);
+    await newPassword(email, password);
+    res.status(200).json({ message: "Password updated successfully" });
   } catch (error) {
-    res.status(500).json({ Error: error.message });
+    if (error.message.includes("system")) {
+      return res.status(404).json({ Error: error.message });
+    } else {
+      return res.status(500).json({ Error: error.message });
+    }
   }
 });
 
