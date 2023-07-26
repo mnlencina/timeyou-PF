@@ -5,7 +5,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addModel } from "../redux/Actions";
+import { addModel, resetDetail } from "../redux/Actions";
 import { addToCart } from "../redux/Actions";
 
 function DetailPage() {
@@ -15,27 +15,25 @@ function DetailPage() {
   const { id } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
   const loading = useSelector((state) => state.detailLoading);
- 
-
   
-
-  const handleAddToCart = () => {
-   
+  const handleAddToCart = () => {   
     dispatch(addToCart(detailClock[color]));
   };
+  
+  const backPag = ()=>{
+    dispatch(resetDetail())
+  }
 
   useEffect(() => {
   console.log(id);
     dispatch(addModel(id));
+    return backPag()
   }, [dispatch]);
 
   return loading ? (
     <div>loanding</div>
   ) : (
     <Container>
-     
-     
-     
       <div className="main_container">
         <header className="title">
           <h3>
@@ -46,11 +44,11 @@ function DetailPage() {
           </h3>
         </header>
         <section className="show-clocks">
-        <div className="navVert">
- {(detailClock[color].image).map((img, i)=>
-   <img onClick={()=> setColor2(i)} key={i+50} src={img} alt="imgB" />
- )}
- </div>
+          <div className="navVert">
+            {(detailClock[color].image).map((img, i)=>
+              <img onClick={()=> setColor2(i)} key={i+50} src={img} alt="imgB" />
+            )}
+          </div>
           <picture className="img-box">
             <img src={detailClock[color].image[color2]} alt="imgD" />
           </picture>
@@ -249,7 +247,7 @@ const Container = styled.main`
           }
           .price {
             width: 90%;
-            height: 180px;
+            height: 190px;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -271,7 +269,7 @@ const Container = styled.main`
               }
               .color {
                 width: 100%;
-                height: 50px;
+                height: 100px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -314,9 +312,11 @@ const Container = styled.main`
             justify-content: center;
           }
           .detail-compra {
-            width: 90%;
-            height: calc(500px - 280px);
-            margin-top: 10px;
+            width: 95%;
+            height: 180px;
+            margin-top: 8px;
+            margin-bottom: 8px;         
+            
           }
         }
       }

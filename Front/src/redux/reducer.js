@@ -125,6 +125,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case RESET_DETAIL:
       return {
         ...state,
+        detailLoading: true,
         detailClock: [],
       };
     case FILTERS:
