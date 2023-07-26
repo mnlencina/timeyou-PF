@@ -64,19 +64,23 @@ watchRouter.get("/", async (req, res) => {
 })
 
 
-watchRouter.get("/:model", async (req, res) => {
+watchRouter.get("/:id", async (req, res) => {
 
   try {
 
-    const {model} = req.params
+    const {id} = req.params
+    
     
     let allWatches = await getWatches();
 
-    if (model || typeof model !== 'string' || model.trim() === '') {
-      let watchByModel = await allWatches.filter(watch => watch.model == model)
+    if (id || typeof id !== 'string' || id.trim() === '') {
+      let data = await allWatches.filter(watch => watch.id == id)
+      let dataFinal = await allWatches.filter(watch => watch.model == data[0].model)
+      //model = dataValues[0].dataValues.model
+      console.log(data[0].model);
 
-      watchByModel.length ?
-        res.status(200).send(watchByModel) :
+      dataFinal.length ?
+        res.status(200).send(dataFinal) :
         res.status(404).send('Watch not found!');
     }
     } catch (error) {

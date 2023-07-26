@@ -12,7 +12,7 @@ function DetailPage() {
   const [color, setColor] = useState(0);
   const [color2, setColor2] = useState(0);
   const dispatch = useDispatch();
-  const { model } = useParams();
+  const { id } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
   const loading = useSelector((state) => state.detailLoading);
  
@@ -25,7 +25,8 @@ function DetailPage() {
   };
 
   useEffect(() => {
-    dispatch(addModel(model));
+  console.log(id);
+    dispatch(addModel(id));
   }, [dispatch]);
 
   return loading ? (
