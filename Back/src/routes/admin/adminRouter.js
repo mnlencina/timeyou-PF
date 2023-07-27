@@ -1,5 +1,6 @@
 const express = require("express");
 const inabilitedUser = require("../../controllers/putAdminUser");
+const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
 
@@ -25,6 +26,7 @@ adminRouter.put("/inabilited/:id", async (req, res) => {
   }
 });
 
+
 adminRouter.get("/users-by-email", async (req, res) => {
   const { email } = req.query;
   try {
@@ -36,4 +38,18 @@ adminRouter.get("/users-by-email", async (req, res) => {
     else return res.status(500).json({ Error: error.message });
   }
 });
+
+adminRouter.get("/user-by-userName", async (req, res) => {
+  const { userName } = req.query;
+  try {
+    const userFound = await selectedUser(userName);
+    res.status(200).json(userFound);
+  } catch (error) {
+    if (error.message.includes("userName"))
+      return res.status(404).json({ Error: error.message });
+    else return res.status(500).json({ Error: error.message });
+  }
+});
+
+
 module.exports = adminRouter;
