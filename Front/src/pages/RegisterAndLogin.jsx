@@ -64,32 +64,37 @@ function RegisterAndLogin() {
       <h1>registrarse</h1>
       <div className="register-container">
         <div className="container-btn">
-          <LoginSocialFacebook
-            appId="822002286033548"
-            onResolve={(Response) => {
-              console.log(Response);
-            }}
-            onReject={(error) => {
-              console.log(error);
-            }}
-          >
-            <button>
-              <FaFacebookF />
-            </button>
-          </LoginSocialFacebook>
-          <LoginSocialGoogle
-            client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
-            onResolve={(Response) => {
-              console.log(Response.data);
-            }}
-            onReject={(error) => {
-              console.log(error);
-            }}
-          >
-            <button>
-              <BsGoogle />
-            </button>
-          </LoginSocialGoogle>
+          <div className="content">
+            <p>Registrate con plataformas sociales</p>
+          </div>
+          <div className="btn-controllers">
+            <LoginSocialFacebook
+              appId="822002286033548"
+              onResolve={(Response) => {
+                console.log(Response);
+              }}
+              onReject={(error) => {
+                console.log(error);
+              }}
+            >
+              <button>
+                <FaFacebookF />
+              </button>
+            </LoginSocialFacebook>
+            <LoginSocialGoogle
+              client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
+              onResolve={(Response) => {
+                console.log(Response.data);
+              }}
+              onReject={(error) => {
+                console.log(error);
+              }}
+            >
+              <button>
+                <BsGoogle />
+              </button>
+            </LoginSocialGoogle>
+          </div>
         </div>
         <form
           action="POST"
@@ -130,6 +135,34 @@ function RegisterAndLogin() {
     <ContainerLogin>
       <h1>Iniciar sesion</h1>
       <div className="login-container">
+        <div className="login-btn">
+          <LoginSocialFacebook
+            appId="822002286033548"
+            onResolve={(Response) => {
+              console.log(Response);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <FaFacebookF />
+            </button>
+          </LoginSocialFacebook>
+          <LoginSocialGoogle
+            client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
+            onResolve={(Response) => {
+              console.log(Response.data);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <BsGoogle />
+            </button>
+          </LoginSocialGoogle>
+        </div>
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <span>email:</span>
           <input
@@ -153,9 +186,22 @@ function RegisterAndLogin() {
   return (
     <Container>
       {renderRegister()}
-      <button style={{ zIndex: 300 }} onClick={handleInMode}>
-        click
-      </button>
+      <div className={`panel-login${inModeLogin ? " active-login" : ""}`}>
+        <div className="panel">
+          <h2>Ya tienes una cuenta</h2>
+          <h4>haz Click para iniciar secion</h4>
+          <button onClick={handleInMode}>ir a login</button>
+        </div>
+      </div>
+      <div
+        className={`panel-register${!inModeLogin ? " active-register" : ""}`}
+      >
+        <div className="panel">
+          <h2>No tienes una cuenta?</h2>
+          <h4>haz Click para registrarte</h4>
+          <button onClick={handleInMode}>register</button>
+        </div>
+      </div>
       <TransitionDiv inModeLogin={inModeLogin} />
       {renderLogin()}
     </Container>
@@ -164,7 +210,7 @@ function RegisterAndLogin() {
 
 export default RegisterAndLogin;
 
-const Container = styled.div`
+const Container = styled.main`
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -173,9 +219,95 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   overflow: hidden;
+  .panel-login {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+    right: -2000px;
+    z-index: 20;
+    border: 1px solid #fff;
+    transition: all 0.7s ease-in-out;
+    border-radius: 50%;
+    .panel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      color: #fff;
+      border-radius: 50%;
+      button {
+        padding: 7px 30px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s ease;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+  .active-login {
+    transition-delay: 1s;
+    right: 150px;
+  }
+  .panel-register {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+    left: -2500px;
+    z-index: 20;
+    border: 1px solid #fff;
+    transition: all 0.7s ease-in-out;
+    border-radius: 50%;
+    .panel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      color: #fff;
+      border-radius: 50%;
+      button {
+        padding: 7px 30px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s ease;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+  .active-register {
+    transition-delay: 1s;
+    left: 150px;
+  }
 `;
 
-const ContainerRegister = styled.main`
+const ContainerRegister = styled.div`
   width: 50%;
   height: 100%;
   h1 {
@@ -188,13 +320,33 @@ const ContainerRegister = styled.main`
     width: 100%;
     height: 100%;
     .container-btn {
+      width: 300px;
+      height: 110px;
       position: absolute;
-      bottom: 90px;
-      left: 260px;
+      bottom: 40px;
+      left: 175px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 30px;
+      .content {
+        width: 100%;
+        height: 20%;
+        p {
+          line-height: 50px;
+          width: 100%;
+          text-align: center;
+        }
+      }
+      .btn-controllers {
+        width: 100%;
+        height: calc(100% - 20%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+      }
       button {
         width: 60px;
         height: 60px;
@@ -203,7 +355,7 @@ const ContainerRegister = styled.main`
         justify-content: center;
         border-radius: 50%;
         background-color: none;
-        border: #111;;
+        border: #111;
         transition: 0.3s ease;
         font-size: 25px;
         &:hover {
@@ -242,6 +394,32 @@ const ContainerLogin = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    .login-btn {
+      position: absolute;
+      bottom: 60px;
+      right: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      button {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: none;
+        border: #111;
+        transition: 0.3s ease;
+        font-size: 25px;
+        &:hover {
+          transform: scale(1.2);
+          background-color: white;
+          border: 1px solid red;
+        }
+      }
+    }
     .login {
       position: absolute;
       top: 150px;
@@ -262,13 +440,13 @@ const TransitionDiv = styled.div`
   width: 1500px;
   height: 1500px;
   position: absolute;
-  top: -700px;
-  left: -800px;
+  top: -720px;
+  left: -779px;
   background-color: #111;
   backdrop-filter: blur(5px);
   border-radius: 50%;
   transform: ${(props) =>
-    props.inModeLogin ? "translateX(calc(107vw))" : "translateX(0)"};
+    props.inModeLogin ? "translateX(calc(107vw))" : "translateX(-2.7vw)"};
   transition: all 2s ease-in-out;
   z-index: 10;
 `;

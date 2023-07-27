@@ -39,9 +39,7 @@ const Container = styled.section`
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-   /*  display: flex;
-    flex-wrap: wrap; */
-    align-items: center;
+    align-items:start;
     justify-items: center;
     
   }

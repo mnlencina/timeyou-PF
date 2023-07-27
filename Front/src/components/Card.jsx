@@ -42,9 +42,9 @@ const Container = styled.article`
   z-index: 20;
   pointer-events: all;
   &:hover {
-    transform: translateY(-10px) translateX(5px);
+    transform: translateY(-1px) translateX(1px);
     opacity: 1;
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
   }
   .top-content {
     width: 100%;
