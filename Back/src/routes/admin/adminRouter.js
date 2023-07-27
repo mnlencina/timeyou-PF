@@ -1,7 +1,18 @@
 const express = require("express");
 const inabilitedUser = require("../../controllers/putAdminUser");
 const userEmail = require("../../controllers/getUserEmail");
+const allUsers = require("../../controllers/getAllUsers");
+
 const adminRouter = express.Router();
+
+adminRouter.get("/allUsers", async (req, res) => {
+  try {
+    const userDataBase = await allUsers();
+    res.status(200).json(userDataBase);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+});
 
 adminRouter.put("/inabilited/:id", async (req, res) => {
   const { id } = req.params;
