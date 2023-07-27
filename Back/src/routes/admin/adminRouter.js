@@ -1,5 +1,6 @@
 const express = require("express");
 const inabilitedUser = require("../../controllers/putAdminUser");
+const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
 
@@ -26,6 +27,18 @@ adminRouter.get("/users-by-email", async (req, res) => {
   }
 });
 
+adminRouter.get("/user-by-userName", async (req, res) => {
+  const { userName } = req.query;
+  try {
+    const userFound = await selectedUser(userName);
+    res.status(200).json(userFound);
+  } catch (error) {
+    if (error.message.includes("userName"))
+      return res.status(404).json({ Error: error.message });
+    else return res.status(500).json({ Error: error.message });
+  }
+});
+
 adminRouter.get("/user/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -38,14 +51,16 @@ adminRouter.get("/user/:id", async (req, res) => {
   }
 });
 
-adminRouter.put("/inabilited/:id", async (req, res) => {
+adminRouter.put("/updateUser/:id", async (req, res) => {
   const { id } = req.params;
-  const { del } = req.body;
+  const user = req.body;
+
   try {
-    const inabilited = await inabilitedUser(id, del);
-    res.status(200).json(inabilited);
+    const updateUser = await updateUser(id, user);
+    res.status(200).json(updateUser);
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
 });
+
 module.exports = adminRouter;
