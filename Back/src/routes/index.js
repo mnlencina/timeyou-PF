@@ -10,6 +10,7 @@ const functionRouter = require("./functions/functionRouter");
 const genderRouter = require("./gender/genderRouter");
 const userRouter = require("./users/userRouter");
 const buyRouter = require("./buy/buyRouter");
+const adminRouter = require("./admin/adminRouter");
 
 // Rutas para el filtrado en la pagina
 router.use("/colors", colorRouter);
@@ -21,7 +22,8 @@ router.use("/straps", strapRouter);
 router.use("/watches", watchRouter);
 router.use("/brands", brandRouter);
 router.use("/users", userRouter);
-router.use("/buy",buyRouter);
+router.use("/buy", buyRouter);
+router.use("/admin", adminRouter);
 
 // router.post("/admin/addFunction", (req, res) => {
 //   const { name } = req.body;
