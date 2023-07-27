@@ -1,5 +1,6 @@
 const express = require("express");
 const inabilitedUser = require("../../controllers/putAdminUser");
+const selectedUser = require("../../controllers/getUserName");
 const adminRouter = express.Router();
 
 adminRouter.put("/inabilited/:id", async (req, res) => {
@@ -10,6 +11,18 @@ adminRouter.put("/inabilited/:id", async (req, res) => {
     res.status(200).json(inabilited);
   } catch (error) {
     res.status(500).json({ Error: error.message });
+  }
+});
+
+adminRouter.get("/user-by-userName", async (req, res) => {
+  const { userName } = req.query;
+  try {
+    const userFound = await selectedUser(userName);
+    res.status(200).json(userFound);
+  } catch (error) {
+    if (error.message.includes("userName"))
+      return res.status(404).json({ Error: error.message });
+    else return res.status(500).json({ Error: error.message });
   }
 });
 
