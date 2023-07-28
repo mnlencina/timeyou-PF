@@ -3,6 +3,7 @@ const inabilitedUser = require("../../controllers/putAdminUser");
 const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
+const updateWatch = require("../../controllers/putAdminWatch");
 
 const adminRouter = express.Router();
 
@@ -58,6 +59,18 @@ adminRouter.put("/updateUser/:id", async (req, res) => {
   try {
     const updateUser = await updateUser(id, user);
     res.status(200).json(updateUser);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+});
+
+adminRouter.put("/update-watch/:id", async (req, res) => {
+  const { id } = req.params;
+  const watch = req.body;
+
+  try {
+    const update = await updateWatch(id, watch);
+    res.status(200).json(update);
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
