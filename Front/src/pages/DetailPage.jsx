@@ -5,8 +5,8 @@ import { FiShoppingCart } from "react-icons/fi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addModel, resetDetail } from "../redux/Actions";
-import { addToCart } from "../redux/Actions";
+import { addModel, resetDetail } from "../redux/action/Actions";
+import { addToCart } from "../redux/action/Actions";
 
 function DetailPage() {
   const [color, setColor] = useState(0);

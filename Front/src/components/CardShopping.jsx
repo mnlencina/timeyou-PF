@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AppendBTN } from "../utils/ComponentsStyle";
-import { removeFromCart } from "../redux/Actions";
+import { removeFromCart } from "../redux/action/Actions";
 import { useDispatch } from "react-redux";
 
 export const CardShopping = ({reloj}) => {

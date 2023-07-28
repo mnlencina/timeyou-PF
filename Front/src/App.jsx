@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import MyRoutes from "./routes/MyRoutes";
 import { useDispatch } from "react-redux";
-import { allPropWatches, getProducts } from "./redux/Actions";
+import { allPropWatches, getProducts } from "./redux/action/Actions";
 
 function App() {
   const dispatch = useDispatch();

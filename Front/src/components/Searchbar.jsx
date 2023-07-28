@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchProduct } from '../redux/Actions.js';
+import { searchProduct } from '../redux/action/Actions.js';
 import { useNavigate } from 'react-router-dom';
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";

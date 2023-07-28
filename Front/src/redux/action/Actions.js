@@ -22,10 +22,10 @@ import {
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER
-} from "./actionTypes";
+} from "./types/type";
 
-import { searchClient } from "../settings_algolia/settingsAlgolia";
-import { BsDisplayport } from "react-icons/bs";
+import { searchClient } from "../../settings_algolia/settingsAlgolia";
+//import { BsDisplayport } from "react-icons/bs";
 
 //fetch de productos
 

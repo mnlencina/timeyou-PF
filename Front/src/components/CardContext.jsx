@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Card } from "../components/index.js";
 import styled from "styled-components";
-import { getProducts } from "../redux/Actions.js";
+import { getProducts } from "../redux/action/Actions.js";
 import { useDispatch, useSelector } from "react-redux";
 
 export const CardContext = ({pagination}) => {

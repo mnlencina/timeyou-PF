@@ -5,7 +5,7 @@ import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
-import { logOut, getProducts, getWatchesByBrand } from "../redux/Actions.js";
+import { logOut, getProducts, getWatchesByBrand } from "../redux/action/Actions.js";
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);

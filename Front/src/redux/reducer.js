@@ -22,7 +22,7 @@ import {
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
-} from "./actionTypes";
+} from "./action/types/type";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");

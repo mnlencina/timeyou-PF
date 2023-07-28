@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filtersAll, clearFilters } from '../../redux/Actions.js'; // Asegúrate de importar correctamente la acción
+import { filtersAll, clearFilters } from '../../redux/action/Actions.js'; // Asegúrate de importar correctamente la acción
 
 const categoryValues = (clocks, categoryName) => {
   const values = clocks.map(clock => clock[categoryName]);

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { createUser, loginUser } from "../redux/Actions";
+import { createUser, loginUser } from "../redux/action/Actions";
 import { useDispatch } from "react-redux";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";

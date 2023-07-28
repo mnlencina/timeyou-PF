@@ -4,7 +4,7 @@ import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../redux/Actions";
+import { clearCart } from "../redux/action/Actions";
 
 export const CheckoutForm = () => {
   const dispatch = useDispatch();

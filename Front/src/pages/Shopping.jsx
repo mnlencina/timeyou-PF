@@ -6,7 +6,7 @@ import { BsBagCheck, BsBag } from "react-icons/bs";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
-import { totalPrice } from "../redux/Actions";
+import { totalPrice } from "../redux/action/Actions";
 
 function Shopping() {
   const dispatch = useDispatch()

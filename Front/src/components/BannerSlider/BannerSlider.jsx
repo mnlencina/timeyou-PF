@@ -1,10 +1,9 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
+import { useRef, useEffect } from "react";
 import { imageCarrousel } from "../../utils/Constant";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { BTNHover } from "../../utils/ComponentsStyle";
-import { Container } from "./Style";
+import { Container } from "./style";
 
 export const BannerSlider = () => {
   const slideShow = useRef(null);
