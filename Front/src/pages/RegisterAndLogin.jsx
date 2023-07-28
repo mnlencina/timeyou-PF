@@ -73,13 +73,13 @@ function RegisterAndLogin() {
       : null;
     const confirmation = queryParams.get("confirmation");
 
-    useEffect(() => {
-      // Aquí puedes acceder a los datos del usuario y la confirmación
+   
       if (userData) {
         dispatch(loginGoogle({ role: "user", token: userData.token }));
-        navigate("/");
+        navigate("/")
+     
       }
-    }, []);
+
   };
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
