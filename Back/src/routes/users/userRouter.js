@@ -1,5 +1,6 @@
 const express = require("express");
 const createUser = require("../../controllers/postUsers");
+const sendEmailConPlantilla = require("../../nodemailer/sendEmailConPlantilla");
 
 const userRouter = express.Router();
 
@@ -15,6 +16,10 @@ userRouter.post("/", async (req, res) => {
       phone_number,
       role
     );
+    if(newUser.email) {
+      console.log(newUser.email)
+      sendEmailConPlantilla(newUser.email, "newUser")
+    }
     res.status(200).json(newUser);
   } catch (error) {
     console.log(error);
