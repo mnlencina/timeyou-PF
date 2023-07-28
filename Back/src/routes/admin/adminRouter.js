@@ -64,6 +64,8 @@ adminRouter.put("/updateUser/:id", async (req, res) => {
   }
 });
 
+// Rutas Watch
+
 adminRouter.put("/update-watch/:id", async (req, res) => {
   const { id } = req.params;
   const watch = req.body;
@@ -71,6 +73,21 @@ adminRouter.put("/update-watch/:id", async (req, res) => {
   try {
     const update = await updateWatch(id, watch);
     res.status(200).json(update);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+});
+
+// Rutas Buy
+
+adminRouter.get("/allBuy", async (req, res) => {
+  try {
+    const allBuy = await allBuyUsers();
+    console.log(allBuy);
+    if (allBuy.message)
+      return res.status(200).json({ message: allBuy.message });
+
+    res.status(200).json(allBuy);
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
