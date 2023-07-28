@@ -1,0 +1,452 @@
+import React, { useState, useRef } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { createUser, loginUser } from "../redux/Actions";
+import { useDispatch } from "react-redux";
+import { FaFacebookF } from "react-icons/fa";
+import { BsGoogle } from "react-icons/bs";
+import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+
+function RegisterAndLogin() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [inModeLogin, setInModeLogin] = useState(false);
+  const handleInMode = () => {
+    setInModeLogin(!inModeLogin);
+  };
+  const [registerValues, setRegisterValues] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const [loginAcount, setLoginAcount] = useState({
+    email: "",
+    password: "",
+    provider: "local",
+  });
+
+  const handleChangeRegister = (e) => {
+    const { name, value } = e.target;
+    setRegisterValues({
+      ...registerValues,
+      [name]: value,
+    });
+    if (name === "password") {
+      const valueForm = value.toString();
+      setRegisterValues({
+        ...registerValues,
+        [name]: valueForm,
+      });
+    }
+  };
+  const handleSubmitRegister = async (e) => {
+    e.preventDefault();
+    dispatch(createUser(registerValues));
+  };
+
+  const handleChangeLogin = (e) => {
+    const { name, value } = e.target;
+    setLoginAcount({
+      ...loginAcount,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(loginAcount));
+    navigate("/");
+  };
+
+  const renderRegister = () => (
+    <ContainerRegister>
+      <h1>registrarse</h1>
+      <div className="register-container">
+        <div className="container-btn">
+          <div className="content">
+            <p>Registrate con plataformas sociales</p>
+          </div>
+          <div className="btn-controllers">
+            <LoginSocialFacebook
+              appId="822002286033548"
+              onResolve={(Response) => {
+                console.log(Response);
+              }}
+              onReject={(error) => {
+                console.log(error);
+              }}
+            >
+              <button>
+                <FaFacebookF />
+              </button>
+            </LoginSocialFacebook>
+            <LoginSocialGoogle
+              client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
+              onResolve={(Response) => {
+                console.log(Response.data);
+              }}
+              onReject={(error) => {
+                console.log(error);
+              }}
+            >
+              <button>
+                <BsGoogle />
+              </button>
+            </LoginSocialGoogle>
+          </div>
+        </div>
+        <form
+          action="POST"
+          onSubmit={handleSubmitRegister}
+          className="register"
+        >
+          <span>Nombre de Usuario:</span>
+          <input
+            type="text"
+            name="userName"
+            value={registerValues.userName}
+            onChange={handleChangeRegister}
+            placeholder="ingrese su nombre completo..."
+          />
+          <span>Email:</span>
+          <input
+            type="email"
+            placeholder=" ingrese su email..."
+            name="email"
+            value={registerValues.email}
+            onChange={handleChangeRegister}
+          />
+          <span>Contraseña:</span>
+          <input
+            type="password"
+            placeholder="ingrese una contraseña"
+            name="password"
+            value={registerValues.password}
+            onChange={handleChangeRegister}
+          />
+          <button> enviar</button>
+        </form>
+      </div>
+    </ContainerRegister>
+  );
+
+  const renderLogin = () => (
+    <ContainerLogin>
+      <h1>Iniciar sesion</h1>
+      <div className="login-container">
+        <div className="login-btn">
+          <LoginSocialFacebook
+            appId="822002286033548"
+            onResolve={(Response) => {
+              console.log(Response);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <FaFacebookF />
+            </button>
+          </LoginSocialFacebook>
+          <LoginSocialGoogle
+            client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
+            onResolve={(Response) => {
+              console.log(Response.data);
+            }}
+            onReject={(error) => {
+              console.log(error);
+            }}
+          >
+            <button>
+              <BsGoogle />
+            </button>
+          </LoginSocialGoogle>
+        </div>
+        <form action="GET" onSubmit={handleSubmitLogin} className="login">
+          <span>email:</span>
+          <input
+            type="text"
+            name="email"
+            value={loginAcount.email}
+            onChange={handleChangeLogin}
+          />
+          <span>Password:</span>
+          <input
+            type="password"
+            name="password"
+            value={loginAcount.password}
+            onChange={handleChangeLogin}
+          />
+          <button>Login</button>
+        </form>
+      </div>
+    </ContainerLogin>
+  );
+  return (
+    <Container>
+      {renderRegister()}
+      <div className={`panel-login${inModeLogin ? " active-login" : ""}`}>
+        <div className="panel">
+          <h2>Ya tienes una cuenta</h2>
+          <h4>haz Click para iniciar secion</h4>
+          <button onClick={handleInMode}>ir a login</button>
+        </div>
+      </div>
+      <div
+        className={`panel-register${!inModeLogin ? " active-register" : ""}`}
+      >
+        <div className="panel">
+          <h2>No tienes una cuenta?</h2>
+          <h4>haz Click para registrarte</h4>
+          <button onClick={handleInMode}>register</button>
+        </div>
+      </div>
+      <TransitionDiv inModeLogin={inModeLogin} />
+      {renderLogin()}
+    </Container>
+  );
+}
+
+export default RegisterAndLogin;
+
+const Container = styled.main`
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  .panel-login {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+    right: -2000px;
+    z-index: 20;
+    border: 1px solid #fff;
+    transition: all 0.7s ease-in-out;
+    border-radius: 50%;
+    .panel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      color: #fff;
+      border-radius: 50%;
+      button {
+        padding: 7px 30px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s ease;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+  .active-login {
+    transition-delay: 1s;
+    right: 150px;
+  }
+  .panel-register {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+    left: -2500px;
+    z-index: 20;
+    border: 1px solid #fff;
+    transition: all 0.7s ease-in-out;
+    border-radius: 50%;
+    .panel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      color: #fff;
+      border-radius: 50%;
+      button {
+        padding: 7px 30px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s ease;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+  .active-register {
+    transition-delay: 1s;
+    left: 150px;
+  }
+`;
+
+const ContainerRegister = styled.div`
+  width: 50%;
+  height: 100%;
+  h1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+    text-transform: uppercase;
+  }
+  .register-container {
+    width: 100%;
+    height: 100%;
+    .container-btn {
+      width: 300px;
+      height: 110px;
+      position: absolute;
+      bottom: 40px;
+      left: 175px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      .content {
+        width: 100%;
+        height: 20%;
+        p {
+          line-height: 50px;
+          width: 100%;
+          text-align: center;
+        }
+      }
+      .btn-controllers {
+        width: 100%;
+        height: calc(100% - 20%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+      }
+      button {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: none;
+        border: #111;
+        transition: 0.3s ease;
+        font-size: 25px;
+        &:hover {
+          transform: scale(1.2);
+          background-color: white;
+          border: 1px solid red;
+        }
+      }
+    }
+    .register {
+      position: absolute;
+      top: 150px;
+      left: 150px;
+      width: 350px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+`;
+
+const ContainerLogin = styled.div`
+  width: 50%;
+  height: 100%;
+  h1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+    text-transform: uppercase;
+  }
+  .login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .login-btn {
+      position: absolute;
+      bottom: 60px;
+      right: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      button {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: none;
+        border: #111;
+        transition: 0.3s ease;
+        font-size: 25px;
+        &:hover {
+          transform: scale(1.2);
+          background-color: white;
+          border: 1px solid red;
+        }
+      }
+    }
+    .login {
+      position: absolute;
+      top: 150px;
+      right: 150px;
+      width: 350px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+`;
+
+const TransitionDiv = styled.div`
+  width: 1500px;
+  height: 1500px;
+  position: absolute;
+  top: -720px;
+  left: -779px;
+  background-color: #111;
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  transform: ${(props) =>
+    props.inModeLogin ? "translateX(calc(107vw))" : "translateX(-2.7vw)"};
+  transition: all 2s ease-in-out;
+  z-index: 10;
+`;

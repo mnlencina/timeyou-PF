@@ -9,36 +9,31 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      age: {
-        type: DataTypes.INTEGER,
+      password: {
+        type: DataTypes.STRING,
         allowNull: true,
-      },
-      phone_number: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        unique: true,
       },
       role: {
         type: DataTypes.ENUM("user", "admin"),
         defaultValue: "user",
+      },
+      provider: {
+        type: DataTypes.ENUM("local", "google", "facebook"),
+        defaultValue: "local",
+      },
+      del: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

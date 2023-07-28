@@ -2,17 +2,8 @@ const { Op } = require("sequelize");
 const { User } = require("../db");
 const bcrypt = require("bcrypt");
 
-const createUser = async (
-  name,
-  userName,
-  password,
-  email,
-  age,
-  phone_number,
-  role
-) => {
-  if (!name || !userName || !password || !email)
-    throw new Error("Missing data");
+const createUser = async (userName, email, password) => {
+  if (!userName || !email) throw new Error("Missing data for create user");
 
   const notAvailable = await User.findOne({
     where: {
@@ -30,15 +21,13 @@ const createUser = async (
 
   const saltRounds = 10; // numero de rounds de encriptacion
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const newUser = User.create({
-    name,
+
+  const newUser = await User.create({
     userName,
-    password: hashedPassword,
     email,
-    age,
-    phone_number,
-    role,
+    password: hashedPassword,
   });
+
   return newUser;
 };
 

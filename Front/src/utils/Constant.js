@@ -8,3 +8,4 @@ const image4 =
   "https://watchlandsa.vtexassets.com/assets/vtex.file-manager-graphql/images/403ce188-2cae-4b01-b5a4-3a00a083bee9___7f6ed3d0f49f50eafc8b44a5871fe11e.png";
 
 export const imageCarrousel = [image1, image2, image3, image4];
+

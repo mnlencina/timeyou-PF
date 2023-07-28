@@ -10,9 +10,9 @@ export const CardContext = ({pagination}) => {
  
   const loading = useSelector(state=> state.isLoading);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  //useEffect(() => {
+  //  dispatch(getProducts());
+  //}, []);
   return (
     <Container>
       <div className="context-card">
@@ -39,9 +39,7 @@ const Container = styled.section`
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-   /*  display: flex;
-    flex-wrap: wrap; */
-    align-items: center;
+    align-items:start;
     justify-items: center;
     
   }

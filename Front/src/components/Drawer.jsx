@@ -1,20 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { FiltersAll } from "./index.js";
 
 export const Drawer = ({ show }) => {
   return (
     <Container show={show}>
       <ul>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
-        <li>filtro1</li>
+        <li><FiltersAll /></li>
       </ul>
     </Container>
   );
