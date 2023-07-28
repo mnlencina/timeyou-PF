@@ -1,4 +1,3 @@
-
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -23,6 +22,7 @@ import {
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
   ALL_USERS,
+  LOGIN_GOOGLE,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -44,8 +44,11 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: { token: "" },
-  allUsers:[],
+  user: {
+    role: "",
+    token: "",
+  },
+  allUsers: [],
 };
 
 // Función para guardar el carrito en el localStorage
@@ -204,6 +207,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         user: { token: payload },
       };
     //lINKS DEL NAVBAR
+    case LOGIN_GOOGLE:
+      return {
+        ...state,
+        user: payload,
+      };
     case GET_WATCHES_BY_BRAND:
       return {
         ...state,
@@ -216,13 +224,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         user: { token: "" },
-              }
+      };
     case ALL_USERS:
-      return{
+      return {
         ...state,
-        allUsers: payload
-      }    
+        allUsers: payload,
+      };
     default:
       return state;
-            }
-          }
+  }
+};
