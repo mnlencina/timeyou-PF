@@ -246,7 +246,7 @@ export const loginUser = (user) => async (dispatch) => {
     console.log(data);
     dispatch({
       type: LOGIN_USER,
-      payload: data.token,
+      payload: data,
     });
   } catch (error) {
     console.log(error);
