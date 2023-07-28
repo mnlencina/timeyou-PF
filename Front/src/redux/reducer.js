@@ -22,6 +22,7 @@ import {
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
+  ALL_USERS,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -44,6 +45,7 @@ const initialState = {
   STRAPS: [],
   FUNCTIONS: [],
   user: { token: "" },
+  allUsers:[],
 };
 
 // Función para guardar el carrito en el localStorage
@@ -215,7 +217,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         user: { token: "" },
               }
-
+    case ALL_USERS:
+      return{
+        ...state,
+        allUsers: payload
+      }    
     default:
       return state;
             }

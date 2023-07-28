@@ -36,3 +36,8 @@ export const LOGOUT_USER = "LOGOUT_USER"
 //links del Navbar
 export const GET_WATCHES_BY_BRAND = "GET_WATCHES_BY_BRAND"
 
+//TIPES DE ADMIN
+export const ALL_USERS = "ALL_USERS"
+
+
+

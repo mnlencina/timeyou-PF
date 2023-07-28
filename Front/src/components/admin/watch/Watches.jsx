@@ -1,6 +1,19 @@
-const Watches =()=>{
+const Watches =({Watch})=>{
+    console.log(Watch);
     return(
-        <h1>ALL USERS</h1>
+        <div>
+            <h1>ALL USERS</h1>
+            {Watch?.map((w, i)=>
+            <div key={i+30}>
+                <span>{w.brandName}- -</span>
+                <span>{w.model}- -</span>
+                <span>{w.styleName}- -</span>
+                <span>{w.strapName}- -</span>
+                <span>{w.color}- -</span>
+                <span>{w.del}</span>
+            </div>
+            )}
+        </div>
     )
     }
     
