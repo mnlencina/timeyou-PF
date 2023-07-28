@@ -6,26 +6,45 @@ import Shopping from "../pages/Shopping";
 import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
-import Dashboard from "../pages/DashBoard/DashBoard";
+import Dashboard from "../pages/dashboard/Dashboard";
+import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const MyRoutes = () => {
   const location = useLocation();
+  const user = useSelector((state) => state.user);
   //mostrar NavBar
-  const showNav = location.pathname !== "/admin/dashboard" // location.pathname === "/" || location.pathname === "/product/:model";
+  const showNav = location.pathname !== "/admin/dashboard"; // location.pathname === "/" || location.pathname === "/product/:model";
 
-  const showFoot = location.pathname !== "/shopping" && location.pathname !== "/admin/dashboard";
+  const showFoot =
+    location.pathname !== "/shopping" &&
+    location.pathname !== "/admin/dashboard";
 
   return (
     <>
       {showNav && <Navbar />}
       <Routes>
-        <Route path="/auth" element={<RegisterAndLogin/>}/>
-        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/auth" element={<RegisterAndLogin />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
-        <Route path="/shopping/checkout" element={<Checkout />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />        
+        <Route
+          path="/shopping/checkout"
+          element={
+            <ProtectedRoutes user={user}>
+              <Checkout />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoutes user={user}>
+              <Dashboard />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
       {showFoot && <Footer />}
     </>

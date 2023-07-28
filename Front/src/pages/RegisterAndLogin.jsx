@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { createUser, loginUser } from "../redux/Actions";
+import { useNavigate, useLocation } from "react-router-dom";
+import { createUser, loginGoogle, loginUser } from "../redux/Actions";
 import { useDispatch } from "react-redux";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
@@ -59,6 +59,33 @@ function RegisterAndLogin() {
     navigate("/");
   };
 
+  /* funciones de google */
+
+  const [userData, setUserData] = useState({});
+  const [useToken, setUserToken] = useState("");
+
+  const LoginGoogle = () => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const dataString = queryParams.get("data");
+    const userData = dataString
+      ? JSON.parse(decodeURIComponent(dataString))
+      : null;
+    const confirmation = queryParams.get("confirmation");
+
+    useEffect(() => {
+      // Aquí puedes acceder a los datos del usuario y la confirmación
+      if (userData) {
+        dispatch(loginGoogle({ role: "user", token: userData.token }));
+        navigate("/");
+      }
+    }, []);
+  };
+  const handleOnClick = async () => {
+    // Redireccionar al usuario a la página de inicio de sesión de Google
+    window.location.href = "http://localhost:3001/auth/google"; // Reemplaza esta URL con la ruta adecuada de tu servidor para la autenticación de Google
+  };
+
   const renderRegister = () => (
     <ContainerRegister>
       <h1>registrarse</h1>
@@ -68,32 +95,12 @@ function RegisterAndLogin() {
             <p>Registrate con plataformas sociales</p>
           </div>
           <div className="btn-controllers">
-            <LoginSocialFacebook
-              appId="822002286033548"
-              onResolve={(Response) => {
-                console.log(Response);
-              }}
-              onReject={(error) => {
-                console.log(error);
-              }}
-            >
-              <button>
-                <FaFacebookF />
-              </button>
-            </LoginSocialFacebook>
-            <LoginSocialGoogle
-              client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
-              onResolve={(Response) => {
-                console.log(Response.data);
-              }}
-              onReject={(error) => {
-                console.log(error);
-              }}
-            >
-              <button>
-                <BsGoogle />
-              </button>
-            </LoginSocialGoogle>
+            <button>
+              <FaFacebookF />
+            </button>
+            <button onClick={handleOnClick}>
+              <BsGoogle />
+            </button>
           </div>
         </div>
         <form
@@ -136,32 +143,12 @@ function RegisterAndLogin() {
       <h1>Iniciar sesion</h1>
       <div className="login-container">
         <div className="login-btn">
-          <LoginSocialFacebook
-            appId="822002286033548"
-            onResolve={(Response) => {
-              console.log(Response);
-            }}
-            onReject={(error) => {
-              console.log(error);
-            }}
-          >
-            <button>
-              <FaFacebookF />
-            </button>
-          </LoginSocialFacebook>
-          <LoginSocialGoogle
-            client_id="927810431118-973a21ldodnucomi99br9c34pjlpd08p.apps.googleusercontent.com"
-            onResolve={(Response) => {
-              console.log(Response.data);
-            }}
-            onReject={(error) => {
-              console.log(error);
-            }}
-          >
-            <button>
-              <BsGoogle />
-            </button>
-          </LoginSocialGoogle>
+          <button>
+            <FaFacebookF />
+          </button>
+          <button>
+            <BsGoogle onClick={handleOnClick} />
+          </button>
         </div>
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <span>email:</span>
@@ -185,6 +172,7 @@ function RegisterAndLogin() {
   );
   return (
     <Container>
+      {LoginGoogle()}
       {renderRegister()}
       <div className={`panel-login${inModeLogin ? " active-login" : ""}`}>
         <div className="panel">
