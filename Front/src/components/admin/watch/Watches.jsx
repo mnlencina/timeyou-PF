@@ -2,7 +2,7 @@ const Watches =({Watch})=>{
     console.log(Watch);
     return(
         <div>
-            <h1>ALL USERS</h1>
+            <h1>ALL WATCHES</h1>
             {Watch?.map((w, i)=>
             <div key={i+30}>
                 <span>{w.brandName}- -</span>
