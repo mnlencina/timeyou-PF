@@ -1,9 +1,11 @@
 const express = require("express");
+const sendEmailConPlantilla = require("../../nodemailer/sendEmailConPlantilla");
 const createUser = require("../../controllers/postUsersRegister");
 const userLogin = require("../../controllers/postLoginUser");
 const createAccessToken = require("../../utils/jwt");
 const allUserName = require("../../controllers/getAllUserName");
 const newPassword = require("../../controllers/putPassworUser");
+
 
 const userRouter = express.Router();
 
@@ -11,6 +13,10 @@ userRouter.post("/register", async (req, res) => {
   const { userName, email, password } = req.body;
   try {
     const newUser = await createUser(userName, email, password);
+    if(email) {
+      console.log(email)
+      sendEmailConPlantilla(email, "newUser")
+    }
     if (newUser) res.status(200).json({ message: "user created successfully" });
   } catch (error) {
     if (error.message.includes("not available")) {
