@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filtersAll, clearFilters } from '../../redux/Actions.js'; // Asegúrate de importar correctamente la acción
+import { filtersAll, clearFilters } from '../../redux/Actions.js'; 
+import { translateGender } from '../helpers/translateGenderWords.jsx'
 
 const categoryValues = (clocks, categoryName) => {
   const values = clocks.map(clock => clock[categoryName]);
@@ -18,17 +19,15 @@ export const FiltersAll = () => {
   const uniqueStyles = categoryValues(clocks, 'styleName');
   const uniqueStraps = categoryValues(clocks, 'strapName');
   const uniqueGenders = categoryValues(clocks, 'gender');
-  const uniquePrices = categoryValues(clocks, "price")
+ 
 
   const [selectedCategories, setSelectedCategories] = useState({ ...searchClocks });
   const [showNoResults, setShowNoResults] = useState(false);
 
   const handleOnCheckbox = (selectedValue, fieldName) => {
 
-    // Verificar si el valor ya está seleccionado
     const isSelected = selectedCategories[fieldName] === selectedValue;
 
-    // Si ya está seleccionado, eliminarlo de las selecciones
     if (isSelected) {
       setSelectedCategories((prevState) => {
         const updatedCategories = { ...prevState };
@@ -36,7 +35,7 @@ export const FiltersAll = () => {
         return updatedCategories;
       });
     } else {
-      // Si no está seleccionado, agregarlo a las selecciones
+
       setSelectedCategories((prevState) => ({
         ...prevState,
         [fieldName]: selectedValue,
@@ -47,10 +46,8 @@ export const FiltersAll = () => {
   const handleApplyFilters = () => {
 
     setSelectedCategories({});
-    // Realiza el dispatch de las categorías seleccionadas
     dispatch(filtersAll(selectedCategories));
 
-    // Verificar si hay resultados o no
     const filteredClocks = clocks.filter((product) => {
       let matchesAllCategories = true;
       for (const fieldName in selectedCategories) {
@@ -67,11 +64,8 @@ export const FiltersAll = () => {
   };
 
   const handleClearFilters = () => {
-    // Limpiar los filtros restableciendo el estado a su valor inicial (vacío)
     setSelectedCategories({});
-    // Realiza el dispatch para limpiar los filtros en el estado del Redux
     dispatch(clearFilters());
-    // Ocultar el mensaje de "No hay coincidencias con la búsqueda seleccionada"
     setShowNoResults(false);
   };
   
@@ -144,7 +138,7 @@ export const FiltersAll = () => {
             checked={selectedCategories.gender === genero}
             onChange={() => handleOnCheckbox(genero, "gender")}
           />
-          <label htmlFor={genero}>{genero}</label>
+          <label htmlFor={genero}>{translateGender(genero)}</label>
         </div>
       ))}
       <button onClick={handleClearFilters}>Borrar filtros</button>

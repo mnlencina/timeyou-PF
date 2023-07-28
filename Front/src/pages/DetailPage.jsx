@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addModel, resetDetail } from "../redux/Actions";
 import { addToCart } from "../redux/Actions";
+import { translateGender } from "../components/helpers/translateGenderWords"
 import CommentsList from "../components/comments/CommentsList";
 import AverageRating from "../components/comments/AverageRating";
 
@@ -115,7 +116,7 @@ function DetailPage () {
                 <div className="gender">
                   <h3>genero</h3>
                   <ul>
-                    <li>{detailClock[0].gender}</li>
+                      <li>{translateGender(detailClock[0].gender)}</li>
                   </ul>
                 </div>
               </div>
