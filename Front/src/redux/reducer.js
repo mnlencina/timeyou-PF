@@ -204,13 +204,17 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: { token: payload },
+        user: { 
+          token: payload.token,
+          role: payload.role  
+        },
       };
     //lINKS DEL NAVBAR
     case LOGIN_GOOGLE:
       return {
         ...state,
         user: payload,
+        role: "user"
       };
     case GET_WATCHES_BY_BRAND:
       return {
@@ -223,7 +227,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case LOGOUT_USER:
       return {
         ...state,
-        user: { token: "" },
+        user: { 
+          token: "",
+          role: ""
+        },
       };
     case ALL_USERS:
       return {
