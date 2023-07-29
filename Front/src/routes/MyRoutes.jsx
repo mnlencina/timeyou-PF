@@ -7,7 +7,7 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { ProtectedRoutes, ProtectedRoutesAdmin } from "../components/ProtectedRoutes";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const MyRoutes = () => {
@@ -40,9 +40,9 @@ const MyRoutes = () => {
         <Route
           path="/admin/dashboard"
           element={
-            <ProtectedRoutes user={user}>
+            <ProtectedRoutesAdmin user={user}>
               <Dashboard />
-            </ProtectedRoutes>
+            </ProtectedRoutesAdmin>
           }
         />
       </Routes>
