@@ -83,7 +83,7 @@ function RegisterAndLogin() {
     const confirmation = queryParams.get("confirmation");
 
     if (userData) {
-      dispatch(loginGoogle({ role: "user", token: userData.token }));
+      dispatch(loginGoogle(userData));
       navigate("/");
     }
   };
