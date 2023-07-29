@@ -35,7 +35,8 @@ userRouter.post("/login", async (req, res) => {
       userName: userSession.userName,
       email: userSession.email,
       token: token,
-      role: userSession.role
+      role: userSession.role,
+      del: userSession.del
     };
     res.status(200).json(userCredentials);
   } catch (error) {
