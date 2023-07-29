@@ -12,7 +12,10 @@ import { Link } from "react-router-dom";
 
 export default function LandingPage() {
 
-    const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
+  const Clocks = useSelector((state) => state.Clocks);
+  const searchClocks = useSelector((state) => state.searchClocks);
+  const searchActive = useSelector((state) => state.searchActive);
+  
   const whatches = searchActive ? searchClocks : Clocks;
 
   const [show, setShow] = useState(false);
@@ -79,9 +82,8 @@ export default function LandingPage() {
   );
 }
 
-const Explore = styled.section`
-
-`;
+//const Explore = styled.section`
+//`;
 
 const ContainerSlide = styled.section`
   width: 100%;
