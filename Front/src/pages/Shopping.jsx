@@ -25,7 +25,7 @@ function Shopping() {
   const renderCart = () => (
     <Container>
       <div className="btn-goback">
-        <BTNHover alter onClick={() => navigate("/")}>
+        <BTNHover alter="true" onClick={() => navigate("/")} >
           {"<"}
         </BTNHover>
       </div>
@@ -78,12 +78,12 @@ function Shopping() {
             </div>
             <div className="btn-checkout">
               <div className="btn-check">
-                <BTNCarritoDeCompras onClick={handleCheckOut}>
+                <BTNCarritoDeCompras alter="false" onClick={handleCheckOut}>
                   FINALIZAR COMPRA
                 </BTNCarritoDeCompras>
               </div>
               <div className="btn-comprarmas">
-                <BTNCarritoDeCompras alter onClick={() => navigate("/")}>
+                <BTNCarritoDeCompras alter="true" onClick={() => navigate("/")}>
                   VER OTROS PRODUCTOS
                 </BTNCarritoDeCompras>
               </div>

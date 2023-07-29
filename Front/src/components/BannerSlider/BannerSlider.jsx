@@ -84,10 +84,10 @@ export const BannerSlider = () => {
         ))}
       </div>
       <div className="controles">
-        <BTNHover onClick={handlePrev}>
+        <BTNHover onClick={handlePrev} alter="false">
           <AiOutlineLeft />
         </BTNHover>
-        <BTNHover onClick={handleNext}>
+        <BTNHover onClick={handleNext} alter="false">
           <AiOutlineRight />
         </BTNHover>
       </div>

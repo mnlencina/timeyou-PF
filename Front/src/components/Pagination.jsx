@@ -7,7 +7,7 @@ export const Pagination = ({ totalPages, page, onPrev, onNext }) => {
   return (
     <Container>
       {page > 1 && (
-        <AppendBTN onClick={onPrev}>
+        <AppendBTN onClick={onPrev} alter="false">
           <AiOutlineLeft />
         </AppendBTN>
       )}
@@ -15,7 +15,7 @@ export const Pagination = ({ totalPages, page, onPrev, onNext }) => {
         {page} de {totalPages}
       </h4>
       {page !== totalPages && (
-        <AppendBTN onClick={onNext}>
+        <AppendBTN onClick={onNext} alter="false">
           <AiOutlineRight />
         </AppendBTN>
       )}

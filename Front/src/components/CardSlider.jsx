@@ -32,10 +32,10 @@ export const CardSlider = () => {
       <div className="bodyContainer">
         <div className="bodyCard">
           <div className="controles">
-            <BTNHover alter onClick={handlePrev}>
+            <BTNHover alter="true" onClick={handlePrev}>
               <AiOutlineLeft />
             </BTNHover>
-            <BTNHover alter onClick={handleNext}>
+            <BTNHover alter="true" onClick={handleNext}>
               <AiOutlineRight />
             </BTNHover>
           </div>

@@ -69,9 +69,9 @@ export const Navbar = () => {
             <li>
               <Link to="/auth">
                 {user.token.trim()==="" ? (
-                  <BiUser onClick={()=> Navigate("/")} />
+                  <BiUser title="LogIn" onClick={()=> Navigate("/")} />
                 ) : (
-                  <BiUserX onClick={() => dispatch(logOut())} />
+                  <BiUserX title="Out" onClick={() => dispatch(logOut())} />
                 )}
               </Link>
             </li>

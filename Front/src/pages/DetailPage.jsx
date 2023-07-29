@@ -82,7 +82,7 @@ function DetailPage () {
                 </div>
               </div>
               <div className="btn-cart">
-                <BTNCarritoDeCompras onClick={handleAddToCart}>
+                <BTNCarritoDeCompras onClick={handleAddToCart} alter="false">
                   <span>
                     <FiShoppingCart />
                   </span>

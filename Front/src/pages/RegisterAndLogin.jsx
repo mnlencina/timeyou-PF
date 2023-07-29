@@ -146,7 +146,7 @@ function RegisterAndLogin() {
             />
           </div>
 
-          <BTNLogin> enviar</BTNLogin>
+          <BTNLogin alter="false"> enviar</BTNLogin>
         </form>
       </div>
     </ContainerRegister>
