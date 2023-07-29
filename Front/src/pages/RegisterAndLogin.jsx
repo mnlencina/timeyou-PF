@@ -79,7 +79,7 @@ function RegisterAndLogin() {
 
    
       if (userData) {
-        dispatch(loginGoogle({ role: "user", token: userData.token }));
+        dispatch(loginGoogle(userData));
         navigate("/")
      
       }

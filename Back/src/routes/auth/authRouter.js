@@ -27,8 +27,11 @@ authRouter.get(
         userName: userSession.userName,
         email: userSession.email,
         token: token,
+        role: userSession.role,
+        del: userSession.del
       };
       const userData = JSON.stringify(userCredentials);
+      console.log(userData);
       res.redirect(
         "http://localhost:5173/auth?data=" +
           encodeURIComponent(userData) +

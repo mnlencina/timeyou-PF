@@ -246,16 +246,16 @@ export const loginUser = (user) => async (dispatch) => {
     });
     dispatch({
       type: LOGIN_USER,
-      payload: { role: data.role || "user", token: data.token },
+      payload: { role: data.role , token: data.token },
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const loginGoogle = (token) => ({
+export const loginGoogle = (user) => ({
   type: LOGIN_GOOGLE,
-  payload: token,
+  payload: user,
 });
 
 // Peticiones para cada una de las Brand en el Navbar //
