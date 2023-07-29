@@ -65,3 +65,22 @@ export const AppendBTN = styled.button`
     color: ${(props) => (props.alter ? "green" : "#fff")};
   }
 `;
+
+export const BTNLogin = styled.button`
+  width: 150px;
+  background-color: #4ebcc7;
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: #111;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    background-color: #35838a;
+    transform: scale(1.2);
+  }
+`;

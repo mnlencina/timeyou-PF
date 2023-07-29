@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom";
+/* actions */
 import { createUser, loginGoogle, loginUser } from "../redux/Actions";
+/* hooks */
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+/* iconos */
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
-import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+/* styled  editing */
+import { BTNLogin } from "../utils/ComponentsStyle";
 
 function RegisterAndLogin() {
-  const USER = useSelector((state)=> state.user)
+  const USER = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inModeLogin, setInModeLogin] = useState(false);
@@ -59,12 +64,12 @@ function RegisterAndLogin() {
     dispatch(loginUser(loginAcount));
     //navigate('/admin/dashboard') : navigate("/home");
   };
-  
-  useEffect(()=>{
-    if(USER.role !== ""){
-      USER.role === "admin" ? navigate('/admin/dashboard'): navigate("/home");
+
+  useEffect(() => {
+    if (USER.role !== "") {
+      USER.role === "admin" ? navigate("/admin/dashboard") : navigate("/home");
     }
-  },[USER])
+  }, [USER]);
 
   /* funciones de google */
 
@@ -77,13 +82,10 @@ function RegisterAndLogin() {
       : null;
     const confirmation = queryParams.get("confirmation");
 
-   
-      if (userData) {
-        dispatch(loginGoogle({ role: "user", token: userData.token }));
-        navigate("/")
-     
-      }
-
+    if (userData) {
+      dispatch(loginGoogle({ role: "user", token: userData.token }));
+      navigate("/");
+    }
   };
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
@@ -112,31 +114,38 @@ function RegisterAndLogin() {
           onSubmit={handleSubmitRegister}
           className="register"
         >
-          <span>Nombre de Usuario:</span>
-          <input
-            type="text"
-            name="userName"
-            value={registerValues.userName}
-            onChange={handleChangeRegister}
-            placeholder="ingrese su nombre completo..."
-          />
-          <span>Email:</span>
-          <input
-            type="email"
-            placeholder=" ingrese su email..."
-            name="email"
-            value={registerValues.email}
-            onChange={handleChangeRegister}
-          />
-          <span>Contraseña:</span>
-          <input
-            type="password"
-            placeholder="ingrese una contraseña"
-            name="password"
-            value={registerValues.password}
-            onChange={handleChangeRegister}
-          />
-          <button> enviar</button>
+          <div className="input-field">
+            <AiOutlineUser />
+            <input
+              type="text"
+              name="userName"
+              value={registerValues.userName}
+              onChange={handleChangeRegister}
+              placeholder="ingrese su nombre de usuario..."
+            />
+          </div>
+          <div className="input-field">
+            <AiOutlineMail />
+            <input
+              type="email"
+              placeholder=" ingrese su email..."
+              name="email"
+              value={registerValues.email}
+              onChange={handleChangeRegister}
+            />
+          </div>
+          <div className="input-field">
+            <AiOutlineLock />
+            <input
+              type="password"
+              placeholder="ingrese una contraseña"
+              name="password"
+              value={registerValues.password}
+              onChange={handleChangeRegister}
+            />
+          </div>
+
+          <BTNLogin> enviar</BTNLogin>
         </form>
       </div>
     </ContainerRegister>
@@ -155,21 +164,27 @@ function RegisterAndLogin() {
           </button>
         </div>
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
-          <span>email:</span>
-          <input
-            type="text"
-            name="email"
-            value={loginAcount.email}
-            onChange={handleChangeLogin}
-          />
-          <span>Password:</span>
-          <input
-            type="password"
-            name="password"
-            value={loginAcount.password}
-            onChange={handleChangeLogin}
-          />
-          <button>Login</button>
+          <div className="input-field">
+            <AiOutlineMail />
+            <input
+              placeholder="Ingrese su email.."
+              type="text"
+              name="email"
+              value={loginAcount.email}
+              onChange={handleChangeLogin}
+            />
+          </div>
+          <div className="input-field">
+            <AiOutlineLock />
+            <input
+              placeholder="Ingrese su contraseña..."
+              type="password"
+              name="password"
+              value={loginAcount.password}
+              onChange={handleChangeLogin}
+            />
+          </div>
+          <BTNLogin>Login</BTNLogin>
         </form>
       </div>
     </ContainerLogin>
@@ -369,6 +384,38 @@ const ContainerRegister = styled.div`
       justify-content: center;
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+      .input-field {
+        overflow: hidden;
+        width: 90%;
+        background-color: #f0f0f0;
+        margin: 10px 0;
+        height: 55px;
+        border-radius: 55px;
+        display: grid;
+        grid-template-columns: 15% 85%;
+        align-items: center;
+        justify-items: center;
+        padding: 0 0.4rem;
+        position: relative;
+        input {
+          background: none;
+          outline: none;
+          border: none;
+          width: 100%;
+          height: 100%;
+          line-height: 1;
+          font-weight: 600;
+          font-size: 1rem;
+          color: #333;
+        }
+        svg {
+          text-align: center;
+          line-height: 55px;
+          color: #111;
+          opacity: 0.8;
+          font-size: 1.3rem;
+        }
+      }
     }
   }
 `;
@@ -421,9 +468,41 @@ const ContainerLogin = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+      .input-field {
+        overflow: hidden;
+        width: 90%;
+        background-color: #f0f0f0;
+        margin: 10px 0;
+        height: 55px;
+        border-radius: 55px;
+        display: grid;
+        grid-template-columns: 15% 85%;
+        align-items: center;
+        justify-items: center;
+        padding: 0 0.4rem;
+        position: relative;
+        input {
+          background: none;
+          outline: none;
+          border: none;
+          width: 100%;
+          height: 100%;
+          line-height: 1;
+          font-weight: 600;
+          font-size: 1rem;
+          color: #333;
+        }
+        svg {
+          text-align: center;
+          line-height: 55px;
+          color: #111;
+          opacity: 0.8;
+          font-size: 1.3rem;
+        }
+      }
     }
   }
 `;
