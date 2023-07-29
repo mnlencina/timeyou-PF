@@ -16,33 +16,45 @@ import {
   ALL_COLORS,
   ALL_STRAPS,
   ALL_FUNCTIONS,
-  POST_WATCH
+  POST_WATCH,
+  CREATE_USER,
+  LOGIN_USER,
+  GET_WATCHES_BY_BRAND,
+  LOGOUT_USER,
+  ALL_USERS,
+  LOGIN_GOOGLE,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");
+const userStored = localStorage.getItem("user");
 
 const initialState = {
   Clocks: [],
-  Clock: {},
+  allClocks: [],
   searchClocks: [],
   searchActive: false,
   filteredClocks: [],
   Cart: storedCart ? JSON.parse(storedCart) : { items: [] },
-  price: 0,
+  price: 500,
   detailClock: [],
   isLoading: true,
   detailLoading: true,
-  BRANDS:[],
-  STYLES:[],
-  COLORS:[],
-  STRAPS:[],
-  FUNCTIONS:[],
+  BRANDS: [],
+  STYLES: [],
+  COLORS: [],
+  STRAPS: [],
+  FUNCTIONS: [],
+  user: userStored ? JSON.parse(userStored) : { role: "", token: "" },
+  allUsers: [],
 };
 
 // Función para guardar el carrito en el localStorage
 const saveCartToLocalStorage = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
+};
+const saveUserToLocalStorage = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -51,6 +63,8 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         Clocks: payload,
+        allClocks: payload,
+        searchClocks: payload,
         isLoading: false,
       };
     case GET_PRODUCTS_DETAIL:
@@ -67,15 +81,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: null,
       };
     case SEARCH_PRODUCT_SUCCESS:
-      const searchedProducts = payload;
-      const searchActive = searchedProducts.length > 0;
-
       return {
         ...state,
-        searchClocks: searchedProducts,
+        searchClocks: payload,
         isLoading: false,
+        searchActive: payload.length > 0,
         error: null,
-        searchActive,
       };
     case SEARCH_PRODUCT_FAILURE:
       return {
@@ -84,6 +95,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: payload,
       };
     case ADD_TO_CART:
+      // eslint-disable-next-line no-case-declarations
       const updatedCart = [...state.Cart.items, payload];
       saveCartToLocalStorage({ items: updatedCart });
       return {
@@ -91,6 +103,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         Cart: { items: updatedCart },
       };
     case REMOVE_FROM_CART:
+      // eslint-disable-next-line no-case-declarations
       const filteredCart = state.Cart.items.filter(
         (item) => item.id !== payload
       ); // Aquí accedemos al array 'items'
@@ -113,25 +126,29 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case UPDATE_PRICE:
       return {
         ...state,
-        price: 0, 
+        price: 0,
       };
     case RESET_DETAIL:
       return {
         ...state,
+        detailLoading: true,
         detailClock: [],
       };
     case FILTERS:
+      // eslint-disable-next-line no-case-declarations
       const filterBrands = payload || {};
       console.log("filterBrands", filterBrands);
 
+      // eslint-disable-next-line no-case-declarations
       const filterActive = Object.values(filterBrands).some(
         (selected) => selected
       );
       console.log(filterActive);
 
-      let filteredClocks = state.Clocks;
+      // eslint-disable-next-line no-case-declarations
+      let filteredClocks = state.allClocks;
       if (filterActive) {
-        filteredClocks = state.Clocks.filter((product) => {
+        filteredClocks = state.allClocks.filter((product) => {
           let matchesAllCategories = true;
           for (const fieldName in filterBrands) {
             const selectedValue = filterBrands[fieldName];
@@ -152,35 +169,71 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchActive: filterActive,
         filteredClocks: filteredClocks,
       };
-      case ALL_BRANDS:
-        return {
-          ...state,
-          BRANDS: payload,
-        }; 
-      case ALL_STYLES:
-        return {
-          ...state,
-          STYLES: payload,
-        };
-      case ALL_COLORS:
-        return {
-          ...state,
-          COLORS: payload,
-        };
-      case ALL_STRAPS:
-        return {
-          ...state,
-          STRAPS: payload,
-        };
-      case ALL_FUNCTIONS:
-        return {
-          ...state,
-          FUNCTIONS: payload,
-        };
-      case POST_WATCH:
-        return {
-          ...state,
-        }
+    case ALL_BRANDS:
+      return {
+        ...state,
+        BRANDS: payload,
+      };
+    case ALL_STYLES:
+      return {
+        ...state,
+        STYLES: payload,
+      };
+    case ALL_COLORS:
+      return {
+        ...state,
+        COLORS: payload,
+      };
+    case ALL_STRAPS:
+      return {
+        ...state,
+        STRAPS: payload,
+      };
+    case ALL_FUNCTIONS:
+      return {
+        ...state,
+        FUNCTIONS: payload,
+      };
+    case POST_WATCH:
+      return {
+        ...state,
+      };
+    case CREATE_USER:
+      return {
+        ...state,
+      };
+    case LOGIN_USER:
+      saveUserToLocalStorage(payload);
+      return {
+        ...state,
+        user: payload,
+      };
+    //lINKS DEL NAVBAR
+    case LOGIN_GOOGLE:
+      saveUserToLocalStorage(payload)
+      return {
+        ...state,
+        user: payload,
+      };
+    case GET_WATCHES_BY_BRAND:
+      return {
+        ...state,
+        searchClocks: payload,
+        isLoading: false,
+        searchActive: payload.length > 0,
+        error: null,
+      };
+    case LOGOUT_USER:
+      localStorage.removeItem("user");
+      return {
+        ...state,
+        user: {role:"", token:""},
+      };
+    case ALL_USERS:
+      return {
+        ...state,
+        allUsers: payload,
+      };
     default:
       return state;
   }

@@ -1,12 +1,13 @@
 import { useCallback, useEffect } from "react";
 import MyRoutes from "./routes/MyRoutes";
 import { useDispatch } from "react-redux";
-import { allPropWatches } from "./redux/Actions";
+import { allPropWatches, getProducts } from "./redux/Actions";
 
 function App() {
   const dispatch = useDispatch();
 
   const allProps = useCallback(() => {
+    dispatch(getProducts());
     dispatch(allPropWatches("brands"));
     dispatch(allPropWatches("styles"));
     dispatch(allPropWatches("colors"));

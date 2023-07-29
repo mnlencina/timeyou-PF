@@ -19,6 +19,8 @@ const userLogin = async (userName, email, password, provider) => {
     id: found.id,
     userName: found.userName,
     email: found.email,
+    role: found.role,
+    del: found. del,
   };
   return userFound;
 };

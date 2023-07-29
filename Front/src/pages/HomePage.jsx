@@ -65,8 +65,8 @@ export default function HomePage() {
 
   return (
     <>
-      {slideContainer()}
-      <CardSlider/>
+      {/* {slideContainer()} */}
+      {/* <CardSlider/> */}
       <Pagination
         totalPages={totalPages}
         page={page}

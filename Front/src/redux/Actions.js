@@ -17,8 +17,16 @@ import {
   ALL_COLORS,
   ALL_STRAPS,
   ALL_FUNCTIONS,
-  POST_WATCH
+  POST_WATCH,
+  CREATE_USER,
+  LOGIN_USER,
+  GET_WATCHES_BY_BRAND,
+  LOGOUT_USER,
+  LOGIN_GOOGLE,
 } from "./actionTypes";
+
+import { searchClient } from "../settings_algolia/settingsAlgolia";
+import { BsDisplayport } from "react-icons/bs";
 
 //fetch de productos
 
@@ -36,11 +44,12 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 //fetch de un producto segun su modelo
-export function addModel(model) {
-  const endpoint = `http://localhost:3001/watches/${model}`;
+export function addModel(id) {
+  const endpoint = `http://localhost:3001/watches/${id}`;
   return async function (dispatch) {
     try {
       let { data } = await axios(endpoint);
+      console.log(data);
       dispatch({
         type: GET_PRODUCTS_DETAIL,
         payload: data,
@@ -50,7 +59,7 @@ export function addModel(model) {
     }
   };
 }
-
+//update Detail
 export function resetDetail() {
   return {
     type: RESET_DETAIL,
@@ -63,7 +72,7 @@ export const addToCart = (product) => ({
   type: ADD_TO_CART,
   payload: product,
 });
- 
+
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
@@ -86,64 +95,32 @@ export const searchProductRequest = () => ({
   type: SEARCH_PRODUCT_REQUEST,
 });
 
-export const searchProductSuccess = (searchTerms) => (dispatch, getState) => {
+export const searchProduct = (searchTerms) => async (dispatch) => {
   console.log("Search terms:", searchTerms);
+  dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
-  // Agregar searchProductRequest para indicar que se ha iniciado la búsqueda
-  dispatch(searchProductRequest());
+  try {
+    const algoliaIndex = searchClient.initIndex("timeyou_PF"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
+    const searchResults = await algoliaIndex.search(searchTerms);
 
-  const state = getState();
-  console.log(state);
-  const { Clocks } = state;
-
-  if (searchTerms.length === 0) {
-    // Si no hay términos de búsqueda, devuelve todos los relojes sin filtrar
-    dispatch({
-      type: SEARCH_PRODUCT_SUCCESS,
-      payload: [],
-    });
-  } else {
-    // Filtra los relojes que cumplen con todas las palabras de búsqueda
-    const filteredProducts = Clocks.filter((product) => {
-      let foundMatch = false; // Variable para indicar si se encontró una coincidencia en algún campo anterior
-
-      foundMatch = searchTerms.every((term) => {
-        // Verifica que al menos uno de los campos contenga el término de búsqueda
-        return (
-          product.brandName.toLowerCase().includes(term.toLowerCase()) ||
-          product.colorName.toLowerCase().includes(term.toLowerCase()) ||
-          product.styleName.toLowerCase().includes(term.toLowerCase()) ||
-          product.strapName.toLowerCase().includes(term.toLowerCase()) ||
-          product.Functions.some((func) => {
-            if (typeof func.name === "string") {
-              return func.name.toLowerCase().includes(term.toLowerCase());
-            }
-            return false;
-          }) ||
-          (term.toLowerCase() === "femenino" &&
-            ["female", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "masculino" &&
-            ["male", "unisex"].includes(product.gender.toLowerCase())) ||
-          (term.toLowerCase() === "unisex" &&
-            product.gender.toLowerCase() === "unisex")
-        );
+    console.log("Algolia search results:", searchResults.hits);
+    if (searchResults.hits.length === 0) {
+      // Si no se encontraron coincidencias, enviar un mensaje al cliente
+      dispatch({
+        type: SEARCH_PRODUCT_SUCCESS,
+        payload: [], // Envía un array vacío como payload para indicar que no se encontraron resultados
+        message: "No se encontraron coincidencias...",
       });
-
-      // Si no se encontró coincidencia en campos anteriores, buscamos en product.description
-      if (!foundMatch) {
-        return product.description
-          .toLowerCase()
-          .includes(searchTerms.join(" ").toLowerCase()); // Búsqueda en la descripción con todos los términos
-      }
-
-      return foundMatch; // Si encontramos coincidencia en campos anteriores, retornamos el resultado
-    });
-    console.log("Filtered products:", filteredProducts);
-
-    dispatch({
-      type: SEARCH_PRODUCT_SUCCESS,
-      payload: filteredProducts,
-    });
+    } else {
+      // Si se encontraron resultados, envía los hits al estado como antes
+      dispatch({
+        type: SEARCH_PRODUCT_SUCCESS,
+        payload: searchResults.hits,
+      });
+    }
+  } catch (error) {
+    console.error("Algolia search error:", error);
+    dispatch(searchProductFailure("Error al realizar la búsqueda."));
   }
 };
 
@@ -188,7 +165,6 @@ export const clearFilters = () => (dispatch) => {
   dispatch(filtersAll({}));
 };
 
-
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
 export function allPropWatches(prop) {
@@ -196,26 +172,31 @@ export function allPropWatches(prop) {
   return async function (dispatch) {
     try {
       let { data } = await axios(endpoint);
-      prop === 'brands' && dispatch({
-        type: ALL_BRANDS,
-        payload: data,
-      });
-      prop === 'styles' && dispatch({
-        type: ALL_STYLES,
-        payload: data,
-      });
-      prop === 'colors' && dispatch({
-        type: ALL_COLORS,
-        payload: data,
-      });
-      prop === 'straps' && dispatch({
-        type: ALL_STRAPS,
-        payload: data,
-      });
-      prop === 'functions' && dispatch({
-        type: ALL_FUNCTIONS,
-        payload: data,
-      });
+      prop === "brands" &&
+        dispatch({
+          type: ALL_BRANDS,
+          payload: data,
+        });
+      prop === "styles" &&
+        dispatch({
+          type: ALL_STYLES,
+          payload: data,
+        });
+      prop === "colors" &&
+        dispatch({
+          type: ALL_COLORS,
+          payload: data,
+        });
+      prop === "straps" &&
+        dispatch({
+          type: ALL_STRAPS,
+          payload: data,
+        });
+      prop === "functions" &&
+        dispatch({
+          type: ALL_FUNCTIONS,
+          payload: data,
+        });
     } catch (error) {
       console.log(error);
     }
@@ -232,11 +213,69 @@ export function postWatch(watch) {
         type: POST_WATCH,
         payload: newWatch,
       });
-      alert ("La Carga del WATCH fue con Exito!!")
+      alert("La Carga del WATCH fue con Exito!!");
       //location.reload();
     } catch (error) {
-      alert ('Verifique si el MODELO en ese COLOR ya Existe')
+      alert("Verifique si el MODELO en ese COLOR ya Existe");
     }
   };
 }
 
+//funcion de registro
+
+export const createUser = (user) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/users/register";
+  try {
+    const newUser = await axios.post(endpoint, user);
+    
+    dispatch({
+      type: CREATE_USER,
+      payload: newUser,
+    });
+    alert("usuario creado con exito")
+  } catch (error) {
+    alert("no pudo crearse el usuario");
+  }
+};
+
+export const loginUser = (user) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/users/login";
+  try {
+    const { data } = await axios.post(endpoint, user, {
+      headers: { "Content-Type": "application/json" },
+    });
+    dispatch({
+      type: LOGIN_USER,
+      payload: { role: data.role , token: data.token },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const loginGoogle = (user) => ({
+  type: LOGIN_GOOGLE,
+  payload: user,
+});
+
+// Peticiones para cada una de las Brand en el Navbar //
+export const getWatchesByBrand = (brand) => async (dispatch) => {
+  const URL = `http://localhost:3001/brands/${brand}`;
+  try {
+    let { data } = await axios.get(URL);
+    console.log("data.Watches", data.Watches);
+    dispatch({
+      type: GET_WATCHES_BY_BRAND,
+      payload: data.Watches,
+    });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logOut = () => {
+  return {
+    type: LOGOUT_USER,
+  };
+};
