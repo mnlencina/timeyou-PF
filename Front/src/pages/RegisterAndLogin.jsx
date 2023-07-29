@@ -68,9 +68,6 @@ function RegisterAndLogin() {
 
   /* funciones de google */
 
-  const [userData, setUserData] = useState({});
-  const [useToken, setUserToken] = useState("");
-
   const LoginGoogle = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);

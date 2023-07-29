@@ -227,11 +227,12 @@ export const createUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/register";
   try {
     const newUser = await axios.post(endpoint, user);
-    console.log(newUser.data);
+    
     dispatch({
       type: CREATE_USER,
       payload: newUser,
     });
+    alert("usuario creado con exito")
   } catch (error) {
     alert("no pudo crearse el usuario");
   }
@@ -241,12 +242,11 @@ export const loginUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/login";
   try {
     const { data } = await axios.post(endpoint, user, {
-      header: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
     });
-    console.log(data);
     dispatch({
       type: LOGIN_USER,
-      payload: data,
+      payload: { role: data.role || "user", token: data.token },
     });
   } catch (error) {
     console.log(error);
