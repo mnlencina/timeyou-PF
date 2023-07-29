@@ -81,12 +81,13 @@ function RegisterAndLogin() {
       ? JSON.parse(decodeURIComponent(dataString))
       : null;
     const confirmation = queryParams.get("confirmation");
-
-    if (userData) {
-      dispatch(loginGoogle(userData));
-      navigate("/");
-    }
+   
+      if (userData) {
+        dispatch(loginGoogle(userData));
+        navigate("/")     
+      }
   };
+  
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
     window.location.href = "http://localhost:3001/auth/google"; // Reemplaza esta URL con la ruta adecuada de tu servidor para la autenticación de Google
