@@ -97,7 +97,7 @@ function RegisterAndLogin() {
     <ContainerRegister>
       <h1>registrarse</h1>
       <div className="register-container">
-        <div className="container-btn">
+        {/* <div className="container-btn">
           <div className="content">
             <p>Registrate con plataformas sociales</p>
           </div>
@@ -109,7 +109,7 @@ function RegisterAndLogin() {
               <BsGoogle />
             </button>
           </div>
-        </div>
+        </div> */}
         <form
           action="POST"
           onSubmit={handleSubmitRegister}
@@ -156,14 +156,14 @@ function RegisterAndLogin() {
     <ContainerLogin>
       <h1>Iniciar sesion</h1>
       <div className="login-container">
-        <div className="login-btn">
+        {/* <div className="login-btn">
           <button>
             <FaFacebookF />
           </button>
           <button>
             <BsGoogle onClick={handleOnClick} />
           </button>
-        </div>
+        </div> */}
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <div className="input-field">
             <AiOutlineMail />
@@ -186,6 +186,16 @@ function RegisterAndLogin() {
             />
           </div>
           <BTNLogin>Login</BTNLogin>
+          
+          <div className="login-btn">
+            <button>
+              <FaFacebookF />
+            </button>
+            <button>
+              <BsGoogle onClick={handleOnClick} />
+            </button>
+          </div>
+          
         </form>
       </div>
     </ContainerLogin>
@@ -435,7 +445,7 @@ const ContainerLogin = styled.div`
     height: 100%;
     display: flex;
     .login-btn {
-      position: absolute;
+      
       bottom: 60px;
       right: 240px;
       display: flex;
