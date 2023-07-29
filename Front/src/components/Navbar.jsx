@@ -14,12 +14,12 @@ export const Navbar = () => {
 
   const itemCount = cart.items?.length;
 
-  const handleLinkClick = async (brand) => {
+  const handleLinkClick =  (brand) => {
     const brandLowerCase = brand.toLowerCase();
     if (brandLowerCase === "ver todo") {
-      await dispatch(getProducts());
+       dispatch(getProducts());
     } else {
-      await dispatch(getWatchesByBrand(brandLowerCase));
+       dispatch(getWatchesByBrand(brandLowerCase));
     }
   };
 
@@ -68,8 +68,8 @@ export const Navbar = () => {
           <ul className="icon">
             <li>
               <Link to="/auth">
-                {!user.token.length ? (
-                  <BiUser />
+                {user.token.trim()==="" ? (
+                  <BiUser onClick={()=> Navigate("/")} />
                 ) : (
                   <BiUserX onClick={() => dispatch(logOut())} />
                 )}
