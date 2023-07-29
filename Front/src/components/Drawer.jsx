@@ -4,7 +4,7 @@ import { FiltersAll } from "./index.js";
 
 export const Drawer = ({ show }) => {
   return (
-    <Container show={show}>
+    <Container show={show.toString()}>
       <ul>
         <li><FiltersAll /></li>
       </ul>
@@ -17,7 +17,7 @@ const Container = styled.aside`
   height: 100%;
   position: absolute;
   top: 0;
-  left: ${(props) => (props.show ? "0" : "-1000px")};
+  left: ${(props) => (props.show === "true" ? "0" : "-1000px")};
   transition: 0.4s ease-in-out;
   display: flex;
   align-items: center;
