@@ -48,7 +48,7 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Para relacionarlos hacemos un destructuring
-const { Watch, User, Brand, Buy, Function, Strap, Style, Color } = sequelize.models;
+const { Watch, User, Brand, Buy, Function, Strap, Style, Color, Comment} = sequelize.models;
 
 //Product.-
 Watch.belongsTo(Brand, { foreignKey: "brandName", targetKey: "name" });

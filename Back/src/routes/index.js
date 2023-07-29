@@ -9,17 +9,20 @@ const styleRouter = require("./style/styleRouter");
 const functionRouter = require("./functions/functionRouter");
 const genderRouter = require("./gender/genderRouter");
 const userRouter = require("./users/userRouter");
-
+const commentRouter = require("./riviews/commentRouter");
 // Rutas para el filtrado en la pagina
+router.use("/comment", commentRouter);
 router.use("/colors", colorRouter);
 router.use("/styles", styleRouter);
 router.use("/functions", functionRouter);
 router.use("/genders", genderRouter);
 router.use("/straps", strapRouter);
+
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
 router.use("/brands", brandRouter);
 router.use("/users", userRouter);
+
 
 // router.post("/admin/addFunction", (req, res) => {
 //   const { name } = req.body;
