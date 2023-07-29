@@ -2,12 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createUser, loginGoogle, loginUser } from "../redux/Actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
 
 function RegisterAndLogin() {
+  const USER = useSelector((state)=> state.user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inModeLogin, setInModeLogin] = useState(false);
@@ -56,8 +57,14 @@ function RegisterAndLogin() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(loginAcount));
-    navigate("/");
+    //navigate('/admin/dashboard') : navigate("/home");
   };
+  
+  useEffect(()=>{
+    if(USER.role !== ""){
+      USER.role === "admin" ? navigate('/admin/dashboard'): navigate("/home");
+    }
+  },[USER])
 
   /* funciones de google */
 

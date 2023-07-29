@@ -214,6 +214,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         user: payload,
+        role: "user"
       };
     case GET_WATCHES_BY_BRAND:
       return {
