@@ -15,6 +15,7 @@ export const BTNCarritoDeCompras = styled.button`
   color: #fff;
   text-transform: capitalize;
   transition: 0.5s ease-in-out;
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
     background-color: /* #35838a */ ${(props) =>
@@ -38,6 +39,7 @@ export const BTNHover = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   &:hover {
     color: ${(props) => props.alter === "true" && "#fff"};
     border: ${(props) => props.alter === "true" && "none"};
@@ -60,7 +62,8 @@ export const AppendBTN = styled.button`
   color: ${(props) => props.alter === "true" && "#fff"};
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => (props.alter === "true" ? "#888" : "rgba(0,0,0,0.8)")};
+    background-color: ${(props) =>
+      props.alter === "true" ? "#888" : "rgba(0,0,0,0.8)"};
     transform: scale(1.2);
     color: ${(props) => (props.alter === "true" ? "green" : "#fff")};
   }
@@ -77,8 +80,8 @@ export const BTNLogin = styled.button`
   text-transform: uppercase;
   font-weight: 600;
   margin: 10px 0;
-  cursor: pointer;
   transition: 0.5s;
+  cursor: pointer;
   &:hover {
     background-color: #35838a;
     transform: scale(1.2);
