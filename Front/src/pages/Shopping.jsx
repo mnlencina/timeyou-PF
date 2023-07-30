@@ -179,9 +179,6 @@ const Container = styled.main`
         grid-template-columns: 70% 30%;
         align-items: start;
         justify-items: start;
-        /*  display: flex;
-        align-items: flex-start;
-        justify-content: center; */
         .products {
           width: 90%;
           height: auto;
@@ -268,7 +265,6 @@ const Container = styled.main`
         }
       }
     }
-
     .footer-shopping {
       width: 100%;
       height: 30px;
@@ -285,6 +281,7 @@ const Container = styled.main`
     }
   }
 `;
+
 
 const ContainerEmpty = styled.div`
   width: 100%;

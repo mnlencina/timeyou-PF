@@ -23,7 +23,6 @@ export const BTNCarritoDeCompras = styled.button`
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   }
 `;
-
 export const BTNHover = styled.button`
   width: 60px;
   height: 60px;
@@ -47,7 +46,6 @@ export const BTNHover = styled.button`
     background-color: rgba(0, 0, 0, 0.4);
   }
 `;
-
 export const AppendBTN = styled.button`
   width: 30px;
   height: 30px;
@@ -68,7 +66,6 @@ export const AppendBTN = styled.button`
     color: ${(props) => (props.alter === "true" ? "green" : "#fff")};
   }
 `;
-
 export const BTNLogin = styled.button`
   width: 150px;
   background-color: #4ebcc7;
