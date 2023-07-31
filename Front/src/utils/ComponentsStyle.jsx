@@ -44,6 +44,7 @@ export const BTNHover = styled.button`
     border: ${(props) => props.alter === "true" && "none"};
     transform: scale(1.2);
     background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
   }
 `;
 export const AppendBTN = styled.button`
