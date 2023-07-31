@@ -55,6 +55,7 @@ const Container = styled.div`
   position: relative;
   margin: 0 auto;
   margin-bottom: 50px;
+  margin-top: 50px;
   .bodyContainer {
     width: 80%;
     height: 100%;
@@ -83,8 +84,11 @@ const Container = styled.div`
         z-index: 10;
         pointer-events: all;
       }
+      .controles :hover{
+        cursor: pointer;
+      }
     }
   }
 `;
 
-// Resto del código...
+
