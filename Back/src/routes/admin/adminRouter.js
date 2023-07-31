@@ -1,11 +1,26 @@
 const express = require("express");
-const inabilitedUser = require("../../controllers/putAdminUser");
 const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
 const updateWatch = require("../../controllers/putAdminWatch");
+const updateUser = require("../../controllers/putAdminUser");
 
 const adminRouter = express.Router();
+
+adminRouter.post("/register", async (req, res) => {
+  const { userName, email, password } = req.body;
+  try {
+    const newUser = await createUser(userName, email, password);
+    if (email) {
+      sendEmailConPlantilla(email, "newUser");
+    }
+    if (newUser) res.status(200).json({ message: "user created successfully" });
+  } catch (error) {
+    if (error.message.includes("not available")) {
+      return res.status(400).json({ Error: error.message });
+    } else res.status(500).json({ Error: error.message });
+  }
+});
 
 adminRouter.get("/allUsers", async (req, res) => {
   try {
@@ -57,8 +72,8 @@ adminRouter.put("/updateUser/:id", async (req, res) => {
   const user = req.body;
 
   try {
-    const updateUser = await updateUser(id, user);
-    res.status(200).json(updateUser);
+    const updateUsers = await updateUser(id, user);
+    res.status(200).json(updateUsers);
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
