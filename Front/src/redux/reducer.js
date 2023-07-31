@@ -1,4 +1,3 @@
-
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -22,10 +21,13 @@ import {
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
+  ALL_USERS,
+  LOGIN_GOOGLE,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");
+const userStored = localStorage.getItem("user");
 
 const initialState = {
   Clocks: [],
@@ -43,12 +45,16 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: { token: "" },
+  user: userStored ? JSON.parse(userStored) : { role: "", token: "" },
+  allUsers: [],
 };
 
 // Función para guardar el carrito en el localStorage
 const saveCartToLocalStorage = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
+};
+const saveUserToLocalStorage = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -197,11 +203,18 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
     case LOGIN_USER:
+      saveUserToLocalStorage(payload);
       return {
         ...state,
-        user: { token: payload },
+        user: payload,
       };
     //lINKS DEL NAVBAR
+    case LOGIN_GOOGLE:
+      saveUserToLocalStorage(payload)
+      return {
+        ...state,
+        user: payload,
+      };
     case GET_WATCHES_BY_BRAND:
       return {
         ...state,
@@ -211,12 +224,17 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: null,
       };
     case LOGOUT_USER:
+      localStorage.removeItem("user");
       return {
         ...state,
-        user: { token: "" },
-              }
-
+        user: {role:"", token:""},
+      };
+    case ALL_USERS:
+      return {
+        ...state,
+        allUsers: payload,
+      };
     default:
       return state;
-            }
-          }
+  }
+};

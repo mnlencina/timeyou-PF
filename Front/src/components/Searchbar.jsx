@@ -73,7 +73,7 @@ export const Searchbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { searchClocks } = useSelector((state) => state);
+  const searchClocks = useSelector((state) => state.searchClocks);
 
 
   const handleSearch = (event) => {
