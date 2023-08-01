@@ -4,6 +4,8 @@ const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
 const updateWatch = require("../../controllers/putAdminWatch");
+const allBuyUsers = require("../../controllers/getAllBuy");
+const updateUser = require("../../controllers/putAdminUser");
 
 const adminRouter = express.Router();
 
@@ -55,10 +57,11 @@ adminRouter.get("/user/:id", async (req, res) => {
 adminRouter.put("/updateUser/:id", async (req, res) => {
   const { id } = req.params;
   const user = req.body;
+  console.log(user);
 
   try {
-    const updateUser = await updateUser(id, user);
-    res.status(200).json(updateUser);
+    const update = await updateUser(id, user);
+    res.status(200).json(update);
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
@@ -83,7 +86,6 @@ adminRouter.put("/update-watch/:id", async (req, res) => {
 adminRouter.get("/allBuy", async (req, res) => {
   try {
     const allBuy = await allBuyUsers();
-    console.log(allBuy);
     if (allBuy.message)
       return res.status(200).json({ message: allBuy.message });
 
