@@ -10,6 +10,7 @@ import { addToCart } from "../redux/Actions";
 import { translateGender } from "../components/helpers/translateGenderWords"
 import CommentsList from "../components/comments/CommentsList";
 import AverageRating from "../components/comments/AverageRating";
+import CreateComment from "../components/comments/CreateComment";
 
 
 function DetailPage () {
@@ -17,9 +18,11 @@ function DetailPage () {
   const [color2, setColor2] = useState(0);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const detailClock = useSelector((state) => state.detailClock);
+  const detailClock = useSelector((state) => state.detailClock);  
   const loading = useSelector((state) => state.detailLoading);
-
+  const user = useSelector((state) => state.user);
+  const isLoggedIn = !!user.token;
+  
   const handleAddToCart = () => {
     dispatch(addToCart(detailClock[color]));
   };
@@ -59,9 +62,7 @@ function DetailPage () {
           <article className="show-cart">
             <section className="body-cart">
               <header className="title-body">
-                <h3>{`${detailClock[0].model} - ${detailClock[
-                  color
-                ].colorName.toUpperCase()}`}</h3>
+                <h3>{`${detailClock[0].model} - ${detailClock[color].colorName.toUpperCase()}`}</h3>
                 <h1>{`${detailClock[0].brandName.toUpperCase()} | ${detailClock[0].model
                   }`}</h1>
               </header>
@@ -116,7 +117,7 @@ function DetailPage () {
                 <div className="gender">
                   <h3>genero</h3>
                   <ul>
-                      <li>{translateGender(detailClock[0].gender)}</li>
+                    <li>{translateGender(detailClock[0].gender)}</li>
                   </ul>
                 </div>
               </div>
@@ -132,11 +133,32 @@ function DetailPage () {
           </article>
         </section>
         <hr />
-        <div className="login">Califica tu compra</div>
-        <div className="container-reviews">
-          <section className="reviews"><CommentsList /></section>
-          <section className="ratings"><AverageRating /></section>
-        </div>
+          {isLoggedIn ? (
+            <div>
+              <div className="container-reviews">
+                <section className="reviews">
+                  <CreateComment watchId={detailClock[0].id} />
+                </section>
+                <section className="ratings">
+                  <AverageRating />
+                </section>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="login">
+                <a href="/auth">Inicia sesión para calificar</a>
+              </div>
+              <div className="container-reviews">
+                <section className="reviews">
+                  <CommentsList watchId={detailClock[0].id} />
+                </section>
+                <section className="ratings">
+                  <AverageRating />
+                </section>
+              </div>
+            </div>
+          )}
       </div>
     </Container>
   );

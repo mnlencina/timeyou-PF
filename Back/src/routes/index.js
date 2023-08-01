@@ -15,6 +15,7 @@ const commentRouter = require("./riviews/commentRouter");
 const buyRouter = require("./buy/buyRouter");
 const adminRouter = require("./admin/adminRouter");
 const authRouter = require('./auth/authRouter');
+const getUserIdRouter = require("./userId/getUserIdRouter");
 
 
 // Rutas para el filtrado en la pagina
@@ -24,11 +25,13 @@ router.use("/styles", styleRouter);
 router.use("/functions", functionRouter);
 router.use("/genders", genderRouter);
 router.use("/straps", strapRouter);
+router.use("/getUserId", getUserIdRouter)
 
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
 router.use("/brands", brandRouter);
 router.use("/users", userRouter);
+
 
 
 

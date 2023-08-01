@@ -1,13 +1,17 @@
+import { useSelector } from 'react-redux';
+
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
 
 const RatingWrapper = styled.div`
      margin: 0 auto;
-     width: 100%;
      min-height: auto;
      padding-top: 55px;
      padding-left: 50px;
+     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   
 `;
 
@@ -16,17 +20,18 @@ const RatingRow = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 8px;
+  flex-wrap: nowrap;
 `;
 
 const NumberColumn = styled.span`
    min-width: 30px;
   padding-right: 20px;
-  position: relative;
+   display: flex;
+  align-items: center;
   span {
     color: #a6a9b9;
     margin: 0;
     padding-left: 20px;
-    padding-right: 5px;
     font-size: 1.2rem;
   }
 `;
@@ -34,6 +39,7 @@ const NumberColumn = styled.span`
 const StarIcon = styled(FaStar)`
   color: #e4e4e4;
   font-size: 20px;
+  margin-right: 5px;
 `;
 
 
@@ -58,17 +64,22 @@ const BarColumn = styled.div`
       justify-content: center;
     `}
   }
-`;  
+`;
 
 
 const PercentageColumn = styled.span`
   color: #acb2b1;
   font-weight: bold;
 `
-;
+  ;
 
 const AverageRating = () => {
-  const numbers = [2, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2];
+
+
+  const comments = useSelector((state) => state.comments);
+  const numbers = comments ? comments.map((num) => num.calification) : [];
+
+  console.log("NUMBERS DESDE AVERAGE RATING", numbers)
   const percentages = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
   const calculatePercentage = (arr) => {
@@ -99,7 +110,7 @@ const AverageRating = () => {
         <RatingRow key={num}>
           <NumberColumn>
             <span>{num}</span>
-            <StarIcon/>
+            <StarIcon />
           </NumberColumn>
           <BarColumn percentage={percentage} />
           <PercentageColumn>

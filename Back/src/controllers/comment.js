@@ -1,12 +1,13 @@
 const { Comment } = require("../db");
 
-const createComment = async (watchId, commentText, calification, userId) => {
+const createComment = async (userId, watchId, commentText, calification, userName) => {
 try {
     const newComment = await Comment.create({
-    WatchId: watchId,
-    comment: commentText,
-    calification: calification,
-    UserId: userId,
+        UserId: userId,
+        WatchId: watchId,
+        commentText: commentText,
+        calification: calification,
+        userName: userName,
     });
     return newComment;
 } catch (error) {
