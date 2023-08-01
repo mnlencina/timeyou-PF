@@ -51,7 +51,7 @@ const MyRoutes = () => {
           }
         />
         <Route
-          path="/admin/dashboard"
+          path="/admin/*"
           element={
             <ProtectedRoutesAdmin user={user}>
               <Dashboard />

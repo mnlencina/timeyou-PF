@@ -40,7 +40,11 @@ export const LOGIN_GOOGLE = "LOGIN_GOOGLE"
 export const GET_WATCHES_BY_BRAND = "GET_WATCHES_BY_BRAND"
 
 //TIPES DE ADMIN
+export const UPDATE_USER = "UPDATE_USER"
+export const UPDATE_WATCH = "UPDATE_WATCH"
 export const ALL_USERS = "ALL_USERS"
+export const ALL_BUY = "ALL_BUY"
+
 
 
 

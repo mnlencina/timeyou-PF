@@ -23,6 +23,9 @@ import {
   LOGOUT_USER,
   ALL_USERS,
   LOGIN_GOOGLE,
+  ALL_BUY,
+  UPDATE_USER,
+  UPDATE_WATCH,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -47,6 +50,7 @@ const initialState = {
   FUNCTIONS: [],
   user: userStored ? JSON.parse(userStored) : { role: "", token: "" },
   allUsers: [],
+  allBuys: []
 };
 
 // Función para guardar el carrito en el localStorage
@@ -234,6 +238,19 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allUsers: payload,
       };
+    case ALL_BUY:
+      return {
+        ...state,
+        allBuys: payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state
+      }
+    case UPDATE_WATCH:
+      return {
+        ...state
+      }
     default:
       return state;
   }
