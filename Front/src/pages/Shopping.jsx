@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { BTNHover } from "../utils/ComponentsStyle";
 import { useNavigate } from "react-router-dom";
-import { BsBagCheck, BsBag } from "react-icons/bs";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
@@ -30,19 +29,6 @@ function Shopping() {
         </BTNHover>
       </div>
       <div className="main-Container">
-        <header className="header-shpping">
-          <div className="header">
-            <span className="check">
-              <BsBagCheck />
-            </span>
-            <h1>
-              time<span>you</span>
-            </h1>
-            <span className="no-check">
-              <BsBag />
-            </span>
-          </div>
-        </header>
         <div className="main-card">
           {cart.items.length === 0 ? (
             <ContainerEmpty>
@@ -96,11 +82,6 @@ function Shopping() {
             </div>
           )}
         </div>
-        <footer className="footer-shopping">
-          <div className="text-info">
-            <p>TimeYou © 2019 - Todos los derechos reservados</p>
-          </div>
-        </footer>
       </div>
     </Container>
   );
@@ -131,37 +112,6 @@ const Container = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .header-shpping {
-      width: 100%;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.4);
-      .header {
-        width: 90%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        h1 {
-          text-transform: uppercase;
-          span {
-            font-weight: 300;
-          }
-        }
-        .check,
-        .no-check {
-          width: 40px;
-          height: auto;
-          font-size: 20px;
-          font-weight: 300;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      }
-    }
     .main-card {
       width: 90%;
       min-height: 600px;
@@ -263,20 +213,6 @@ const Container = styled.main`
             }
           }
         }
-      }
-    }
-    .footer-shopping {
-      width: 100%;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.1);
-      .text-info {
-        width: 90%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
       }
     }
   }
