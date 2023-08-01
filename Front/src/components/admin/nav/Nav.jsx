@@ -1,9 +1,12 @@
+import {NavDiv} from "./styled"
+import timeYouu from "../../../../public/timeYouu.svg"
+
 const Nav =()=>{
     return(
-        <div>
-            <h1>NAV BUSQUEDA DE USUARIOS || BUSQUEDA DE RELOJES</h1>
-            <h2>alertas </h2>
-        </div>
+        <NavDiv>
+            <img src={timeYouu} alt="" />            
+            <input type="text" name="SEARCH"/>
+        </NavDiv>
     )
     }
     
