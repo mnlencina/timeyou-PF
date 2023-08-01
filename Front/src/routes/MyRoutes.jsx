@@ -7,14 +7,20 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import { ProtectedRoutes, ProtectedRoutesAdmin } from "../components/ProtectedRoutes";
+import {
+  ProtectedRoutes,
+  ProtectedRoutesAdmin,
+} from "../components/ProtectedRoutes";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const MyRoutes = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
   //mostrar NavBar
-  const showNav = location.pathname !== "/admin/dashboard"; // location.pathname === "/" || location.pathname === "/product/:model";
+  const showNav =
+    location.pathname !== "/admin/dashboard" &&
+    location.pathname !== "/shopping" &&
+    location.pathname !== "/shopping/checkout"; // location.pathname === "/" || location.pathname === "/product/:model";
 
   const showFoot =
     location.pathname !== "/shopping" &&

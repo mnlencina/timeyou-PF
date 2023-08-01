@@ -1,5 +1,4 @@
 const express = require("express");
-const inabilitedUser = require("../../controllers/putAdminUser");
 const selectedUser = require("../../controllers/getUserName");
 const userEmail = require("../../controllers/getUserEmail");
 const allUsers = require("../../controllers/getAllUsers");
@@ -8,6 +7,21 @@ const allBuyUsers = require("../../controllers/getAllBuy");
 const updateUser = require("../../controllers/putAdminUser");
 
 const adminRouter = express.Router();
+
+adminRouter.post("/register", async (req, res) => {
+  const { userName, email, password } = req.body;
+  try {
+    const newUser = await createUser(userName, email, password);
+    if (email) {
+      sendEmailConPlantilla(email, "newUser");
+    }
+    if (newUser) res.status(200).json({ message: "user created successfully" });
+  } catch (error) {
+    if (error.message.includes("not available")) {
+      return res.status(400).json({ Error: error.message });
+    } else res.status(500).json({ Error: error.message });
+  }
+});
 
 adminRouter.get("/allUsers", async (req, res) => {
   try {
@@ -57,11 +71,11 @@ adminRouter.get("/user/:id", async (req, res) => {
 adminRouter.put("/updateUser/:id", async (req, res) => {
   const { id } = req.params;
   const user = req.body;
-  console.log(user);
 
   try {
     const update = await updateUser(id, user);
     res.status(200).json(update);
+    
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
