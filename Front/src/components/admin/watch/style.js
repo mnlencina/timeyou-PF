@@ -2,13 +2,25 @@ import styled from "styled-components";
 
 
 export const Container = styled.main`
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top:0;
+    width: 100%;   
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-items: center;
     align-items: center;
     flex-wrap: nowrap;
+    background-color: rgb(0,0,0,0.4);
     
   h2 {
     margin: 10px;
+  }
+  
+  .btnClose{
+    bottom:10%
   }
 `;
   
@@ -19,6 +31,10 @@ export const Formulario = styled.main`
   align-items: flex-start;
   gap: 50px;
   margin: 20px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 10%;
   
   select {
     width: 175px;

@@ -1,27 +1,32 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-//import styled from "styled-components";
 import { Container, Formulario, Container1, Container2 } from "./style";
-import { postWatch } from "../../../redux/Actions";
+import { updateWatch } from "../../../redux/actions/admin/updateWatch";
 
-function FormWatch({btnClose, editWatch}) {
+function FormWatchUpdate({btnClose, editWatch}) {
   
   const dispatch = useDispatch()
   const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
   const [addImage, setAddImage] = useState("")
-  const [watch, setWatch] = useState({
-    brand: "",
-    model: "",
-    style: "",
-    color: "",
-    image: [],
-    strap: "",
-    price: 0,
-    gender: "", 
-    functions: [],
-    description: ""
-  })
   
+  console.log(editWatch);
+  
+    const watchUp = {
+      brandName: editWatch.brandName,
+      model: editWatch.model,
+      styleName: editWatch.styleName,
+      colorName: editWatch.colorName,
+      image: editWatch.image,
+      strapName: editWatch.strapName,
+      price: editWatch.price,
+      gender: editWatch.gender, 
+      Functions: editWatch.Functions.map(f => f.name),
+      description: editWatch.description
+    }
+  
+  console.log(watchUp);
+  // eslint-disable-next-line no-undef
+  const [watch, setWatch] = useState(watchUp)  
   
   
   const handleChange = (e)=>{
@@ -90,13 +95,9 @@ function FormWatch({btnClose, editWatch}) {
       }
     )    
   }
-  const postWatches = ()=>{
-    watch.brand !== "" && watch.model !== "" && watch.style !== "" 
-      && watch.color !== "" && watch.image.length !== 0 && watch.strap !== ""
-      && watch.price !== 0 && watch.gender !== "" && watch.functions.length !== 0
-      && watch.description !== "" 
-      && 
-        dispatch(postWatch(watch))
+  const putWatches = ()=>{
+    
+        dispatch(updateWatch(editWatch.id,watch))
         setWatch({
           ...watch,
           image: [],
@@ -115,8 +116,8 @@ function FormWatch({btnClose, editWatch}) {
           <input name="model" type="text" onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
-          <select onChange={handleChange} name="brand" value={watch.brand}>
-            {watch.brand === "" && <option>Marca</option>}
+          <select onChange={handleChange} name="brandName" value={watch.brandName}>
+            {watch.brandName === "" && <option>Marca</option>}
             {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
           </select>
         </div>
@@ -129,32 +130,32 @@ function FormWatch({btnClose, editWatch}) {
            </select>
         </div>            
         <div className="optionDiv">
-          <select onChange={handleChange} name="style" value={watch.style}>
-            {watch.style === "" && <option>Estilo</option>}
+          <select onChange={handleChange} name="styleName" value={watch.styleName}>
+            {watch.styleName === "" && <option>Estilo</option>}
             {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
-          <select onChange={handleChange} name="color" value={watch.color}>
-            {watch.color === "" && <option>Color</option>}
+          <select onChange={handleChange} name="colorName" value={watch.colorName}>
+            {watch.colorName === "" && <option>Color</option>}
             {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
-          <select onChange={handleChange} name="strap" value={watch.strap}>
-            {watch.strap === "" && <option>Malla</option>}
+          <select onChange={handleChange} name="strapName" value={watch.strapName}>
+            {watch.ststrapNamerap === "" && <option>Malla</option>}
             {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
           </select>
         </div>
         <div className="optionDiv">                  
-          <select onChange={handleChange} name="functions" value={watch.functions}>
+          <select onChange={handleChange} name="Functions" value="Funciones">
             <option value={''}>Funciones</option>
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
           </select>     
         </div>
         <div className="funcionesDiv">
-          {watch.functions.length !== 0 && 
-            watch.functions.map((f,i)=>
+          {watch.Functions.length !== 0 && 
+            watch.Functions.map((f,i)=>
               <span key={i+f} onClick={()=>handlerFunctions(f)}>
                 *{f.toUpperCase()}
               </span>
@@ -174,7 +175,7 @@ function FormWatch({btnClose, editWatch}) {
           <button type="button" onClick={()=> masImg(addImage)}>add</button>
         </div>
         
-          <button type="button" onClick={postWatches}>UP WATCH</button>
+          <button type="button" onClick={putWatches}>Actualizar</button>
           
         </Container1>
         
@@ -197,7 +198,7 @@ function FormWatch({btnClose, editWatch}) {
     )
   }
   
-  export default FormWatch;
+  export default FormWatchUpdate;
   
   
 

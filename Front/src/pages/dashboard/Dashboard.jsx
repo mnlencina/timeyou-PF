@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Container} from "./style"
+import Sidebar from "../../components/admin/sidebar/Sidebar";
 import Form from "../../components/admin/watch/Form";
 //import Users from "../../components/admin/users/Users"
 import Buys from "../../components/admin/buys/Buys";
@@ -13,9 +14,12 @@ import { addBuys } from "../../redux/actions/admin/addBuys";
 import { updateUser } from "../../redux/actions/admin/updateUser";
 import { updateWatch } from "../../redux/actions/admin/updateWatch";
 import { getProducts } from "../../redux/Actions";
+import FormWatchUpdate from "../../components/admin/watch/FormUpdate";
 //import styled from "styled-components";
 
 const Dashboard = ()=>{
+    const [newWat, setNewWat] = useState(false)
+    const [updateW, setUpdateW] = useState(false)
     const allUsers = useSelector((state)=> state.allUsers)
     const allClocks = useSelector((state)=> state.allClocks)
     //const allBuys = useSelector((state)=> state.allBuys)
@@ -50,6 +54,16 @@ const Dashboard = ()=>{
         console.log(data);
         setEditRole(false)        
         dispatch(addUsers())
+    }
+    
+    
+    const editWatches =(row)=>{
+        console.log(row);
+        
+        let editWatch = row
+        setUpdateW(true)
+        FormWatchUpdate({editWatch})
+        
     }
     
     const columnsUser = [
@@ -115,6 +129,11 @@ const Dashboard = ()=>{
             sortable: true
         },
         {
+            name: "Precio: U$s",
+            selector: row => row.price,
+            sortable: true
+        },
+        {
             name: "Color:",
             selector: row => row.colorName,
             sortable: true
@@ -135,8 +154,15 @@ const Dashboard = ()=>{
             sortable: true
         },
         {
-            name: "Activo",
-            selector: row => row.del ? (
+            name: "Activo:",
+            selector: row => row.del ? "NO" : "SI",
+            sortable: true
+        },
+        {
+            name: "Acción:",
+            selector: row => (
+                <div className="divAction">
+            {row.del ? (
                 <div className="btnDiv">
                     <button onClick={()=> delWatch(row.id,{del: !row.del})} id="btn1">NO</button>
                 </div>
@@ -144,18 +170,27 @@ const Dashboard = ()=>{
                     <div className="btnDiv">
                         <button onClick={()=> delWatch(row.id, {del: !row.del})} id="btn2">SI</button>
                     </div>
-                    ),
-            sortable: true
+                    )}
+                    <button onClick={()=>editWatches(row)}>&#x270E;</button>
+                </div>
+            ),
             
         },
         
     ]
+    
+    const dataExpan = ({data})=> {
+    console.log(data);
+    return <span>Descripción: {data.description} / Funciones: {data.Functions.map(s=>` -${s.name} `)}</span>
+    };
     
     
     console.log("todos",allUsers);
     return (
         <Container>
             <Nav/>
+            <div className="home">
+            <Sidebar/>
             <div className="containerTable">
                 <Buys/>
                 
@@ -167,6 +202,7 @@ const Dashboard = ()=>{
                      fixedHeaderScrollHeight="300px"                     
                      progressComponent={<h1>Cargando Usuarios</h1>}   
                      highlightOnHover
+                     pointerOnHover
                     />
                 </div>
                 
@@ -178,11 +214,16 @@ const Dashboard = ()=>{
                      fixedHeaderScrollHeight="300px"
                      progressPending={!allClocks}
                      progressComponent={<h1>Cargando Relojes</h1>}
-                        
+                     pointerOnHover   
                      highlightOnHover
+                     expandableRows
+                     expandableRowsComponent={dataExpan}
                     />
                 </div>
-                <Form/>
+                <button onClick={()=>setNewWat(true)}>New Watch</button>
+                {newWat && <Form btnClose={()=>setNewWat(false)}/>}
+                {updateW && <FormWatchUpdate btnClose={()=>setUpdateW(false)} editWatches={editW}/>}
+            </div>
             </div>
         </Container>
     )
