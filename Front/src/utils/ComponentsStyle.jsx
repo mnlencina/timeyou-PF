@@ -18,7 +18,7 @@ export const BTNCarritoDeCompras = styled.button`
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
-    background-color: /* #35838a */ ${(props) =>
+    background-color:${(props) =>
       props.alter === "true" ? "rgba(0,0,0,0.8)" : "#35838a"};
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   }

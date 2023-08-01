@@ -12,6 +12,8 @@ import {
   ProtectedRoutesAdmin,
 } from "../components/ProtectedRoutes";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { HeaderCheckout } from "../components/HeaderCheckout";
+import { FooterCheckOut } from "../components/FooterCheckout";
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -20,15 +22,20 @@ const MyRoutes = () => {
   const showNav =
     location.pathname !== "/admin/dashboard" &&
     location.pathname !== "/shopping" &&
-    location.pathname !== "/shopping/checkout"; // location.pathname === "/" || location.pathname === "/product/:model";
+    location.pathname !== "/shopping/checkout";
 
   const showFoot =
+    location.pathname !== "/admin/dashboard" &&
     location.pathname !== "/shopping" &&
-    location.pathname !== "/admin/dashboard";
+    location.pathname !== "/shopping/checkout";
+
+  const ShowCheckoutNav = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
+  const showCheckoutFoot = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
 
   return (
     <>
       {showNav && <Navbar />}
+      {ShowCheckoutNav && <HeaderCheckout />}
       <Routes>
         <Route path="/auth" element={<RegisterAndLogin />} />
         <Route path="/" element={<LandingPage />} />
@@ -53,6 +60,7 @@ const MyRoutes = () => {
         />
       </Routes>
       {showFoot && <Footer />}
+      {showCheckoutFoot && <FooterCheckOut/>}
     </>
   );
 };
