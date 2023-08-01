@@ -26,6 +26,11 @@ import {
   ALL_BUY,
   UPDATE_USER,
   UPDATE_WATCH,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_ERROR,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE,
+  GET_USER_LOGGED
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -50,7 +55,10 @@ const initialState = {
   FUNCTIONS: [],
   user: userStored ? JSON.parse(userStored) : { role: "", token: "" },
   allUsers: [],
-  allBuys: []
+  allBuys: [],
+  comments: [],
+  errorComments:null,
+  userLoggedId: []
 };
 
 // Función para guardar el carrito en el localStorage
@@ -251,6 +259,35 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state
       }
+      case GET_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        comments: payload,
+        errorComments: null,
+      };
+    case GET_COMMENTS_ERROR:
+      return {
+        ...state,
+        comments: [],
+        errorComments: payload
+      };
+    case CREATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: [...state.comments, payload],
+        errorComments: null,
+      };
+    case CREATE_COMMENT_FAILURE:
+      return {
+        ...state,
+        errorComments: payload
+      };
+      case GET_USER_LOGGED:
+        return {
+          ...state,
+          userLoggedId: payload,
+          error: null,
+        };
     default:
       return state;
   }

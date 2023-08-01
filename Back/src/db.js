@@ -67,7 +67,10 @@ Watch.belongsToMany(Function, { through: "FunctionWatch" });
 Buy.belongsTo(User);
 User.hasMany(Buy);
 
-
+Comment.belongsTo(Watch, { foreignKey: 'WatchId' });
+Comment.belongsTo(User, { foreignKey: 'UserId' });
+User.hasMany(Comment, { foreignKey: "UserId" });
+Watch.hasMany(Comment, { foreignKey: "WatchId" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
