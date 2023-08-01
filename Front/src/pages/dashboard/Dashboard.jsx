@@ -18,7 +18,7 @@ import { getProducts } from "../../redux/Actions";
 const Dashboard = ()=>{
     const allUsers = useSelector((state)=> state.allUsers)
     const allClocks = useSelector((state)=> state.allClocks)
-    const allBuys = useSelector((state)=> state.allBuys)
+    //const allBuys = useSelector((state)=> state.allBuys)
     
     const dispatch = useDispatch()
     
@@ -47,6 +47,7 @@ const Dashboard = ()=>{
     const handleRole = async(e,id)=>{
         const {value} = e.target
         let data = await dispatch(updateUser(id,{role: value}))
+        console.log(data);
         setEditRole(false)        
         dispatch(addUsers())
     }
