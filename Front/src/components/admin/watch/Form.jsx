@@ -1,13 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 //import styled from "styled-components";
 import { Container, Formulario, Container1, Container2 } from "./style";
 import { postWatch } from "../../../redux/Actions";
 
-function FormWatch({btnClose, editWatch}) {
+function FormWatch({btnClose}) {
   
   const dispatch = useDispatch()
-  const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
+  const BRANDS = useSelector((state)=> state.BRANDS)
+  const STYLES = useSelector((state)=> state.STYLES)
+  const COLORS = useSelector((state)=> state.COLORS) 
+  const STRAPS = useSelector((state)=> state.STRAPS) 
   const [addImage, setAddImage] = useState("")
   const [watch, setWatch] = useState({
     brand: "",

@@ -20,6 +20,7 @@ function Checkout() {
         <Elements stripe={stripePromesi}>
           <CheckoutForm />
         </Elements>
+        
       </div>
     </Container>
   );
