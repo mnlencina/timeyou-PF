@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
  export const Container = styled.div`
-  width: 85%;
+  width: 75%;
   height: 100%;
   position: relative;
   margin: auto;
   z-index: 950;
+  overflow: hidden;
   .container-slide {
     width: 100%;
     height: 100%;
@@ -31,8 +32,8 @@ import styled from 'styled-components'
   .controles {
     position: absolute;
     top: 0;
-    left: -65px;
-    width: 110%;
+    left: -85px;
+    width: 115%;
     height: 100%;
     display: flex;
     align-items: center;

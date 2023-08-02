@@ -16,7 +16,7 @@ export const BannerSlider = () => {
     if (slideShow.current.children.length > 0) {
       const primerElemento = slideShow.current.children[0];
 
-      slideShow.current.style.transition = "500ms ease-out all";
+      slideShow.current.style.transition = "2000ms ease-out all";
 
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
 
@@ -66,7 +66,7 @@ export const BannerSlider = () => {
       slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
 
       setTimeout(() => {
-        slideShow.current.style.transition = "500ms ease-out all";
+        slideShow.current.style.transition = "2000ms ease-out all";
         slideShow.current.style.transform = "translateX(0)";
       }, 30);
     }

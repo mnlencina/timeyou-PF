@@ -36,7 +36,7 @@ export const LogoSlider = () => {
   const startTimer = () => {
     timerRef.current = setInterval(() => {
       handleNext();
-    }, 6000);
+    }, 8000);
   };
 
   const resetTimer = () => {
