@@ -34,7 +34,7 @@ export const Formulario = styled.main`
   background-color: white;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 10%;
+  margin-top: 5%;
   background-color: rgb(255,255,255,0.8);
   
   select {
