@@ -110,8 +110,9 @@ export const Container2 = styled.main`
   
 
   img {    
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
+    padding: 5px;
   }
   
   .btnClose {
