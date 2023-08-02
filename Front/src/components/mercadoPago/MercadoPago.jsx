@@ -2,9 +2,10 @@ import { useState } from "react";
 //importamos el componente e inicializamos mercado pago
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
-import "./Product.module.css";
+//import "./Product.module.css";
 
-export const Product = () => {
+export const ProductMP = ({carrito}) => {
+console.log(carrito);
   const [preferenceId, setPreferenceId] = useState(null);
 
   //eL DATO ENTRE PARENTESIS DEBE SER UNA VARIABLE DE ENTORNO CUANDO ESTE EN PRODUCCION
@@ -13,13 +14,19 @@ export const Product = () => {
   const createPreference = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/create_preference",
-        {
-          description: "Reloj Casio",
+        "http://localhost:3001/MP/create_preference",
+        [{
+          description: "COMPRA CARRO",
           price: 1000,
           quantity: 1,
           currency_id: "ARS",
-        }
+        },
+        {
+          description: "SUPER COMPRA",
+          price: 2000,
+          quantity: 2,
+          currency_id: "ARS",
+        }]
       );
 
       const { id } = response.data;
@@ -45,10 +52,8 @@ export const Product = () => {
     },
   };
   return (
-    <div>
-      <h2>Reloj Casio</h2>
-      <p>1000$</p>
-      <button onClick={handleBuy}>COMPRAR</button>
+    <div>      
+      {!preferenceId && <button onClick={handleBuy}>PAGAR CON MP</button>}
       {preferenceId && (
         <Wallet
           customization={customization}

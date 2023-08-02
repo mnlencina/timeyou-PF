@@ -6,6 +6,7 @@ import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { totalPrice } from "../redux/Actions";
+import { ProductMP } from "../components/MercadoPago/MercadoPago"
 
 function Shopping() {
   const dispatch = useDispatch();
@@ -67,6 +68,9 @@ function Shopping() {
                       >
                         FINALIZAR COMPRA
                       </BTNCarritoDeCompras>
+                      <div>
+                      <ProductMP carrito={cart}/>
+                      </div>
                     </div>
                     <div className="btn-comprarmas">
                       <BTNCarritoDeCompras
@@ -83,6 +87,7 @@ function Shopping() {
           )}
         </div>
       </div>
+      
     </Container>
   );
 
