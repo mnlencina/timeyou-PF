@@ -14,9 +14,9 @@ const commentRouter = require("./riviews/commentRouter");
 
 const buyRouter = require("./buy/buyRouter");
 const adminRouter = require("./admin/adminRouter");
-const authRouter = require('./auth/authRouter');
+const authRouter = require("./auth/authRouter");
 const getUserIdRouter = require("./userId/getUserIdRouter");
-
+const mercadoPagoRouter = require("./Mercado _Pago/mercadoPago");
 
 // Rutas para el filtrado en la pagina
 router.use("/comment", commentRouter);
@@ -25,39 +25,16 @@ router.use("/styles", styleRouter);
 router.use("/functions", functionRouter);
 router.use("/genders", genderRouter);
 router.use("/straps", strapRouter);
-router.use("/getUserId", getUserIdRouter)
+router.use("/getUserId", getUserIdRouter);
 
 // Rutas adicionales necesarias
 router.use("/watches", watchRouter);
 router.use("/brands", brandRouter);
 router.use("/users", userRouter);
-
-
-
-
-// router.post("/admin/addFunction", (req, res) => {
-//   const { name } = req.body;
-//   try {
-//     const newFunction = createNewFunction(name);
-//     res.status(200).json(newFunction);
-//   } catch (error) {
-//     res.status(500).json({ Error: error.message });
-//   }
-// });
-
-// router.post("/admin/addStyle", async (req, res) => {
-//   const { name } = req.body;
-//   try {
-//     const newStyle = await createNewStyle(name);
-//     res.status(200).json(newStyle);
-//   } catch (error) {
-//     res.status(500).json({ Error: error.message });
-//   }
-// });
+router.use("/MP", mercadoPagoRouter);
 
 router.use("/buy", buyRouter);
 router.use("/admin", adminRouter);
-router.use("/auth",authRouter);
-
+router.use("/auth", authRouter);
 
 module.exports = router;
