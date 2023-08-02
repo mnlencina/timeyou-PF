@@ -152,16 +152,9 @@ function FormWatch({btnClose, editWatch}) {
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
           </select>     
         </div>
-        <div className="funcionesDiv">
-          {watch.functions.length !== 0 && 
-            watch.functions.map((f,i)=>
-              <span key={i+f} onClick={()=>handlerFunctions(f)}>
-                *{f.toUpperCase()}
-              </span>
-          )}
-        </div>        
+        
         <div className="optionDiv">
-          <h3>PRECIO EN DOLAR:</h3>
+          <h3>Precio en u$s:</h3>
           <input name="price" type="text" onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
@@ -177,7 +170,19 @@ function FormWatch({btnClose, editWatch}) {
           <button type="button" onClick={postWatches}>UP WATCH</button>
           
         </Container1>
-        
+        <div className="funcionesDiv">
+          <h3>Funciones:</h3>
+        <div className="funcionesDiv2">
+          {watch.functions.length !== 0 && 
+            watch.functions.map((f,i)=>
+              <span key={i+f} onClick={()=>handlerFunctions(f)}>
+                *{f.toUpperCase()}
+              </span>
+          )}
+        </div>
+        </div>
+        <div className="divImg">
+          <h3>Imagenes:</h3>
         <Container2>
           {watch.image.length !== 0 && 
             watch.image.map((img,i)=>
@@ -190,6 +195,7 @@ function FormWatch({btnClose, editWatch}) {
             </div>               
           )}
         </Container2>
+        </div>
         
       </Formulario>
       <button className="btnClose" onClick={btnClose}>Close</button>

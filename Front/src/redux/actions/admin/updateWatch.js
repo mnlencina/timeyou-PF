@@ -11,6 +11,7 @@ export function updateWatch(id,upWatch) {
           type: UPDATE_WATCH,
           payload: update,
         });
+        alert("Update OK!")
       } catch (error) {
         alert("Verifique los datos");
       }

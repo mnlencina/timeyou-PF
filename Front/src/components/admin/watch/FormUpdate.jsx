@@ -1,27 +1,33 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Container, Formulario, Container1, Container2 } from "./style";
 import { updateWatch } from "../../../redux/actions/admin/updateWatch";
+import { getProducts } from "../../../redux/Actions";
 
-function FormWatchUpdate({btnClose, editWatch}) {
-  
+function FormWatchUpdate(props) {
+  const {btnClose, wUpdate, setUpdateW} = props
   const dispatch = useDispatch()
-  const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
+  
+  const BRANDS = useSelector((state)=> state.BRANDS)
+  const STYLES = useSelector((state)=> state.STYLES)
+  const COLORS = useSelector((state)=> state.COLORS) 
+  const STRAPS = useSelector((state)=> state.STRAPS) 
+  const FUNCTIONS = useSelector((state)=> state.FUNCTIONS)
+  
   const [addImage, setAddImage] = useState("")
   
-  console.log(editWatch);
-  
     const watchUp = {
-      brandName: editWatch.brandName,
-      model: editWatch.model,
-      styleName: editWatch.styleName,
-      colorName: editWatch.colorName,
-      image: editWatch.image,
-      strapName: editWatch.strapName,
-      price: editWatch.price,
-      gender: editWatch.gender, 
-      Functions: editWatch.Functions.map(f => f.name),
-      description: editWatch.description
+      brandName: wUpdate.brandName,
+      model: wUpdate.model,
+      styleName: wUpdate.styleName,
+      colorName: wUpdate.colorName,
+      image: wUpdate.image,
+      strapName: wUpdate.strapName,
+      price: wUpdate.price,
+      gender: wUpdate.gender, 
+      Functions: wUpdate.Functions.map(f => f.name),
+      description: wUpdate.description
     }
   
   console.log(watchUp);
@@ -33,7 +39,7 @@ function FormWatchUpdate({btnClose, editWatch}) {
     e.preventDefault()
     const {name, value} = e.target
     console.log(name, value);
-    if(name !== "functions"){
+    if(name !== "Functions"){
       setWatch(
         {
           ...watch,
@@ -41,13 +47,13 @@ function FormWatchUpdate({btnClose, editWatch}) {
         }
       )
     } else {       
-        const filtered = watch.functions.filter(f=> f === value)
+        const filtered = watch.Functions.filter(f=> f === value)
         console.log(filtered);
         if(!filtered.length && value !== ""){
           setWatch(
             {
               ...watch,
-              functions: [...watch.functions, value]
+              Functions: [...watch.Functions, value]
             }
           )        
         }   
@@ -77,11 +83,11 @@ function FormWatchUpdate({btnClose, editWatch}) {
   }
     
   const handlerFunctions = (func)=>{    
-    const filtered = watch.functions.filter(f=> f !== func)   
+    const filtered = watch.Functions.filter(f=> f !== func)   
     setWatch(
       {
         ...watch,
-        functions: filtered,
+        Functions: filtered,
       }
     )    
   }
@@ -95,13 +101,12 @@ function FormWatchUpdate({btnClose, editWatch}) {
       }
     )    
   }
-  const putWatches = ()=>{
-    
-        dispatch(updateWatch(editWatch.id,watch))
-        setWatch({
-          ...watch,
-          image: [],
-        })        
+  const putWatches = async()=>{
+    // eslint-disable-next-line react/prop-types
+    const data = await dispatch(updateWatch(wUpdate.id,watch))
+    console.log(data);
+    setUpdateW(false)
+    dispatch(getProducts())
   }
   
   
@@ -113,7 +118,7 @@ function FormWatchUpdate({btnClose, editWatch}) {
         <Container1>
         <div className="optionDiv">
           <h3>Modelo:</h3>
-          <input name="model" type="text" onChange={handleChange}/>     
+          <input name="model" type="text" defaultValue={watch.model} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="brandName" value={watch.brandName}>
@@ -153,21 +158,14 @@ function FormWatchUpdate({btnClose, editWatch}) {
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
           </select>     
         </div>
-        <div className="funcionesDiv">
-          {watch.Functions.length !== 0 && 
-            watch.Functions.map((f,i)=>
-              <span key={i+f} onClick={()=>handlerFunctions(f)}>
-                *{f.toUpperCase()}
-              </span>
-          )}
-        </div>        
+        
         <div className="optionDiv">
-          <h3>PRECIO EN DOLAR:</h3>
-          <input name="price" type="text" onChange={handleChange}/>     
+          <h3>Precio en u$s:</h3>
+          <input name="price" type="text" defaultValue={watch.price} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
         <h3>Descripción</h3>
-        <input name="description" type="text" onChange={handleChange}/>
+        <input name="description" type="text" defaultValue={watch.description} onChange={handleChange}/>
         </div>
         <div className="optionDiv">
           <h3>Imagen</h3>
@@ -179,6 +177,20 @@ function FormWatchUpdate({btnClose, editWatch}) {
           
         </Container1>
         
+        <div className="funcionesDiv">
+          <h3>Funciones:</h3>
+        <div className="funcionesDiv2">
+          {watch.Functions.length !== 0 && 
+            watch.Functions.map((f,i)=>
+              <span key={i+f} onClick={()=>handlerFunctions(f)}>
+                *{f.toUpperCase()}
+              </span>
+          )}
+        </div>        
+        </div>
+        
+        <div className="divImg">
+          <h3>Imagenes:</h3>
         <Container2>
           {watch.image.length !== 0 && 
             watch.image.map((img,i)=>
@@ -191,6 +203,7 @@ function FormWatchUpdate({btnClose, editWatch}) {
             </div>               
           )}
         </Container2>
+        </div>
         
       </Formulario>
       <button className="btnClose" onClick={btnClose}>Close</button>

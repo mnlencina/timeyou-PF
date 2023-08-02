@@ -56,14 +56,10 @@ const Dashboard = ()=>{
         dispatch(addUsers())
     }
     
-    
+    const [wUpdate, setWUpdate] = useState({})
     const editWatches =(row)=>{
-        console.log(row);
-        
-        let editWatch = row
-        setUpdateW(true)
-        FormWatchUpdate({editWatch})
-        
+        setWUpdate(row)
+        setUpdateW(true)        
     }
     
     const columnsUser = [
@@ -185,7 +181,7 @@ const Dashboard = ()=>{
     };
     
     
-    console.log("todos",allUsers);
+    
     return (
         <Container>
             <Nav/>
@@ -222,7 +218,7 @@ const Dashboard = ()=>{
                 </div>
                 <button onClick={()=>setNewWat(true)}>New Watch</button>
                 {newWat && <Form btnClose={()=>setNewWat(false)}/>}
-                {updateW && <FormWatchUpdate btnClose={()=>setUpdateW(false)} editWatches={editW}/>}
+                {updateW && wUpdate.id && <FormWatchUpdate btnClose={()=>setUpdateW(false)} wUpdate={wUpdate} setUpdateW={setUpdateW}/>}
             </div>
             </div>
         </Container>

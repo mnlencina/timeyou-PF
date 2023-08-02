@@ -13,7 +13,7 @@ export const Container = styled.main`
     justify-items: center;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: rgb(0,0,0,0.4);
+    background-color: rgb(0,0,0,0.7);
     
   h2 {
     margin: 10px;
@@ -29,12 +29,13 @@ export const Formulario = styled.main`
   flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-start;
-  gap: 50px;
+  gap: 30px;
   margin: 20px;
   background-color: white;
   border-radius: 20px;
   padding: 20px;
   margin-top: 10%;
+  background-color: rgb(255,255,255,0.8);
   
   select {
     width: 175px;
@@ -43,15 +44,18 @@ export const Formulario = styled.main`
   input {
     width: 175px;
   }
-`;
-
-export const Container1 = styled.main`
   .funcionesDiv{
-    width: 300px;
+    width: 220px;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    background-color: rgb(255,255,255,0.7);
+    height: 100%;
+    border-radius: 10px;
+    h3{
+      margin: 5px 0px 0px 10px;
+    }
     
     span{
       margin: 2px;
@@ -60,10 +64,35 @@ export const Container1 = styled.main`
       cursor: pointer;
       background-color: #001aff55;
       border-radius: 5px;
-      padding: 2px;
+      padding: 5px;
+    }
+    .funcionesDiv2{
+      border: 0px;
+      padding: 0px;
+      margin: 0px 10px 0px 10px;
+      display: flex;
+      width: 200px;
+      font-size: 12px;
+      flex-direction: column;
+      align-items: stretch;
+      flex-wrap: nowrap;
     }
   }
+  .divImg{
+    width: 301px;
+    height: 100%;
+    border-radius: 10px;
+    background-color: rgb(255,255,255,0.7);
+    h3{
+      margin: 5px 0px 0px 10px;
+    }
+  }
+`;
+
+export const Container1 = styled.main`
+  
   .optionDiv{
+    width: 180px;
     margin: 5px 5px 5px 0;
   }
   button {
@@ -73,22 +102,28 @@ export const Container1 = styled.main`
   
 export const Container2 = styled.main`
   display: flex;
-  width: 350px;
+  width: 301px;  
   flex-wrap: wrap;
-  flex-direction: row;  
+  flex-direction: row;
+  margin-top: -15px;
+  
+  
 
-  img {
-      height: 150px;
-      width: 150px;
+  img {    
+    height: 150px;
+    width: 150px;
   }
   
   .btnClose {
-    width: 30px;
-    height: 30px;
+    position: relative;
+    bottom: -20px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
     background: #888;
     border: none;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
