@@ -1,7 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { getCommentsByWatchId } from '../../redux/actions/comments/getCommentsByWatchId'
+
 
 
 const RatingWrapper = styled.div`
@@ -73,11 +76,18 @@ const PercentageColumn = styled.span`
 `
   ;
 
-const AverageRating = () => {
+const AverageRating = ({ watchId }) => {
 
 
   const comments = useSelector((state) => state.comments);
   const numbers = comments ? comments.map((num) => num.calification) : [];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCommentsByWatchId(watchId));
+  }, [dispatch, watchId]);
+  
 
   console.log("NUMBERS DESDE AVERAGE RATING", numbers)
   const percentages = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };

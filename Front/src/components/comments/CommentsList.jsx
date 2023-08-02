@@ -39,9 +39,9 @@ const FaEllipsisHWrapper = styled.div`
 
 const CommentsList = ({watchId}) => {
   
-  console.log("WATCHID",  watchId)
+
   const comments = useSelector((state) => state.comments) || []; 
-  console.log("COMMENTS DEL COMMENTLIST", comments)
+
   
   const error = useSelector((state) => state.errorComments);
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ const CommentsList = ({watchId}) => {
     dispatch(getCommentsByWatchId(watchId));
   }, [dispatch, watchId]);
   if (error) {
-    return <div>Todavía no existen calificaciones para este producto.. </div>;
+    console.log(error);
   }
 
   const handleShowMore = () => {
@@ -71,6 +71,7 @@ const CommentsList = ({watchId}) => {
   return (
     <CommentListContainer>
       <Title>Comentarios</Title>
+      {comments.length == 0 && <h4>Todavía no existen calificaciones para este producto...</h4>}
       {comments.length > 0 && comments.slice(0, visibleComments).map((comment) => (
         <>
           <CommentItem

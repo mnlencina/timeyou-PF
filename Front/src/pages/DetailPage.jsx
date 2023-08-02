@@ -140,7 +140,7 @@ function DetailPage () {
                   <CreateComment watchId={detailClock[0].id} />
                 </section>
                 <section className="ratings">
-                  <AverageRating />
+                  <AverageRating watchId={detailClock[0].id} />
                 </section>
               </div>
             </div>
@@ -154,7 +154,7 @@ function DetailPage () {
                   <CommentsList watchId={detailClock[0].id} />
                 </section>
                 <section className="ratings">
-                  <AverageRating />
+                  <AverageRating watchId={detailClock[0].id} />
                 </section>
               </div>
             </div>

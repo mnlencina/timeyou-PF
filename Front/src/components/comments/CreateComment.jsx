@@ -90,6 +90,16 @@ const SuccessMessage = styled.div`
   border: none;
 `;
 
+const WrongMessage = styled.div`
+  color: #001113;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: none;
+`;
+
 
 
 
@@ -108,12 +118,23 @@ const CreateComment = ({ watchId }) => {
   
 const email = useSelector((state)=> state.user.email)
 const userId = useSelector((state)=>state.userLoggedId)
-//console.log("USER LOGGED email" , email, "USER ID", userId)
+console.log("USER LOGGED email" , email, "USER ID LOGGED", userId)
+
+
+const comments = useSelector((state) => state.comments) || []; 
+const userIdFromComment = comments.filter(user => user.UserId !== userId)
+console.log("USER ID", userIdFromComment)
+const watchIdFromComment = comments.filter(user => user.WatchId !== watchId)
+console.log("WATCH ID", watchIdFromComment)
+
+
+
 
 useEffect(() => {
   console.log("Antes de llamar a la acción getLoggedUserId");
   dispatch(getLoggedUserId(email))
 }, [dispatch, email]);
+
  
   const handleRatingClick = (rating) => {
     setCalification(rating);
@@ -134,11 +155,11 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!watchId) {
+    if (!watchId || watchId == watchIdFromComment) {
       console.error('Error: watchId no válidos');
       return; 
     }
-    if(!userId) {
+    if(!userId || userId == userIdFromComment) {
       console.error('Error: userId no válidos');
     }
     if (!userName) {
@@ -155,20 +176,30 @@ useEffect(() => {
     };
 
     if (commentText.trim() !== '') {
-      dispatch(createComment(commentBody));
+if (userId !== userIdFromComment && watchId !== watchIdFromComment ){
+  alert("Ya realizaste un comentario en este producto")
+  setShowSuccessMessage(false)
+  setCommentText('');
+  setCalification('');
+  setUserName('');
+  setSelectedRating(0); 
+  setHoveredRating(0);
+
+} else {
+  dispatch(createComment(commentBody));
       setShowSuccessMessage(true);
       setCommentText('');
       setCalification('');
       setUserName('');
       setSelectedRating(0); 
       setHoveredRating(0);
-      
     }
   };
+}
 
   return (
     <Form onSubmit={handleSubmit} onClick={handleFormClick}>
-       <Title>Danos tu opinión:</Title>
+       <Title>Califica este producto</Title>
       <div>
         <Label htmlFor="userName">Tu nombre:</Label>
         <Input

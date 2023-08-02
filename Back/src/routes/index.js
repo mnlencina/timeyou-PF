@@ -16,7 +16,7 @@ const buyRouter = require("./buy/buyRouter");
 const adminRouter = require("./admin/adminRouter");
 const authRouter = require("./auth/authRouter");
 const getUserIdRouter = require("./userId/getUserIdRouter");
-const mercadoPagoRouter = require("./MercadoPago/mercadoPago");
+const mercadoPagoRouter = require("./Mercado _Pago/mercadoPago");
 
 // Rutas para el filtrado en la pagina
 router.use("/comment", commentRouter);
