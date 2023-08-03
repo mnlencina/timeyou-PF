@@ -12,23 +12,48 @@ export const LogoSlider = () => {
   const timerRef = useRef(null);
 
  
+  // const handleNext = () => {
+  //   resetTimer();
+  //   if (slideShow.current.children.length > 0) {
+  //     const primerElemento = slideShow.current.children[0];
+
+  //     slideShow.current.style.transition = "500ms ease-out all";
+
+  //     const tamañoSlide = slideShow.current.children[0].offsetWidth;
+
+  //     slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
+
+  //     const transicion = () => {
+  //       slideShow.current.style.transition = "none";
+  //       slideShow.current.style.transform = "translateX(0)";
+  //       slideShow.current.appendChild(primerElemento);
+  //       slideShow.current.removeEventListener("transitionend", transicion);
+  //     };
+  //     slideShow.current.addEventListener("transitionend", transicion);
+  //   }
+  // };
+
   const handleNext = () => {
     resetTimer();
     if (slideShow.current.children.length > 0) {
       const primerElemento = slideShow.current.children[0];
-
-      slideShow.current.style.transition = "500ms ease-out all";
-
-      const tamañoSlide = slideShow.current.children[0].offsetWidth;
-
+      const clonePrimerElemento = primerElemento.cloneNode(true); // Clonar el primer elemento
+  
+      
+      const tamañoSlide = primerElemento.offsetWidth;
       slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
-
+      
+      // Ajustar la posición del clon del primer elemento después del último elemento
+      slideShow.current.appendChild(clonePrimerElemento);
+      slideShow.current.style.transition = "1000ms ease-out all";
+      
       const transicion = () => {
         slideShow.current.style.transition = "none";
         slideShow.current.style.transform = "translateX(0)";
-        slideShow.current.appendChild(primerElemento);
+        slideShow.current.removeChild(primerElemento); // Eliminar el primer elemento original
         slideShow.current.removeEventListener("transitionend", transicion);
       };
+      
       slideShow.current.addEventListener("transitionend", transicion);
     }
   };
@@ -36,7 +61,7 @@ export const LogoSlider = () => {
   const startTimer = () => {
     timerRef.current = setInterval(() => {
       handleNext();
-    }, 8000);
+    }, 3000);
   };
 
   const resetTimer = () => {
@@ -93,14 +118,14 @@ export const LogoSlider = () => {
         ))}
       </div>
 
-      <div className="controles">
+      {/* <div className="controles">
         <BTNHover onClick={handlePrev}>
           <AiOutlineLeft />
         </BTNHover>
         <BTNHover onClick={handleNext}>
           <AiOutlineRight />
         </BTNHover>
-      </div>
+      </div> */}
       
     </Container>
   );

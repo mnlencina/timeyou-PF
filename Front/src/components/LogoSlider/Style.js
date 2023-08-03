@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
  export const Container = styled.div`
-  width: 75%;
+  width: 80%;
   height: 100%;
   position: relative;
   margin: auto;
@@ -14,18 +14,21 @@ import styled from 'styled-components'
     flex-wrap: nowrap;
     margin: auto;
     z-index: 950;
+    gap: 1px;
     .slide {
-      min-width: 10%;
+      width: 10
+      
+      /* min-width: 10%;
       min-height: 100%;
       z-index: 30;
       margin: auto;
-      z-index: 950;
+      z-index: 950; */
       img {
         width: 100%;
-        min-height: 20px;
         height: 100%;
         vertical-align: top;
         z-index: 950;
+        width: 100%;
       }
     }
   }

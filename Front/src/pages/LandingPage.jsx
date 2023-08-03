@@ -73,15 +73,15 @@ export default function LandingPage() {
 //     </ContainerMostrador>
 //   );
 
-  const banner = () => (
-    <Banners>
+  const bannerFoto = () => (
+    <BannersFotos>
         <Link to={'/home'} onClick={() => handleLinkClick('casio')}>
       <img src="https://watchlandsa.vtexassets.com/assets/vtex.file-manager-graphql/images/d5ddcaed-1cec-4736-8a94-0e03b3ba26f8___89f5b3ced11506895642fca1c4f6d59a.png" className="foto"  />
         </Link>
         <Link to={'/home'} onClick={() => handleLinkClick('mistral')}>
       <img src="https://watchlandsa.vtexassets.com/assets/vtex.file-manager-graphql/images/74b39cc8-7942-4a5d-86cf-4d03f19ee51c___7d3dd5a98962f95ef4e34c14f54a1ee8.png" className="foto" />
         </Link>
-    </Banners>
+    </BannersFotos>
   )
 
 
@@ -90,19 +90,20 @@ export default function LandingPage() {
       {slideContainer()}
       <LogoSlider/>
       <CardSlider/>
-      {banner()}
+      {bannerFoto()}
       <CardSlider/>
     </>
   );
 }
 
-const Banners = styled.section`
-    width: 100%;
-    height: 100%;
-    margin-left: 100px;
+const BannersFotos = styled.section`
+  width: 70%;
+  height: 100%;
+  display: grid;
+  place-items: center;
     .foto {
-        margin-top: 50px;
-        width:90%;
+      width: 100%;
+      margin-top: 50px;
     }
 `;
 
