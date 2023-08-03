@@ -28,13 +28,13 @@ const dispatch = useDispatch()
         <section className="content">
           <h4>${reloj.price * 500}</h4>
           <div className="inputs">
-            <AppendBTN alter>+</AppendBTN>
+            <AppendBTN alter="true">-</AppendBTN>
             <span className="visor">1</span>
-            <AppendBTN alter>-</AppendBTN>
+            <AppendBTN alter="true">+</AppendBTN>
           </div>
         </section>
         <div className="clear">
-          <AppendBTN alter onClick={handleRemove}>X</AppendBTN>
+          <AppendBTN alter="true" onClick={handleRemove}>X</AppendBTN>
         </div>
       </div>
     </Container>

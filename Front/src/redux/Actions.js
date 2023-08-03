@@ -21,7 +21,8 @@ import {
   CREATE_USER,
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
-  LOGOUT_USER
+  LOGOUT_USER,
+  LOGIN_GOOGLE,
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
@@ -43,7 +44,7 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 //fetch de un producto segun su modelo
-export function addModel (id) {
+export function addModel(id) {
   const endpoint = `http://localhost:3001/watches/${id}`;
   return async function (dispatch) {
     try {
@@ -58,8 +59,8 @@ export function addModel (id) {
     }
   };
 }
-
-export function resetDetail () {
+//update Detail
+export function resetDetail() {
   return {
     type: RESET_DETAIL,
   };
@@ -99,7 +100,7 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
-    const algoliaIndex = searchClient.initIndex('timeyou_PF'); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
+    const algoliaIndex = searchClient.initIndex("timeyou_PF"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
     const searchResults = await algoliaIndex.search(searchTerms);
 
     console.log("Algolia search results:", searchResults.hits);
@@ -166,7 +167,7 @@ export const clearFilters = () => (dispatch) => {
 
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
-export function allPropWatches (prop) {
+export function allPropWatches(prop) {
   const endpoint = `http://localhost:3001/${prop}`;
   return async function (dispatch) {
     try {
@@ -202,7 +203,7 @@ export function allPropWatches (prop) {
   };
 }
 
-export function postWatch (watch) {
+export function postWatch(watch) {
   const endpoint = `http://localhost:3001/watches/`;
   return async function (dispatch) {
     try {
@@ -226,11 +227,12 @@ export const createUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/register";
   try {
     const newUser = await axios.post(endpoint, user);
-    console.log(newUser.data);
+    
     dispatch({
       type: CREATE_USER,
       payload: newUser,
     });
+    alert("usuario creado con exito")
   } catch (error) {
     alert("no pudo crearse el usuario");
   }
@@ -239,38 +241,41 @@ export const createUser = (user) => async (dispatch) => {
 export const loginUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/login";
   try {
-    const { data } = await axios.post(endpoint, user,{
-      header: {'Content-Type': 'application/json',}
+    const { data } = await axios.post(endpoint, user, {
+      headers: { "Content-Type": "application/json" },
     });
-    console.log(data);
     dispatch({
       type: LOGIN_USER,
-      payload: data.token,
+      payload: data,
     });
   } catch (error) {
     console.log(error);
   }
 };
 
+export const loginGoogle = (user) => ({
+  type: LOGIN_GOOGLE,
+  payload: user,
+});
+
 // Peticiones para cada una de las Brand en el Navbar //
 export const getWatchesByBrand = (brand) => async (dispatch) => {
   const URL = `http://localhost:3001/brands/${brand}`;
   try {
     let { data } = await axios.get(URL);
-    console.log("data.Watches", data.Watches)
+    console.log("data.Watches", data.Watches);
     dispatch({
       type: GET_WATCHES_BY_BRAND,
       payload: data.Watches,
     });
-    console.log(data)
+    console.log(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const logOut = ()=>{
+export const logOut = () => {
   return {
     type: LOGOUT_USER,
-  }
-}
-
+  };
+};

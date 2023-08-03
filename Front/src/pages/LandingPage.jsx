@@ -14,7 +14,10 @@ import { getProducts, getWatchesByBrand } from "../redux/Actions.js";
 
 export default function LandingPage() {
 
-    const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
+  const Clocks = useSelector((state) => state.Clocks);
+  const searchClocks = useSelector((state) => state.searchClocks);
+  const searchActive = useSelector((state) => state.searchActive);
+  
   const whatches = searchActive ? searchClocks : Clocks;
 
   const [show, setShow] = useState(false);

@@ -1,4 +1,3 @@
-
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -22,10 +21,21 @@ import {
   LOGIN_USER,
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
+  ALL_USERS,
+  LOGIN_GOOGLE,
+  ALL_BUY,
+  UPDATE_USER,
+  UPDATE_WATCH,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_ERROR,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE,
+  GET_USER_LOGGED
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
 const storedCart = localStorage.getItem("cart");
+const userStored = localStorage.getItem("user");
 
 const initialState = {
   Clocks: [],
@@ -43,12 +53,20 @@ const initialState = {
   COLORS: [],
   STRAPS: [],
   FUNCTIONS: [],
-  user: { token: "" },
+  user: userStored ? JSON.parse(userStored) : { role: "", token: "" },
+  allUsers: [],
+  allBuys: [],
+  comments: [],
+  errorComments:null,
+  userLoggedId: []
 };
 
 // Función para guardar el carrito en el localStorage
 const saveCartToLocalStorage = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
+};
+const saveUserToLocalStorage = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -197,11 +215,18 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
     case LOGIN_USER:
+      saveUserToLocalStorage(payload);
       return {
         ...state,
-        user: { token: payload },
+        user: payload,
       };
     //lINKS DEL NAVBAR
+    case LOGIN_GOOGLE:
+      saveUserToLocalStorage(payload)
+      return {
+        ...state,
+        user: payload,
+      };
     case GET_WATCHES_BY_BRAND:
       return {
         ...state,
@@ -211,12 +236,59 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: null,
       };
     case LOGOUT_USER:
+      localStorage.removeItem("user");
       return {
         ...state,
-        user: { token: "" },
-              }
-
+        user: {role:"", token:""},
+      };
+    case ALL_USERS:
+      return {
+        ...state,
+        allUsers: payload,
+      };
+    case ALL_BUY:
+      return {
+        ...state,
+        allBuys: payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state
+      }
+    case UPDATE_WATCH:
+      return {
+        ...state
+      }
+      case GET_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        comments: payload,
+        errorComments: null,
+      };
+    case GET_COMMENTS_ERROR:
+      return {
+        ...state,
+        comments: [],
+        errorComments: payload
+      };
+    case CREATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: [...state.comments, payload],
+        errorComments: null,
+      };
+    case CREATE_COMMENT_FAILURE:
+      return {
+        ...state,
+        errorComments: payload
+      };
+      case GET_USER_LOGGED:
+        return {
+          ...state,
+          userLoggedId: payload,
+          error: null,
+        };
     default:
       return state;
-            }
-          }
+  }
+};

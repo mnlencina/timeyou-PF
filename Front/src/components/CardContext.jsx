@@ -18,7 +18,7 @@ export const CardContext = ({pagination}) => {
       <div className="context-card">
       {
         loading ? (<h1>Cargando...</h1>):(pagination.map(e=>(
-          <Card key={e.idProduct} watch={e}/>
+          <Card key={e.id} watch={e}/>
         )))
       }
       </div>
@@ -39,9 +39,7 @@ const Container = styled.section`
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-   /*  display: flex;
-    flex-wrap: wrap; */
-    align-items: center;
+    align-items:start;
     justify-items: center;
     
   }

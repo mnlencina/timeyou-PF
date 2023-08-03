@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components";
-import { postWatch } from "../../redux/Actions";
+//import styled from "styled-components";
+import { Container, Formulario, Container1, Container2 } from "./style";
+import { postWatch } from "../../../redux/Actions";
 
-function FormWatch() {
+function FormWatch({btnClose, editWatch}) {
   
   const dispatch = useDispatch()
   const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
@@ -20,6 +21,8 @@ function FormWatch() {
     functions: [],
     description: ""
   })
+  
+  
   
   const handleChange = (e)=>{
     e.preventDefault()
@@ -103,7 +106,8 @@ function FormWatch() {
   
     return (
     <Container>
-        <h2>Carga todas las caracteristicas del Reloj</h2>
+        {/* <h2>Carga todas las caracteristicas del Reloj</h2> */}
+        
       <Formulario>
         <Container1>
         <div className="optionDiv">
@@ -148,16 +152,9 @@ function FormWatch() {
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
           </select>     
         </div>
-        <div className="funcionesDiv">
-          {watch.functions.length !== 0 && 
-            watch.functions.map((f,i)=>
-              <span key={i+f} onClick={()=>handlerFunctions(f)}>
-                *{f.toUpperCase()}
-              </span>
-          )}
-        </div>        
+        
         <div className="optionDiv">
-          <h3>PRECIO EN DOLAR:</h3>
+          <h3>Precio en u$s:</h3>
           <input name="price" type="text" onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
@@ -173,7 +170,19 @@ function FormWatch() {
           <button type="button" onClick={postWatches}>UP WATCH</button>
           
         </Container1>
-        
+        <div className="funcionesDiv">
+          <h3>Funciones:</h3>
+        <div className="funcionesDiv2">
+          {watch.functions.length !== 0 && 
+            watch.functions.map((f,i)=>
+              <span key={i+f} onClick={()=>handlerFunctions(f)}>
+                *{f.toUpperCase()}
+              </span>
+          )}
+        </div>
+        </div>
+        <div className="divImg">
+          <h3>Imagenes:</h3>
         <Container2>
           {watch.image.length !== 0 && 
             watch.image.map((img,i)=>
@@ -186,8 +195,10 @@ function FormWatch() {
             </div>               
           )}
         </Container2>
+        </div>
         
       </Formulario>
+      <button className="btnClose" onClick={btnClose}>Close</button>
     </Container>  
     )
   }
@@ -195,86 +206,4 @@ function FormWatch() {
   export default FormWatch;
   
   
-const Container = styled.main`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
-    
-  h2 {
-    margin: 10px;
-  }
-`;
-  
-const Formulario = styled.main`  
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 50px;
-  margin: 20px;
-  
-  select {
-    width: 175px;
-  }
-  
-  input {
-    width: 175px;
-  }
-`;
-
-const Container1 = styled.main`
-  .funcionesDiv{
-    width: 300px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    
-    span{
-      margin: 2px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      background-color: #001aff55;
-      border-radius: 5px;
-      padding: 2px;
-    }
-  }
-  .optionDiv{
-    margin: 5px 5px 5px 0;
-  }
-  button {
-    cursor: pointer;
-  }
-`;
-  
-const Container2 = styled.main`
-  display: flex;
-  width: 350px;
-  flex-wrap: wrap;
-  flex-direction: row;  
-
-  img {
-      height: 150px;
-      width: 150px;
-  }
-  
-  .btnClose {
-    width: 30px;
-    height: 30px;
-    background: #888;
-    border: none;
-    border-radius: 50%;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s ease-in-out all;
-    color: #fff;
-    cursor: pointer;
-}
-   
-  
-`;
 
