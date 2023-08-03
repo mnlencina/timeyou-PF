@@ -32,6 +32,15 @@ export const Container = styled.div`
     .divAction{
         display: flex;
     }
+    .tableRole{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        gap: 4px;
+        width: 70px;
+    }
     
     .btnDiv{
         width: 30px;

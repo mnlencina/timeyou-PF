@@ -65,37 +65,49 @@ const Dashboard = ()=>{
     const columnsUser = [
         {
             name: "Usuario:",
-            selector: row => row.userName,
+            selector:"userName",
+            cell: row => row.userName,
             sortable: true,
-            fixed: "30px",
+            //width: "100px",
         },
         {
             name: "email:",
-            selector: row => row.email,
+            selector: "email",
+            cell: row => row.email,
             sortable: true
         },
-        {
+        /* {
             name: "Password:",
             selector: row => row.password
-        },
+        }, */
         {
             name: "Tipo:",
-            selector: row => editRole?
+            selector: "role",
+            cell: row => editRole?
                 <select onChange={(e)=>handleRole(e,row.id)} value={row.role}>
                     <option value="admin">Admin</option>
                     <option value="user">User</option>
                 </select> 
-                : <div>{row.role} <button onClick={()=>setEditRole(!editRole)}>&#x270E;</button></div>,
-            sortable: true
+                : <div className="tableRole">
+                    <span>
+                        {row.role.charAt(0).toUpperCase() + row.role.slice(1)} 
+                    </span>
+                    <button onClick={()=>setEditRole(!editRole)}>&#x270E;</button>
+                </div>,
+            sortable: true,
+            //width:"250px",
+            
         },
         {
             name: "Registro:",
-            selector: row => row.provider,
+            selector: "provider",
+            cell: row => row.provider.charAt(0).toUpperCase() + row.provider.slice(1),
             sortable: true
         },
         {
             name: "Activo",
-            selector: row => row.del ? (
+            selector: "del",
+            cell: row => row.del ? (
                 <div className="btnDiv">
                     <button onClick={()=> delUser(row.id,{del: !row.del})} id="btn1">NO</button>
                 </div>
@@ -112,51 +124,55 @@ const Dashboard = ()=>{
     const columnsWatch = [
         {
             name: "Reloj:",
-            selector: row => (<img className="imgTable" src={row.image[0]}/>),
+            selector: "image",
+            cell: row => (<img className="imgTable" src={row.image[0]}/>),
         },
         {
             name: "Marca:",
-            selector: row => row.brandName,
+            selector: "brandName",
+            cell: row => row.brandName.charAt(0).toUpperCase() + row.brandName.slice(1),
             sortable: true
         },
         {
             name: "Modelo:",
-            selector: row => row.model,
+            selector: "model",
+            cell: row => row.model.charAt(0).toUpperCase() + row.model.slice(1),
             sortable: true
         },
         {
             name: "Precio: U$s",
-            selector: row => row.price,
+            selector: "price",
+            cell: row => row.price,
             sortable: true
         },
         {
             name: "Color:",
-            selector: row => row.colorName,
+            selector: "colorName",
+            cell: row => row.colorName.charAt(0).toUpperCase() + row.colorName.slice(1),
             sortable: true
         },
         {
             name: "Estilo:",
-            selector: row => row.styleName,
+            selector: "styleName",
+            cell: row => row.styleName.charAt(0).toUpperCase() + row.styleName.slice(1),
             sortable: true
         },
         {
             name: "Genero:",
-            selector: row => row.gender,
+            selector: "gender",
+            cell: row => row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
             sortable: true
         },
         {
             name: "Malla:",
-            selector: row => row.strapName,
-            sortable: true
-        },
-        {
-            name: "Activo:",
-            selector: row => row.del ? "NO" : "SI",
+            selector: "strapName",
+            cell: row => row.strapName.charAt(0).toUpperCase() + row.strapName.slice(1),
             sortable: true
         },
         {
             name: "Acción:",
-            selector: row => (
+            selector: "del",
+            cell: row => (
                 <div className="divAction">
             {row.del ? (
                 <div className="btnDiv">
@@ -170,14 +186,19 @@ const Dashboard = ()=>{
                     <button onClick={()=>editWatches(row)}>&#x270E;</button>
                 </div>
             ),
+            sortable: true
             
         },
         
     ]
     
     const dataExpan = ({data})=> {
-    console.log(data);
-    return <span>Descripción: {data.description} / Funciones: {data.Functions.map(s=>` -${s.name} `)}</span>
+        console.log(data);
+        return (
+            <div>
+                <span>Descripción: {data.description} </span><span>Funciones: {data.Functions.map(s=>` -${s.name} `)}</span>
+            </div>
+        )
     };
     
     
@@ -191,7 +212,7 @@ const Dashboard = ()=>{
                 <Buys/>
                 
                 <div className="tableUser">
-                    <DataTable
+                    <DataTable 
                      columns={columnsUser}
                      data={allUsers}
                      fixedHeader= {true}
@@ -199,6 +220,7 @@ const Dashboard = ()=>{
                      progressComponent={<h1>Cargando Usuarios</h1>}   
                      highlightOnHover
                      pointerOnHover
+                     responsive
                     />
                 </div>
                 
@@ -214,6 +236,7 @@ const Dashboard = ()=>{
                      highlightOnHover
                      expandableRows
                      expandableRowsComponent={dataExpan}
+                     responsive
                     />
                 </div>
                 <button onClick={()=>setNewWat(true)}>New Watch</button>
