@@ -39,6 +39,7 @@ export const BTNHover = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  pointer-events: all;
   &:hover {
     color: ${(props) => props.alter === "true" && "#fff"};
     border: ${(props) => props.alter === "true" && "none"};

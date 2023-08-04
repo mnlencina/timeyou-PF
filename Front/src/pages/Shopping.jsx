@@ -6,7 +6,7 @@ import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { totalPrice } from "../redux/Actions";
-import { ProductMP } from "../components/MercadoPago/MercadoPago"
+import {ProductMP} from '../components/mercadoPago/MercadoPago'
 
 function Shopping() {
   const dispatch = useDispatch();

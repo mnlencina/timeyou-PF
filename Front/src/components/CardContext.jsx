@@ -35,22 +35,16 @@ const Container = styled.section`
   justify-content: center;
   overflow: hidden;
   .context-card {
+    margin-top: 30px;
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     align-items:start;
-    justify-items: center;
+    justify-items:center;
+    gap: 10px;
     
   }
-  @media (max-width: 768px) {
-    .context-card {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  @media (max-width: 500px) {
-    .context-card {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+
 `;

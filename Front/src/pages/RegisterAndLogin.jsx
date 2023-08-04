@@ -18,7 +18,27 @@ function RegisterAndLogin() {
   const dispatch = useDispatch();
   const [inModeLogin, setInModeLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState({});
 
+  const validateInputs = (input) => {
+    let errors = {};
+    if (input.userName.toString().trim() === "") {
+      errors.n1 = "El nombre de usuario requerido";
+    }
+    if (input.userName.length > 15) {
+      errors.n2 = "El nombre de usuario no puede contener mas de 15 caracteres";
+    }
+    if (input.email.trim() === "") {
+      errors.e1 = "El correo electronico es requerido";
+    }
+    if (!input.email.includes("@")) {
+      errors.e2 = "ingrese una direccion de correo valida";
+    }
+    if (input.password.trim() === "") {
+      errors.p = "Debe ingresar una contraseña";
+    }
+    return errors;
+  };
 
   const handleInMode = () => {
     setInModeLogin(!inModeLogin);
@@ -41,17 +61,35 @@ function RegisterAndLogin() {
       ...registerValues,
       [name]: value,
     });
+    setError(
+      validateInputs({
+        ...registerValues,
+        [name]: value,
+      })
+    );
     if (name === "password") {
       const valueForm = value.toString();
       setRegisterValues({
         ...registerValues,
         [name]: valueForm,
       });
+      setError(
+        validateInputs({
+          ...registerValues,
+          [name]: value,
+        })
+      );
     }
   };
+  console.log(error);
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    dispatch(createUser(registerValues));
+    if (error !== null) {
+      alert("Faltan datos");
+    } else {
+      dispatch(createUser(registerValues));
+      BsArrowLeftRight("usuario registrado con exito");
+    }
   };
 
   const handleChangeLogin = (e) => {
@@ -60,18 +98,28 @@ function RegisterAndLogin() {
       ...loginAcount,
       [name]: value,
     });
+    setError(
+      validateInputs({
+        [name]: value,
+      })
+    );
   };
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    dispatch(loginUser(loginAcount));
-    setLoggedIn(true);
-    const redirectPath = new URLSearchParams(location.search).get('redirect')
-    if (redirectPath) {
-      // Redirige a la pagina donde estaba el usuario previamente
-      navigate(redirectPath);
+    if (error !== null) {
+      alert("faltan datos a completar");
+      return;
     } else {
-      navigate('/auth');
+      dispatch(loginUser(loginAcount));
+      setLoggedIn(true);
+      const redirectPath = new URLSearchParams(location.search).get("redirect");
+      if (redirectPath) {
+        // Redirige a la pagina donde estaba el usuario previamente
+        navigate(redirectPath);
+      } else {
+        navigate("/auth");
+      }
     }
   };
 
@@ -91,13 +139,13 @@ function RegisterAndLogin() {
       ? JSON.parse(decodeURIComponent(dataString))
       : null;
     const confirmation = queryParams.get("confirmation");
-   
-      if (userData) {
-        dispatch(loginGoogle(userData));
-        navigate("/")     
-      }
+
+    if (userData) {
+      dispatch(loginGoogle(userData));
+      navigate("/");
+    }
   };
-  
+
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
     window.location.href = "http://localhost:3001/auth/google"; // Reemplaza esta URL con la ruta adecuada de tu servidor para la autenticación de Google
@@ -105,21 +153,9 @@ function RegisterAndLogin() {
 
   const renderRegister = () => (
     <ContainerRegister>
+      <div className="errors"></div>
       <h1>registrarse</h1>
       <div className="register-container">
-        {/* <div className="container-btn">
-          <div className="content">
-            <p>Registrate con plataformas sociales</p>
-          </div>
-          <div className="btn-controllers">
-            <button>
-              <FaFacebookF />
-            </button>
-            <button onClick={handleOnClick}>
-              <BsGoogle />
-            </button>
-          </div>
-        </div> */}
         <form
           action="POST"
           onSubmit={handleSubmitRegister}
@@ -134,6 +170,26 @@ function RegisterAndLogin() {
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
             />
+            {error.n1 && (
+              <p style={{ position: "absolute", top: "50px", color: "red" }}>
+                {error.n1}
+              </p>
+            )}
+            {error.n2 && (
+              <p
+                style={{
+                  position: "absolute",
+                  top: "2px",
+                  left: "250px",
+                  color: "red",
+                  width: "100%",
+                  textAlign: "center",
+                  zIndex: 10,
+                }}
+              >
+                {error.n2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineMail />
@@ -144,6 +200,36 @@ function RegisterAndLogin() {
               value={registerValues.email}
               onChange={handleChangeRegister}
             />
+            {error.e1 && (
+              <p
+                style={{
+                  position: "absolute",
+                  top: "53px",
+                  left: "0",
+                  color: "red",
+                  width: "100%",
+                  textAlign: "center",
+                  zIndex: 10,
+                }}
+              >
+                {error.e1}
+              </p>
+            )}
+            {error.e2 && (
+              <p
+                style={{
+                  position: "absolute",
+                  top: "53px",
+                  left: "0",
+                  color: "red",
+                  width: "100%",
+                  textAlign: "center",
+                  zIndex: 10,
+                }}
+              >
+                {error.e2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -154,6 +240,11 @@ function RegisterAndLogin() {
               value={registerValues.password}
               onChange={handleChangeRegister}
             />
+            {error.p && (
+              <p style={{ position: "absolute", top: "50px", color: "red" }}>
+                {error.p}
+              </p>
+            )}
           </div>
 
           <BTNLogin alter="false"> enviar</BTNLogin>
@@ -184,6 +275,26 @@ function RegisterAndLogin() {
               value={loginAcount.email}
               onChange={handleChangeLogin}
             />
+              {error.n1 && (
+              <p style={{ position: "absolute", top: "50px", color: "red" }}>
+                {error.n1}
+              </p>
+            )}
+            {error.n2 && (
+              <p
+                style={{
+                  position: "absolute",
+                  top: "2px",
+                  left: "250px",
+                  color: "red",
+                  width: "100%",
+                  textAlign: "center",
+                  zIndex: 10,
+                }}
+              >
+                {error.n2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -196,7 +307,7 @@ function RegisterAndLogin() {
             />
           </div>
           <BTNLogin>Login</BTNLogin>
-          
+
           <div className="login-btn">
             <button>
               <FaFacebookF />
@@ -205,7 +316,6 @@ function RegisterAndLogin() {
               <BsGoogle onClick={handleOnClick} />
             </button>
           </div>
-          
         </form>
       </div>
     </ContainerLogin>
@@ -338,11 +448,35 @@ const Container = styled.main`
 const ContainerRegister = styled.div`
   width: 50%;
   height: 100%;
+  position: relative;
   h1 {
     width: 100%;
     text-align: center;
     margin-top: 60px;
     text-transform: uppercase;
+  }
+  .errors {
+   /*  display: inline-block;
+    position: absolute;
+    top: 175px;
+    left: 505px;
+    width: 200px;
+    height: 80px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    z-index: 20;
+    transition: 0.3s ease; */
+   /*  &::after {
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: -12px;
+      width: 25px;
+      height: 25px;
+      transform: rotate(45deg);
+      background-color: red;
+      z-index: 10;
+    } */
   }
   .register-container {
     width: 100%;
@@ -406,6 +540,7 @@ const ContainerRegister = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
+        position: relative
         overflow: hidden;
         width: 90%;
         background-color: #f0f0f0;
@@ -455,7 +590,6 @@ const ContainerLogin = styled.div`
     height: 100%;
     display: flex;
     .login-btn {
-      
       bottom: 60px;
       right: 240px;
       display: flex;
