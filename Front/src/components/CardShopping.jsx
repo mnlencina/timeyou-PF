@@ -14,10 +14,10 @@ const dispatch = useDispatch()
       <div className="section-card">
         <div className="top-content">
           <picture className="img-box">
-            <img
+         {   <img
               src={reloj.image[0]}
               alt={reloj.name}
-            />
+            />}
           </picture>
           <div className="marca-modelo">
             <h5>{reloj.brandName}</h5>
