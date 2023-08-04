@@ -16,7 +16,6 @@ export const Footer = () => {
             <ul>
               <li>sobre nosotros</li>
               <li>contacto</li>
-              <li>trabaja con nosotros</li>
               <li>mi cuenta</li>
               <li>servicio tecnico</li>
             </ul>
@@ -26,7 +25,6 @@ export const Footer = () => {
             <ul>
               <li>preguntas frecuentes</li>
               <li>Privacidad</li>
-              <li>manuales</li>
               <li>Terminos & condiciones</li>
             </ul>
           </div>
@@ -45,8 +43,7 @@ export const Footer = () => {
         <hr />
         <section className="copy">
           <h4>
-            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023 - Todos los
-            derechos reservados
+            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023 
           </h4>
         </section>
       </div>
@@ -56,7 +53,7 @@ export const Footer = () => {
 
 const Container = styled.footer`
   width: 100vw;
-  height: 350px;
+  height: 250px;
   background-color: #111;
   display: flex;
   flex-direction: column;
@@ -72,7 +69,7 @@ const Container = styled.footer`
     margin: 0 auto;
     .media {
       width: 100%;
-      height: 300px;
+      height: 240px;
       display: flex;
       align-items: center;
       .about,
@@ -133,10 +130,11 @@ const Container = styled.footer`
     }
     .copy {
       width: 100%;
-      height: 50px;
+      height: 25px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin-bottom: 30px;
       h4 {
         font-size: 0.8rem;
         color: #fff;

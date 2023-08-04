@@ -17,6 +17,9 @@ function RegisterAndLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inModeLogin, setInModeLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+
   const handleInMode = () => {
     setInModeLogin(!inModeLogin);
   };
@@ -63,7 +66,14 @@ function RegisterAndLogin() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(loginAcount));
-
+    setLoggedIn(true);
+    const redirectPath = new URLSearchParams(location.search).get('redirect')
+    if (redirectPath) {
+      // Redirige a la pagina donde estaba el usuario previamente
+      navigate(redirectPath);
+    } else {
+      navigate('/auth');
+    }
   };
 
   useEffect(() => {

@@ -17,11 +17,11 @@ export const LogoSlider = () => {
     if (slideShow.current.children.length > 0) {
       const primerElemento = slideShow.current.children[0];
 
-      slideShow.current.style.transition = "500ms ease-out all";
+      slideShow.current.style.transition = "800ms ease-out all";
 
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
 
-      slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
 
       const transicion = () => {
         slideShow.current.style.transition = "none";
@@ -33,10 +33,11 @@ export const LogoSlider = () => {
     }
   };
 
+
   const startTimer = () => {
     timerRef.current = setInterval(() => {
       handleNext();
-    }, 6000);
+    }, 3000);
   };
 
   const resetTimer = () => {
@@ -64,10 +65,10 @@ export const LogoSlider = () => {
 
       slideShow.current.style.transition = "none";
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
-      slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
 
       setTimeout(() => {
-        slideShow.current.style.transition = "500ms ease-out all";
+        slideShow.current.style.transition = "800ms ease-out all";
         slideShow.current.style.transform = "translateX(0)";
       }, 30);
     }
@@ -82,7 +83,7 @@ export const LogoSlider = () => {
 
   return (
     <Container>
-
+      <div className="containerHider">
       <div className="container-slide" ref={slideShow}>
         {imageCarrouselMarcas.map((brand, index ) => (
           <div key={index} className="slide">
@@ -92,16 +93,16 @@ export const LogoSlider = () => {
           </div>
         ))}
       </div>
+      </div>
 
       <div className="controles">
-        <BTNHover onClick={handlePrev}>
+        <BTNHover alter='true'onClick={handlePrev}>
           <AiOutlineLeft />
         </BTNHover>
-        <BTNHover onClick={handleNext}>
+        <BTNHover alter='true' onClick={handleNext}>
           <AiOutlineRight />
         </BTNHover>
       </div>
-      
     </Container>
   );
 };

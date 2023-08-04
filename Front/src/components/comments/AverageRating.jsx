@@ -1,4 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getCommentsByWatchId } from '../../redux/actions/comments/getCommentsByWatchId'
+
 
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
@@ -7,12 +10,11 @@ import { FaStar } from 'react-icons/fa';
 const RatingWrapper = styled.div`
      margin: 0 auto;
      min-height: auto;
-     padding-top: 55px;
+     padding-top: 110px;
      padding-left: 50px;
      display: flex;
     flex-direction: column;
-    align-items: flex-start;
-  
+    margin-bottom: 80px;
 `;
 
 const RatingRow = styled.div`
@@ -26,13 +28,29 @@ const RatingRow = styled.div`
 const NumberColumn = styled.span`
    min-width: 30px;
   padding-right: 20px;
+  padding-left: 3px;
    display: flex;
   align-items: center;
+  color: #7d7576;
   span {
     color: #a6a9b9;
     margin: 0;
     padding-left: 20px;
     font-size: 1.2rem;
+  }
+`;
+
+const NumberColumn2 = styled.span`
+   min-width: 30px;
+  padding-right: 20px;
+  padding-left: 3px;
+   display: flex;
+  align-items: center;
+  span {
+    color: #7d7576;
+    margin: 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -44,8 +62,8 @@ const StarIcon = styled(FaStar)`
 
 
 const BarColumn = styled.div`
-  flex-basis: 200px;
-  height: 10px;
+  flex-basis: 250px;
+  height: 12px;
   background-color: #e4e4e4;
   margin-right: 10px;
   position: relative;
@@ -56,6 +74,7 @@ const BarColumn = styled.div`
     top: 0;
     left: 0;
     height: 100%;
+    width: 100%; 
     ${({ percentage }) => `
       width: ${percentage}%;
       background-color: #ffbb6a;
@@ -70,23 +89,37 @@ const BarColumn = styled.div`
 const PercentageColumn = styled.span`
   color: #acb2b1;
   font-weight: bold;
+  margin: 4px auto;
 `
   ;
 
-const AverageRating = () => {
+const AverageRating = ({watchId}) => {
 
 
   const comments = useSelector((state) => state.comments);
   const numbers = comments ? comments.map((num) => num.calification) : [];
-
-  console.log("NUMBERS DESDE AVERAGE RATING", numbers)
   const percentages = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+  const total1 = comments ? comments.filter((num) => num.calification == 1) : [];
+  const total2 = comments ? comments.filter((num) => num.calification == 2) : [];
+  const total3 = comments ? comments.filter((num) => num.calification == 3) : [];
+  const total4 = comments ? comments.filter((num) => num.calification == 4) : [];
+  const total5 = comments ? comments.filter((num) => num.calification == 5) : [];
+
+  console.log("totales",total1,total2,total3,total4,total5)
+
+ // console.log("NUMBERS DESDE AVERAGE RATING", numbers)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCommentsByWatchId(watchId));
+  }, [dispatch, watchId]);
 
   const calculatePercentage = (arr) => {
     if (!arr.every((num) => num >= 1 && num <= 5)) {
       return null;
     }
-
     const totalCount = arr.length;
     const countMap = {};
 
@@ -98,7 +131,6 @@ const AverageRating = () => {
       const count = countMap[num];
       percentages[num] = Math.round((count / totalCount) * 100);
     }
-
     return percentages;
   };
 
@@ -114,8 +146,17 @@ const AverageRating = () => {
           </NumberColumn>
           <BarColumn percentage={percentage} />
           <PercentageColumn>
-            {percentage}%
+            {percentage}% 
           </PercentageColumn>
+          <NumberColumn2>
+            <span>
+            ({(num == 1 && total1.length > 0) ? total1.length : ""}
+          {num == 2 && total2.length > 0 && total2.length}
+          {num == 3 && total3.length > 0 && total3.length}
+          {num == 4 && total4.length > 0 && total4.length}
+          {num == 5 && total5.length > 0 && total5.length})
+            </span>
+          </NumberColumn2>
         </RatingRow>
       ))}
     </RatingWrapper>

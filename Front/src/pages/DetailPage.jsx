@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { addModel, resetDetail } from "../redux/Actions";
 import { addToCart } from "../redux/Actions";
 import { translateGender } from "../components/helpers/translateGenderWords"
@@ -143,21 +143,21 @@ function DetailPage () {
                   <CreateComment watchId={detailClock[0].id} />
                 </section>
                 <section className="ratings">
-                  <AverageRating />
+                  <AverageRating watchId={detailClock[0].id} />
                 </section>
               </div>
             </div>
           ) : (
             <div>
               <div className="login">
-                <a href="/auth">Inicia sesión para calificar</a>
+              <StyledNavLink to={`/auth?redirect=/product/${detailClock[0].id}`}>Inicia sesión para calificar</StyledNavLink>
               </div>
               <div className="container-reviews">
                 <section className="reviews">
                   <CommentsList watchId={detailClock[0].id} />
                 </section>
                 <section className="ratings">
-                  <AverageRating />
+                  <AverageRating watchId={detailClock[0].id} />
                 </section>
               </div>
             </div>
@@ -463,6 +463,7 @@ const Container = styled.main`
     display: flex;
     justify-content: flex-end;
   } 
+  
   .container-reviews {
      margin: 0 auto;
      width: 90%;
@@ -481,4 +482,15 @@ const Container = styled.main`
       min-height: auto;
       margin-bottom: 20px;
     }
+`;
+
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+  color:#7d7576;
+  font-size: 1.1rem;
+  padding: 20px;
+
+  &:hover {
+    font-weight: bolder;
+  }
 `;

@@ -93,10 +93,28 @@ export const Container1 = styled.main`
   
   .optionDiv{
     width: 180px;
-    margin: 5px 5px 5px 0;
-  }
-  button {
-    cursor: pointer;
+    margin: 5px 5px 5px 0;    
+    
+    .customInput {
+      opacity: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .customLabel {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Estilo para ocultar el botón de archivo por defecto */
+    input[type="file"] {
+      position: absolute;
+      left: -9999px;
+    }
   }
 `;
   
