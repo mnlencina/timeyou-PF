@@ -19,7 +19,7 @@ export const Footer = () => {
             <ul>
               <li>sobre nosotros</li>
               <li>contacto</li>
-              <li>trabaja con nosotros</li>
+              <li>mi cuenta</li>
               <li>servicio tecnico</li>
             </ul>
           </div>
@@ -138,10 +138,11 @@ const Container = styled.footer`
     }
     .copy {
       width: 100%;
-      height: 50px;
+      height: 25px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin-bottom: 30px;
       h4 {
         font-size: 0.8rem;
         color: #fff;

@@ -9,7 +9,7 @@ export const CardSlider = () => {
   const watches = useSelector((state) => state.Clocks);
 
   const numWatches = 90;
-  const cardsPerPage = 3;
+  const cardsPerPage = 4;
   const maxPages = Math.ceil(numWatches / cardsPerPage);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -67,8 +67,7 @@ const Container = styled.div`
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+      gap: 15px;
       border-radius: 20px;
       position: relative;
       transition: 0.5s ease-in-out;
