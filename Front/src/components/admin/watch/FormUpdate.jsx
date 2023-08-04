@@ -170,7 +170,8 @@ function FormWatchUpdate(props) {
         <div className="optionDiv">
           <h3>Imagen</h3>
           <input id="imgs" onChange={handlerImage} name="image" type="text"/>
-          <button type="button" onClick={()=> masImg(addImage)}>add</button>
+           <button type= "button" onClick={()=> masImg(addImage)}>add</button> 
+    
         </div>
         
           <button type="button" onClick={putWatches}>Actualizar</button>
