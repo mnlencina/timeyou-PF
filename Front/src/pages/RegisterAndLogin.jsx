@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 /* actions */
-import { createUser, loginGoogle, loginUser } from "../redux/Actions";
+import { createUser, loginGoogle, loginUser, updateCart } from "../redux/Actions";
 /* hooks */
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,6 +60,7 @@ function RegisterAndLogin() {
       ...loginAcount,
       [name]: value,
     });
+    
   };
 
   const handleSubmitLogin = (e) => {
@@ -91,13 +92,13 @@ function RegisterAndLogin() {
       ? JSON.parse(decodeURIComponent(dataString))
       : null;
     const confirmation = queryParams.get("confirmation");
-   
-      if (userData) {
-        dispatch(loginGoogle(userData));
-        navigate("/")     
-      }
+
+    if (userData) {
+      dispatch(loginGoogle(userData));
+      navigate("/");
+    }
   };
-  
+
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
     window.location.href = "http://localhost:3001/auth/google"; // Reemplaza esta URL con la ruta adecuada de tu servidor para la autenticación de Google
@@ -196,7 +197,7 @@ function RegisterAndLogin() {
             />
           </div>
           <BTNLogin>Login</BTNLogin>
-          
+
           <div className="login-btn">
             <button>
               <FaFacebookF />
@@ -205,7 +206,6 @@ function RegisterAndLogin() {
               <BsGoogle onClick={handleOnClick} />
             </button>
           </div>
-          
         </form>
       </div>
     </ContainerLogin>
@@ -455,7 +455,6 @@ const ContainerLogin = styled.div`
     height: 100%;
     display: flex;
     .login-btn {
-      
       bottom: 60px;
       right: 240px;
       display: flex;

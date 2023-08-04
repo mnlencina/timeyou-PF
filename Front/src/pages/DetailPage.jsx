@@ -22,6 +22,9 @@ function DetailPage () {
   const loading = useSelector((state) => state.detailLoading);
   const user = useSelector((state) => state.user);
   const isLoggedIn = !!user.token;
+  const cart = useSelector(state=> state.Cart);
+
+  console.log(cart)
   
   const handleAddToCart = () => {
     dispatch(addToCart(detailClock[color]));

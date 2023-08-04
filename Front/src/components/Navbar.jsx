@@ -5,26 +5,38 @@ import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
-import { logOut, getProducts, getWatchesByBrand } from "../redux/Actions.js";
+import {
+  logOut,
+  getProducts,
+  getWatchesByBrand,
+  clearCart,
+} from "../redux/Actions.js";
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const itemCount = cart.items?.length;
 
-  const handleLinkClick =  (brand) => {
+  const itemCount = cart?.length
+
+  console.log(itemCount)
+  const handleLogOut = () => {
+    dispatch(clearCart());
+    dispatch(logOut());
+  };
+
+  const handleLinkClick = (brand) => {
     const brandLowerCase = brand.toLowerCase();
     if (brandLowerCase === "ver todo") {
-       dispatch(getProducts());
+      dispatch(getProducts());
     } else {
-       dispatch(getWatchesByBrand(brandLowerCase));
+      dispatch(getWatchesByBrand(brandLowerCase));
     }
   };
 
   return (
-    <Container itemcount={itemCount}>
+    <Container itemCount={itemCount}>
       <header className="header">
         <h1>
           <StyledLink2 to="/">
@@ -68,10 +80,10 @@ export const Navbar = () => {
           <ul className="icon">
             <li>
               <Link to="/auth">
-                {user.token.trim()==="" ? (
-                  <BiUser title="LogIn" onClick={()=> Navigate("/")} />
+                {user.token.trim() === "" ? (
+                  <BiUser title="LogIn" onClick={() => Navigate("/")} />
                 ) : (
-                  <BiUserX title="Out" onClick={() => dispatch(logOut())} />
+                  <BiUserX title="Out" onClick={handleLogOut} />
                 )}
               </Link>
             </li>
@@ -160,7 +172,7 @@ const Container = styled.div`
           }
           span {
             visibility: ${(props) =>
-              props.itemcount === 0 ? "hidden" : "visible"};
+              props.itemCount === 0 ? "hidden" : "visible"};
             position: absolute;
             right: -10px;
             bottom: 0;
