@@ -7,6 +7,7 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
+import TerminosCondiciones from '../pages/Terminos&Condiciones'
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -42,6 +43,7 @@ const MyRoutes = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
         <Route
           path="/shopping/checkout"
           element={
