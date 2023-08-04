@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Container, Formulario, Container1, Container2 } from "./style";
 import { updateWatch } from "../../../redux/actions/admin/updateWatch";
 import { getProducts } from "../../../redux/Actions";
+import uploadImageToCloudinary from "../claudinary/uploadimage";
 
 function FormWatchUpdate(props) {
   const {btnClose, wUpdate, setUpdateW} = props
@@ -62,11 +63,21 @@ function FormWatchUpdate(props) {
   }
   
   
-  const handlerImage = (img)=>{
+  /* const handlerImage = (img)=>{
     const {name, value} = img.target
     console.log(name, value);
      setAddImage(value)
-  }
+  } */
+  
+  const  handlerImage = async (e) => {
+    const imag = e.target.files[0];    
+    console.log(imag)
+      
+    let imageUrl  = await uploadImageToCloudinary("Relojes Time You", imag)
+      
+    setAddImage(imageUrl)
+    masImg(imageUrl)
+  };
   
   const masImg = (img)=>{
     const filtered = watch.image.filter(f=> f === img)
@@ -168,9 +179,8 @@ function FormWatchUpdate(props) {
         <input name="description" type="text" defaultValue={watch.description} onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <h3>Imagen</h3>
-          <input id="imgs" onChange={handlerImage} name="image" type="text"/>
-           <button type= "button" onClick={()=> masImg(addImage)}>add</button> 
+          <label className="customLabel" htmlFor="imgs">Cargar Imagen</label>
+          <input className="customInput" id="imgs" onChange={handlerImage} name="image" type="file" aria-label="Seleccionar archivo" />
     
         </div>
         

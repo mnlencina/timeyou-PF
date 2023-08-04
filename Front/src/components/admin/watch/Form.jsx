@@ -1,14 +1,21 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 //import styled from "styled-components";
 import { Container, Formulario, Container1, Container2 } from "./style";
-import { postWatch } from "../../../redux/Actions";
+import { getProducts, postWatch } from "../../../redux/Actions";
 import uploadImageToCloudinary from "../claudinary/uploadimage.js";
 
-function FormWatch({btnClose, editWatch}) {
+function FormWatch({btnClose}) {
   
   const dispatch = useDispatch()
-  const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
+  
+  const BRANDS = useSelector((state)=> state.BRANDS)
+  const STYLES = useSelector((state)=> state.STYLES)
+  const COLORS = useSelector((state)=> state.COLORS) 
+  const STRAPS = useSelector((state)=> state.STRAPS) 
+  const FUNCTIONS = useSelector((state)=> state.FUNCTIONS)
+  
   const [addImage, setAddImage] = useState("")
   const [watch, setWatch] = useState({
     brand: "",
@@ -52,11 +59,21 @@ function FormWatch({btnClose, editWatch}) {
   }
   
   
-  const handlerImage = (img)=>{
+  /* const handlerImage = (img)=>{
     const {name, value} = img.target
     console.log(name, value);
      setAddImage(value)
-  }
+  } */
+  
+  const  handlerImage = async (e) => {
+    const imag = e.target.files[0];    
+    console.log(imag)
+      
+    let imageUrl  = await uploadImageToCloudinary("Relojes Time You", imag)
+      
+    setAddImage(imageUrl)
+    masImg(imageUrl)
+  };
   
   const masImg = (img)=>{
     const filtered = watch.image.filter(f=> f === img)
@@ -72,15 +89,6 @@ function FormWatch({btnClose, editWatch}) {
       document.getElementById("imgs").value = "";
   }
 
-  const  handleOnChange = async (e) => {
-    const { name, value } = e.target;
-    console.log(name, value)
-    console.log(e.target.files[0])
-let imageUrl;
-imageUrl  = await uploadImageToCloudinary("Relojes Time You", e.target.files[0],)
-console.log(imageUrl);
-setAddImage(imageUrl)
-  };
 
     
   const handlerFunctions = (func)=>{    
@@ -112,7 +120,9 @@ setAddImage(imageUrl)
         setWatch({
           ...watch,
           image: [],
-        })        
+        })
+        dispatch(getProducts())
+    
   }
   
   
@@ -174,10 +184,9 @@ setAddImage(imageUrl)
         <input name="description" type="text" onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <h3>Imagen:</h3>
-         {/*<input id="imgs" onChange={handlerImage} name="image" type="text"/>*/} 
-          <input type= "file" name="image" onChange={handleOnChange} />
-         <button type="button" onClick={()=> masImg(addImage)}>add</button>
+          <label className="customLabel" htmlFor="imgs">Cargar Imagen</label>
+          <input className="customInput" id="imgs" onChange={handlerImage} name="image" type="file" aria-label="Seleccionar archivo" />
+        
         </div>
         
           <button type="button" onClick={postWatches}>UP WATCH</button>
