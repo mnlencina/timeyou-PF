@@ -27,6 +27,8 @@ try {
 }
 });
 
+
+
 // GET route to fetch comments by watch Id
 commentRouter.get("/watch/:watchId", async (req, res) => {
 const { watchId } = req.params;
@@ -40,10 +42,6 @@ try {
     res.status(500).json({ Error: error.message });
 }
 });
-
-module.exports = commentRouter;
-
-
 
 
 commentRouter.get("/:userId", async (req, res)=> {
@@ -59,10 +57,24 @@ commentRouter.get("/:userId", async (req, res)=> {
     }
 })
 
+//GET comment from 1 user for 1 watch
+commentRouter.get("/:watchId/:userId", async(req,res) => {
+    const { watchId , userId } = req.params;
+    try {
+        const allComments = await Comment.findAll({
+            where: {WatchId: watchId, UserId: userId},
+            include:{model: User},
+            include:{model: Watch},
+        });
+        res.status(200).json(allComments);
+    } catch (error) {
+        res.status(500).json({ Error: error.message });
+    }
+})
 
 
 
-
+module.exports = commentRouter;
 
 
 
