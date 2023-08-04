@@ -26,11 +26,11 @@ export const BTNCarritoDeCompras = styled.button`
 export const BTNHover = styled.button`
   width: 60px;
   height: 60px;
-  border: ${(props) => (props.alter === "true" ? "1px solid #111" : "none")};
+  border: ${(props) => (props.alter === "true" ? "1px solid #666565" : "none")};
   border-radius: 50%;
   background: none;
   font-size: 50px;
-  color: ${(props) => (props.alter === "true" ? "#111" : "#fff")};
+  color: ${(props) => (props.alter === "true" ? "#666565" : "#fff")};
   transition: 0.3s ease-in all;
   pointer-events: none;
   pointer-events: all;

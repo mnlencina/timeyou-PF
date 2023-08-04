@@ -89,7 +89,7 @@ export const Navbar = () => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 120px;
   display: flex;
   flex-direction: column;

@@ -12,51 +12,27 @@ export const LogoSlider = () => {
   const timerRef = useRef(null);
 
  
-  // const handleNext = () => {
-  //   resetTimer();
-  //   if (slideShow.current.children.length > 0) {
-  //     const primerElemento = slideShow.current.children[0];
-
-  //     slideShow.current.style.transition = "500ms ease-out all";
-
-  //     const tamañoSlide = slideShow.current.children[0].offsetWidth;
-
-  //     slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
-
-  //     const transicion = () => {
-  //       slideShow.current.style.transition = "none";
-  //       slideShow.current.style.transform = "translateX(0)";
-  //       slideShow.current.appendChild(primerElemento);
-  //       slideShow.current.removeEventListener("transitionend", transicion);
-  //     };
-  //     slideShow.current.addEventListener("transitionend", transicion);
-  //   }
-  // };
-
   const handleNext = () => {
     resetTimer();
     if (slideShow.current.children.length > 0) {
       const primerElemento = slideShow.current.children[0];
-      const clonePrimerElemento = primerElemento.cloneNode(true); // Clonar el primer elemento
-  
-      
-      const tamañoSlide = primerElemento.offsetWidth;
-      slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
-      
-      // Ajustar la posición del clon del primer elemento después del último elemento
-      slideShow.current.appendChild(clonePrimerElemento);
-      slideShow.current.style.transition = "1000ms ease-out all";
-      
+
+      slideShow.current.style.transition = "800ms ease-out all";
+
+      const tamañoSlide = slideShow.current.children[0].offsetWidth;
+
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
+
       const transicion = () => {
         slideShow.current.style.transition = "none";
         slideShow.current.style.transform = "translateX(0)";
-        slideShow.current.removeChild(primerElemento); // Eliminar el primer elemento original
+        slideShow.current.appendChild(primerElemento);
         slideShow.current.removeEventListener("transitionend", transicion);
       };
-      
       slideShow.current.addEventListener("transitionend", transicion);
     }
   };
+
 
   const startTimer = () => {
     timerRef.current = setInterval(() => {
@@ -89,10 +65,10 @@ export const LogoSlider = () => {
 
       slideShow.current.style.transition = "none";
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
-      slideShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
 
       setTimeout(() => {
-        slideShow.current.style.transition = "500ms ease-out all";
+        slideShow.current.style.transition = "800ms ease-out all";
         slideShow.current.style.transform = "translateX(0)";
       }, 30);
     }
@@ -107,7 +83,7 @@ export const LogoSlider = () => {
 
   return (
     <Container>
-
+      <div className="containerHider">
       <div className="container-slide" ref={slideShow}>
         {imageCarrouselMarcas.map((brand, index ) => (
           <div key={index} className="slide">
@@ -117,16 +93,16 @@ export const LogoSlider = () => {
           </div>
         ))}
       </div>
+      </div>
 
-      {/* <div className="controles">
-        <BTNHover onClick={handlePrev}>
+      <div className="controles">
+        <BTNHover alter='true'onClick={handlePrev}>
           <AiOutlineLeft />
         </BTNHover>
-        <BTNHover onClick={handleNext}>
+        <BTNHover alter='true' onClick={handleNext}>
           <AiOutlineRight />
         </BTNHover>
-      </div> */}
-      
+      </div>
     </Container>
   );
 };

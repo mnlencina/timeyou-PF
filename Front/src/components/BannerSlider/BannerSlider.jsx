@@ -35,7 +35,7 @@ export const BannerSlider = () => {
   const startTimer = () => {
     timerRef.current = setInterval(() => {
       handleNext();
-    }, 4000);
+    }, 6000);
   };
 
   const resetTimer = () => {

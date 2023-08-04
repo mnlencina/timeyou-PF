@@ -52,7 +52,7 @@ export const Footer = () => {
 };
 
 const Container = styled.footer`
-  width: 100%;
+  width: 100vw;
   height: 250px;
   background-color: #111;
   display: flex;
