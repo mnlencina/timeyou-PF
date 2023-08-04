@@ -107,10 +107,6 @@ function RegisterAndLogin() {
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    if (error !== null) {
-      alert("faltan datos a completar");
-      return;
-    } else {
       dispatch(loginUser(loginAcount));
       setLoggedIn(true);
       const redirectPath = new URLSearchParams(location.search).get("redirect");
@@ -120,7 +116,7 @@ function RegisterAndLogin() {
       } else {
         navigate("/auth");
       }
-    }
+    
   };
 
   useEffect(() => {
