@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 //import styled from "styled-components";
 import { Container, Formulario, Container1, Container2 } from "./style";
 import { postWatch } from "../../../redux/Actions";
+import uploadImageToCloudinary from "../claudinary/uploadimage.js";
 
 function FormWatch({btnClose, editWatch}) {
   
@@ -70,6 +71,17 @@ function FormWatch({btnClose, editWatch}) {
       )            
       document.getElementById("imgs").value = "";
   }
+
+  const  handleOnChange = async (e) => {
+    const { name, value } = e.target;
+    console.log(name, value)
+    console.log(e.target.files[0])
+let imageUrl;
+imageUrl  = await uploadImageToCloudinary("Relojes Time You", e.target.files[0],)
+console.log(imageUrl);
+setAddImage(imageUrl)
+  };
+
     
   const handlerFunctions = (func)=>{    
     const filtered = watch.functions.filter(f=> f !== func)   
@@ -154,17 +166,18 @@ function FormWatch({btnClose, editWatch}) {
         </div>
         
         <div className="optionDiv">
-          <h3>Precio en u$s:</h3>
+          <h3>Precio en usd:</h3>
           <input name="price" type="text" onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
-        <h3>Descripción</h3>
+        <h3>Descripción:</h3>
         <input name="description" type="text" onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <h3>Imagen</h3>
-          <input id="imgs" onChange={handlerImage} name="image" type="text"/>
-          <button type="button" onClick={()=> masImg(addImage)}>add</button>
+          <h3>Imagen:</h3>
+         {/*<input id="imgs" onChange={handlerImage} name="image" type="text"/>*/} 
+          <input type= "file" name="image" onChange={handleOnChange} />
+         <button type="button" onClick={()=> masImg(addImage)}>add</button>
         </div>
         
           <button type="button" onClick={postWatches}>UP WATCH</button>
