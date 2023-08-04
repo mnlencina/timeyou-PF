@@ -15,6 +15,7 @@ import { updateUser } from "../../redux/actions/admin/updateUser";
 import { updateWatch } from "../../redux/actions/admin/updateWatch";
 import { getProducts } from "../../redux/Actions";
 import FormWatchUpdate from "../../components/admin/watch/FormUpdate";
+
 //import styled from "styled-components";
 
 const Dashboard = ()=>{
@@ -23,6 +24,11 @@ const Dashboard = ()=>{
     const allUsers = useSelector((state)=> state.allUsers)
     const allClocks = useSelector((state)=> state.allClocks)
     //const allBuys = useSelector((state)=> state.allBuys)
+    
+    const [view, setView] = useState("");
+    const handleView = (viewName) => {
+    setView(viewName);
+    };
     
     const dispatch = useDispatch()
     
@@ -207,11 +213,12 @@ const Dashboard = ()=>{
         <Container>
             <Nav/>
             <div className="home">
-            <Sidebar/>
-            <div className="containerTable">
-                <Buys/>
+            <Sidebar handleView={handleView} setNewWat={setNewWat} />
+            
+            <div className="containerTable">                
+                {view === "buys" &&<Buys/>}
                 
-                <div className="tableUser">
+                {view === "users" && <div className="tableUser">
                     <DataTable 
                      columns={columnsUser}
                      data={allUsers}
@@ -222,9 +229,9 @@ const Dashboard = ()=>{
                      pointerOnHover
                      responsive
                     />
-                </div>
+                </div>}
                 
-                <div className="tableWatch">
+                {view === "watches" && <div className="tableWatch">
                     <DataTable
                      columns={columnsWatch}
                      data={allClocks}
@@ -238,7 +245,7 @@ const Dashboard = ()=>{
                      expandableRowsComponent={dataExpan}
                      responsive
                     />
-                </div>
+                </div>}
                 <button onClick={()=>setNewWat(true)}>New Watch</button>
                 {newWat && <Form btnClose={()=>setNewWat(false)}/>}
                 {updateW && wUpdate.id && <FormWatchUpdate btnClose={()=>setUpdateW(false)} wUpdate={wUpdate} setUpdateW={setUpdateW}/>}

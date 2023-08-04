@@ -28,7 +28,7 @@ function Shopping() {
   const renderCart = () => (
     <Container>
       <div className="btn-goback">
-        <BTNHover alter="true" onClick={() => navigate("/")}>
+        <BTNHover alter="true" onClick={() => navigate(-1)}>
           {"<"}
         </BTNHover>
       </div>
