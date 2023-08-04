@@ -7,6 +7,7 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
+
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -29,8 +30,12 @@ const MyRoutes = () => {
     location.pathname !== "/shopping" &&
     location.pathname !== "/shopping/checkout";
 
-  const ShowCheckoutNav = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
-  const showCheckoutFoot = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
+  const ShowCheckoutNav =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
+  const showCheckoutFoot =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
 
   return (
     <>
@@ -59,8 +64,9 @@ const MyRoutes = () => {
           }
         />
       </Routes>
+
       {showFoot && <Footer />}
-      {showCheckoutFoot && <FooterCheckOut/>}
+      {showCheckoutFoot && <FooterCheckOut />}
     </>
   );
 };

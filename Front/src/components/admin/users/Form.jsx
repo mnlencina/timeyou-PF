@@ -1,10 +1,9 @@
-const FromUser =()=>{
-    return(
-        <div>
-            
-            <h2>form USER </h2>
-        </div>
-    )
-    }
-    
-    export default FromUser
+const FormUser = () => {
+  return (
+    <div>
+      <h1>ACA ESTARAN LOS USUARIOS</h1>
+    </div>
+  );
+};
+
+export default FormUser;

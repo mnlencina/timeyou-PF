@@ -1,7 +1,9 @@
-const Buys =()=>{
-    return(
-        <h1>lista BUYS</h1>
-    )
-    }
-    
-    export default Buys
+const Buys = () => {
+  return (
+    <div>
+      <h1>ACA SE MOSTRARAN TODAS LAS COMPRAS</h1>;
+    </div>
+  );
+};
+
+export default Buys;
