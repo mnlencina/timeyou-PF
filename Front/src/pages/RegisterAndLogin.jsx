@@ -64,16 +64,12 @@ function RegisterAndLogin() {
   };
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    if (errorRegister !== null) {
+    if (Object.keys(errorRegister).length > 0) {
       /* Agregar alerta! */
       alert("no se registraron datos");
-    } else {
-      setErrorRegister({
-        user: "done!",
-      });
-      dispatch(createUser(registerValues));
-      setInModeLogin(!inModeLogin);
     }
+    dispatch(createUser(registerValues));
+    setInModeLogin(!inModeLogin);
   };
 
   const handleChangeLogin = (e) => {
@@ -91,7 +87,7 @@ function RegisterAndLogin() {
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    if (errorLogin !== null) {
+    if (Object.keys(errorLogin).length > 0) {
       /* agregar alertas!!!! */
       alert("Usuario o contraseña incorrectos");
       return;
@@ -199,13 +195,19 @@ function RegisterAndLogin() {
                 {errorRegister.e1}
               </p>
             )}
-            {errorRegister.e2 && <p style={{
+            {errorRegister.e2 && (
+              <p
+                style={{
                   position: "absolute",
                   width: "250px",
                   color: "red",
                   left: "350px",
                   zIndex: "100",
-                }}>{errorRegister.e2}</p>}
+                }}
+              >
+                {errorRegister.e2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
