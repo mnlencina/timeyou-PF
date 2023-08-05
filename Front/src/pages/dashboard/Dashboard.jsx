@@ -19,13 +19,17 @@ import FormWatchUpdate from "../../components/admin/watch/FormUpdate";
 //import styled from "styled-components";
 
 const Dashboard = ()=>{
+
     const [newWat, setNewWat] = useState(false)
     const [updateW, setUpdateW] = useState(false)
+    const [editRole, setEditRole] = useState(false)
+    const [wUpdate, setWUpdate] = useState({})
+    const [view, setView] = useState("home");
+    
     const allUsers = useSelector((state)=> state.allUsers)
     const allClocks = useSelector((state)=> state.allClocks)
     //const allBuys = useSelector((state)=> state.allBuys)
     
-    const [view, setView] = useState("");
     const handleView = (viewName) => {
     setView(viewName);
     };
@@ -52,7 +56,6 @@ const Dashboard = ()=>{
         console.log(data);
         dispatch(getProducts())
     }
-    const [editRole, setEditRole] = useState(false)
     
     const handleRole = async(e,id)=>{
         const {value} = e.target
@@ -62,7 +65,6 @@ const Dashboard = ()=>{
         dispatch(addUsers())
     }
     
-    const [wUpdate, setWUpdate] = useState({})
     const editWatches =(row)=>{
         setWUpdate(row)
         setUpdateW(true)        
@@ -213,7 +215,12 @@ const Dashboard = ()=>{
         <Container>
             <Nav/>
             <div className="home">
-            <Sidebar handleView={handleView} setNewWat={setNewWat} />
+            <Sidebar 
+                handleView={handleView} 
+                setNewWat={setNewWat}
+                view={view}
+                newWat={newWat}
+            />
             
             <div className="containerTable">                
                 {view === "buys" &&<Buys/>}
@@ -223,7 +230,7 @@ const Dashboard = ()=>{
                      columns={columnsUser}
                      data={allUsers}
                      fixedHeader= {true}
-                     fixedHeaderScrollHeight="300px"                     
+                     fixedHeaderScrollHeight="450px"                     
                      progressComponent={<h1>Cargando Usuarios</h1>}   
                      highlightOnHover
                      pointerOnHover
@@ -232,11 +239,14 @@ const Dashboard = ()=>{
                 </div>}
                 
                 {view === "watches" && <div className="tableWatch">
+                    
+                    <input type="text" className="" placeholder="Busca por Modelo" />
+                    
                     <DataTable
                      columns={columnsWatch}
                      data={allClocks}
                      fixedHeader= {true}
-                     fixedHeaderScrollHeight="300px"
+                     fixedHeaderScrollHeight="450px"
                      progressPending={!allClocks}
                      progressComponent={<h1>Cargando Relojes</h1>}
                      pointerOnHover   

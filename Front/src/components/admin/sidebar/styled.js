@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 
 export const SideDiv = styled.div`
   background-color: grey;
-  margin-top: 15px;
+  margin-top: 70px;
   color: white;
-  height: 550px;
+  height: 450px;
   width: 190px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   border-radius: 0 8px 8px 0;
 `;
 export const BtnSideBar = styled.button`
-  background-color: black;
+  background-color:${(props)=> props.alter !== "true" ? "black" : "rgb(255,255,255,0.5)"};
   color: white;
   width: 80%;
   padding: 8px 16px;
@@ -24,6 +25,7 @@ export const BtnSideBar = styled.button`
   cursor: pointer;
   font-size: 16px;
   transition: 1s;
+  ${(props)=> props.alter == "true" ? "transform: scale(0.9)" : "null"};
   
   &:hover{
   background-color: rgb(255,255,255,0.7);
@@ -31,8 +33,4 @@ export const BtnSideBar = styled.button`
   transform: scale(0.9);
   
   }
-`;
-export const StyledLink = styled(Link)`
-  margin-left: -22px;
-  width: 100%;
 `;

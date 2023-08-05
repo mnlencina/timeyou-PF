@@ -195,8 +195,6 @@ const Container = styled.div`
           }
           .iconImg{
             width: 30px;
-            mix-blend-mode: color;
-            color: red;
             transition: 1s;
             animation: girar 10s linear infinite;
             &:hover{              
