@@ -5,7 +5,7 @@ import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
-import iconAdminBlack from "../../public/iconAdminBlack.svg"
+import iconAdminBlack from "../../public/iconAdminBlack.svg";
 import {
   logOut,
   getProducts,
@@ -18,10 +18,9 @@ export const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const itemCount = cart?.length;
 
-  const itemCount = cart?.length
-
-  console.log(itemCount)
+  console.log(itemCount);
   const handleLogOut = () => {
     dispatch(clearCart());
     dispatch(logOut());
@@ -37,7 +36,7 @@ export const Navbar = () => {
   };
 
   return (
-    <Container itemCount={itemCount}>
+    <Container itemCount={itemCount.toString()}>
       <header className="header">
         <h1>
           <StyledLink2 to="/">
@@ -94,12 +93,17 @@ export const Navbar = () => {
                 <FiShoppingCart />
               </Link>
             </li>
-            {user.role === "admin" && 
-            <li title="Dashboard">
-              <Link to="/admin/dashboard">
-              <img className="iconImg" src={iconAdminBlack} alt="SVG Image"/>
-              </Link>
-            </li>}
+            {user.role === "admin" && (
+              <li title="Dashboard">
+                <Link to="/admin/dashboard">
+                  <img
+                    className="iconImg"
+                    src={iconAdminBlack}
+                    alt="SVG Image"
+                  />
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
@@ -179,7 +183,7 @@ const Container = styled.div`
           }
           span {
             visibility: ${(props) =>
-              props.itemCount === 0 ? "hidden" : "visible"};
+              props.itemCount === "0" ? "hidden" : "visible"};
             position: absolute;
             right: -10px;
             bottom: 0;
@@ -193,13 +197,13 @@ const Container = styled.div`
             justify-content: center;
             color: #fff;
           }
-          .iconImg{
+          .iconImg {
             width: 30px;
             mix-blend-mode: color;
             color: red;
             transition: 1s;
             animation: girar 10s linear infinite;
-            &:hover{              
+            &:hover {
               animation: girar 3s linear infinite;
               transition: 1s;
             }

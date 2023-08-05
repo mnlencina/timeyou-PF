@@ -6,7 +6,8 @@ import { allPropWatches, getProducts, setCart } from "./redux/Actions";
 function App() {
   const dispatch = useDispatch();
   /* cambio realizado */
-  const cart = useSelector((state) => state.Cart); // Obtener el carrito del estado de Redux
+  /* Se agrega user al array de dependencias del effect */
+  const user = useSelector(state=> state.user);
   /* ---- */
   const allProps = useCallback(() => {
     dispatch(getProducts());
@@ -26,10 +27,11 @@ function App() {
     const userData = userStored ? JSON.parse(userStored) : false;
     const userName = userData ? userData.userName : null;
     const storedCart = localStorage.getItem(userName);
-    if (storedCart) {
+    if (storedCart && user) {
+      console.log("se ejecuto!")
       dispatch(setCart(JSON.parse(storedCart))); // Cargar el carrito desde el almacenamiento local
     }
-  }, [dispatch]);
+  }, [dispatch, user]);
   /* ---- */
   return <MyRoutes />;
 }
