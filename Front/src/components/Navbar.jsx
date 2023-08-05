@@ -5,6 +5,7 @@ import { BiUser, BiUserX } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
+import iconAdminBlack from "../../public/iconAdminBlack.svg"
 import {
   logOut,
   getProducts,
@@ -93,6 +94,12 @@ export const Navbar = () => {
                 <FiShoppingCart />
               </Link>
             </li>
+            {user.role === "admin" && 
+            <li title="Dashboard">
+              <Link to="/admin/dashboard">
+              <img className="iconImg" src={iconAdminBlack} alt="SVG Image"/>
+              </Link>
+            </li>}
           </ul>
         </div>
       </nav>
@@ -185,6 +192,25 @@ const Container = styled.div`
             align-items: center;
             justify-content: center;
             color: #fff;
+          }
+          .iconImg{
+            width: 30px;
+            mix-blend-mode: color;
+            color: red;
+            transition: 1s;
+            animation: girar 10s linear infinite;
+            &:hover{              
+              animation: girar 3s linear infinite;
+              transition: 1s;
+            }
+          }
+          @keyframes girar {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
           }
         }
       }
