@@ -13,5 +13,6 @@ body{
   width: 100vw;
   min-height: 500px;
   height: auto;
+  overflow-x: hidden;
 }
 

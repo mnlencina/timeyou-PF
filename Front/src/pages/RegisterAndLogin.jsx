@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 /* actions */
-import { createUser, loginGoogle, loginUser, updateCart } from "../redux/Actions";
+import { createUser, loginGoogle, loginUser } from "../redux/Actions";
 /* hooks */
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,29 +11,36 @@ import { BsGoogle } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 /* styled  editing */
 import { BTNLogin } from "../utils/ComponentsStyle";
+/* funciones de validacion */
+import {
+  validateInputLogin,
+  validateInputRegister,
+} from "../utils/functiosAux";
 
 function RegisterAndLogin() {
   const USER = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  /* Estados locales */
   const [inModeLogin, setInModeLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
-
-  const handleInMode = () => {
-    setInModeLogin(!inModeLogin);
-  };
+  const [errorRegister, setErrorRegister] = useState({});
+  const [errorLogin, setErrorLogin] = useState({});
   const [registerValues, setRegisterValues] = useState({
     userName: "",
     email: "",
     password: "",
   });
-
   const [loginAcount, setLoginAcount] = useState({
     email: "",
     password: "",
     provider: "local",
   });
+
+  /* Controladores */
+  const handleInMode = () => {
+    setInModeLogin(!inModeLogin);
+  };
 
   const handleChangeRegister = (e) => {
     const { name, value } = e.target;
@@ -41,6 +48,12 @@ function RegisterAndLogin() {
       ...registerValues,
       [name]: value,
     });
+    setErrorRegister(
+      validateInputRegister({
+        ...registerValues,
+        [name]: value,
+      })
+    );
     if (name === "password") {
       const valueForm = value.toString();
       setRegisterValues({
@@ -51,7 +64,12 @@ function RegisterAndLogin() {
   };
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+    if (Object.keys(errorRegister).length > 0) {
+      /* Agregar alerta! */
+      alert("no se registraron datos");
+    }
     dispatch(createUser(registerValues));
+    setInModeLogin(!inModeLogin);
   };
 
   const handleChangeLogin = (e) => {
@@ -60,19 +78,28 @@ function RegisterAndLogin() {
       ...loginAcount,
       [name]: value,
     });
-    
+    setErrorLogin(
+      validateInputLogin({
+        [name]: value,
+      })
+    );
   };
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
+    if (Object.keys(errorLogin).length > 0) {
+      /* agregar alertas!!!! */
+      alert("Usuario o contraseña incorrectos");
+      return;
+    }
     dispatch(loginUser(loginAcount));
     setLoggedIn(true);
-    const redirectPath = new URLSearchParams(location.search).get('redirect')
+    const redirectPath = new URLSearchParams(location.search).get("redirect");
     if (redirectPath) {
       // Redirige a la pagina donde estaba el usuario previamente
       navigate(redirectPath);
     } else {
-      navigate('/auth');
+      navigate("/auth");
     }
   };
 
@@ -135,6 +162,24 @@ function RegisterAndLogin() {
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
             />
+            {errorRegister.n1 && (
+              <p style={{ position: "absolute", color: "red", top: "50px" }}>
+                {errorRegister.n1}
+              </p>
+            )}
+            {errorRegister.n2 && (
+              <p
+                style={{
+                  position: "absolute",
+                  width: "250px",
+                  color: "red",
+                  left: "350px",
+                  zIndex: "100",
+                }}
+              >
+                {errorRegister.n2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineMail />
@@ -145,6 +190,24 @@ function RegisterAndLogin() {
               value={registerValues.email}
               onChange={handleChangeRegister}
             />
+            {errorRegister.e1 && (
+              <p style={{ position: "absolute", color: "red", top: "50px" }}>
+                {errorRegister.e1}
+              </p>
+            )}
+            {errorRegister.e2 && (
+              <p
+                style={{
+                  position: "absolute",
+                  width: "250px",
+                  color: "red",
+                  left: "350px",
+                  zIndex: "100",
+                }}
+              >
+                {errorRegister.e2}
+              </p>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -185,6 +248,12 @@ function RegisterAndLogin() {
               value={loginAcount.email}
               onChange={handleChangeLogin}
             />
+            {errorLogin.n1 && (
+              <p style={{ position: "absolute", top: "0", left: "0" }}>
+                {errorLogin.n1}
+              </p>
+            )}
+            {errorLogin.n2 && <p>{errorLogin.n2}</p>}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -406,7 +475,6 @@ const ContainerRegister = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
-        overflow: hidden;
         width: 90%;
         background-color: #f0f0f0;
         margin: 10px 0;
@@ -419,6 +487,8 @@ const ContainerRegister = styled.div`
         padding: 0 0.4rem;
         position: relative;
         input {
+          position: relative;
+          overflow: hidden;
           background: none;
           outline: none;
           border: none;
@@ -505,6 +575,7 @@ const ContainerLogin = styled.div`
         padding: 0 0.4rem;
         position: relative;
         input {
+          position: relative;
           background: none;
           outline: none;
           border: none;
