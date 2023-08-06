@@ -43,19 +43,19 @@ const Sidebar = ({ handleView, setNewWat, view, newWat }) => {
       >
         Cargar Watch
       </BtnSideBar>
-      <BtnSideBar alter={newWat.toString()}
+      {/* <BtnSideBar alter={newWat.toString()}
         onClick={() => {
             setNewWat(true);
         }}
       >
         Cargar User
-      </BtnSideBar>
+      </BtnSideBar> */}
         <BtnSideBar 
             onClick={() => {
                 navigate("/home");
             }}
         >
-        Time You
+        TimeYou
         </BtnSideBar>
     </SideDiv>
   );

@@ -254,6 +254,7 @@ const Dashboard = ()=>{
                      expandableRows
                      expandableRowsComponent={dataExpan}
                      responsive
+            
                     />
                 </div>}
                 <button onClick={()=>setNewWat(true)}>New Watch</button>

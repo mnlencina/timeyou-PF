@@ -5,7 +5,7 @@ export const NavDiv = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    background-color: gray;
+    background-image: linear-gradient(to bottom, rgb(100,100,130), black, black, rgb(230,230,255));
     height: 45px;
     
     img{
@@ -16,8 +16,8 @@ export const NavDiv = styled.div`
         padding: 10px;
     }
     
-    input{
+    h2{
         margin: 10px;
-        border-radius: 5px;
+        color: rgb(255,255,255,0.9);
     }
 `
