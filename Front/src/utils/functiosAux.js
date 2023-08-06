@@ -23,7 +23,7 @@ export const validateInputRegister = (input) => {
   if (!input.email.includes("@") || !input.email.includes(".com")) {
     errors.e2 = "Debe agregar un correo valido ej: example@example.com";
   }
-  return errors
+  return errors;
 };
 
 /* Se agrega validaciones de inputs de Login */
@@ -36,5 +36,5 @@ export const validateInputLogin = (input) => {
   if (!input.email.includes("@") || !input.email.includes(".com")) {
     errors.e2 = "Debe agregar un correo valido ej: example@example.com";
   }
-  return errors
+  return errors;
 };

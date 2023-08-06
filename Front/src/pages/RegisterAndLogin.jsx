@@ -67,9 +67,11 @@ function RegisterAndLogin() {
     if (Object.keys(errorRegister).length > 0) {
       /* Agregar alerta! */
       alert("no se registraron datos");
+      return;
+    } else {
+      dispatch(createUser(registerValues));
+      setInModeLogin(!inModeLogin);
     }
-    dispatch(createUser(registerValues));
-    setInModeLogin(!inModeLogin);
   };
 
   const handleChangeLogin = (e) => {
@@ -80,11 +82,12 @@ function RegisterAndLogin() {
     });
     setErrorLogin(
       validateInputLogin({
+        ...loginAcount,
         [name]: value,
       })
     );
   };
-
+  console.log(errorLogin);
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     if (Object.keys(errorLogin).length > 0) {
@@ -162,23 +165,16 @@ function RegisterAndLogin() {
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
             />
+
             {errorRegister.n1 && (
-              <p style={{ position: "absolute", color: "red", top: "50px" }}>
-                {errorRegister.n1}
-              </p>
+              <ContainerError>
+                <p>{errorRegister.n1}</p>
+              </ContainerError>
             )}
             {errorRegister.n2 && (
-              <p
-                style={{
-                  position: "absolute",
-                  width: "250px",
-                  color: "red",
-                  left: "350px",
-                  zIndex: "100",
-                }}
-              >
-                {errorRegister.n2}
-              </p>
+              <ContainerError>
+                <p>{errorRegister.n2}</p>
+              </ContainerError>
             )}
           </div>
           <div className="input-field">
@@ -191,22 +187,14 @@ function RegisterAndLogin() {
               onChange={handleChangeRegister}
             />
             {errorRegister.e1 && (
-              <p style={{ position: "absolute", color: "red", top: "50px" }}>
-                {errorRegister.e1}
-              </p>
+              <ContainerError>
+                <p>{errorRegister.e1}</p>
+              </ContainerError>
             )}
             {errorRegister.e2 && (
-              <p
-                style={{
-                  position: "absolute",
-                  width: "250px",
-                  color: "red",
-                  left: "350px",
-                  zIndex: "100",
-                }}
-              >
-                {errorRegister.e2}
-              </p>
+              <ContainerError>
+                <p>{errorRegister.e2}</p>
+              </ContainerError>
             )}
           </div>
           <div className="input-field">
@@ -225,7 +213,7 @@ function RegisterAndLogin() {
       </div>
     </ContainerRegister>
   );
-
+  console.log(errorLogin.n1);
   const renderLogin = () => (
     <ContainerLogin>
       <h1>Iniciar sesion</h1>
@@ -248,12 +236,16 @@ function RegisterAndLogin() {
               value={loginAcount.email}
               onChange={handleChangeLogin}
             />
-            {errorLogin.n1 && (
-              <p style={{ position: "absolute", top: "0", left: "0" }}>
-                {errorLogin.n1}
-              </p>
+            {errorLogin.e1 && (
+              <ContainerErrorLogin>
+                <p>{errorLogin.e1}</p>
+              </ContainerErrorLogin>
             )}
-            {errorLogin.n2 && <p>{errorLogin.n2}</p>}
+            {errorLogin.e2 && (
+              <ContainerErrorLogin>
+                <p>{errorLogin.e2}</p>
+              </ContainerErrorLogin>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -266,7 +258,6 @@ function RegisterAndLogin() {
             />
           </div>
           <BTNLogin>Login</BTNLogin>
-
           <div className="login-btn">
             <button>
               <FaFacebookF />
@@ -325,7 +316,7 @@ const Container = styled.main`
     position: absolute;
     top: 150px;
     right: -2000px;
-    z-index: 20;
+    z-index: 200;
     border: 1px solid #fff;
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
@@ -368,7 +359,7 @@ const Container = styled.main`
     position: absolute;
     top: 150px;
     left: -2500px;
-    z-index: 20;
+    z-index: 200;
     border: 1px solid #fff;
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
@@ -562,7 +553,7 @@ const ContainerLogin = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
-        overflow: hidden;
+        position: relative;
         width: 90%;
         background-color: #f0f0f0;
         margin: 10px 0;
@@ -585,6 +576,9 @@ const ContainerLogin = styled.div`
           font-weight: 600;
           font-size: 1rem;
           color: #333;
+          &::placeholder {
+            overflow: hidden;
+          }
         }
         svg {
           text-align: center;
@@ -610,5 +604,77 @@ const TransitionDiv = styled.div`
   transform: ${(props) =>
     props.inModeLogin ? "translateX(calc(107vw))" : "translateX(-2.7vw)"};
   transition: all 2s ease-in-out;
+  z-index: 100;
+`;
+
+const ContainerError = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 20px;
   z-index: 10;
+  background-color: #fff;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: 0.3s ease;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #fff;
+  }
+  p {
+    width: 90%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    color: red;
+    opacity: 0.6;
+  }
+`;
+
+const ContainerErrorLogin = styled.div`
+  position: absolute;
+  top: 50px;
+  background-color: red;
+  z-index: 10;
+  background-color: #fff;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: 300ms ease;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #fff;
+  }
+  p {
+    width: 90%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    color: red;
+    opacity: 0.6;
+  }
 `;
