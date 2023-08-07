@@ -74,7 +74,7 @@ export const Navbar = () => {
           <li>
             <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
               mistral
-            </StyledLink>
+            </StyledLink> 
           </li>
           <li>
             <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
