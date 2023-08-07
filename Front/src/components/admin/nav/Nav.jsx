@@ -7,7 +7,7 @@ const Nav =()=>{
     const user = useSelector((state)=> state.user)
     return(
         <NavDiv>
-            <Link to="/home" ><img src={timeYouu} alt="" /></Link>
+            <Link to="/home" className="linkImg"><img src={timeYouu} alt="" /></Link>
                         
             <h2>Bienvenido {user.userName} </h2>
         </NavDiv>
