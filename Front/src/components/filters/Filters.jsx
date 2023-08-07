@@ -1,31 +1,33 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { filtersAll, clearFilters } from '../../redux/Actions.js'; 
-import { translateGender } from '../helpers/translateGenderWords.jsx'
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { filtersAll, clearFilters } from "../../redux/Actions.js";
+import { translateGender } from "../helpers/translateGenderWords.jsx";
 
 const categoryValues = (clocks, categoryName) => {
-  const values = clocks.map(clock => clock[categoryName]);
+  const values = clocks.map((clock) => clock[categoryName]);
 
-  return values.filter((value, index, allValues) => allValues.indexOf(value) === index);
+  return values.filter(
+    (value, index, allValues) => allValues.indexOf(value) === index
+  );
 };
 
-export const FiltersAll = () => {
+export const FiltersAll = ({ setPage }) => {
   const clocks = useSelector((state) => state.Clocks);
   const dispatch = useDispatch();
   const searchClocks = useSelector((state) => state.searchClocks);
 
-  const uniqueBrands = categoryValues(clocks, 'brandName');
-  const uniqueColors = categoryValues(clocks, 'colorName');
-  const uniqueStyles = categoryValues(clocks, 'styleName');
-  const uniqueStraps = categoryValues(clocks, 'strapName');
-  const uniqueGenders = categoryValues(clocks, 'gender');
- 
+  const uniqueBrands = categoryValues(clocks, "brandName");
+  const uniqueColors = categoryValues(clocks, "colorName");
+  const uniqueStyles = categoryValues(clocks, "styleName");
+  const uniqueStraps = categoryValues(clocks, "strapName");
+  const uniqueGenders = categoryValues(clocks, "gender");
 
-  const [selectedCategories, setSelectedCategories] = useState({ ...searchClocks });
+  const [selectedCategories, setSelectedCategories] = useState({
+    ...searchClocks,
+  });
   const [showNoResults, setShowNoResults] = useState(false);
 
   const handleOnCheckbox = (selectedValue, fieldName) => {
-
     const isSelected = selectedCategories[fieldName] === selectedValue;
 
     if (isSelected) {
@@ -35,7 +37,6 @@ export const FiltersAll = () => {
         return updatedCategories;
       });
     } else {
-
       setSelectedCategories((prevState) => ({
         ...prevState,
         [fieldName]: selectedValue,
@@ -44,7 +45,6 @@ export const FiltersAll = () => {
   };
 
   const handleApplyFilters = () => {
-
     setSelectedCategories({});
     dispatch(filtersAll(selectedCategories));
 
@@ -57,6 +57,7 @@ export const FiltersAll = () => {
           break;
         }
       }
+      setPage(1);
       return matchesAllCategories;
     });
 
@@ -68,7 +69,6 @@ export const FiltersAll = () => {
     dispatch(clearFilters());
     setShowNoResults(false);
   };
-  
 
   return (
     <div>
@@ -95,7 +95,8 @@ export const FiltersAll = () => {
             name="styleName"
             value={estilo}
             checked={selectedCategories.styleName === estilo}
-            onChange={() => handleOnCheckbox(estilo, "styleName")} />
+            onChange={() => handleOnCheckbox(estilo, "styleName")}
+          />
           <label htmlFor={estilo}>{estilo}</label>
         </div>
       ))}
@@ -143,7 +144,9 @@ export const FiltersAll = () => {
       ))}
       <button onClick={handleClearFilters}>Borrar filtros</button>
       <button onClick={handleApplyFilters}>Aplicar filtros</button>
-      {showNoResults && <q> No hay coincidencias con la búsqueda seleccionada. </q>}
+      {showNoResults && (
+        <q> No hay coincidencias con la búsqueda seleccionada. </q>
+      )}
     </div>
   );
 };

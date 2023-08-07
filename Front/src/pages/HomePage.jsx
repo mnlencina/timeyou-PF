@@ -55,7 +55,7 @@ export default function HomePage() {
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
-        <Drawer show={show} />
+        <Drawer show={show} setPage={setPage} />
       </div>
       <section className="main-card">
         <CardContext pagination={PaginacionRelojes} />

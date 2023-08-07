@@ -14,6 +14,7 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+ 
 `;
 
 const SearchInput = styled.input`
@@ -40,6 +41,8 @@ const FormContainer = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  
 `;
 
 const SearchButton = styled.button`
