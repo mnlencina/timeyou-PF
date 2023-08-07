@@ -1,7 +1,8 @@
-//import { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser, BiUserX } from "react-icons/bi";
+import { BsSearch } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Searchbar } from "./index.js";
@@ -33,6 +34,14 @@ export const Navbar = () => {
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
     }
+  };
+
+  /* controlador de la barra de busqueda */
+
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
   };
 
   return (
@@ -73,11 +82,16 @@ export const Navbar = () => {
             </StyledLink>
           </li>
         </ul>
-        <div className="serch-container">
-          <Searchbar />
-        </div>
         <div className="icons">
           <ul className="icon">
+            <li>
+              <BsSearch onClick={handleShowSearch} />
+              <ul className={`search-conteiner ${showSearch ? " active" : ""}`}>
+                <li onMouseLeave={handleShowSearch}>
+                  <Searchbar />
+                </li>
+              </ul>
+            </li>
             <li>
               <Link to="/auth">
                 {user.token.trim() === "" ? (
@@ -150,23 +164,19 @@ const Container = styled.div`
     }
     .nav {
       margin: 0 auto;
-      width: 70%;
+      width: 60%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
     }
-    .serch-container {
-      width: 25%;
-      height: auto;
-      position: relative;
-    }
     .icons {
-      width: 30%;
+      width: 40%;
       display: flex;
       align-items: center;
       justify-content: center;
       .icon {
+        position: relative;
         width: 100%;
         height: 100%;
         display: flex;
@@ -177,6 +187,39 @@ const Container = styled.div`
           font-size: 1.4rem;
           font-weight: 500;
           position: relative;
+          cursor: pointer;
+          .search-conteiner {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            width: 300px;
+            height: 100px;
+            top: 40px;
+            left: -10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background: #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s all ease-in-out;
+            display: grid;
+            place-items: center;
+            z-index: 100;
+            &::before {
+              content: "";
+              position: absolute;
+              width: 25px;
+              height: 25px;
+              top: -25px;
+              left: 15px;
+              border-left: 15px solid transparent;
+              border-right: 15px solid transparent;
+              border-bottom: 12px solid #fff;
+            }
+          }
+          .active {
+            visibility: visible;
+            opacity: 1;
+          }
           a {
             text-decoration: none;
             color: #111;
