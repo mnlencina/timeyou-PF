@@ -49,11 +49,11 @@ export const Navbar = () => {
 
   const handleShowLogout = () => {
     setShowLogout(!showLogout);
-    setShowSearch(false)
+    setShowSearch(false);
   };
   const handleShowSearch = () => {
     setShowSearch(!showSearch);
-    setShowLogout(false)
+    setShowLogout(false);
   };
   return (
     <Container itemCount={itemCount.toString()}>
@@ -256,7 +256,7 @@ const Container = styled.div`
             align-items: center;
             justify-content: center;
             gap: 10px;
-            z-index: 50;
+            z-index: 100;
             .btn {
               width: 90%;
               height: 35px;
@@ -282,10 +282,12 @@ const Container = styled.div`
           .active {
             visibility: visible;
             opacity: 1;
+            z-index: 200;
           }
           .active-log {
             visibility: visible;
             opacity: 1;
+            z-index: 200;
           }
           a {
             text-decoration: none;
