@@ -19,16 +19,16 @@ export const Footer = () => {
             <ul>
               <li>sobre nosotros</li>
               <li>contacto</li>
-              <li>mi cuenta</li>
+              <StyledLink to='/auth' target="_top">mi cuenta</StyledLink>
               <li>servicio tecnico</li>
             </ul>
           </div>
           <div className="help">
             <h3 className="title">ayuda</h3>
             <ul>
-              <li>preguntas frecuentes</li>
-              <li>Privacidad</li>
-              <StyledLink to='/terminosycondiciones'>Terminos & condiciones</StyledLink>
+              <StyledLink to='/preguntas' target="_top">preguntas frecuentes</StyledLink>
+              <StyledLink to='/privacidad' target="_top">Privacidad</StyledLink>
+              <StyledLink to='/terminosycondiciones' target="_top">Terminos & condiciones</StyledLink>
             </ul>
           </div>
           <div className="social">

@@ -22,15 +22,15 @@ export default function LandingPage() {
 
   const bannerFoto = () => (
     <BannersFotos>
-      <Link to={"/home"} onClick={() => handleLinkClick("mistral")}>
-        <img
+      <Link id="1" to={"/home"} onClick={() => handleLinkClick("mistral")}>
+        <img 
           src="https://res.cloudinary.com/pagetimeyou/image/upload/v1691117013/Banners/74b39cc8-7942-4a5d-86cf-4d03f19ee51c___7d3dd5a98962f95ef4e34c14f54a1ee8_efbhwv.webp"
           className="banner"
         />
       </Link>
-      <Link to={"/home"} onClick={() => handleLinkClick("g-shock")}>
-        <img
-          src="https://res.cloudinary.com/pagetimeyou/image/upload/v1691117010/Banners/d5ddcaed-1cec-4736-8a94-0e03b3ba26f8___89f5b3ced11506895642fca1c4f6d59a_iqnflt.webp"
+      <Link id="2" to={"/home"} onClick={() => handleLinkClick("g-shock")}>
+        <img 
+          src="https://res.cloudinary.com/pagetimeyou/image/upload/v1690916565/Banners/Banner_G-Shock_2_ilozht.webp"
           className="banner"
         />
       </Link>
@@ -50,12 +50,11 @@ export default function LandingPage() {
 
 const BannersFotos = styled.section`
   width: 80%;
-  height: 100%;
-  margin-left: 9.5vw;
+  margin: 0 auto;
   .banner {
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
 `;
 
