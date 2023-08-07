@@ -9,11 +9,11 @@ import { InstantSearch } from "react-instantsearch-dom";
 import { searchClient } from "../settings_algolia/settingsAlgolia.js";
 
 const SearchContainer = styled.div`
- width: 100%;
- height: 100%;
- display:flex;
- align-items: center;
- justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SearchInput = styled.input`
@@ -35,11 +35,11 @@ const SearchInput = styled.input`
 `;
 
 const FormContainer = styled.form`
- width: 100%;
- height: 100%;
-display: flex;
-align-items: center;
-justify-content:center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SearchButton = styled.button`
@@ -67,7 +67,7 @@ const ResultsContainer = styled.div`
   margin-top: 10px;
 `;
 
-export const Searchbar = () => {
+export const Searchbar = ({ setShowSearch, setInputHover }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
@@ -102,7 +102,15 @@ export const Searchbar = () => {
   return (
     <SearchContainer>
       <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
-        <FormContainer onSubmit={onSearchSubmit}>
+        <FormContainer
+          onSubmit={onSearchSubmit}
+          onMouseEnter={() => setInputHover(true)}
+          onMouseLeave={() => setInputHover(false)}
+          onBlur={() => {
+            setShowSearch(false);
+            setInputHover(false);
+          }}
+        >
           <SearchInput
             type="text"
             placeholder="Buscar reloj..."
