@@ -26,7 +26,7 @@ const Dashboard = ()=>{
     const [updateW, setUpdateW] = useState(false)
     const [editRole, setEditRole] = useState(false)
     const [wUpdate, setWUpdate] = useState({})
-    const [view, setView] = useState("home");
+    const [view, setView] = useState("watches");
     
     
     const handleView = (viewName) => {
