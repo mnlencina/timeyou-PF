@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Router } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
@@ -29,8 +29,12 @@ const MyRoutes = () => {
     location.pathname !== "/shopping" &&
     location.pathname !== "/shopping/checkout";
 
-  const ShowCheckoutNav = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
-  const showCheckoutFoot = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
+  const ShowCheckoutNav =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
+  const showCheckoutFoot =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
 
   return (
     <>
@@ -41,15 +45,10 @@ const MyRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
-        <Route path="/shopping" element={<Shopping />} />
-        <Route
-          path="/shopping/checkout"
-          element={
-            <ProtectedRoutes user={user}>
-              <Checkout />
-            </ProtectedRoutes>
-          }
-        />
+        <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
+          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/shopping/checkout" element={<Checkout />} />
+        </Route>
         <Route
           path="/admin/*"
           element={
@@ -60,7 +59,7 @@ const MyRoutes = () => {
         />
       </Routes>
       {showFoot && <Footer />}
-      {showCheckoutFoot && <FooterCheckOut/>}
+      {showCheckoutFoot && <FooterCheckOut />}
     </>
   );
 };

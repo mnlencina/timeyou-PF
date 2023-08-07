@@ -1,17 +1,22 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { RedirectTo } from "./RedirectYo";
 
-export const ProtectedRoutes = ({ children, user, redirectTo = "/auth" }) => {
+export const ProtectedRoutes = ({ children, user }) => {
   if (user.token.trim() === "") {
-    return <Navigate to={redirectTo} />;
+    return <RedirectTo />;
   }
   if (user.role === "") {
-    return <Navigate to={redirectTo} />;
+    return <RedirectTo />;
   }
-  return children;
+  return <Outlet />;
 };
 
-export const ProtectedRoutesAdmin = ({ children, user, redirectTo = "/home" }) => {
+export const ProtectedRoutesAdmin = ({
+  children,
+  user,
+  redirectTo = "/home",
+}) => {
   if (user.token.trim() === "") {
     return <Navigate to={redirectTo} />;
   }
