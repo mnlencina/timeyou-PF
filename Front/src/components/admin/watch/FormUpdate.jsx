@@ -134,7 +134,7 @@ function FormWatchUpdate(props) {
         <div className="optionDiv">
           <select onChange={handleChange} name="brandName" value={watch.brandName}>
             {watch.brandName === "" && <option>Marca</option>}
-            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">
@@ -148,25 +148,25 @@ function FormWatchUpdate(props) {
         <div className="optionDiv">
           <select onChange={handleChange} name="styleName" value={watch.styleName}>
             {watch.styleName === "" && <option>Estilo</option>}
-            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="colorName" value={watch.colorName}>
             {watch.colorName === "" && <option>Color</option>}
-            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="strapName" value={watch.strapName}>
             {watch.ststrapNamerap === "" && <option>Malla</option>}
-            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">                  
           <select onChange={handleChange} name="Functions" value="Funciones">
             <option value={''}>Funciones</option>
-            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
+            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}      
           </select>     
         </div>
         
@@ -179,12 +179,12 @@ function FormWatchUpdate(props) {
         <input name="description" type="text" defaultValue={watch.description} onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <label className="customLabel" htmlFor="imgs">Cargar Imagen</label>
+          <label className="customLabel" htmlFor="imgs">Cargar Imagen...</label>
           <input className="customInput" id="imgs" onChange={handlerImage} name="image" type="file" aria-label="Seleccionar archivo" />
     
         </div>
         
-          <button type="button" onClick={putWatches}>Actualizar</button>
+          <button className="btnUp" type="button" onClick={putWatches}>Actualizar</button>
           
         </Container1>
         

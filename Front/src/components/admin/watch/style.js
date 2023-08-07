@@ -20,7 +20,24 @@ export const Container = styled.main`
   }
   
   .btnClose{
-    bottom:10%
+    bottom:10%;
+    background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,50), black);
+    color: white;
+    width: 150px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 500ms;
+  
+      &:hover{
+        background-image: none;
+        background-color: rgb(255,255,255,0.2);
+        color: red;
+        transform: scale(0.9);
+  
+      }   
   }
 `;
   
@@ -108,6 +125,12 @@ export const Container1 = styled.main`
       border-radius: 5px;
       cursor: pointer;
       display: inline-block;
+      width: 175px;
+      transition: 100ms;
+      &:hover{
+        transform: scale(0.9);
+      }
+      
     }
 
     /* Estilo para ocultar el botón de archivo por defecto */
@@ -115,7 +138,27 @@ export const Container1 = styled.main`
       position: absolute;
       left: -9999px;
     }
+    
   }
+  .btnUp {
+        background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,200), black);
+        color: white;
+        width: 175px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 500ms;
+  
+        &:hover{
+          background-image: none;
+          background-color: rgb(100,100,255);
+          color: black;
+          transform: scale(0.9);
+  
+        }
+      }
 `;
   
 export const Container2 = styled.main`

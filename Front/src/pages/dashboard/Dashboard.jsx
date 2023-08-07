@@ -73,15 +73,22 @@ const Dashboard = ()=>{
         rows: {
             style:{
                 color: "black",
-                backgroundColor: "rgb(255,255,255,0.7)"
+                backgroundColor: "rgb(255,255,255,0.7)",
+                
             }
         },
         headCells: {
             style:{
                 color: "white",
-                backgroundColor: "rgb(0,0,0,0.8)"
+                backgroundColor: "rgb(0,0,0,0.8)",
             }
-        }
+        },
+        /* table:{
+            style:{
+                backgroundColor: ""
+            }
+        }, */
+        
     }
    
     

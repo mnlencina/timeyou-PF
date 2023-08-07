@@ -139,7 +139,7 @@ function FormWatch({btnClose}) {
         <div className="optionDiv">
           <select onChange={handleChange} name="brand" value={watch.brand}>
             {watch.brand === "" && <option>Marca</option>}
-            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">
@@ -153,25 +153,25 @@ function FormWatch({btnClose}) {
         <div className="optionDiv">
           <select onChange={handleChange} name="style" value={watch.style}>
             {watch.style === "" && <option>Estilo</option>}
-            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="color" value={watch.color}>
             {watch.color === "" && <option>Color</option>}
-            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="strap" value={watch.strap}>
             {watch.strap === "" && <option>Malla</option>}
-            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">                  
           <select onChange={handleChange} name="functions" value={watch.functions}>
             <option value={''}>Funciones</option>
-            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
+            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}      
           </select>     
         </div>
         
@@ -184,14 +184,13 @@ function FormWatch({btnClose}) {
         <input name="description" type="text" onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <label className="customLabel" htmlFor="imgs">Cargar Imagen</label>
+          <label className="customLabel" htmlFor="imgs">Cargar Imagen...</label>
           <input className="customInput" id="imgs" onChange={handlerImage} name="image" type="file" aria-label="Seleccionar archivo" />
         
         </div>
         
-          <button type="button" onClick={postWatches}>UP WATCH</button>
-          
-        </Container1>
+          <button className="btnUp" type="button" onClick={postWatches}>UP WATCH</button>
+          </Container1>
         <div className="funcionesDiv">
           <h3>Funciones:</h3>
         <div className="funcionesDiv2">
