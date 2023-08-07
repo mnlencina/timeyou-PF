@@ -10,8 +10,8 @@ import {
 import { useSelector } from "react-redux";
 
 export default function HomePage() {
-  const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
-  const whatches = searchActive ? searchClocks : Clocks;
+  const { Clocks, allClocks, searchActive } = useSelector((state) => state);
+  const whatches = searchActive ?  Clocks : allClocks;
 
   const [show, setShow] = useState(false);
   const showOpen = show.toString();

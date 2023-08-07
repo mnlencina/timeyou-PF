@@ -66,31 +66,36 @@ const SearchButton = styled.button`
   }
 `;
 
-const ResultsContainer = styled.div`
-  margin-top: 10px;
-`;
 
 export const Searchbar = ({ setShowSearch, setInputHover }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const selectedCategories = useSelector((state)=> state.selectedCategories)
+
+  const allTerms = searchTerm.concat(" ", selectedCategories)
+const uniqueCategories = new Set(allTerms.split(" "));
+const allSearch = [...uniqueCategories].join(" ");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const searchClocks = useSelector((state) => state.searchClocks);
+  const clocks = useSelector((state) => state.Clocks);
+
+  console.log("Selected All categories", allSearch)
 
   const handleSearch = (event) => {
     setSearchTerm(event.currentTarget.value);
   };
+  
 
   useEffect(() => {
-    if (searchTerm.trim() !== "") {
-      const searchTerms = searchTerm.split(" ");
+    if (allSearch.trim() !== "") {
+      const searchTerms = allSearch.split(" ");
       dispatch(searchProduct(searchTerms));
     }
   }, [searchTerm, dispatch]);
 
   const onSearchSubmit = (event) => {
     event.preventDefault();
-    if (searchTerm.trim() === "") {
+    if (allSearch.trim() === "") {
       alert("Debes ingresar al menos un dato para realizar una búsqueda");
       return;
     }
@@ -125,11 +130,6 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
             <BsSearch />
           </SearchButton>
         </FormContainer>
-        <ResultsContainer>
-          {searchTerm !== "" && searchClocks.length === 0 && (
-            <div>Prueba con otra búsqueda...</div>
-          )}
-        </ResultsContainer>
       </InstantSearch>
     </SearchContainer>
   );

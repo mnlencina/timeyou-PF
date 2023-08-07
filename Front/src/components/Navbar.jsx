@@ -12,6 +12,8 @@ import {
   getProducts,
   getWatchesByBrand,
   clearCart,
+  clearFilters,
+  updateSelectedCategories,
 } from "../redux/Actions.js";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
 
@@ -34,6 +36,8 @@ export const Navbar = () => {
     const brandLowerCase = brand.toLowerCase();
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
+      dispatch(clearFilters());
+      dispatch(updateSelectedCategories(""))
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
     }
