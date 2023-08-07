@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { filtersAll, clearFilters } from "../../redux/Actions.js";
+import { filtersAll, clearFilters , getProducts, updateSelectedCategories} from "../../redux/Actions.js";
 import { translateGender } from "../helpers/translateGenderWords.jsx";
 
 const categoryValues = (clocks, categoryName) => {
@@ -12,23 +12,26 @@ const categoryValues = (clocks, categoryName) => {
 };
 
 export const FiltersAll = ({ setPage }) => {
-  const clocks = useSelector((state) => state.Clocks);
+  const allClocks = useSelector((state) => state.allClocks);
   const dispatch = useDispatch();
-  const searchClocks = useSelector((state) => state.searchClocks);
+  const clocks = useSelector((state) => state.Clocks);
 
-  const uniqueBrands = categoryValues(clocks, "brandName");
-  const uniqueColors = categoryValues(clocks, "colorName");
-  const uniqueStyles = categoryValues(clocks, "styleName");
-  const uniqueStraps = categoryValues(clocks, "strapName");
-  const uniqueGenders = categoryValues(clocks, "gender");
+
+  const uniqueBrands = categoryValues(allClocks, "brandName");
+  const uniqueColors = categoryValues(allClocks, "colorName");
+  const uniqueStyles = categoryValues(allClocks, "styleName");
+  const uniqueStraps = categoryValues(allClocks, "strapName");
+  const uniqueGenders = categoryValues(allClocks, "gender");
 
   const [selectedCategories, setSelectedCategories] = useState({
-    ...searchClocks,
+    ...clocks
   });
+  const [selectedValues, setSelectedValues] = useState("");
   const [showNoResults, setShowNoResults] = useState(false);
 
   const handleOnCheckbox = (selectedValue, fieldName) => {
     const isSelected = selectedCategories[fieldName] === selectedValue;
+    console.log("SELECTED VALUE DEL FILTERS" , selectedValue )
 
     if (isSelected) {
       setSelectedCategories((prevState) => {
@@ -36,17 +39,21 @@ export const FiltersAll = ({ setPage }) => {
         delete updatedCategories[fieldName];
         return updatedCategories;
       });
+      setSelectedValues((prevState) => prevState.filter((value) => value !== selectedValue));
     } else {
       setSelectedCategories((prevState) => ({
         ...prevState,
         [fieldName]: selectedValue,
       }));
+      setSelectedValues((prevState) => [...prevState, selectedValue]);
     }
   };
 
+  const selectedValuesString = selectedValues.length && selectedValues.join(" ");
+
   const handleApplyFilters = () => {
-    setSelectedCategories({});
     dispatch(filtersAll(selectedCategories));
+    dispatch(updateSelectedCategories(selectedValuesString))
 
     const filteredClocks = clocks.filter((product) => {
       let matchesAllCategories = true;
@@ -67,6 +74,7 @@ export const FiltersAll = ({ setPage }) => {
   const handleClearFilters = () => {
     setSelectedCategories({});
     dispatch(clearFilters());
+    dispatch(getProducts());
     setShowNoResults(false);
   };
 

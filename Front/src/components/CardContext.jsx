@@ -19,7 +19,7 @@ export const CardContext = ({ pagination }) => {
         {loading ? (
           <h1>Cargando...</h1>
         ) : (
-          pagination.map((e) => <Card key={e.id} watch={e} />)
+          pagination && pagination.map((e) => <Card key={e.id} watch={e} />)
         )}
       </div>
     </Container>
