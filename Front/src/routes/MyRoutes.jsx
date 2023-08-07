@@ -10,6 +10,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import TerminosCondiciones from '../pages/Terminos&Condiciones'
 import Privacidad from '../pages/Privacidad'
 import Preguntas from '../pages/Preguntas'
+import SobreNosotros from '../pages/SobreNosotros'
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -50,11 +51,12 @@ const MyRoutes = () => {
         <Route path="/product/:id" element={<DetailPage />} />
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
-          <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
+          <Route path="/shopping/checkout" element={<Checkout />} />
+        </Route>
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
         <Route path="/privacidad" element={<Privacidad/>} />
         <Route path="/preguntas" element={<Preguntas />} />
-        <Route path="/shopping/checkout" element={<Checkout />} />
-        </Route>
+        <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route
           path="/admin/*"
           element={

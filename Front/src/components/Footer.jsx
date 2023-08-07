@@ -9,6 +9,8 @@ import {
   AiOutlineTwitter,
 } from "react-icons/ai";
 
+
+
 export const Footer = () => {
   return (
     <Container>
@@ -17,10 +19,9 @@ export const Footer = () => {
           <div className="about">
             <h3 className="title">TimeYou</h3>
             <ul>
-              <li>sobre nosotros</li>
+              <StyledLink to='/sobreNosotros' target="_top">sobre nosotros</StyledLink>
               <li>contacto</li>
               <StyledLink to='/auth' target="_top">mi cuenta</StyledLink>
-              <li>servicio tecnico</li>
             </ul>
           </div>
           <div className="help">
@@ -61,7 +62,7 @@ export const Footer = () => {
 
 const Container = styled.footer`
   width: 100vw;
-  height: 250px;
+  height: 200px;
   background-color: #111;
   display: flex;
   flex-direction: column;
@@ -77,7 +78,7 @@ const Container = styled.footer`
     margin: 0 auto;
     .media {
       width: 100%;
-      height: 230px;
+      height: 200px;
       display: flex;
       align-items: center;
       .about,
