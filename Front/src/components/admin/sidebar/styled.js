@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const SideDiv = styled.div`
-  //background-color: rgb(0,0,0,0.5);
-  background-image: linear-gradient(to left,rgb(240,240,255),rgb(100,100,130),rgb(5,5,20));
-  margin-top: 70px;
+  background-color: rgb(5,5,20,0.8);
+  //background-image: linear-gradient(to left,rgb(5,5,20),rgb(100,100,130),rgb(5,5,20));
   height: 450px;
   width: 190px;
   gap: 10px;
@@ -13,6 +12,7 @@ export const SideDiv = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 0 8px 8px 0;
+  margin-top: 70px;
 `;
 export const BtnSideBar = styled.button`
   

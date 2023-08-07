@@ -69,7 +69,20 @@ const Dashboard = ()=>{
         setUpdateW(true)        
     }
     
-    
+    const custonStyled = {
+        rows: {
+            style:{
+                color: "black",
+                backgroundColor: "rgb(255,255,255,0.7)"
+            }
+        },
+        headCells: {
+            style:{
+                color: "white",
+                backgroundColor: "rgb(0,0,0,0.8)"
+            }
+        }
+    }
    
     
     
@@ -97,6 +110,7 @@ const Dashboard = ()=>{
                         handleRole={handleRole}
                         editRole={editRole}
                         setEditRole={setEditRole}
+                        custonStyled={custonStyled}
                     />
                 }
                 
@@ -105,8 +119,7 @@ const Dashboard = ()=>{
                         allClocks={allClocks} 
                         delWatch={delWatch}
                         editWatches={editWatches}
-                        //searchClock={searchClock}
-                        //setSearchClock={setSearchClock}
+                        custonStyled={custonStyled}
                     />
                 }
                 

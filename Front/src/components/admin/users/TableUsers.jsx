@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react"
 import DataTable from "react-data-table-component"
 import { BiTrash,BiDislike } from "react-icons/bi"
 import {FaUser,FaUserTie} from "react-icons/fa"
 
-const TableUsers = ({allUsers,delUser,handleRole,setEditRole,editRole})=>{
-    
+const TableUsers = ({allUsers,delUser,handleRole,setEditRole,editRole,custonStyled})=>{
+    const [searchUser, setSearchUser] = useState(allUsers)
     const columnsUser = [
         {
             name: "User",
@@ -75,16 +76,31 @@ const TableUsers = ({allUsers,delUser,handleRole,setEditRole,editRole})=>{
         
     ]
     
+    const handleFilter = (e)=>{
+        const {value} = e.target
+        const filtered = allUsers.filter(row=>{
+            const name = row.userName.toLowerCase()
+            return name.includes(value.toLowerCase())        
+        })
+        setSearchUser(filtered)
+    }
+    
     return(
-        <div className="tableUser">
+        <div className="tables">
+            <div className="title">
+                <h3>Lista de Usuarios:</h3>
+                <input type="text" className="inputFilter" placeholder="Busca por Modelo" onChange={handleFilter}/>  
+            </div>
             <DataTable 
                 columns={columnsUser}
-                data={allUsers}
+                data={searchUser}
                 fixedHeader= {true}
-                fixedHeaderScrollHeight="450px"  
+                fixedHeaderScrollHeight="420px"  
                 highlightOnHover
                 pointerOnHover
                 responsive
+                theme="dark"
+                customStyles={custonStyled}
             />
         </div>
     )

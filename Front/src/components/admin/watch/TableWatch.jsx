@@ -3,7 +3,7 @@ import { useState } from "react";
 import DataTable from "react-data-table-component"
 import { TbDeviceWatchOff, TbDeviceWatchStats, TbDeviceWatchUp } from "react-icons/tb";
 
-const TableWatch =({allClocks,editWatches,delWatch})=>{
+const TableWatch =({allClocks,editWatches,delWatch,custonStyled})=>{
     
     const [searchClock, setSearchClock] = useState(allClocks)
     console.log(searchClock);
@@ -95,33 +95,18 @@ const TableWatch =({allClocks,editWatches,delWatch})=>{
     
     
     const handleFilter = (e)=>{
-    console.log((allClocks[0].model).toLowerCase());
         const {value} = e.target
         const filtered = allClocks.filter(row=>{
             const modelo = row.model.toLowerCase()
             return modelo.includes(value.toLowerCase())        
         })
-        setSearchClock(filtered)    
-        console.log(filtered);
+        setSearchClock(filtered)
     }
     
-    const custonStyled = {
-        rows: {
-            style:{
-                color: "black",
-                backgroundColor: "rgb(255,255,255,0.7)"
-            }
-        },
-        headCells: {
-            style:{
-                color: "white",
-                backgroundColor: "rgb(0,0,0,0.8)"
-            }
-        }
-    }
+    
     
     return(
-        <div className="tableWatch"> 
+        <div className="tables"> 
             <div className="title">
                 <h3>Lista de Relojes:</h3>
                 <input type="text" className="inputFilter" placeholder="Busca por Modelo" onChange={handleFilter}/>  
@@ -130,7 +115,7 @@ const TableWatch =({allClocks,editWatches,delWatch})=>{
                     columns={columnsWatch}
                     data={searchClock}
                     fixedHeader= {true}
-                    fixedHeaderScrollHeight="450px"
+                    fixedHeaderScrollHeight="420px"
                     pointerOnHover   
                     highlightOnHover
                     expandableRows

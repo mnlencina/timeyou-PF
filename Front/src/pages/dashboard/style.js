@@ -18,11 +18,11 @@ export const Container = styled.div`
         flex-direction: column;
         align-items: center;
         width: 80%;
+        height: 450px;
     }
-    .tableUser{
-        width: 95%;
-    }
-    .tableWatch{
+    
+    .tables{
+        margin-top: 0px;
         display: flex;
         width: 95%;
         flex-direction: column;
@@ -38,6 +38,7 @@ export const Container = styled.div`
             flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
         
         .inputFilter{
@@ -45,7 +46,6 @@ export const Container = styled.div`
             outline: none;
             border-radius: 15px;
             padding: 0.8em;
-            margin: 1em;
             background-color: #ccc;
             box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
             transition: 300ms ease-in-out;
