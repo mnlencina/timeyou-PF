@@ -41,7 +41,7 @@ const Sidebar = ({ handleView, setNewWat, view, newWat }) => {
             setNewWat(true);
         }}
       >
-        Cargar Watch
+        Cargar Reloj
       </BtnSideBar>
       {/* <BtnSideBar alter={newWat.toString()}
         onClick={() => {

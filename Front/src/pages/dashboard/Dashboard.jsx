@@ -12,14 +12,18 @@ import { updateUser } from "../../redux/actions/admin/updateUser";
 import { updateWatch } from "../../redux/actions/admin/updateWatch";
 import { getProducts } from "../../redux/Actions";
 import FormWatchUpdate from "../../components/admin/watch/FormUpdate";
-import TableWatch from "../../components/admin/watch/TableWatch";
-import TableUsers from "../../components/admin/users/TableUsers";
+import DataTable from "react-data-table-component"
+import { BiTrash,BiDislike } from "react-icons/bi"
+import {FaUser,FaUserTie,FaEdit} from "react-icons/fa"
+import { TbDeviceWatchOff, TbDeviceWatchStats, TbDeviceWatchUp } from "react-icons/tb";
+
+
 
 //import styled from "styled-components";
 
 const Dashboard = ()=>{
     const allUsers = useSelector((state)=> state.allUsers)
-    const allClocks = useSelector((state)=> state.allClocks)
+    let allClocks = useSelector((state)=> state.allClocks)
     //const allBuys = useSelector((state)=> state.allBuys)
 
     const [newWat, setNewWat] = useState(false)
@@ -27,13 +31,16 @@ const Dashboard = ()=>{
     const [editRole, setEditRole] = useState(false)
     const [wUpdate, setWUpdate] = useState({})
     const [view, setView] = useState("watches");
+    const [searchClock, setSearchClock] = useState(allClocks)
+    const [searchUser, setSearchUser] = useState(allUsers)
+    const dispatch = useDispatch()
+    
     
     
     const handleView = (viewName) => {
     setView(viewName);
     };
     
-    const dispatch = useDispatch()
     
     const dashboarprops = useCallback(()=>{
         dispatch(addUsers())
@@ -48,12 +55,14 @@ const Dashboard = ()=>{
         let data = await dispatch(updateUser(id,del))
         console.log(data);
         dispatch(addUsers())
+        
     }
     
     const delWatch = async(id,del)=>{
         let data = await dispatch(updateWatch(id,del))
         console.log(data);
         dispatch(getProducts())
+        
     }
     
     const handleRole = async(e,id)=>{
@@ -62,11 +71,188 @@ const Dashboard = ()=>{
         console.log(data);
         setEditRole(false)        
         dispatch(addUsers())
+        
     }
     
     const editWatches =(row)=>{
         setWUpdate(row)
-        setUpdateW(true)        
+        setUpdateW(true)
+        
+    }
+    
+    const handleFilterUser = (e)=>{
+        const {value} = e.target
+        const filtered = allUsers.filter(row=>{
+            const name = row.userName.toLowerCase()
+            return name.includes(value.toLowerCase())        
+        })
+        setSearchUser(filtered)
+    }
+    
+    const columnsUser = [
+        {
+            name: "User",
+            selector:"role",
+            cell: row => 
+                row.role === "admin" 
+                ? (row.del ? <FaUserTie color="red" className="iconUser"/> : <FaUserTie className="iconUser"/>) 
+                : (row.del ? <FaUser className="iconUser" color="red"/> : <FaUser className="iconUser"/>),
+            sortable: true
+        },
+        {
+            name: "Nombre:",
+            selector:"userName",
+            cell: row => row.userName,
+            sortable: true
+        },
+        {
+            name: "email:",
+            selector: "email",
+            cell: row => row.email,
+            sortable: true
+        },
+        /* {
+            name: "Password:",
+            selector: row => row.password
+        }, */
+        {
+            name: "Tipo:",
+            selector: "role",
+            cell: row => editRole === row.id?
+                <select onChange={(e)=>handleRole(e,row.id)} value={row.role}>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select> 
+                : <div className="tableRole">
+                    <span>
+                        {row.role.charAt(0).toUpperCase() + row.role.slice(1)} 
+                    </span>
+                    
+                    <FaEdit color="blue" size={16} onClick={()=>setEditRole(row.id)}/>
+                </div>,
+            sortable: true,
+            
+            
+        },
+        {
+            name: "Registro:",
+            selector: "provider",
+            cell: row => row.provider.charAt(0).toUpperCase() + row.provider.slice(1),
+            sortable: true
+        },
+        {
+            name: "Activo",
+            selector: "del",
+            cell: row => row.del ? (
+                <div className="btnDiv" onClick={()=> delUser(row.id,{del: !row.del})}>
+                    <div className="Icon1">                    
+                        <BiDislike/>
+                    </div>
+                </div>
+                ) : (
+                    <div className="btnDiv" onClick={()=> delUser(row.id,{del: !row.del})}>
+                        <BiTrash className="Icon2"/>
+                    </div>
+                    ),
+            sortable: true
+            
+        },
+        
+    ]
+    
+    const columnsWatch = [
+    {
+        name: "Reloj:",
+        selector: "image",
+        cell: row => (<img className="imgTable" src={row.image[0]}/>),
+    },
+    {
+        name: "Marca:",
+        selector: "brandName",
+        cell: row => row.brandName.charAt(0).toUpperCase() + row.brandName.slice(1),
+        sortable: true
+    },
+    {
+        name: "Modelo:",
+        selector: "model",
+        cell: row => row.model.charAt(0).toUpperCase() + row.model.slice(1),
+        sortable: true
+    },
+    {
+        name: "Precio:",
+        selector: "price",
+        cell: row => `u$s${row.price}`,
+        sortable: true
+    },
+    {
+        name: "Color:",
+        selector: "colorName",
+        cell: row => row.colorName.charAt(0).toUpperCase() + row.colorName.slice(1),
+        sortable: true
+    },
+    {
+        name: "Estilo:",
+        selector: "styleName",
+        cell: row => row.styleName.charAt(0).toUpperCase() + row.styleName.slice(1),
+        sortable: true
+    },
+    {
+        name: "Genero:",
+        selector: "gender",
+        cell: row => row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
+        sortable: true
+    },
+    {
+        name: "Malla:",
+        selector: "strapName",
+        cell: row => row.strapName.charAt(0).toUpperCase() + row.strapName.slice(1),
+        sortable: true
+    },
+    {
+        name: "Acción:",
+        selector: "del",
+        cell: row => (
+            <div className="divAction">
+        {row.del ? (
+            <div className="btnDiv" onClick={()=> delWatch(row.id,{del: !row.del})}>
+                
+                <div className="Icon1">                    
+                    <TbDeviceWatchUp title="Agregar"/>
+                </div>
+            </div>
+            ) : (
+                <div className="btnDiv" onClick={()=> delWatch(row.id,{del: !row.del})}>
+                    <TbDeviceWatchOff title="Borrar" className="Icon2"/>
+                </div>
+                )}
+                <div className="btnDiv">
+                <TbDeviceWatchStats title="Edit" className="Icon2" onClick={()=>editWatches(row)} color="rgb(3, 3, 173)"/>
+                </div>
+            </div>
+        ),
+        sortable: true
+        
+    },
+    
+    ]
+
+    const dataExpan = ({data})=> {
+    console.log(data);
+    return (
+        <div className="dataExpan">
+            <span>Descripción: {data.description} </span><span>Funciones: {data.Functions.map(s=>`  •${s.name.charAt(0).toUpperCase() + s.name.slice(1)}  `)}</span>
+        </div>
+    )
+    };
+
+
+    const handleFilterWatch = (e)=>{
+    const {value} = e.target
+    const filtered = allClocks.filter(row=>{
+        const modelo = row.model.toLowerCase()
+        return modelo.includes(value.toLowerCase())        
+    })
+    setSearchClock(filtered)
     }
     
     const custonStyled = {
@@ -95,7 +281,6 @@ const Dashboard = ()=>{
     
     
     
-    
     return (
         <Container>
             <Nav/>
@@ -105,29 +290,53 @@ const Dashboard = ()=>{
                 setNewWat={setNewWat}
                 view={view}
                 newWat={newWat}
+                
             />
             
             <div className="containerTable">                
                 {view === "buys" &&<Buys/>}
                 
                 {view === "users" && 
-                    <TableUsers
-                        allUsers={allUsers}
-                        delUser={delUser}
-                        handleRole={handleRole}
-                        editRole={editRole}
-                        setEditRole={setEditRole}
-                        custonStyled={custonStyled}
+                    <div className="tables">
+                    <div className="title">
+                        <h3>Lista de Usuarios:</h3>
+                        <input id="inUser" type="text" className="inputFilter" placeholder="Busca por Nombre" onChange={handleFilterUser}/>  
+                    </div>
+                    <DataTable 
+                        columns={columnsUser}
+                        data={searchUser}
+                        fixedHeader= {true}
+                        fixedHeaderScrollHeight="420px"  
+                        highlightOnHover
+                        pointerOnHover
+                        responsive
+                        theme="dark"
+                        customStyles={custonStyled}
                     />
+                    </div>
                 }
                 
                 {view === "watches" && 
-                    <TableWatch 
-                        allClocks={allClocks} 
-                        delWatch={delWatch}
-                        editWatches={editWatches}
-                        custonStyled={custonStyled}
-                    />
+                    <div className="tables"> 
+                    <div className="title">
+                        <h3>Lista de Relojes:</h3>
+                        <input type="text" className="inputFilter" placeholder="Busca por Modelo" onChange={handleFilterWatch}/>  
+                    </div>
+                        <DataTable
+                            columns={columnsWatch}
+                            data={searchClock}
+                            fixedHeader= {true}
+                            fixedHeaderScrollHeight="420px"
+                            pointerOnHover   
+                            highlightOnHover
+                            expandableRows
+                            expandableRowsComponent={dataExpan}
+                            responsive
+                            theme="dark"
+                            customStyles={custonStyled}                         
+                    
+                        />
+                    </div>
                 }
                 
                 {newWat && <Form btnClose={()=>setNewWat(false)}/>}
