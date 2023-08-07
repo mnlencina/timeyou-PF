@@ -91,11 +91,11 @@ const allSearch = [...uniqueCategories].join(" ");
       const searchTerms = allSearch.split(" ");
       dispatch(searchProduct(searchTerms));
     }
-  }, [allSearch, dispatch]);
+  }, [searchTerm, dispatch]);
 
   const onSearchSubmit = (event) => {
     event.preventDefault();
-    if (searchTerm.trim() === "") {
+    if (allSearch.trim() === "") {
       alert("Debes ingresar al menos un dato para realizar una búsqueda");
       return;
     }
