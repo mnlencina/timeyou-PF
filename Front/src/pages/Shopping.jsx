@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { BTNHover } from "../utils/ComponentsStyle";
 import { useNavigate } from "react-router-dom";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
-import { totalPrice } from "../redux/Actions";
-import { ProductMP } from "../components/MercadoPago/MercadoPago"
+import { setCart, totalPrice } from "../redux/Actions";
+import { ProductMP } from "../components/mercadoPago/MercadoPago";
 
 function Shopping() {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.isLoadingCart);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const userName = user.userName;
   const cart = useSelector((state) => state.Cart);
 
   const compraTotal = Math.floor(
-    cart.items.reduce((acc, e) => acc + e.price, 0) * 500
+    cart?.reduce((acc, e) => acc + e.price, 0) * 500
   );
 
   const handleCheckOut = () => {
@@ -25,24 +28,26 @@ function Shopping() {
   const renderCart = () => (
     <Container>
       <div className="btn-goback">
-        <BTNHover alter="true" onClick={() => navigate("/")}>
+        <BTNHover alter="true" onClick={() => navigate(-1)}>
           {"<"}
         </BTNHover>
       </div>
       <div className="main-Container">
         <div className="main-card">
-          {cart.items.length === 0 ? (
+          {cart.length === 0 ? (
             <ContainerEmpty>
               <h1>No tienes elementos cargados en el carrito</h1>
             </ContainerEmpty>
           ) : (
             <div className="main-products">
               <div className="products">
-                {cart.items.map((e, index) => (
-                  <CardShopping key={index} reloj={e} />
-                ))}
+                {loading ? (
+                  <h1>cargandoo</h1>
+                ) : (
+                  cart.map((e, index) => <CardShopping key={index} reloj={e} />)
+                )}
               </div>
-              {cart.items.length > 0 ? (
+              {cart.length > 0 ? (
                 <div className="resumen-container">
                   <div className="resumen-text">
                     <h4>Resumen del pedido</h4>
@@ -69,7 +74,7 @@ function Shopping() {
                         FINALIZAR COMPRA
                       </BTNCarritoDeCompras>
                       <div>
-                      <ProductMP carrito={cart}/>
+                        <ProductMP carrito={cart} />
                       </div>
                     </div>
                     <div className="btn-comprarmas">
@@ -87,7 +92,6 @@ function Shopping() {
           )}
         </div>
       </div>
-      
     </Container>
   );
 
@@ -222,7 +226,6 @@ const Container = styled.main`
     }
   }
 `;
-
 
 const ContainerEmpty = styled.div`
   width: 100%;

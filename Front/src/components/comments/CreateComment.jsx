@@ -9,11 +9,12 @@ import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
 const Form = styled.form`
-  width: 400px;
+  width: 550px;
   margin: 0;
   padding: 0;
   background-color: #fff;
   border-radius: 8px;
+  margin-bottom: 80px;
 `;
 
 const Label = styled.label`
@@ -39,15 +40,18 @@ const Textarea = styled.textarea`
 `;
 
 const Button = styled.button`
-  padding: 10px 20px;
+  padding: 10px 40px;
   background-color: #f46b11;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem;
+  margin-top: 30px;
 `;
 const Title = styled.h2`
   text-align: left;
+  padding:20px;
   margin-bottom: 20px;
 `;
 
@@ -59,13 +63,14 @@ const RatingContainer = styled.div`
 
 const StarsContainer = styled.div`
   display: inline-block;
-  font-size: 24px;
+  font-size: 30px;
   color: #ffbb6a;
   cursor: pointer;
 `;
 
 const Star = styled(FaStar)`
   transition: color 0.2s;
+  margin: 10px;
   &.empty {
     color: #e4e4e4;
   }
@@ -76,7 +81,7 @@ const Star = styled(FaStar)`
 
 const RatingText = styled.span`
   margin-left: 8px;
-  font-weight: bold;
+  color: #7d7576;
   font-size: 16px;
 `;
 
@@ -94,8 +99,9 @@ const SuccessMessage = styled.div`
 
 
 const CreateComment = ({ watchId }) => {
-  
-  console.log("watchId desde el componente de CreateComment", watchId)
+
+  const comments = useSelector((state) => state.comments) || []; 
+
   const dispatch = useDispatch();
 
   const [commentText, setCommentText] = useState("");
@@ -109,6 +115,12 @@ const CreateComment = ({ watchId }) => {
 const email = useSelector((state)=> state.user.email)
 const userId = useSelector((state)=>state.userLoggedId)
 //console.log("USER LOGGED email" , email, "USER ID", userId)
+
+const filterWatchIdComments = comments.filter(watchIdComment => watchIdComment.WatchId == watchId)
+console.log("FILTERWATCHID FROM COMMENTS", filterWatchIdComments)
+
+const filterUserIdFromWatch = filterWatchIdComments.filter(userIdComment => userIdComment.UserId == userId)
+console.log("FILTERUSERID POST FROM COMMENTS", filterUserIdFromWatch)
 
 useEffect(() => {
   console.log("Antes de llamar a la acción getLoggedUserId");
@@ -155,20 +167,29 @@ useEffect(() => {
     };
 
     if (commentText.trim() !== '') {
-      dispatch(createComment(commentBody));
-      setShowSuccessMessage(true);
-      setCommentText('');
-      setCalification('');
-      setUserName('');
-      setSelectedRating(0); 
-      setHoveredRating(0);
-      
+      if(filterUserIdFromWatch.length > 0) {
+        alert("Ya realizaste un comentario en este producto")
+        setShowSuccessMessage(false);
+        setCommentText('');
+        setCalification('');
+        setUserName('');
+        setSelectedRating(0); 
+        setHoveredRating(0);
+      } else {
+        dispatch(createComment(commentBody));
+        setShowSuccessMessage(true);
+        setCommentText('');
+        setCalification('');
+        setUserName('');
+        setSelectedRating(0); 
+        setHoveredRating(0);   
+      }    
     }
   };
 
   return (
     <Form onSubmit={handleSubmit} onClick={handleFormClick}>
-       <Title>Danos tu opinión:</Title>
+       <Title>Califica este producto:</Title>
       <div>
         <Label htmlFor="userName">Tu nombre:</Label>
         <Input
@@ -182,7 +203,7 @@ useEffect(() => {
       <div>
         <Label>Puntuación:</Label>
         <RatingContainer>
-        <StarsContainer onMouseLeave={handleRatingHoverExit} required>
+        <StarsContainer onMouseLeave={handleRatingHoverExit}>
           {[1, 2, 3, 4, 5].map((rating) => (
             <React.Fragment key={rating}>
             <Star

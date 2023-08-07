@@ -38,6 +38,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
     },
+    stock: {
+        type: DataTypes.NUMBER,
+        defaultValue: 1,
+    }
   },{
     timestamps: false, // Desactivar timestamps
   });

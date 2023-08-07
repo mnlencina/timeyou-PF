@@ -23,6 +23,8 @@ import {
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
   LOGIN_GOOGLE,
+  UPDATE_CART,
+  SET_CART,
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
@@ -67,10 +69,19 @@ export function resetDetail() {
 }
 
 //funciones del carrito
+/* Cambio realizado */
+export const setCart = (cartData) => ({
+  type: SET_CART,
+  payload: cartData,
+});
+/* ------ */
+export const updateCart = () => ({
+  type: UPDATE_CART,
+});
 
-export const addToCart = (product) => ({
+export const addToCart = (sesionData) => ({
   type: ADD_TO_CART,
-  payload: product,
+  payload: sesionData,
 });
 
 export const removeFromCart = (productId) => ({
@@ -227,12 +238,12 @@ export const createUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/register";
   try {
     const newUser = await axios.post(endpoint, user);
-    
+
     dispatch({
       type: CREATE_USER,
       payload: newUser,
     });
-    alert("usuario creado con exito")
+    alert("usuario creado con exito");
   } catch (error) {
     alert("no pudo crearse el usuario");
   }

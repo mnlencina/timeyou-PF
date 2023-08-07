@@ -11,26 +11,36 @@ import { BsGoogle } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 /* styled  editing */
 import { BTNLogin } from "../utils/ComponentsStyle";
+/* funciones de validacion */
+import {
+  validateInputLogin,
+  validateInputRegister,
+} from "../utils/functiosAux";
 
 function RegisterAndLogin() {
   const USER = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  /* Estados locales */
   const [inModeLogin, setInModeLogin] = useState(false);
-  const handleInMode = () => {
-    setInModeLogin(!inModeLogin);
-  };
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [errorRegister, setErrorRegister] = useState({});
+  const [errorLogin, setErrorLogin] = useState({});
   const [registerValues, setRegisterValues] = useState({
     userName: "",
     email: "",
     password: "",
   });
-
   const [loginAcount, setLoginAcount] = useState({
     email: "",
     password: "",
     provider: "local",
   });
+
+  /* Controladores */
+  const handleInMode = () => {
+    setInModeLogin(!inModeLogin);
+  };
 
   const handleChangeRegister = (e) => {
     const { name, value } = e.target;
@@ -38,6 +48,12 @@ function RegisterAndLogin() {
       ...registerValues,
       [name]: value,
     });
+    setErrorRegister(
+      validateInputRegister({
+        ...registerValues,
+        [name]: value,
+      })
+    );
     if (name === "password") {
       const valueForm = value.toString();
       setRegisterValues({
@@ -48,7 +64,14 @@ function RegisterAndLogin() {
   };
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    dispatch(createUser(registerValues));
+    if (Object.keys(errorRegister).length > 0) {
+      /* Agregar alerta! */
+      alert("no se registraron datos");
+      return;
+    } else {
+      dispatch(createUser(registerValues));
+      setInModeLogin(!inModeLogin);
+    }
   };
 
   const handleChangeLogin = (e) => {
@@ -57,12 +80,30 @@ function RegisterAndLogin() {
       ...loginAcount,
       [name]: value,
     });
+    setErrorLogin(
+      validateInputLogin({
+        ...loginAcount,
+        [name]: value,
+      })
+    );
   };
-
+  console.log(errorLogin);
   const handleSubmitLogin = (e) => {
     e.preventDefault();
+    if (Object.keys(errorLogin).length > 0) {
+      /* agregar alertas!!!! */
+      alert("Usuario o contraseña incorrectos");
+      return;
+    }
     dispatch(loginUser(loginAcount));
-    //navigate('/admin/dashboard') : navigate("/home");
+    setLoggedIn(true);
+    const redirectPath = new URLSearchParams(location.search).get("redirect");
+    if (redirectPath) {
+      // Redirige a la pagina donde estaba el usuario previamente
+      navigate(redirectPath);
+    } else {
+      navigate("/auth");
+    }
   };
 
   useEffect(() => {
@@ -81,13 +122,13 @@ function RegisterAndLogin() {
       ? JSON.parse(decodeURIComponent(dataString))
       : null;
     const confirmation = queryParams.get("confirmation");
-   
-      if (userData) {
-        dispatch(loginGoogle(userData));
-        navigate("/")     
-      }
+
+    if (userData) {
+      dispatch(loginGoogle(userData));
+      navigate("/");
+    }
   };
-  
+
   const handleOnClick = async () => {
     // Redireccionar al usuario a la página de inicio de sesión de Google
     window.location.href = "http://localhost:3001/auth/google"; // Reemplaza esta URL con la ruta adecuada de tu servidor para la autenticación de Google
@@ -124,6 +165,17 @@ function RegisterAndLogin() {
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
             />
+
+            {errorRegister.n1 && (
+              <ContainerError>
+                <p>{errorRegister.n1}</p>
+              </ContainerError>
+            )}
+            {errorRegister.n2 && (
+              <ContainerError>
+                <p>{errorRegister.n2}</p>
+              </ContainerError>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineMail />
@@ -134,6 +186,16 @@ function RegisterAndLogin() {
               value={registerValues.email}
               onChange={handleChangeRegister}
             />
+            {errorRegister.e1 && (
+              <ContainerError>
+                <p>{errorRegister.e1}</p>
+              </ContainerError>
+            )}
+            {errorRegister.e2 && (
+              <ContainerError>
+                <p>{errorRegister.e2}</p>
+              </ContainerError>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -151,7 +213,7 @@ function RegisterAndLogin() {
       </div>
     </ContainerRegister>
   );
-
+  console.log(errorLogin.n1);
   const renderLogin = () => (
     <ContainerLogin>
       <h1>Iniciar sesion</h1>
@@ -174,6 +236,16 @@ function RegisterAndLogin() {
               value={loginAcount.email}
               onChange={handleChangeLogin}
             />
+            {errorLogin.e1 && (
+              <ContainerErrorLogin>
+                <p>{errorLogin.e1}</p>
+              </ContainerErrorLogin>
+            )}
+            {errorLogin.e2 && (
+              <ContainerErrorLogin>
+                <p>{errorLogin.e2}</p>
+              </ContainerErrorLogin>
+            )}
           </div>
           <div className="input-field">
             <AiOutlineLock />
@@ -186,7 +258,6 @@ function RegisterAndLogin() {
             />
           </div>
           <BTNLogin>Login</BTNLogin>
-          
           <div className="login-btn">
             <button>
               <FaFacebookF />
@@ -195,7 +266,6 @@ function RegisterAndLogin() {
               <BsGoogle onClick={handleOnClick} />
             </button>
           </div>
-          
         </form>
       </div>
     </ContainerLogin>
@@ -246,7 +316,7 @@ const Container = styled.main`
     position: absolute;
     top: 150px;
     right: -2000px;
-    z-index: 20;
+    z-index: 200;
     border: 1px solid #fff;
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
@@ -289,7 +359,7 @@ const Container = styled.main`
     position: absolute;
     top: 150px;
     left: -2500px;
-    z-index: 20;
+    z-index: 200;
     border: 1px solid #fff;
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
@@ -396,7 +466,6 @@ const ContainerRegister = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
-        overflow: hidden;
         width: 90%;
         background-color: #f0f0f0;
         margin: 10px 0;
@@ -409,6 +478,8 @@ const ContainerRegister = styled.div`
         padding: 0 0.4rem;
         position: relative;
         input {
+          position: relative;
+          overflow: hidden;
           background: none;
           outline: none;
           border: none;
@@ -445,7 +516,6 @@ const ContainerLogin = styled.div`
     height: 100%;
     display: flex;
     .login-btn {
-      
       bottom: 60px;
       right: 240px;
       display: flex;
@@ -483,7 +553,7 @@ const ContainerLogin = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
-        overflow: hidden;
+        position: relative;
         width: 90%;
         background-color: #f0f0f0;
         margin: 10px 0;
@@ -496,6 +566,7 @@ const ContainerLogin = styled.div`
         padding: 0 0.4rem;
         position: relative;
         input {
+          position: relative;
           background: none;
           outline: none;
           border: none;
@@ -505,6 +576,9 @@ const ContainerLogin = styled.div`
           font-weight: 600;
           font-size: 1rem;
           color: #333;
+          &::placeholder {
+            overflow: hidden;
+          }
         }
         svg {
           text-align: center;
@@ -530,5 +604,77 @@ const TransitionDiv = styled.div`
   transform: ${(props) =>
     props.inModeLogin ? "translateX(calc(107vw))" : "translateX(-2.7vw)"};
   transition: all 2s ease-in-out;
+  z-index: 100;
+`;
+
+const ContainerError = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 20px;
   z-index: 10;
+  background-color: #fff;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: 0.3s ease;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #fff;
+  }
+  p {
+    width: 90%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    color: red;
+    opacity: 0.6;
+  }
+`;
+
+const ContainerErrorLogin = styled.div`
+  position: absolute;
+  top: 50px;
+  background-color: red;
+  z-index: 10;
+  background-color: #fff;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: 300ms ease;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #fff;
+  }
+  p {
+    width: 90%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    color: red;
+    opacity: 0.6;
+  }
 `;

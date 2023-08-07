@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { getProducts } from "../redux/Actions.js";
 import { useDispatch, useSelector } from "react-redux";
 
-export const CardContext = ({pagination}) => {
+export const CardContext = ({ pagination }) => {
   const dispatch = useDispatch();
- 
-  const loading = useSelector(state=> state.isLoading);
+
+  const loading = useSelector((state) => state.isLoading);
 
   //useEffect(() => {
   //  dispatch(getProducts());
@@ -16,18 +16,17 @@ export const CardContext = ({pagination}) => {
   return (
     <Container>
       <div className="context-card">
-      {
-        loading ? (<h1>Cargando...</h1>):(pagination.map(e=>(
-          <Card key={e.id} watch={e}/>
-        )))
-      }
+        {loading ? (
+          <h1>Cargando...</h1>
+        ) : (
+          pagination.map((e) => <Card key={e.id} watch={e} />)
+        )}
       </div>
     </Container>
   );
 };
 
 const Container = styled.section`
-
   width: 90%;
   height: 100%;
   display: flex;
@@ -35,13 +34,15 @@ const Container = styled.section`
   justify-content: center;
   overflow: hidden;
   .context-card {
+    margin-top: 20px;
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    align-items:start;
+    /* se agrega template row */
+    grid-template-rows: repeat(3, 1fr);
+    align-items: start;
     justify-items: center;
-    
   }
   @media (max-width: 768px) {
     .context-card {

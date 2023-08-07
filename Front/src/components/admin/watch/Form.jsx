@@ -1,13 +1,21 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 //import styled from "styled-components";
 import { Container, Formulario, Container1, Container2 } from "./style";
-import { postWatch } from "../../../redux/Actions";
+import { getProducts, postWatch } from "../../../redux/Actions";
+import uploadImageToCloudinary from "../claudinary/uploadimage.js";
 
-function FormWatch({btnClose, editWatch}) {
+function FormWatch({btnClose}) {
   
   const dispatch = useDispatch()
-  const {BRANDS, STYLES, COLORS, STRAPS, FUNCTIONS} = useSelector(state=> state)
+  
+  const BRANDS = useSelector((state)=> state.BRANDS)
+  const STYLES = useSelector((state)=> state.STYLES)
+  const COLORS = useSelector((state)=> state.COLORS) 
+  const STRAPS = useSelector((state)=> state.STRAPS) 
+  const FUNCTIONS = useSelector((state)=> state.FUNCTIONS)
+  
   const [addImage, setAddImage] = useState("")
   const [watch, setWatch] = useState({
     brand: "",
@@ -51,11 +59,21 @@ function FormWatch({btnClose, editWatch}) {
   }
   
   
-  const handlerImage = (img)=>{
+  /* const handlerImage = (img)=>{
     const {name, value} = img.target
     console.log(name, value);
      setAddImage(value)
-  }
+  } */
+  
+  const  handlerImage = async (e) => {
+    const imag = e.target.files[0];    
+    console.log(imag)
+      
+    let imageUrl  = await uploadImageToCloudinary("Relojes Time You", imag)
+      
+    setAddImage(imageUrl)
+    masImg(imageUrl)
+  };
   
   const masImg = (img)=>{
     const filtered = watch.image.filter(f=> f === img)
@@ -70,6 +88,8 @@ function FormWatch({btnClose, editWatch}) {
       )            
       document.getElementById("imgs").value = "";
   }
+
+
     
   const handlerFunctions = (func)=>{    
     const filtered = watch.functions.filter(f=> f !== func)   
@@ -100,7 +120,9 @@ function FormWatch({btnClose, editWatch}) {
         setWatch({
           ...watch,
           image: [],
-        })        
+        })
+        dispatch(getProducts())
+    
   }
   
   
@@ -117,7 +139,7 @@ function FormWatch({btnClose, editWatch}) {
         <div className="optionDiv">
           <select onChange={handleChange} name="brand" value={watch.brand}>
             {watch.brand === "" && <option>Marca</option>}
-            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {BRANDS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">
@@ -131,45 +153,44 @@ function FormWatch({btnClose, editWatch}) {
         <div className="optionDiv">
           <select onChange={handleChange} name="style" value={watch.style}>
             {watch.style === "" && <option>Estilo</option>}
-            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STYLES.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="color" value={watch.color}>
             {watch.color === "" && <option>Color</option>}
-            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {COLORS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="strap" value={watch.strap}>
             {watch.strap === "" && <option>Malla</option>}
-            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}       
+            {STRAPS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}       
           </select>
         </div>
         <div className="optionDiv">                  
           <select onChange={handleChange} name="functions" value={watch.functions}>
             <option value={''}>Funciones</option>
-            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name}</option>)}      
+            {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}      
           </select>     
         </div>
         
         <div className="optionDiv">
-          <h3>Precio en u$s:</h3>
+          <h3>Precio en usd:</h3>
           <input name="price" type="text" onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
-        <h3>Descripción</h3>
+        <h3>Descripción:</h3>
         <input name="description" type="text" onChange={handleChange}/>
         </div>
         <div className="optionDiv">
-          <h3>Imagen</h3>
-          <input id="imgs" onChange={handlerImage} name="image" type="text"/>
-          <button type="button" onClick={()=> masImg(addImage)}>add</button>
+          <label className="customLabel" htmlFor="imgs">Cargar Imagen...</label>
+          <input className="customInput" id="imgs" onChange={handlerImage} name="image" type="file" aria-label="Seleccionar archivo" />
+        
         </div>
         
-          <button type="button" onClick={postWatches}>UP WATCH</button>
-          
-        </Container1>
+          <button className="btnUp" type="button" onClick={postWatches}>UP WATCH</button>
+          </Container1>
         <div className="funcionesDiv">
           <h3>Funciones:</h3>
         <div className="funcionesDiv2">
