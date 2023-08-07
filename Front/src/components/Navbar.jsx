@@ -44,16 +44,17 @@ export const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
 
-  const handleShowSearch = () => {
-    setShowSearch(!showSearch);
-  };
   /* Controlador del globo de usuario */
   const [showLogout, setShowLogout] = useState(false);
 
   const handleShowLogout = () => {
     setShowLogout(!showLogout);
+    setShowSearch(false)
   };
-
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
+    setShowLogout(false)
+  };
   return (
     <Container itemCount={itemCount.toString()}>
       <header className="header">
@@ -255,7 +256,7 @@ const Container = styled.div`
             align-items: center;
             justify-content: center;
             gap: 10px;
-            z-index: 100;
+            z-index: 50;
             .btn {
               width: 90%;
               height: 35px;
