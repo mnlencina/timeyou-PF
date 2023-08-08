@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchProduct } from "../redux/Actions.js";
+import { searchProduct , updateSelectedCategories} from "../redux/Actions.js";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
@@ -83,28 +83,40 @@ const allSearch = [...uniqueCategories].join(" ");
 
   const handleSearch = (event) => {
     setSearchTerm(event.currentTarget.value);
+   // dispatch(updateSelectedCategories(selectedCategories))
   };
   
 
   useEffect(() => {
+
     if (allSearch.trim() !== "") {
+      console.log("ALLSEARCH TRIM", allSearch.trim())
       const searchTerms = allSearch.split(" ");
+      console.log("ALLSEARCH SPLIT", searchTerms)
       dispatch(searchProduct(searchTerms));
     }
-  }, [searchTerm, dispatch]);
+  }, [allSearch, dispatch]); 
 
   const onSearchSubmit = (event) => {
     event.preventDefault();
     if (allSearch.trim() === "") {
-      alert("Debes ingresar al menos un dato para realizar una búsqueda");
-      return;
+      const searchTerms = allSearch.split(" ");
+      dispatch(searchProduct(searchTerms));
+    //  dispatch(updateSelectedCategories(allSearch))
     }
+    if(searchTerm.length  === 0) {
+      dispatch(updateSelectedCategories(""))
+      alert("Debes ingresar al menos un dato para realizar una búsqueda");
+     return;
+    }
+    
     navigate("/home");
-    setSearchTerm("");
+   setSearchTerm("");
   };
 
   const resetSearchTerm = () => {
     setSearchTerm("");
+    
   };
 
   return (
