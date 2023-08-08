@@ -20,7 +20,7 @@ import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
   const user = useSelector((state) => state.user);
-  const selectedCategories = useSelector((state)=> state.selectedCategories)
+  const selectedCategories = useSelector((state) => state.selectedCategories);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,18 +33,17 @@ export const Navbar = () => {
     navigate("/auth");
   };
 
-
-
   const handleLinkClick = (brand) => {
     const brandLowerCase = brand.toLowerCase();
-   
+    console.log("estoy aca");
+
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
       dispatch(clearFilters());
-      dispatch(updateSelectedCategories(""))
+      dispatch(updateSelectedCategories(""));
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
-      dispatch(updateSelectedCategories(` ${brandLowerCase}`))
+      dispatch(updateSelectedCategories(` ${brandLowerCase}`));
     }
   };
 
@@ -55,7 +54,6 @@ export const Navbar = () => {
 
   /* Controlador del globo de usuario */
   const [showLogout, setShowLogout] = useState(false);
-  const [isActive, setIsActive] = useState(false);
 
   const handleShowLogout = () => {
     setShowLogout(!showLogout);
@@ -77,48 +75,28 @@ export const Navbar = () => {
       <nav className="navigation">
         <ul className="nav">
           <li>
-            <StyledLink
-              className={isActive ? "active" : ""}
-              to="/home"
-              onClick={() => handleLinkClick("ver todo")}
-            >
+            <StyledLink to="/home" onClick={() => handleLinkClick("ver todo")}>
               ver todo
             </StyledLink>
           </li>
           <li>
-            <StyledLink
-              className={isActive ? "active" : ""}
-              to="/home"
-              onClick={() => handleLinkClick("festina")}
-            >
+            <StyledLink to="/home" onClick={() => handleLinkClick("festina")}>
               festina
             </StyledLink>
           </li>
           <li>
             {" "}
-            <StyledLink
-              className={isActive ? "active" : ""}
-              to="/home"
-              onClick={() => handleLinkClick("citizen")}
-            >
+            <StyledLink to="/home" onClick={() => handleLinkClick("citizen")}>
               citizen
             </StyledLink>
           </li>
           <li>
-            <StyledLink
-              className={isActive ? "active" : ""}
-              to="/home"
-              onClick={() => handleLinkClick("mistral")}
-            >
+            <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
               mistral
             </StyledLink>
           </li>
           <li>
-            <StyledLink
-              className={isActive ? "active" : ""}
-              to="/home"
-              onClick={() => handleLinkClick("prune")}
-            >
+            <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
               prÜne
             </StyledLink>
           </li>
@@ -214,17 +192,18 @@ const Container = styled.div`
       li {
         text-transform: uppercase;
         font-weight: 300;
+       }
       }
-    }
-  }
-  .nav {
+    .nav {
     margin: 0 auto;
     width: 60%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-evenly; 
+    }
   }
+
     .icons {
       width: 40%;
       display: flex;

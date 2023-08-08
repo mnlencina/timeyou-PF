@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { Ring } from "@uiball/loaders";
+import Interior from "../../assets/load01.svg";
+import Animacion from "../../assets/load02.svg";
 
 export const Loader = () => {
   return (
     <Container>
       <div className="container">
-        <Ring size={250} lineWeight={3} speed={2} color="white" />;
+        <img className="fijo" src={Interior} alt="logo svg" />
+        <img className="movil" src={Animacion} alt="animacion svg" />
       </div>
     </Container>
   );
@@ -19,22 +21,39 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  background: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
   background: radial-gradient(
     circle,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(51, 51, 51, 1) 10%,
-    rgba(56, 56, 56, 1) 23%,
-    rgba(255, 255, 255, 1) 100%
+    rgba(255, 255, 255, 1) 42%,
+    rgba(85, 85, 85, 1) 100%
   );
-  backdrop-filter: blur(10px);
   .container {
-    position: absolute;
-    top: 24%;
-    left: 35%;
     width: 400px;
     height: 400px;
-    display: grid;
-    place-items: center;
+    position: relative;
+
+    .fijo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+    }
+    .movil {
+      position: absolute;
+      top: 8%;
+      left: 23%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      animation: animate 2s infinite linear;
+    }
+  }
+  @keyframes animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(359deg);
+    }
   }
 `;
