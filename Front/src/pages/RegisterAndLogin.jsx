@@ -24,6 +24,8 @@ function RegisterAndLogin() {
   /* Estados locales */
   const [inModeLogin, setInModeLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [registerSubmitted, setRegisterSubmitted] = useState(false);
+  const [loginSubmitted, setLoginSubmitted] = useState(false);
   const [errorRegister, setErrorRegister] = useState({});
   const [errorLogin, setErrorLogin] = useState({});
   const [registerValues, setRegisterValues] = useState({
@@ -64,6 +66,7 @@ function RegisterAndLogin() {
   };
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+    setRegisterSubmitted(true);
     if (Object.keys(errorRegister).length > 0) {
       /* Agregar alerta! */
       alert("no se registraron datos");
@@ -87,9 +90,10 @@ function RegisterAndLogin() {
       })
     );
   };
-  console.log(errorLogin);
+
   const handleSubmitLogin = (e) => {
     e.preventDefault();
+    setLoginSubmitted(true);
     if (Object.keys(errorLogin).length > 0) {
       /* agregar alertas!!!! */
       alert("Usuario o contraseña incorrectos");
@@ -166,12 +170,12 @@ function RegisterAndLogin() {
               placeholder="ingrese su nombre de usuario..."
             />
 
-            {errorRegister.n1 && (
+            {registerSubmitted && errorRegister.n1 && (
               <ContainerError>
                 <p>{errorRegister.n1}</p>
               </ContainerError>
             )}
-            {errorRegister.n2 && (
+            {registerSubmitted && errorRegister.n2 && (
               <ContainerError>
                 <p>{errorRegister.n2}</p>
               </ContainerError>
@@ -186,12 +190,12 @@ function RegisterAndLogin() {
               value={registerValues.email}
               onChange={handleChangeRegister}
             />
-            {errorRegister.e1 && (
+            {registerSubmitted && errorRegister.e1 && (
               <ContainerError>
                 <p>{errorRegister.e1}</p>
               </ContainerError>
             )}
-            {errorRegister.e2 && (
+            {registerSubmitted && errorRegister.e2 && (
               <ContainerError>
                 <p>{errorRegister.e2}</p>
               </ContainerError>
@@ -236,12 +240,12 @@ function RegisterAndLogin() {
               value={loginAcount.email}
               onChange={handleChangeLogin}
             />
-            {errorLogin.e1 && (
+            {loginSubmitted && errorLogin.e1 && (
               <ContainerErrorLogin>
                 <p>{errorLogin.e1}</p>
               </ContainerErrorLogin>
             )}
-            {errorLogin.e2 && (
+            {loginSubmitted && errorLogin.e2 && (
               <ContainerErrorLogin>
                 <p>{errorLogin.e2}</p>
               </ContainerErrorLogin>
@@ -317,7 +321,7 @@ const Container = styled.main`
     top: 150px;
     right: -2000px;
     z-index: 200;
-   
+
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
     .panel {
@@ -360,7 +364,7 @@ const Container = styled.main`
     top: 150px;
     left: -2500px;
     z-index: 200;
-  
+
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
     .panel {
@@ -400,9 +404,10 @@ const ContainerRegister = styled.div`
   height: 100%;
   h1 {
     width: 100%;
-    text-align: center;
+    margin-left: 220px;
     margin-top: 60px;
     text-transform: uppercase;
+    text-decoration: underline;
   }
   .register-container {
     width: 100%;
@@ -475,7 +480,6 @@ const ContainerRegister = styled.div`
         grid-template-columns: 15% 85%;
         align-items: center;
         justify-items: center;
-        padding: 0 0.4rem;
         position: relative;
         input {
           position: relative;
@@ -507,9 +511,10 @@ const ContainerLogin = styled.div`
   height: 100%;
   h1 {
     width: 100%;
-    text-align: center;
-    margin-top: 60px;
+    margin-left: 235px;
+    margin-top: 95px;
     text-transform: uppercase;
+    text-decoration: underline;
   }
   .login-container {
     width: 100%;
@@ -553,7 +558,6 @@ const ContainerLogin = styled.div`
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
       .input-field {
-        position: relative;
         width: 90%;
         background-color: #f0f0f0;
         margin: 10px 0;
@@ -563,10 +567,10 @@ const ContainerLogin = styled.div`
         grid-template-columns: 15% 85%;
         align-items: center;
         justify-items: center;
-        padding: 0 0.4rem;
         position: relative;
         input {
           position: relative;
+          overflow: hidden;
           background: none;
           outline: none;
           border: none;
@@ -576,9 +580,6 @@ const ContainerLogin = styled.div`
           font-weight: 600;
           font-size: 1rem;
           color: #333;
-          &::placeholder {
-            overflow: hidden;
-          }
         }
         svg {
           text-align: center;

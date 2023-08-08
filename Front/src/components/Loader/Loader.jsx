@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Ring } from "@uiball/loaders";
-import ImgTime from "../../assets/logo.svg";
 
 export const Loader = () => {
   return (
     <Container>
-      <img src={ImgTime} alt="logo" />
       <div className="container">
         <Ring size={250} lineWeight={3} speed={2} color="white" />;
       </div>
@@ -38,16 +36,5 @@ const Container = styled.div`
     height: 400px;
     display: grid;
     place-items: center;
-  }
-  img {
-    width: 200px;
-    height: 200px;
-    fill: #fff !important;
-    background: radial-gradient(
-    circle,
-    #111 20%, #fff
-  );
-    border-radius:50%;
-    
   }
 `;
