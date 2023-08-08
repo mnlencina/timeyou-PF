@@ -216,25 +216,15 @@ const Container = styled.div`
         font-weight: 300;
       }
     }
-
-    .nav {
-      margin: 0 auto;
-      width: 60%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      a {
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 10px;
-        transition: 0.3s ease-in-out;
-        &:hover {
-          background-image: linear-gradient(to bottom, grey, black, black);
-          color: #fff;
-        }
-      
-    }
+  }
+  .nav {
+    margin: 0 auto;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
     .icons {
       width: 40%;
       display: flex;
