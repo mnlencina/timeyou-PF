@@ -12,9 +12,11 @@ import { Loader } from "../components/Loader/Loader.jsx";
 import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 
 export default function HomePage() {
+
   const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
   const whatches = searchActive ? searchClocks : Clocks;
   const loading = useSelector((state) => state.isLoading);
+
 
   const [show, setShow] = useState(false);
   const showOpen = show.toString();

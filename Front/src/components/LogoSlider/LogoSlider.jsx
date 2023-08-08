@@ -95,14 +95,14 @@ export const LogoSlider = () => {
       </div>
       </div>
 
-      <div className="controles">
+      {/* <div className="controles">
         <BTNHover alter='true'onClick={handlePrev}>
           <AiOutlineLeft />
         </BTNHover>
         <BTNHover alter='true' onClick={handleNext}>
           <AiOutlineRight />
         </BTNHover>
-      </div>
+      </div> */}
     </Container>
   );
 };

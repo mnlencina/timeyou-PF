@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { SideDiv, BtnSideBar} from "./styled";
 
-const Sidebar = ({ handleView, setNewWat, view, newWat }) => {
+const Sidebar = ({ handleView, setNewWat, view, newWat,setNewUser,newUser }) => {
     const navigate = useNavigate()
   return (
     <SideDiv>
@@ -41,15 +41,15 @@ const Sidebar = ({ handleView, setNewWat, view, newWat }) => {
             setNewWat(true);
         }}
       >
-        Cargar Watch
+        Cargar Reloj
       </BtnSideBar>
-      {/* <BtnSideBar alter={newWat.toString()}
+      {<BtnSideBar alter={newUser.toString()}
         onClick={() => {
-            setNewWat(true);
+            setNewUser(true);
         }}
       >
         Cargar User
-      </BtnSideBar> */}
+      </BtnSideBar>}
         <BtnSideBar 
             onClick={() => {
                 navigate("/home");

@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
+
 import {
   AiOutlineInstagram,
   AiOutlineFacebook,
   AiOutlineCopyrightCircle,
+  AiOutlineTwitter,
 } from "react-icons/ai";
 
 export const Footer = () => {
@@ -16,27 +19,30 @@ export const Footer = () => {
             <ul>
               <li>sobre nosotros</li>
               <li>contacto</li>
-              <li>mi cuenta</li>
+              <StyledLink to='/auth' target="_top">mi cuenta</StyledLink>
               <li>servicio tecnico</li>
             </ul>
           </div>
           <div className="help">
             <h3 className="title">ayuda</h3>
             <ul>
-              <li>preguntas frecuentes</li>
-              <li>Privacidad</li>
-              <li>Terminos & condiciones</li>
+              <StyledLink to='/preguntas' target="_top">preguntas frecuentes</StyledLink>
+              <StyledLink to='/privacidad' target="_top">Privacidad</StyledLink>
+              <StyledLink to='/terminosycondiciones' target="_top">Terminos & condiciones</StyledLink>
             </ul>
           </div>
           <div className="social">
             <h3>Seguinos</h3>
             <ul>
-              <li>
+              <StyledLink to='https://www.facebook.com/soyhenryok/'>
                 <AiOutlineFacebook />
-              </li>
-              <li>
+              </StyledLink>
+              <StyledLink to='https://www.instagram.com/soyhenry_ok/'>
                 <AiOutlineInstagram />
-              </li>
+              </StyledLink>
+              <StyledLink to='https://twitter.com/soyhenry_ok'>
+                <AiOutlineTwitter/>
+              </StyledLink>
             </ul>
           </div>
         </section>
@@ -50,6 +56,8 @@ export const Footer = () => {
     </Container>
   );
 };
+
+
 
 const Container = styled.footer`
   width: 100vw;
@@ -69,7 +77,7 @@ const Container = styled.footer`
     margin: 0 auto;
     .media {
       width: 100%;
-      height: 240px;
+      height: 230px;
       display: flex;
       align-items: center;
       .about,
@@ -146,4 +154,10 @@ const Container = styled.footer`
       }
     }
   }
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 15px;
+  color: #faf9f9;
 `;

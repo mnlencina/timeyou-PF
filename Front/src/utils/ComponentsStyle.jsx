@@ -38,6 +38,7 @@ export const BTNHover = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: all;
   cursor: pointer;
   &:hover {
     color: ${(props) => props.alter === "true" && "#fff"};

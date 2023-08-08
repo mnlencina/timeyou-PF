@@ -34,9 +34,10 @@ import styled from 'styled-components'
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 950;
+    z-index:-1;
+    pointer-events: none;
   }
-  .controles :hover{
+  .controles :hover {
     cursor: pointer;
   }
 `;

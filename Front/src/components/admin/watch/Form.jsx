@@ -189,7 +189,7 @@ function FormWatch({btnClose}) {
         
         </div>
         
-          <button className="btnUp" type="button" onClick={postWatches}>UP WATCH</button>
+          <button className="btnUp" type="button" onClick={postWatches}>CARGAR</button>
           </Container1>
         <div className="funcionesDiv">
           <h3>Funciones:</h3>
@@ -219,7 +219,7 @@ function FormWatch({btnClose}) {
         </div>
         
       </Formulario>
-      <button className="btnClose" onClick={btnClose}>Close</button>
+      <button className="btnClose" onClick={btnClose}>Cerrar</button>
     </Container>  
     )
   }
