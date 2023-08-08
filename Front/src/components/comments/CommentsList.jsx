@@ -6,16 +6,16 @@ import CommentItem from './CommentItem';
 import { FaEllipsisH } from 'react-icons/fa';
 
 const CommentListContainer = styled.div`
-  max-width: 900px;
+  max-width: 800px;
   margin: 2px auto;
   padding: 2px auto;
    min-height: auto;
-   margin-bottom: 50px; 
+   margin-bottom: 80px; 
 `;
 
 const Title = styled.h2`
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 const ShowMoreButton = styled.button`
@@ -42,6 +42,7 @@ const CommentsList = ({watchId}) => {
   console.log("WATCHID",  watchId)
   const comments = useSelector((state) => state.comments) || []; 
   console.log("COMMENTS DEL COMMENTLIST", comments)
+
   
   const error = useSelector((state) => state.errorComments);
   const dispatch = useDispatch();
@@ -55,9 +56,7 @@ const CommentsList = ({watchId}) => {
   useEffect(() => {
     dispatch(getCommentsByWatchId(watchId));
   }, [dispatch, watchId]);
-  if (error) {
-    return <div>Todavía no existen calificaciones para este producto.. </div>;
-  }
+  
 
   const handleShowMore = () => {
     setVisibleComments((prevVisibleComments) => prevVisibleComments + 5);
@@ -71,6 +70,7 @@ const CommentsList = ({watchId}) => {
   return (
     <CommentListContainer>
       <Title>Comentarios</Title>
+      {comments.length == 0 && <div>Todavía no existen calificaciones para este producto... </div>}
       {comments.length > 0 && comments.slice(0, visibleComments).map((comment) => (
         <>
           <CommentItem

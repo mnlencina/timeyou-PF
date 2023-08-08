@@ -10,6 +10,8 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
+  CLEAR_FILTERS,
+  UPDATE_SELECTED_CATEGORIES,
   TOTAL_PRICE,
   UPDATE_PRICE,
   ALL_BRANDS,
@@ -23,6 +25,8 @@ import {
   GET_WATCHES_BY_BRAND,
   LOGOUT_USER,
   LOGIN_GOOGLE,
+  UPDATE_CART,
+  SET_CART,
 } from "./actionTypes";
 
 import { searchClient } from "../settings_algolia/settingsAlgolia";
@@ -67,10 +71,19 @@ export function resetDetail() {
 }
 
 //funciones del carrito
+/* Cambio realizado */
+export const setCart = (cartData) => ({
+  type: SET_CART,
+  payload: cartData,
+});
+/* ------ */
+export const updateCart = () => ({
+  type: UPDATE_CART,
+});
 
-export const addToCart = (product) => ({
+export const addToCart = (sesionData) => ({
   type: ADD_TO_CART,
-  payload: product,
+  payload: sesionData,
 });
 
 export const removeFromCart = (productId) => ({
@@ -96,7 +109,7 @@ export const searchProductRequest = () => ({
 });
 
 export const searchProduct = (searchTerms) => async (dispatch) => {
-  console.log("Search terms:", searchTerms);
+  console.log("SE HIZO EL DISPATCH DE LA SEARCHBAR","Search terms:", searchTerms);
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
@@ -162,9 +175,16 @@ export const filtersAll = (filterBrands) => (dispatch, getState) => {
 // Acción para limpiar los filtros
 export const clearFilters = () => (dispatch) => {
   // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
-  dispatch(filtersAll({}));
+  dispatch({
+    type: CLEAR_FILTERS,
+    payload: "",
+    });
 };
 
+export const updateSelectedCategories = (selectedCategories) => ({
+  type: UPDATE_SELECTED_CATEGORIES,
+  payload: selectedCategories,
+});
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
 export function allPropWatches(prop) {
@@ -227,12 +247,12 @@ export const createUser = (user) => async (dispatch) => {
   const endpoint = "http://localhost:3001/users/register";
   try {
     const newUser = await axios.post(endpoint, user);
-    
+
     dispatch({
       type: CREATE_USER,
       payload: newUser,
     });
-    alert("usuario creado con exito")
+    alert("usuario creado con exito");
   } catch (error) {
     alert("no pudo crearse el usuario");
   }

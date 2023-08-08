@@ -13,6 +13,7 @@ import styled from 'styled-components'
       min-width: 100%;
       min-height: 100%;
       z-index: 10;
+      cursor: pointer;
       img {
         width: 100%;
         min-height: 200px;
@@ -31,5 +32,6 @@ import styled from 'styled-components'
     align-items: center;
     justify-content: space-between;
     z-index: 20;
+    pointer-events: none;
   }
 `;

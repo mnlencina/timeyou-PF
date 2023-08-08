@@ -26,11 +26,11 @@ export const BTNCarritoDeCompras = styled.button`
 export const BTNHover = styled.button`
   width: 60px;
   height: 60px;
-  border: ${(props) => (props.alter === "true" ? "1px solid #111" : "none")};
+  border: ${(props) => (props.alter === "true" ? "1px solid #666565" : "none")};
   border-radius: 50%;
   background: none;
   font-size: 50px;
-  color: ${(props) => (props.alter === "true" ? "#111" : "#fff")};
+  color: ${(props) => (props.alter === "true" ? "#666565" : "#fff")};
   transition: 0.3s ease-in all;
   pointer-events: none;
   pointer-events: all;
@@ -38,6 +38,7 @@ export const BTNHover = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: all;
   cursor: pointer;
   &:hover {
     color: ${(props) => props.alter === "true" && "#fff"};
@@ -84,4 +85,12 @@ export const BTNLogin = styled.button`
     background-color: #35838a;
     transform: scale(1.2);
   }
+`;
+
+export const ContainerLoader = styled.div`
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

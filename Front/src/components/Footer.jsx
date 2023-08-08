@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
+
 import {
   AiOutlineInstagram,
   AiOutlineFacebook,
   AiOutlineCopyrightCircle,
+  AiOutlineTwitter,
 } from "react-icons/ai";
 
 export const Footer = () => {
@@ -16,37 +19,37 @@ export const Footer = () => {
             <ul>
               <li>sobre nosotros</li>
               <li>contacto</li>
-              <li>trabaja con nosotros</li>
-              <li>mi cuenta</li>
+              <StyledLink to='/auth' target="_top">mi cuenta</StyledLink>
               <li>servicio tecnico</li>
             </ul>
           </div>
           <div className="help">
             <h3 className="title">ayuda</h3>
             <ul>
-              <li>preguntas frecuentes</li>
-              <li>Privacidad</li>
-              <li>manuales</li>
-              <li>Terminos & condiciones</li>
+              <StyledLink to='/preguntas' target="_top">preguntas frecuentes</StyledLink>
+              <StyledLink to='/privacidad' target="_top">Privacidad</StyledLink>
+              <StyledLink to='/terminosycondiciones' target="_top">Terminos & condiciones</StyledLink>
             </ul>
           </div>
           <div className="social">
             <h3>Seguinos</h3>
             <ul>
-              <li>
+              <StyledLink to='https://www.facebook.com/soyhenryok/'>
                 <AiOutlineFacebook />
-              </li>
-              <li>
+              </StyledLink>
+              <StyledLink to='https://www.instagram.com/soyhenry_ok/'>
                 <AiOutlineInstagram />
-              </li>
+              </StyledLink>
+              <StyledLink to='https://twitter.com/soyhenry_ok'>
+                <AiOutlineTwitter/>
+              </StyledLink>
             </ul>
           </div>
         </section>
         <hr />
         <section className="copy">
           <h4>
-            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023 - Todos los
-            derechos reservados
+            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023 
           </h4>
         </section>
       </div>
@@ -54,9 +57,11 @@ export const Footer = () => {
   );
 };
 
+
+
 const Container = styled.footer`
   width: 100vw;
-  height: 350px;
+  height: 250px;
   background-color: #111;
   display: flex;
   flex-direction: column;
@@ -72,7 +77,7 @@ const Container = styled.footer`
     margin: 0 auto;
     .media {
       width: 100%;
-      height: 300px;
+      height: 230px;
       display: flex;
       align-items: center;
       .about,
@@ -133,10 +138,11 @@ const Container = styled.footer`
     }
     .copy {
       width: 100%;
-      height: 50px;
+      height: 25px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin-bottom: 30px;
       h4 {
         font-size: 0.8rem;
         color: #fff;
@@ -148,4 +154,10 @@ const Container = styled.footer`
       }
     }
   }
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 15px;
+  color: #faf9f9;
 `;

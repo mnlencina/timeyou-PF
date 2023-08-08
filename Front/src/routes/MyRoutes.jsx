@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Router } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
@@ -8,6 +8,9 @@ import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Contacto from "../pages/Contacto";
+import TerminosCondiciones from '../pages/Terminos&Condiciones'
+import Privacidad from '../pages/Privacidad'
+import Preguntas from '../pages/Preguntas'
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -31,8 +34,12 @@ const MyRoutes = () => {
     location.pathname !== "/shopping" &&
     location.pathname !== "/shopping/checkout";
 
-  const ShowCheckoutNav = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
-  const showCheckoutFoot = location.pathname === "/shopping" ||  location.pathname === "/shopping/checkout";
+  const ShowCheckoutNav =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
+  const showCheckoutFoot =
+    location.pathname === "/shopping" ||
+    location.pathname === "/shopping/checkout";
 
   return (
     <>
@@ -53,6 +60,13 @@ const MyRoutes = () => {
             </ProtectedRoutes>
           }
         />
+        <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
+          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
+        <Route path="/privacidad" element={<Privacidad/>} />
+        <Route path="/preguntas" element={<Preguntas />} />
+        <Route path="/shopping/checkout" element={<Checkout />} />
+        </Route>
         <Route
           path="/admin/*"
           element={
@@ -63,7 +77,7 @@ const MyRoutes = () => {
         />
       </Routes>
       {showFoot && <Footer />}
-      {showCheckoutFoot && <FooterCheckOut/>}
+      {showCheckoutFoot && <FooterCheckOut />}
     </>
   );
 };

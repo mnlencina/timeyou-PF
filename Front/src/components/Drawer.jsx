@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { FiltersAll } from "./index.js";
 
-export const Drawer = ({ show }) => {
+export const Drawer = ({ show, setPage }) => {
   return (
     <Container show={show.toString()}>
       <ul>
-        <li><FiltersAll /></li>
+        <li>
+          <FiltersAll setPage={setPage} />
+        </li>
       </ul>
     </Container>
   );

@@ -14,13 +14,31 @@ export const Container = styled.main`
     align-items: center;
     flex-wrap: nowrap;
     background-color: rgb(0,0,0,0.7);
+    justify-content: center;
     
   h2 {
     margin: 10px;
   }
   
   .btnClose{
-    bottom:10%
+    
+    background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,50), black);
+    color: white;
+    width: 150px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 500ms;
+  
+      &:hover{
+        background-image: none;
+        background-color: rgb(255,255,255,0.2);
+        color: red;
+        transform: scale(0.9);
+  
+      }   
   }
 `;
   
@@ -30,11 +48,10 @@ export const Formulario = styled.main`
   flex-direction: row;
   align-items: flex-start;
   gap: 30px;
-  margin: 20px;
+  margin: 10px;
   background-color: white;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 5%;
   background-color: rgb(255,255,255,0.8);
   
   select {
@@ -93,11 +110,55 @@ export const Container1 = styled.main`
   
   .optionDiv{
     width: 180px;
-    margin: 5px 5px 5px 0;
+    margin: 5px 5px 5px 0;    
+    
+    .customInput {
+      opacity: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .customLabel {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      width: 175px;
+      transition: 100ms;
+      &:hover{
+        transform: scale(0.9);
+      }
+      
+    }
+
+    /* Estilo para ocultar el botón de archivo por defecto */
+    input[type="file"] {
+      position: absolute;
+      left: -9999px;
+    }
+    
   }
-  button {
-    cursor: pointer;
-  }
+  .btnUp {
+        background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,200), black);
+        color: white;
+        width: 175px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 500ms;
+  
+        &:hover{
+          background-image: none;
+          background-color: rgb(100,100,255);
+          color: black;
+          transform: scale(0.9);
+  
+        }
+      }
 `;
   
 export const Container2 = styled.main`

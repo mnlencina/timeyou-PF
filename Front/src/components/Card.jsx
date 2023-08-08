@@ -21,7 +21,7 @@ export const Card = ({ watch }) => {
       <div className="section-content">
         <h3>{cleanedWatch.brandName}</h3>
         <h4>{cleanedWatch.model +' - '+ cleanedWatch.colorName}</h4>
-        <h5>${cleanedWatch.price * 500}</h5>
+        <h5>${parseInt(cleanedWatch.price * 500)}</h5>
       </div>
     </Container>
   );

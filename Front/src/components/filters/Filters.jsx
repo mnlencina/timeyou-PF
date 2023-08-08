@@ -1,32 +1,37 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { filtersAll, clearFilters } from '../../redux/Actions.js'; 
-import { translateGender } from '../helpers/translateGenderWords.jsx'
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { filtersAll, clearFilters , getProducts, updateSelectedCategories} from "../../redux/Actions.js";
+import { translateGender } from "../helpers/translateGenderWords.jsx";
 
 const categoryValues = (clocks, categoryName) => {
-  const values = clocks.map(clock => clock[categoryName]);
+  const values = clocks.map((clock) => clock[categoryName]);
 
-  return values.filter((value, index, allValues) => allValues.indexOf(value) === index);
+  return values.filter(
+    (value, index, allValues) => allValues.indexOf(value) === index
+  );
 };
 
-export const FiltersAll = () => {
-  const clocks = useSelector((state) => state.Clocks);
+export const FiltersAll = ({ setPage }) => {
+  const allClocks = useSelector((state) => state.allClocks);
   const dispatch = useDispatch();
-  const searchClocks = useSelector((state) => state.searchClocks);
+  const clocks = useSelector((state) => state.Clocks);
 
-  const uniqueBrands = categoryValues(clocks, 'brandName');
-  const uniqueColors = categoryValues(clocks, 'colorName');
-  const uniqueStyles = categoryValues(clocks, 'styleName');
-  const uniqueStraps = categoryValues(clocks, 'strapName');
-  const uniqueGenders = categoryValues(clocks, 'gender');
- 
 
-  const [selectedCategories, setSelectedCategories] = useState({ ...searchClocks });
+  const uniqueBrands = categoryValues(allClocks, "brandName");
+  const uniqueColors = categoryValues(allClocks, "colorName");
+  const uniqueStyles = categoryValues(allClocks, "styleName");
+  const uniqueStraps = categoryValues(allClocks, "strapName");
+  const uniqueGenders = categoryValues(allClocks, "gender");
+
+  const [selectedCategories, setSelectedCategories] = useState({
+    ...clocks 
+  });
+  const [selectedValues, setSelectedValues] = useState("");
   const [showNoResults, setShowNoResults] = useState(false);
 
   const handleOnCheckbox = (selectedValue, fieldName) => {
-
     const isSelected = selectedCategories[fieldName] === selectedValue;
+    console.log("SELECTED VALUE DEL FILTERS" , selectedValue )
 
     if (isSelected) {
       setSelectedCategories((prevState) => {
@@ -34,19 +39,23 @@ export const FiltersAll = () => {
         delete updatedCategories[fieldName];
         return updatedCategories;
       });
+      setSelectedValues((prevState) => prevState.filter((value) => value !== selectedValue));
     } else {
-
       setSelectedCategories((prevState) => ({
         ...prevState,
         [fieldName]: selectedValue,
       }));
+      setSelectedValues((prevState) => [...prevState, selectedValue]);
     }
   };
 
-  const handleApplyFilters = () => {
+  const selectedValuesString = selectedValues.length && selectedValues.join(" ");
 
-    setSelectedCategories({});
+
+
+  const handleApplyFilters = () => {
     dispatch(filtersAll(selectedCategories));
+    dispatch(updateSelectedCategories(selectedValuesString))
 
     const filteredClocks = clocks.filter((product) => {
       let matchesAllCategories = true;
@@ -57,6 +66,7 @@ export const FiltersAll = () => {
           break;
         }
       }
+      setPage(1);
       return matchesAllCategories;
     });
 
@@ -64,11 +74,13 @@ export const FiltersAll = () => {
   };
 
   const handleClearFilters = () => {
+    dispatch(getProducts());
     setSelectedCategories({});
+    setSelectedValues("");
     dispatch(clearFilters());
+    dispatch(updateSelectedCategories(""));
     setShowNoResults(false);
   };
-  
 
   return (
     <div>
@@ -95,7 +107,8 @@ export const FiltersAll = () => {
             name="styleName"
             value={estilo}
             checked={selectedCategories.styleName === estilo}
-            onChange={() => handleOnCheckbox(estilo, "styleName")} />
+            onChange={() => handleOnCheckbox(estilo, "styleName")}
+          />
           <label htmlFor={estilo}>{estilo}</label>
         </div>
       ))}
@@ -143,7 +156,9 @@ export const FiltersAll = () => {
       ))}
       <button onClick={handleClearFilters}>Borrar filtros</button>
       <button onClick={handleApplyFilters}>Aplicar filtros</button>
-      {showNoResults && <q> No hay coincidencias con la búsqueda seleccionada. </q>}
+      {showNoResults && (
+        <q> No hay coincidencias con la búsqueda seleccionada. </q>
+      )}
     </div>
   );
 };
