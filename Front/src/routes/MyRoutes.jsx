@@ -7,7 +7,7 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import Contacto from "../pages/Contacto";
+import Contacto from "../pages/Contacto/Contacto";
 import TerminosCondiciones from '../pages/Terminos&Condiciones'
 import Privacidad from '../pages/Privacidad'
 import Preguntas from '../pages/Preguntas'
