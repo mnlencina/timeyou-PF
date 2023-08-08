@@ -317,7 +317,7 @@ const Container = styled.main`
     top: 150px;
     right: -2000px;
     z-index: 200;
-    border: 1px solid #fff;
+   
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
     .panel {
@@ -360,7 +360,7 @@ const Container = styled.main`
     top: 150px;
     left: -2500px;
     z-index: 200;
-    border: 1px solid #fff;
+  
     transition: all 0.7s ease-in-out;
     border-radius: 50%;
     .panel {

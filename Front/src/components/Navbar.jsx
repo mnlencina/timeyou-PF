@@ -55,6 +55,7 @@ export const Navbar = () => {
 
   /* Controlador del globo de usuario */
   const [showLogout, setShowLogout] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const handleShowLogout = () => {
     setShowLogout(!showLogout);
@@ -76,28 +77,48 @@ export const Navbar = () => {
       <nav className="navigation">
         <ul className="nav">
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("ver todo")}>
+            <StyledLink
+              className={isActive ? "active" : ""}
+              to="/home"
+              onClick={() => handleLinkClick("ver todo")}
+            >
               ver todo
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("festina")}>
+            <StyledLink
+              className={isActive ? "active" : ""}
+              to="/home"
+              onClick={() => handleLinkClick("festina")}
+            >
               festina
             </StyledLink>
           </li>
           <li>
             {" "}
-            <StyledLink to="/home" onClick={() => handleLinkClick("citizen")}>
+            <StyledLink
+              className={isActive ? "active" : ""}
+              to="/home"
+              onClick={() => handleLinkClick("citizen")}
+            >
               citizen
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
+            <StyledLink
+              className={isActive ? "active" : ""}
+              to="/home"
+              onClick={() => handleLinkClick("mistral")}
+            >
               mistral
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
+            <StyledLink
+              className={isActive ? "active" : ""}
+              to="/home"
+              onClick={() => handleLinkClick("prune")}
+            >
               prÜne
             </StyledLink>
           </li>
@@ -190,11 +211,12 @@ const Container = styled.div`
     ul {
       list-style: none;
       position: relative;
+      li {
+        text-transform: uppercase;
+        font-weight: 300;
+      }
     }
-    li {
-      text-transform: uppercase;
-      font-weight: 300;
-    }
+
     .nav {
       margin: 0 auto;
       width: 60%;
@@ -202,6 +224,16 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-evenly;
+      a {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+        &:hover {
+          background-image: linear-gradient(to bottom, grey, black, black);
+          color: #fff;
+        }
+      
     }
     .icons {
       width: 40%;

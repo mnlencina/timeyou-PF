@@ -8,10 +8,15 @@ import {
   CardSlider,
 } from "../components/index.js";
 import { useSelector } from "react-redux";
+import { Loader } from "../components/Loader/Loader.jsx";
+import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 
 export default function HomePage() {
-  const { Clocks, allClocks, searchActive } = useSelector((state) => state);
-  const whatches = searchActive ?  Clocks : allClocks;
+
+  const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
+  const whatches = searchActive ? searchClocks : Clocks;
+  const loading = useSelector((state) => state.isLoading);
+
 
   const [show, setShow] = useState(false);
   const showOpen = show.toString();
@@ -41,14 +46,6 @@ export default function HomePage() {
     }
   };
 
-  const slideContainer = () => (
-    <ContainerSlide>
-      <div className="slide-container">
-        <BannerSlider />
-      </div>
-    </ContainerSlide>
-  );
-
   const renderMostrador = () => (
     <ContainerMostrador show={show.toString()}>
       <div className="sidebar">
@@ -63,43 +60,37 @@ export default function HomePage() {
     </ContainerMostrador>
   );
 
+  const renderLoader = () => (
+    <ContainerLoader>
+      <Loader />
+    </ContainerLoader>
+  );
+
   return (
     <>
-      {/* {slideContainer()} */}
-      {/* <CardSlider/> */}
-      <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      />
-      {renderMostrador()}
-      <Pagination
-        totalPages={totalPages}
-        page={page}
-        onPrev={onPreviusPage}
-        onNext={onNextPage}
-      />
+      {loading ? (
+        renderLoader()
+      ) : (
+        <>
+          <Pagination
+            totalPages={totalPages}
+            page={page}
+            onPrev={onPreviusPage}
+            onNext={onNextPage}
+          />
+          {renderMostrador()}
+          <Pagination
+            totalPages={totalPages}
+            page={page}
+            onPrev={onPreviusPage}
+            onNext={onNextPage}
+          />
+        </>
+      )}
     </>
   );
 }
 
-const ContainerSlide = styled.section`
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .slide-container {
-    width: 80%;
-    height: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    overflow: hidden;
-  }
-`;
 const ContainerMostrador = styled.div`
   width: 100%;
   min-height: 500px;

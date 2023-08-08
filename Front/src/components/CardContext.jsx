@@ -2,25 +2,21 @@
 import React, { useEffect } from "react";
 import { Card } from "../components/index.js";
 import styled from "styled-components";
-import { getProducts } from "../redux/Actions.js";
+
 import { useDispatch, useSelector } from "react-redux";
+
 
 export const CardContext = ({ pagination }) => {
   const dispatch = useDispatch();
-
   const loading = useSelector((state) => state.isLoading);
 
-  //useEffect(() => {
-  //  dispatch(getProducts());
-  //}, []);
   return (
     <Container>
       <div className="context-card">
-        {loading ? (
-          <h1>Cargando...</h1>
-        ) : (
-          pagination && pagination.map((e) => <Card key={e.id} watch={e} />)
-        )}
+
+        {pagination.map((e) => (
+          <Card key={e.id} watch={e} />
+        ))}
       </div>
     </Container>
   );
