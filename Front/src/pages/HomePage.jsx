@@ -13,8 +13,9 @@ import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 
 export default function HomePage() {
 
-  const { Clocks, searchClocks, searchActive } = useSelector((state) => state);
-  const whatches = searchActive ? searchClocks : Clocks;
+  const { Clocks, allClocks, searchActive } = useSelector((state) => state);
+  const whatches = searchActive ?  Clocks : allClocks;
+
   const loading = useSelector((state) => state.isLoading);
 
 
