@@ -24,7 +24,7 @@ export const FiltersAll = ({ setPage }) => {
   const uniqueGenders = categoryValues(allClocks, "gender");
 
   const [selectedCategories, setSelectedCategories] = useState({
-    ...clocks
+    ...clocks 
   });
   const [selectedValues, setSelectedValues] = useState("");
   const [showNoResults, setShowNoResults] = useState(false);
@@ -51,6 +51,8 @@ export const FiltersAll = ({ setPage }) => {
 
   const selectedValuesString = selectedValues.length && selectedValues.join(" ");
 
+
+
   const handleApplyFilters = () => {
     dispatch(filtersAll(selectedCategories));
     dispatch(updateSelectedCategories(selectedValuesString))
@@ -72,9 +74,11 @@ export const FiltersAll = ({ setPage }) => {
   };
 
   const handleClearFilters = () => {
-    setSelectedCategories({});
-    dispatch(clearFilters());
     dispatch(getProducts());
+    setSelectedCategories({});
+    setSelectedValues("");
+    dispatch(clearFilters());
+    dispatch(updateSelectedCategories(""));
     setShowNoResults(false);
   };
 

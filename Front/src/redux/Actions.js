@@ -109,7 +109,7 @@ export const searchProductRequest = () => ({
 });
 
 export const searchProduct = (searchTerms) => async (dispatch) => {
-  console.log("Search terms:", searchTerms);
+  console.log("SE HIZO EL DISPATCH DE LA SEARCHBAR","Search terms:", searchTerms);
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
@@ -177,7 +177,7 @@ export const clearFilters = () => (dispatch) => {
   // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
   dispatch({
     type: CLEAR_FILTERS,
-    payload: [],
+    payload: "",
     });
 };
 
