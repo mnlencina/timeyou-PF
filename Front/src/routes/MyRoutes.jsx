@@ -8,9 +8,9 @@ import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Contacto from "../pages/Contacto/Contacto";
-import TerminosCondiciones from '../pages/Terminos&Condiciones'
-import Privacidad from '../pages/Privacidad'
-import Preguntas from '../pages/Preguntas'
+import TerminosCondiciones from "../pages/Terminos&Condiciones";
+import Privacidad from "../pages/Privacidad";
+import Preguntas from "../pages/Preguntas";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -18,7 +18,6 @@ import {
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { HeaderCheckout } from "../components/HeaderCheckout";
 import { FooterCheckOut } from "../components/FooterCheckout";
-
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -50,23 +49,16 @@ const MyRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
-        <Route path="/shopping" element={<Shopping />} />
         <Route exact path="/contacto" component={<Contacto />} />
-        <Route
-          path="/shopping/checkout"
-          element={
-            <ProtectedRoutes user={user}>
-              <Checkout />
-            </ProtectedRoutes>
-          }
-        />
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
-          <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
-        <Route path="/privacidad" element={<Privacidad/>} />
-        <Route path="/preguntas" element={<Preguntas />} />
-        <Route path="/shopping/checkout" element={<Checkout />} />
+          <Route path="/shopping" element={<Shopping />} />
+
+          <Route path="/shopping/checkout" element={<Checkout />} />
         </Route>
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
+        <Route path="/privacidad" element={<Privacidad />} />
+        <Route path="/preguntas" element={<Preguntas />} />
         <Route
           path="/admin/*"
           element={

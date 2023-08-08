@@ -5,13 +5,13 @@ import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { Navigate } from "react-router-dom";
 
 export const RedirectTo = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Container>
       <div className="content">
         <h3>¡Hola!, para ingresar a nuestros servicios, ingresa a tu cuenta</h3>
         <div className="btn">
-          <BTNCarritoDeCompras onClick={() =>navigate("/auth")}>
+          <BTNCarritoDeCompras onClick={() => navigate("/auth")}>
             Ir a Login
           </BTNCarritoDeCompras>
         </div>
@@ -27,11 +27,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: rgb(0, 0, 0);
+
+  background: rgb(255, 255, 255);
   background: radial-gradient(
     circle,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(17, 17, 17, 1) 35%,
-    rgba(255, 255, 255, 1) 100%
+    rgba(255, 255, 255, 1) 42%,
+    rgba(85, 85, 85, 1) 100%
   );
   .content {
     width: 350px;
