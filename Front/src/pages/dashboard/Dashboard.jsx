@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {Container} from "./style"
 import Sidebar from "../../components/admin/sidebar/Sidebar";
 import Form from "../../components/admin/watch/Form";
+import FormUser from "../../components/admin/users/Form";
 import Buys from "../../components/admin/buys/Buys";
 import Nav from "../../components/admin/nav/Nav";
 import { addUsers } from "../../redux/actions/admin/addUsers";
@@ -25,7 +26,8 @@ const Dashboard = ()=>{
     const allUsers = useSelector((state)=> state.allUsers)
     let allClocks = useSelector((state)=> state.allClocks)
     //const allBuys = useSelector((state)=> state.allBuys)
-
+    
+    const [newUser, setNewUser] = useState(false)
     const [newWat, setNewWat] = useState(false)
     const [updateW, setUpdateW] = useState(false)
     const [editRole, setEditRole] = useState(false)
@@ -55,13 +57,14 @@ const Dashboard = ()=>{
         let data = await dispatch(updateUser(id,del))
         console.log(data);
         dispatch(addUsers())
-        
+        setSearchUser(false)
     }
     
     const delWatch = async(id,del)=>{
         let data = await dispatch(updateWatch(id,del))
         console.log(data);
         dispatch(getProducts())
+        setSearchClock(false)
         
     }
     
@@ -71,13 +74,23 @@ const Dashboard = ()=>{
         console.log(data);
         setEditRole(false)        
         dispatch(addUsers())
-        
+        setSearchUser(false)
     }
     
     const editWatches =(row)=>{
         setWUpdate(row)
         setUpdateW(true)
+        setSearchClock(false)
         
+    }
+    
+    const handleFilterWatch = (e)=>{
+        const {value} = e.target
+        const filtered = allClocks.filter(row=>{
+            const modelo = row.model.toLowerCase()
+            return modelo.includes(value.toLowerCase())        
+        })
+        setSearchClock(filtered)
     }
     
     const handleFilterUser = (e)=>{
@@ -88,6 +101,43 @@ const Dashboard = ()=>{
         })
         setSearchUser(filtered)
     }
+    
+    
+    const dataExpan = ({data})=> {
+        console.log(data);
+        return (
+            <div className="dataExpan">
+            <span>Descripción: {data.description} </span><span>Funciones: {data.Functions.map(s=>`  •${s.name.charAt(0).toUpperCase() + s.name.slice(1)}  `)}</span>
+        </div>
+    )
+};
+
+
+
+const custonStyled = {
+    rows: {
+        style:{
+            color: "black",
+            backgroundColor: "rgb(255,255,255,0.7)",
+            
+        }
+    },
+    headCells: {
+        style:{
+                color: "white",
+                backgroundColor: "rgb(0,0,0,0.8)",
+            }
+        },
+        /* table:{
+            style:{
+                backgroundColor: ""
+            }
+        }, */
+        
+    }
+    
+    
+    
     
     const columnsUser = [
         {
@@ -235,51 +285,6 @@ const Dashboard = ()=>{
     },
     
     ]
-
-    const dataExpan = ({data})=> {
-    console.log(data);
-    return (
-        <div className="dataExpan">
-            <span>Descripción: {data.description} </span><span>Funciones: {data.Functions.map(s=>`  •${s.name.charAt(0).toUpperCase() + s.name.slice(1)}  `)}</span>
-        </div>
-    )
-    };
-
-
-    const handleFilterWatch = (e)=>{
-    const {value} = e.target
-    const filtered = allClocks.filter(row=>{
-        const modelo = row.model.toLowerCase()
-        return modelo.includes(value.toLowerCase())        
-    })
-    setSearchClock(filtered)
-    }
-    
-    const custonStyled = {
-        rows: {
-            style:{
-                color: "black",
-                backgroundColor: "rgb(255,255,255,0.7)",
-                
-            }
-        },
-        headCells: {
-            style:{
-                color: "white",
-                backgroundColor: "rgb(0,0,0,0.8)",
-            }
-        },
-        /* table:{
-            style:{
-                backgroundColor: ""
-            }
-        }, */
-        
-    }
-   
-    
-    
-    
     
     return (
         <Container>
@@ -290,6 +295,8 @@ const Dashboard = ()=>{
                 setNewWat={setNewWat}
                 view={view}
                 newWat={newWat}
+                setNewUser={setNewUser}
+                newUser={newUser}
                 
             />
             
@@ -304,7 +311,7 @@ const Dashboard = ()=>{
                     </div>
                     <DataTable 
                         columns={columnsUser}
-                        data={searchUser}
+                        data={!searchUser.length ? allUsers : searchUser}
                         fixedHeader= {true}
                         fixedHeaderScrollHeight="420px"  
                         highlightOnHover
@@ -324,7 +331,7 @@ const Dashboard = ()=>{
                     </div>
                         <DataTable
                             columns={columnsWatch}
-                            data={searchClock}
+                            data={!searchClock.length ? allClocks : searchClock}
                             fixedHeader= {true}
                             fixedHeaderScrollHeight="420px"
                             pointerOnHover   
@@ -338,7 +345,7 @@ const Dashboard = ()=>{
                         />
                     </div>
                 }
-                
+                {newUser && <FormUser btnClose={()=>setNewUser(false)}/>}
                 {newWat && <Form btnClose={()=>setNewWat(false)}/>}
                 {updateW && wUpdate.id && <FormWatchUpdate btnClose={()=>setUpdateW(false)} wUpdate={wUpdate} setUpdateW={setUpdateW}/>}
             </div>
