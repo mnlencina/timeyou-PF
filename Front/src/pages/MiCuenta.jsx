@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import {useDispatch, useSelector} from 'react-redux';
 import { updateUser } from "../redux/actions/admin/updateUser";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
+import { updateUserName } from "../redux/actions/user/updateUserName";
 
 export default function MiCuenta() {
 const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const dispatch = useDispatch();
   const newUser = async () => {
     // const valor = document.getElementById('newUserName').value;
     await dispatch(updateUser(user.id, {userName: userName}));
+    await dispatch(updateUserName(userName));
     alert('Nombre de usuario actualizado!');
   }
 
@@ -28,7 +30,7 @@ const dispatch = useDispatch();
       <div className="caja">
         <div className="agrupe">
         <div className="titulos">Mi usuario</div>
-        <div className="datos">{userName}</div>
+        <div className="datos">{user?.userName}</div>
         <div className="titulos">Email</div>
         <div className="datos">{user?.email}</div>
         <div className="titulos">Cambiar nombre de Usuario</div>
