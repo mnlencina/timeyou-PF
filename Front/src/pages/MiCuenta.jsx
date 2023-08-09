@@ -45,18 +45,21 @@ const dispatch = useDispatch();
         <div className="agrupe">
           <div className="titulos">Mi usuario</div>
           <div className="datos">{user?.userName}</div>
+        </div>  
+        <div className="agrupe">
           <div className="titulos">Email</div>
           <div className="datos">{user?.email}</div>
+        </div>  
           {!editUser && !editPass && (
-            <>
+            <div className="botones">
               <BTNCarritoDeCompras onClick={()=>setEditUser(true)}>Cambiar Nombre</BTNCarritoDeCompras>
               <BTNCarritoDeCompras onClick={()=>setEditPass(true)}>Cambiar Contraseña</BTNCarritoDeCompras>
-            </>
+            </div>
           )}
           {editUser && 
             <div>
               <div className="titulos">Nuevo nombre de Usuario</div>
-              <input type="text" id="newUserName" onChange={handleChangeUser}/>
+              <input type="text" onChange={handleChangeUser}/>
               <div className="btn">
                 <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
               </div>
@@ -64,15 +67,14 @@ const dispatch = useDispatch();
           }
           {editPass && 
             <div>
-              <div className="titulos">Nueva Contraseña</div>
-              <input type="password"  onChange={handleChangePass}/>
-              {password.length && <div className="btn">
+              < div className="titulos">Nueva Contraseña</div>
+              <input type="text" onChange={handleChangePass}/>
+              { !password.length? <button className="btn"></button> : <div className="btn">
                 <BTNCarritoDeCompras onClick={newPass}>Actualizar</BTNCarritoDeCompras>
               </div>}
             </div>            
           }          
         </div>
-      </div>
     </Container>
   );
 }
@@ -84,53 +86,56 @@ const Container = styled.section`
     align-items: center;
     justify-content: center;
     margin: 30px auto;
-    /* background-color: rebeccapurple; */
     .caja {
         width: 30%;
-        height: 100%;
+        height: 435px;
         border: 1px;
         border-radius: 20px;
         box-shadow: 0 0 20px rgba(0,0,0,0.2);
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
     .agrupe {
         width: 80%;
-        height: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-evenly;
-        margin: 20px auto;
-    }
-    .titulos {
-        width: 100%;
-        height: 100%;
+        margin: 30px auto;
+        .titulos {
+            display: flex;
+            font-size: 16px;
+          }
+          .datos {
+              display: flex;
+              align-items: center;
+              margin: 2px 4px;
+              width: 98%;
+              height: 30px;
+              padding: 0px 15px;
+              border: 1px solid black;
+              border-radius: 20px;
+              font-size: 16px;
+        }
+      }
+      input {
+          width: 98%;
+          height: 30px;
+          border: 1px solid black;
+          border-radius: 20px;
+          margin-bottom: 20px;
+          font-size: 16px;
+          padding: 0 15px;
+      }
+      .botones {
+        width: 80%;
+        height: 20%;
+        gap: 10px;
         display: flex;
-        justify-content: start;
-        margin-top: 20px;
-        font-size: 16px;
-    }
-    .datos {
-        width: 98%;
-        height: 30px;
-        padding: 0px 15px;
-        border: 1px solid black;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
-    input {
-        width: 98%;
-        height: 30px;
-        border: 1px solid black;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        font-size: 16px;
-        padding: 0 15px;
-    }
-    .btn {
-      width: 40%;
-    }
+        margin: 100px auto;      
+      }
+        .btn {
+          font-size: 16px;
+        }
+    }  
 `;

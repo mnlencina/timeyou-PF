@@ -10,7 +10,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import TerminosCondiciones from "../pages/Terminos&Condiciones";;
 import Privacidad from "../pages/Privacidad";;
 import Preguntas from "../pages/Preguntas";;
-import SobreNosotros from '../pages/SobreNosotros';
+import SobreNosotros from '../pages/SobreNosotros/SobreNosotros';
 import Contacto from "../pages/Contacto";
 import MiCuenta from "../pages/MiCuenta";
 import {
