@@ -13,21 +13,18 @@ const dispatch = useDispatch();
   const [editUser, setEditUser] = useState(false)
   const [editPass, setEditPass] = useState(false)
 
-  // updateUser(user.id, input)
+  
   const newUser = async () => {
-    // const valor = document.getElementById('newUserName').value;
     await dispatch(updateUser(user.id, {userName: userName}));
     await dispatch(updateUserName(userName));
     setEditUser(false)
     alert('Nombre de usuario actualizado!');
   }
   
-  const newPass = async () => {
-    // const valor = document.getElementById('newUserName').value;
-    await dispatch(updateUser(user.id, {password: password}));
-    await dispatch(updateUserName(userName));
-    setEditUser(false)
-    alert('Nombre de usuario actualizado!');
+  const newPass = () => {
+    dispatch(updateUser(user.id, {password: password}));
+    setEditPass(false)
+    alert('Contraseña nueva creada!');
   }
 
   const handleChangeUser = (e) => {
@@ -70,7 +67,7 @@ const dispatch = useDispatch();
               <div className="titulos">Nueva Contraseña</div>
               <input type="text" id="newUserName" onChange={handleChangePass}/>
               <div className="btn">
-                <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
+                <BTNCarritoDeCompras onClick={newPass}>Actualizar</BTNCarritoDeCompras>
               </div>
             </div>            
           }          
