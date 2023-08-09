@@ -72,8 +72,8 @@ const Container = styled.article`
       justify-content: center;
       overflow: hidden;
       img {
-        width: 80%;
-        height: 80%;
+        //width: 80%;
+        height: 95%;
         object-fit: cover;
       }
     }

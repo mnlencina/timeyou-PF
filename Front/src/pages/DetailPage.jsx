@@ -258,7 +258,7 @@ const Container = styled.main`
         justify-content: center;
         overflow: hidden;
         img {
-          width: 350px;
+          height: 100%;
           object-fit: contain;
         }
       }
@@ -332,7 +332,7 @@ const Container = styled.main`
                 justify-content: center;
 
                 img {
-                  width: 70px;
+                  height: 95%;
                   margin: 10px;
                   cursor: pointer;
                 }
