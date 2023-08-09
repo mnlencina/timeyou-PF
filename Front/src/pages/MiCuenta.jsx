@@ -1,26 +1,40 @@
-import React from "react";
-import style, { styled } from "styled-components";
-import {useSelector} from 'react-redux';
+import React, { useState } from "react";
+import { styled } from "styled-components";
+import {useDispatch, useSelector} from 'react-redux';
 import { updateUser } from "../redux/actions/admin/updateUser";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 
 export default function MiCuenta() {
-
+const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user.userName);
+  const [ userName, setUserName ] = useState(user.userName);
+
+  // updateUser(user.id, input)
+  const newUser = async () => {
+    // const valor = document.getElementById('newUserName').value;
+    await dispatch(updateUser(user.id, {userName: userName}));
+    alert('Nombre de usuario actualizado!');
+  }
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    if(value === ''){
+      setUserName(user.userName)
+    } else setUserName(value);
+  }
 
   return (
     <Container>
       <div className="caja">
         <div className="agrupe">
         <div className="titulos">Mi usuario</div>
-        <div className="datos">{user?.userName}</div>
+        <div className="datos">{userName}</div>
         <div className="titulos">Email</div>
         <div className="datos">{user?.email}</div>
         <div className="titulos">Cambiar nombre de Usuario</div>
-        <input type="text" name="newUserName"></input>
+        <input type="text" id="newUserName" onChange={handleChange}></input>
         <div className="btn">
-        <BTNCarritoDeCompras>Actualizar</BTNCarritoDeCompras>
+        <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
         </div>
         </div>
       </div>
@@ -61,10 +75,10 @@ const Container = styled.section`
         display: flex;
         justify-content: start;
         margin-top: 20px;
-        font-size: 20px;
+        font-size: 16px;
     }
     .datos {
-        width: 100%;
+        width: 98%;
         height: 30px;
         padding: 0px 15px;
         border: 1px solid black;
@@ -73,17 +87,15 @@ const Container = styled.section`
         font-size: 16px;
     }
     input {
-      width: 100%;
+        width: 98%;
         height: 30px;
         border: 1px solid black;
         border-radius: 20px;
         margin-bottom: 20px;
+        font-size: 16px;
+        padding: 0 15px;
     }
     .btn {
       width: 40%;
-    }
-    .prueba {
-      display: flex;
-      width: 100%;
     }
 `;
