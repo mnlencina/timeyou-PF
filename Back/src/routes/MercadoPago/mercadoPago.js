@@ -1,17 +1,18 @@
 const express = require("express");
 const mercadopago = require("mercadopago");
+const dataBuysMP = require("../../controllers/postNotificationMP");
 const mercadoPagoRouter = express.Router();
 
 mercadoPagoRouter.post("/create_preference", (req, res) => {
-console.log("entro al post");
+  console.log("entro al post");
   const shoppingCart = req.body;
   console.log(shoppingCart);
   try {
     let preference = {
       items: shoppingCart.map((items) => ({
-        title: items.description,//`${items.brandName} - ${items.model}`,
+        title: items.description, //`${items.brandName} - ${items.model}`,
         unit_price: items.price, //Number(items.price),
-        quantity: items.quantity,//Number(shoppingCart.quantity),
+        quantity: items.quantity, //Number(shoppingCart.quantity),
         currency_id: "ARS",
       })),
       /* let preference = {
@@ -39,6 +40,18 @@ console.log("entro al post");
       .catch(function (error) {
         res.status(500).json({ Error: error.message });
       });
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+});
+
+mercadoPagoRouter.post("/notification", async (req, res) => {
+  const transactionId = req.body.data.id;
+
+  try {
+    await dataBuysMP(transactionId);
+
+    res.status(200).send("OK");
   } catch (error) {
     res.status(500).json({ Error: error.message });
   }
