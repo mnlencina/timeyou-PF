@@ -426,14 +426,14 @@ const Container = styled.main`
           }
         }
         .body-content {
-          width: 65%;
+          width: 100%;
           height: 62%;
           display: flex;
           align-items: flex-start;
           gap: 50px;
-          margin-left: 10%;
+          margin-left: 40%;
           flex-direction: row;
-          justify-content: space-around;
+          flex-wrap: nowrap;
           
           .container-mesh {
             width: 20%;
@@ -442,6 +442,7 @@ const Container = styled.main`
             flex-direction: column;
             align-items: flex-start;
             justify-content: space-around;
+            gap: 20px;
             .mesh,
             .gender {
               h3 {
@@ -465,7 +466,7 @@ const Container = styled.main`
               text-transform: capitalize;
             }
             ul {
-              margin-top: 10px;
+              margin-top: 2px;
               width: 50%;
               height: auto;
               display: grid;
