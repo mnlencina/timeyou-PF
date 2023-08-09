@@ -3,6 +3,8 @@ import { useState } from "react";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 //import "./Product.module.css";
+import { BTNCarritoDeCompras } from "../../utils/ComponentsStyle";
+import {SiMercadopago} from 'react-icons/si'
 
 export const ProductMP = ({carrito}) => {
 console.log(carrito);
@@ -53,7 +55,7 @@ console.log(carrito);
   };
   return (
     <div>      
-      {!preferenceId && <button onClick={handleBuy}>PAGAR CON MP</button>}
+      {!preferenceId && <BTNCarritoDeCompras alter="true" onClick={handleBuy}><span></span>Pagar con Mercado Pago</BTNCarritoDeCompras>}
       {preferenceId && (
         <Wallet
           customization={customization}

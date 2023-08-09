@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BTNHover } from "../utils/ComponentsStyle";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { setCart, totalPrice } from "../redux/Actions";
 import { ProductMP } from "../components/mercadoPago/MercadoPago";
+import { BsStripe } from "react-icons/bs";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+
+const stripePromise = loadStripe(
+  "pk_test_51NVgnTAYvuvU8SQ49gIo7GAYFVsJvzbxM4nYtK4dTWvvmSTBQgssGmwQbzqlWvznnEtmq7AMt8eVMuG3ZDy5Ex4L00Pkqqwp0w"
+); // Reemplaza con tu clave secreta de Stripe
 
 function Shopping() {
   const dispatch = useDispatch();
@@ -16,13 +23,33 @@ function Shopping() {
   const userName = user.userName;
   const cart = useSelector((state) => state.Cart);
 
+  const [toogle, setToogle] = useState(false);
+
   const compraTotal = Math.floor(
     cart?.reduce((acc, e) => acc + e.price, 0) * 500
   );
 
-  const handleCheckOut = () => {
-    dispatch(totalPrice(compraTotal));
-    navigate("/shopping/checkout");
+  const toogleState = () => {
+    setToogle(!toogle);
+  };
+
+  const handleStripeButton = async (event) => {
+    try {
+      const stripe = await stripePromise;
+      const response = await axios.post(
+        "http://localhost:3001/api/payment/create-checkout-session"
+      );
+      const session = response.data;
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.sessionId,
+      });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
   };
 
   const renderCart = () => (
@@ -65,19 +92,35 @@ function Shopping() {
                       Total: <span>${compraTotal}</span>{" "}
                     </h2>
                   </div>
-                  <div className="btn-checkout">
-                    <div className="btn-check">
-                      <BTNCarritoDeCompras
-                        alter="false"
-                        onClick={handleCheckOut}
-                      >
-                        FINALIZAR COMPRA
-                      </BTNCarritoDeCompras>
-                      <div>
+                  <Acordion className={toogle ? "active" : ""}>
+                    <div className="MP">
+                      <div className="btn">
                         <ProductMP carrito={cart} />
                       </div>
                     </div>
-                    <div className="btn-comprarmas">
+                    <hr />
+                    <div className="Stripe">
+                      <div className="btn">
+                        <BTNCarritoDeCompras
+                          alter="true"
+                          onClick={handleStripeButton}
+                        >
+                          <span className="icon-stripe">
+                            <BsStripe />
+                          </span>
+                          Pagar con Stripe
+                        </BTNCarritoDeCompras>
+                        <p>All your details are protected</p>
+                      </div>
+                    </div>
+                  </Acordion>
+                  <div className="btn-checkout">
+                    <div className="btn-check">
+                      <BTNCarritoDeCompras alter="false" onClick={toogleState}>
+                        FINALIZAR COMPRA
+                      </BTNCarritoDeCompras>
+                    </div>
+                    <div className={`btn-comprarmas`}>
                       <BTNCarritoDeCompras
                         alter="true"
                         onClick={() => navigate("/")}
@@ -108,6 +151,7 @@ const Container = styled.main`
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 100;
   .btn-goback {
     position: absolute;
     top: 80px;
@@ -207,6 +251,12 @@ const Container = styled.main`
               justify-content: space-between;
             }
           }
+          .active {
+            visibility: visible;
+            bottom: -18px;
+            transition: 0.5s ease-in;
+            z-index: 200;
+          }
           .btn-checkout {
             width: 100%;
             height: calc(100% / 3);
@@ -215,6 +265,7 @@ const Container = styled.main`
             align-items: center;
             justify-content: space-evenly;
             margin: auto;
+            position: relative;
             .btn-check,
             .btn-comprarmas {
               width: 90%;
@@ -234,4 +285,101 @@ const ContainerEmpty = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const Acordion = styled.div`
+  width: 300px;
+  height: 180px;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 145px;
+  bottom: 180px;
+  z-index: -100;
+  visibility: hidden;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+  display: grid;
+  grid-template-rows: 45% 10% 45%;
+  place-items: center;
+  overflow: hidden;
+  .MP {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .btn {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      button {
+        width: 100% !important;
+        height: 50px;
+        text-transform: none;
+        background-color: rgba(0, 0, 0, 0.9);
+        transition: 0.3s ease-in-out;
+        font-size: 18px;
+        letter-spacing: 1px;
+        display: grid;
+        grid-template-columns: 100%;
+        place-content: center;
+        border-radius: 5px !important;
+        &:hover {
+          transform: none;
+          background-color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+  }
+  hr {
+    width: 90%;
+    height: 1px;
+    margin: 0 auto;
+    background-color: #111;
+    opacity: 0.5;
+  }
+  .Stripe {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      p {
+        width: 100%;
+        text-align: center;
+        font-size: 10px;
+        opacity: 0.6;
+      }
+      button {
+        height: 50px;
+        text-transform: none;
+        background-color: rgba(0, 0, 0, 0.9);
+        transition: 0.3s ease-in-out;
+        font-size: 18px;
+        letter-spacing: 1px;
+        display: grid;
+        grid-template-columns: 15% 75%;
+        place-items: center;
+        border-radius: 5px !important;
+        &:hover {
+          transform: none;
+          background-color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+  }
 `;
