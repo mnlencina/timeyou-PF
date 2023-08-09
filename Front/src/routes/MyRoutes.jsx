@@ -7,10 +7,12 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import TerminosCondiciones from '../pages/Terminos&Condiciones'
-import Privacidad from '../pages/Privacidad'
-import Preguntas from '../pages/Preguntas'
-import SobreNosotros from '../pages/SobreNosotros'
+import TerminosCondiciones from '../pages/Terminos&Condiciones';
+import Privacidad from '../pages/Privacidad';
+import Preguntas from '../pages/Preguntas';
+import SobreNosotros from '../pages/SobreNosotros';
+import Contacto from '../pages/Contacto';
+import MiCuenta from "../pages/MiCuenta";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -57,6 +59,8 @@ const MyRoutes = () => {
         <Route path="/privacidad" element={<Privacidad/>} />
         <Route path="/preguntas" element={<Preguntas />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/micuenta" element={<MiCuenta />} />
         <Route
           path="/admin/*"
           element={

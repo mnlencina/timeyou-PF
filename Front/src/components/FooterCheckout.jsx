@@ -5,7 +5,7 @@ export const FooterCheckOut = () => {
   return (
     <FooterContainer>
       <div className="text-info">
-        <p>TimeYou © 2019 - Todos los derechos reservados</p>
+        <p>TimeYou © 2023</p>
       </div>
     </FooterContainer>
   );
