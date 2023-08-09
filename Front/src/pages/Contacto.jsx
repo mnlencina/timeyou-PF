@@ -86,7 +86,6 @@ const Container1 = styled.div`
           height: 30px;
           border: 1px solid black;
           border-radius: 30px;
-          /* background-color: red; */
         }
         label{
             font-size: 16px;
