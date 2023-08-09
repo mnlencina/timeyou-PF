@@ -28,7 +28,8 @@ function FormWatchUpdate(props) {
       price: wUpdate.price,
       gender: wUpdate.gender, 
       Functions: wUpdate.Functions.map(f => f.name),
-      description: wUpdate.description
+      description: wUpdate.description,
+      stock: wUpdate.stock
     }
   
   console.log(watchUp);
@@ -169,6 +170,10 @@ function FormWatchUpdate(props) {
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}      
           </select>     
         </div>
+        <div className="optionDiv">
+          <h3>Cantidad:</h3>
+          <input name="stock" type="text" defaultValue={watch.stock} onChange={handleChange}/>     
+        </div>        
         
         <div className="optionDiv">
           <h3>Precio en u$s:</h3>
