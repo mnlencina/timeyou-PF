@@ -264,6 +264,7 @@ export const loginUser = (user) => async (dispatch) => {
     const { data } = await axios.post(endpoint, user, {
       headers: { "Content-Type": "application/json" },
     });
+    console.log(data);
     dispatch({
       type: LOGIN_USER,
       payload: data,
