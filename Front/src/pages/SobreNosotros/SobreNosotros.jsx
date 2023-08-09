@@ -75,7 +75,7 @@ const SobreNosotros = () => {
       github: 'https://github.com/1000ward',
     },
     {
-      imagen: 'https://res.cloudinary.com/pagetimeyou/image/upload/v1691617886/Fotos%20equipo/matias_v4lf60.jpg',
+      imagen: 'https://res.cloudinary.com/pagetimeyou/image/upload/c_fit,h_800,w_800/v1691611114/Fotos%20equipo/Foto-Pininfarina_oiszrw.jpg',
       titulo: 'Matias Nicolas Lencina',
       descripcion: 'Nos dedicamos a proporcionar...',
       linkedin: 'https://www.linkedin.com/in/matias-lencina-b118a9116/',
