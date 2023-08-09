@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ALL_BUY } from "../../actionTypes";
 
-export function addBuys () {
+UPDATE_USERNAME
     const endpoint = `http://localhost:3001/admin/allBuy`;
     return async function (dispatch) {
       try {

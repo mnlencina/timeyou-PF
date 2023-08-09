@@ -35,6 +35,7 @@ import {
   GET_USER_LOGGED,
   SET_CART,
   UPDATE_CART,
+  UPDATE_USERNAME,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -324,6 +325,14 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userLoggedId: payload,
         error: null,
+      };
+    case UPDATE_USERNAME:
+      return{
+        ...state,
+        user:{
+          ...state.user,
+          userName: payload
+        }
       };
     default:
       return state;
