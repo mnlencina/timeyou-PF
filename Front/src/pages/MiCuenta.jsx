@@ -65,10 +65,10 @@ const dispatch = useDispatch();
           {editPass && 
             <div>
               <div className="titulos">Nueva Contraseña</div>
-              <input type="text" id="newUserName" onChange={handleChangePass}/>
-              <div className="btn">
+              <input type="password"  onChange={handleChangePass}/>
+              {password.length && <div className="btn">
                 <BTNCarritoDeCompras onClick={newPass}>Actualizar</BTNCarritoDeCompras>
-              </div>
+              </div>}
             </div>            
           }          
         </div>
