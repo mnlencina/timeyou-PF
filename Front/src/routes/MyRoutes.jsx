@@ -51,7 +51,6 @@ const MyRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
-        <Route exact path="/contacto" component={<Contacto />} />
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />

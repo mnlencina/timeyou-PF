@@ -19,7 +19,7 @@ export default function Contacto() {
       .then(
         (result) => {
           console.log(result.text);
-          alert('mensaje enviado perrito')
+          alert('mensaje enviado con éxito')
         },
         (error) => {
           console.log(error.text);
