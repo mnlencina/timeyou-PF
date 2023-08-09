@@ -17,6 +17,7 @@ import DataTable from "react-data-table-component"
 import { BiTrash,BiDislike } from "react-icons/bi"
 import {FaUser,FaUserTie,FaEdit} from "react-icons/fa"
 import { TbDeviceWatchOff, TbDeviceWatchStats, TbDeviceWatchUp } from "react-icons/tb";
+import HomeAdmin from "../../components/admin/nav/HomeAdmin";
 
 
 const Dashboard = ()=>{
@@ -302,7 +303,15 @@ const custonStyled = {
                 
             />
             
-            <div className="containerTable">                
+            <div className="containerTable">   
+                {view === "home" && 
+                    <HomeAdmin
+                        allBuys={allBuys}
+                        allClocks={allClocks}
+                        allUsers={allUsers}
+                        setView={setView}
+                    />
+                }
                 {view === "buys" &&
                     <Buys
                         allBuys={allBuys}
