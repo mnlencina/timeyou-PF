@@ -17,15 +17,13 @@ import DataTable from "react-data-table-component"
 import { BiTrash,BiDislike } from "react-icons/bi"
 import {FaUser,FaUserTie,FaEdit} from "react-icons/fa"
 import { TbDeviceWatchOff, TbDeviceWatchStats, TbDeviceWatchUp } from "react-icons/tb";
+import HomeAdmin from "../../components/admin/nav/HomeAdmin";
 
-
-
-//import styled from "styled-components";
 
 const Dashboard = ()=>{
     const allUsers = useSelector((state)=> state.allUsers)
-    let allClocks = useSelector((state)=> state.allClocks)
-    //const allBuys = useSelector((state)=> state.allBuys)
+    const allClocks = useSelector((state)=> state.allClocks)
+    const allBuys = useSelector((state)=> state.allBuys)
     
     const [newUser, setNewUser] = useState(false)
     const [newWat, setNewWat] = useState(false)
@@ -138,7 +136,6 @@ const custonStyled = {
     
     
     
-    
     const columnsUser = [
         {
             name: "User",
@@ -150,13 +147,13 @@ const custonStyled = {
             sortable: true
         },
         {
-            name: "Nombre:",
+            name: "Nombre",
             selector:"userName",
-            cell: row => row.userName,
+            cell: row => row.userName.charAt(0).toUpperCase() + row.userName.slice(1),
             sortable: true
         },
         {
-            name: "email:",
+            name: "email",
             selector: "email",
             cell: row => row.email,
             sortable: true
@@ -166,7 +163,7 @@ const custonStyled = {
             selector: row => row.password
         }, */
         {
-            name: "Tipo:",
+            name: "Tipo",
             selector: "role",
             cell: row => editRole === row.id?
                 <select onChange={(e)=>handleRole(e,row.id)} value={row.role}>
@@ -185,7 +182,7 @@ const custonStyled = {
             
         },
         {
-            name: "Registro:",
+            name: "Registro",
             selector: "provider",
             cell: row => row.provider.charAt(0).toUpperCase() + row.provider.slice(1),
             sortable: true
@@ -212,54 +209,60 @@ const custonStyled = {
     
     const columnsWatch = [
     {
-        name: "Reloj:",
+        name: "Reloj",
         selector: "image",
         cell: row => (<img className="imgTable" src={row.image[0]}/>),
     },
     {
-        name: "Marca:",
+        name: "Marca",
         selector: "brandName",
         cell: row => row.brandName.charAt(0).toUpperCase() + row.brandName.slice(1),
         sortable: true
     },
     {
-        name: "Modelo:",
+        name: "Modelo",
         selector: "model",
         cell: row => row.model.charAt(0).toUpperCase() + row.model.slice(1),
         sortable: true
     },
     {
-        name: "Precio:",
+        name: "Precio",
         selector: "price",
         cell: row => `u$s${row.price}`,
         sortable: true
     },
     {
-        name: "Color:",
+        name: "Color",
         selector: "colorName",
         cell: row => row.colorName.charAt(0).toUpperCase() + row.colorName.slice(1),
         sortable: true
     },
     {
-        name: "Estilo:",
+        name: "Estilo",
         selector: "styleName",
         cell: row => row.styleName.charAt(0).toUpperCase() + row.styleName.slice(1),
         sortable: true
     },
     {
-        name: "Genero:",
+        name: "Genero",
         selector: "gender",
         cell: row => row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
         sortable: true
     },
     {
-        name: "Malla:",
+        name: "Malla",
         selector: "strapName",
         cell: row => row.strapName.charAt(0).toUpperCase() + row.strapName.slice(1),
         sortable: true
     },
     {
-        name: "Acción:",
+        name: "Stock",
+        selector: "stock",
+        cell: row => `Cant.(${row.stock})`,
+        sortable: true
+    },
+    {
+        name: "Acción",
         selector: "del",
         cell: row => (
             <div className="divAction">
@@ -300,8 +303,21 @@ const custonStyled = {
                 
             />
             
-            <div className="containerTable">                
-                {view === "buys" &&<Buys/>}
+            <div className="containerTable">   
+                {view === "home" && 
+                    <HomeAdmin
+                        allBuys={allBuys}
+                        allClocks={allClocks}
+                        allUsers={allUsers}
+                        setView={setView}
+                    />
+                }
+                {view === "buys" &&
+                    <Buys
+                        allBuys={allBuys}
+                        custonStyled={custonStyled}
+                    />
+                }
                 
                 {view === "users" && 
                     <div className="tables">

@@ -17,6 +17,7 @@ const adminRouter = require("./admin/adminRouter");
 const authRouter = require("./auth/authRouter");
 const getUserIdRouter = require("./userId/getUserIdRouter");
 const mercadoPagoRouter = require("./MercadoPago/mercadoPago");
+const paymentRouter = require('./payment/paymentRouter');
 
 // Rutas para el filtrado en la pagina
 router.use("/comment", commentRouter);
@@ -36,5 +37,6 @@ router.use("/MP", mercadoPagoRouter);
 router.use("/buy", buyRouter);
 router.use("/admin", adminRouter);
 router.use("/auth", authRouter);
+router.use('/payment', paymentRouter);
 
 module.exports = router;

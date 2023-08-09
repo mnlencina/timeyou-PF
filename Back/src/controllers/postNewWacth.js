@@ -12,10 +12,11 @@ const createNewWatch = async (
   review,
   functions,
   description,
+  stock
 ) => {
     
     // evaluamos que recibimos los datos completos para crear el nuevo reloj
-    if (!brand || !model || !style || !color || !image || !strap || !price || !gender || !functions || !description ) throw new Error("missing data");
+    if (!brand || !model || !style || !color || !image || !strap || !price || !gender || !functions || !description || !stock) throw new Error("missing data");
   
     const comprobacion = await Watch.findOne({
       where: { model: model },

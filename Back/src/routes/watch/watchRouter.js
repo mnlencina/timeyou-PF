@@ -8,7 +8,7 @@ const watchRouter = express.Router();
 
 watchRouter.post("/", async (req, res) => {
   // console.log(req.body);
-  const { brand, model, style, color, image, strap, price, gender, review, functions, description, del} = req.body;
+  const { brand, model, style, color, image, strap, price, gender, review, functions, description, del, stock} = req.body;
   try {
     const newWatch = await createNewWatch(
       brand,
@@ -22,7 +22,8 @@ watchRouter.post("/", async (req, res) => {
       review,
       functions,
       description,
-      del
+      del,
+      stock
     );
     res.status(200).json(newWatch);
   } catch (error) {

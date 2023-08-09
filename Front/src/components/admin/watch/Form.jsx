@@ -27,7 +27,8 @@ function FormWatch({btnClose}) {
     price: 0,
     gender: "", 
     functions: [],
-    description: ""
+    description: "",
+    stock:""
   })
   
   
@@ -173,6 +174,11 @@ function FormWatch({btnClose}) {
             <option value={''}>Funciones</option>
             {FUNCTIONS.map((m) => <option key={m.id} value={m.name}>{m.name.charAt(0).toUpperCase() + m.name.slice(1)}</option>)}      
           </select>     
+        </div>
+        
+        <div className="optionDiv">
+          <h3>Cantidad:</h3>
+          <input name="stock" type="text" defaultValue={watch.stock} onChange={handleChange}/>     
         </div>
         
         <div className="optionDiv">
