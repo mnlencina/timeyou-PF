@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { styled } from "styled-components";
 import {useDispatch, useSelector} from 'react-redux';
 import { updateUser } from "../redux/actions/admin/updateUser";
@@ -9,35 +9,71 @@ export default function MiCuenta() {
 const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [ userName, setUserName ] = useState(user.userName);
+  const [ password, setPassword ] = useState("");
+  const [editUser, setEditUser] = useState(false)
+  const [editPass, setEditPass] = useState(false)
 
   // updateUser(user.id, input)
   const newUser = async () => {
     // const valor = document.getElementById('newUserName').value;
     await dispatch(updateUser(user.id, {userName: userName}));
     await dispatch(updateUserName(userName));
+    setEditUser(false)
+    alert('Nombre de usuario actualizado!');
+  }
+  
+  const newPass = async () => {
+    // const valor = document.getElementById('newUserName').value;
+    await dispatch(updateUser(user.id, {password: password}));
+    await dispatch(updateUserName(userName));
+    setEditUser(false)
     alert('Nombre de usuario actualizado!');
   }
 
-  const handleChange = (e) => {
+  const handleChangeUser = (e) => {
     const { value } = e.target;
     if(value === ''){
       setUserName(user.userName)
     } else setUserName(value);
+  }
+  
+  const handleChangePass = (e) => {
+    const { value } = e.target;
+    setPassword(value);
   }
 
   return (
     <Container>
       <div className="caja">
         <div className="agrupe">
-        <div className="titulos">Mi usuario</div>
-        <div className="datos">{user?.userName}</div>
-        <div className="titulos">Email</div>
-        <div className="datos">{user?.email}</div>
-        <div className="titulos">Cambiar nombre de Usuario</div>
-        <input type="text" id="newUserName" onChange={handleChange}></input>
-        <div className="btn">
-        <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
-        </div>
+          <div className="titulos">Mi usuario</div>
+          <div className="datos">{user?.userName}</div>
+          <div className="titulos">Email</div>
+          <div className="datos">{user?.email}</div>
+          {!editUser && !editPass && (
+            <>
+              <BTNCarritoDeCompras onClick={()=>setEditUser(true)}>Cambiar Nombre</BTNCarritoDeCompras>
+              <BTNCarritoDeCompras onClick={()=>setEditPass(true)}>Cambiar Contraseña</BTNCarritoDeCompras>
+            </>
+          )}
+          {editUser && 
+            <div>
+              <div className="titulos">Nuevo nombre de Usuario</div>
+              <input type="text" id="newUserName" onChange={handleChangeUser}/>
+              <div className="btn">
+                <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
+              </div>
+            </div>            
+          }
+          {editPass && 
+            <div>
+              <div className="titulos">Nueva Contraseña</div>
+              <input type="text" id="newUserName" onChange={handleChangePass}/>
+              <div className="btn">
+                <BTNCarritoDeCompras onClick={newUser}>Actualizar</BTNCarritoDeCompras>
+              </div>
+            </div>            
+          }          
         </div>
       </div>
     </Container>
