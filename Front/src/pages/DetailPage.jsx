@@ -332,7 +332,7 @@ const Container = styled.main`
                 justify-content: center;
 
                 img {
-                  height: 95%;
+                  height: 70%;
                   margin: 10px;
                   cursor: pointer;
                 }
@@ -380,9 +380,9 @@ const Container = styled.main`
     .descriptions {
       margin: 0 auto;
       width: 90%;
-      height: 250px;
+      height: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       .description {
         width: 50%;
@@ -426,13 +426,15 @@ const Container = styled.main`
           }
         }
         .body-content {
-          width: 100%;
+          width: 65%;
           height: 62%;
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          align-items: flex-start;
           gap: 50px;
-          margin-left: 100px;
+          margin-left: 10%;
+          flex-direction: row;
+          justify-content: space-around;
+          
           .container-mesh {
             width: 20%;
             height: 100%;

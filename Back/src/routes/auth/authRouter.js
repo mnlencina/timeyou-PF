@@ -24,12 +24,11 @@ authRouter.get(
       const token = await createAccessToken({ id: userSession.id });
 
       const userCredentials = {
-        userName: userSession.userName,
-        email: userSession.email,
+        ...userSession,
         token: token,
-        role: userSession.role,
-        del: userSession.del
+        provider: provider
       };
+      
       const userData = JSON.stringify(userCredentials);
       console.log(userData);
       res.redirect(

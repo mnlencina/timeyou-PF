@@ -32,6 +32,7 @@ userRouter.post("/login", async (req, res) => {
     const userCredentials = {
       ...userSession,
       token: token,
+      provider: provider,
     };
     res.status(200).json(userCredentials);
   } catch (error) {
