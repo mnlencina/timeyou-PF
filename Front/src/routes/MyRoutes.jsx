@@ -7,10 +7,12 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import Contacto from "../pages/Contacto/Contacto";
-import TerminosCondiciones from "../pages/Terminos&Condiciones";
-import Privacidad from "../pages/Privacidad";
-import Preguntas from "../pages/Preguntas";
+import TerminosCondiciones from "../pages/Terminos&Condiciones";;
+import Privacidad from "../pages/Privacidad";;
+import Preguntas from "../pages/Preguntas";;
+import SobreNosotros from '../pages/SobreNosotros';
+import Contacto from "../pages/Contacto";
+import MiCuenta from "../pages/MiCuenta";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -49,16 +51,16 @@ const MyRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<DetailPage />} />
-        <Route exact path="/contacto" component={<Contacto />} />
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
-          <Route path="/shopping" element={<Shopping />} />
-
           <Route path="/shopping/checkout" element={<Checkout />} />
         </Route>
-        <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
-        <Route path="/privacidad" element={<Privacidad />} />
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
+        <Route path="/privacidad" element={<Privacidad/>} />
         <Route path="/preguntas" element={<Preguntas />} />
+        <Route path="/sobreNosotros" element={<SobreNosotros />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/micuenta" element={<MiCuenta />} />
         <Route
           path="/admin/*"
           element={

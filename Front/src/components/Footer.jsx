@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import {
   AiOutlineInstagram,
@@ -10,6 +11,8 @@ import {
 } from "react-icons/ai";
 
 export const Footer = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Container>
       <div className="margin">
@@ -17,31 +20,47 @@ export const Footer = () => {
           <div className="about">
             <h3 className="title">TimeYou</h3>
             <ul>
-              <li>sobre nosotros</li>
-              <li>contacto</li>
-              <StyledLink to='/auth' target="_top">mi cuenta</StyledLink>
-              <li>servicio tecnico</li>
+              <StyledLink to="/sobreNosotros" target="_top">
+                sobre nosotros
+              </StyledLink>
+              <StyledLink to='/contacto' target="_top">contacto</StyledLink>
+
+              {user.role.trim() === "" ? (
+                <StyledLink to="/auth" target="_top">
+                  mi cuenta
+                </StyledLink>
+              ) : (user.provider === 'local' ? (
+                <StyledLink to="/micuenta" target="_top">
+                  mi cuenta
+                </StyledLink>
+              ) : (true))}
             </ul>
           </div>
           <div className="help">
             <h3 className="title">ayuda</h3>
             <ul>
-              <StyledLink to='/preguntas' target="_top">preguntas frecuentes</StyledLink>
-              <StyledLink to='/privacidad' target="_top">Privacidad</StyledLink>
-              <StyledLink to='/terminosycondiciones' target="_top">Terminos & condiciones</StyledLink>
+              <StyledLink to="/preguntas" target="_top">
+                preguntas frecuentes
+              </StyledLink>
+              <StyledLink to="/privacidad" target="_top">
+                Privacidad
+              </StyledLink>
+              <StyledLink to="/terminosycondiciones" target="_top">
+                Terminos & condiciones
+              </StyledLink>
             </ul>
           </div>
           <div className="social">
             <h3>Seguinos</h3>
             <ul>
-              <StyledLink to='https://www.facebook.com/soyhenryok/'>
+              <StyledLink to="https://www.facebook.com/soyhenryok/">
                 <AiOutlineFacebook />
               </StyledLink>
-              <StyledLink to='https://www.instagram.com/soyhenry_ok/'>
+              <StyledLink to="https://www.instagram.com/soyhenry_ok/">
                 <AiOutlineInstagram />
               </StyledLink>
-              <StyledLink to='https://twitter.com/soyhenry_ok'>
-                <AiOutlineTwitter/>
+              <StyledLink to="https://twitter.com/soyhenry_ok">
+                <AiOutlineTwitter />
               </StyledLink>
             </ul>
           </div>
@@ -49,7 +68,7 @@ export const Footer = () => {
         <hr />
         <section className="copy">
           <h4>
-            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023 
+            <span>TimeYou</span> {<AiOutlineCopyrightCircle />} 2023
           </h4>
         </section>
       </div>
@@ -57,11 +76,9 @@ export const Footer = () => {
   );
 };
 
-
-
 const Container = styled.footer`
   width: 100vw;
-  height: 250px;
+  height: 200px;
   background-color: #111;
   display: flex;
   flex-direction: column;
@@ -77,7 +94,7 @@ const Container = styled.footer`
     margin: 0 auto;
     .media {
       width: 100%;
-      height: 230px;
+      height: 200px;
       display: flex;
       align-items: center;
       .about,
