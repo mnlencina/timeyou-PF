@@ -86,3 +86,11 @@ export const BTNLogin = styled.button`
     transform: scale(1.2);
   }
 `;
+
+export const ContainerLoader = styled.div`
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

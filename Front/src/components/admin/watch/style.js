@@ -14,13 +14,14 @@ export const Container = styled.main`
     align-items: center;
     flex-wrap: nowrap;
     background-color: rgb(0,0,0,0.7);
+    justify-content: center;
     
   h2 {
     margin: 10px;
   }
   
   .btnClose{
-    bottom:10%;
+    
     background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,50), black);
     color: white;
     width: 150px;
@@ -47,11 +48,10 @@ export const Formulario = styled.main`
   flex-direction: row;
   align-items: flex-start;
   gap: 30px;
-  margin: 20px;
+  margin: 10px;
   background-color: white;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 5%;
   background-color: rgb(255,255,255,0.8);
   
   select {

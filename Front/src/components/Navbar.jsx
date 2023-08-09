@@ -12,12 +12,17 @@ import {
   getProducts,
   getWatchesByBrand,
   clearCart,
+  clearFilters,
+  updateSelectedCategories,
 } from "../redux/Actions.js";
+import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
   const user = useSelector((state) => state.user);
+  const selectedCategories = useSelector((state) => state.selectedCategories);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const itemCount = cart?.length;
 
@@ -25,25 +30,39 @@ export const Navbar = () => {
   const handleLogOut = () => {
     dispatch(clearCart());
     dispatch(logOut());
+    navigate("/auth");
   };
 
   const handleLinkClick = (brand) => {
     const brandLowerCase = brand.toLowerCase();
+    console.log("estoy aca");
+
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
+      dispatch(clearFilters());
+      dispatch(updateSelectedCategories(""));
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
+      dispatch(updateSelectedCategories(` ${brandLowerCase}`));
     }
   };
 
   /* controlador de la barra de busqueda */
 
   const [showSearch, setShowSearch] = useState(false);
+  const [inputHover, setInputHover] = useState(false);
 
+  /* Controlador del globo de usuario */
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleShowLogout = () => {
+    setShowLogout(!showLogout);
+    setShowSearch(false);
+  };
   const handleShowSearch = () => {
     setShowSearch(!showSearch);
+    setShowLogout(false);
   };
-
   return (
     <Container itemCount={itemCount.toString()}>
       <header className="header">
@@ -74,7 +93,7 @@ export const Navbar = () => {
           <li>
             <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
               mistral
-            </StyledLink> 
+            </StyledLink>
           </li>
           <li>
             <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
@@ -87,19 +106,32 @@ export const Navbar = () => {
             <li>
               <BsSearch onClick={handleShowSearch} />
               <ul className={`search-conteiner ${showSearch ? " active" : ""}`}>
-                <li onMouseLeave={handleShowSearch}>
-                  <Searchbar />
+                <li>
+                  <Searchbar
+                    setInputHover={setInputHover}
+                    setShowSearch={setShowSearch}
+                  />
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="/auth">
-                {user.token.trim() === "" ? (
-                  <BiUser title="LogIn" onClick={() => Navigate("/")} />
-                ) : (
-                  <BiUserX title="Out" onClick={handleLogOut} />
-                )}
-              </Link>
+              {user.token.trim() === "" ? (
+                <BiUser onClick={() => navigate("/auth")} />
+              ) : (
+                <BiUserX title="Out" onClick={handleShowLogout} />
+              )}
+              {user.token && (
+                <ul className={`logout ${showLogout ? " active-log" : ""}`}>
+                  <li>
+                    <p>Cerrar sesion</p>
+                    <div className="btn">
+                      <BTNCarritoDeCompras onClick={handleLogOut}>
+                        logOUT
+                      </BTNCarritoDeCompras>
+                    </div>
+                  </li>
+                </ul>
+              )}
             </li>
             <li>
               <Link to="/shopping">
@@ -157,19 +189,21 @@ const Container = styled.div`
     ul {
       list-style: none;
       position: relative;
-    }
-    li {
-      text-transform: uppercase;
-      font-weight: 300;
-    }
+      li {
+        text-transform: uppercase;
+        font-weight: 300;
+       }
+      }
     .nav {
-      margin: 0 auto;
-      width: 60%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
+    margin: 0 auto;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; 
     }
+  }
+
     .icons {
       width: 40%;
       display: flex;
@@ -216,9 +250,54 @@ const Container = styled.div`
               border-bottom: 12px solid #fff;
             }
           }
+          .logout {
+            position: absolute;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            width: 200px;
+            height: 80px;
+            top: 40px;
+            left: -80px;
+            background: #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s all ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 100;
+            .btn {
+              width: 90%;
+              height: 35px;
+              button {
+                font-size: 15px;
+              }
+            }
+            p {
+              font-size: 15px;
+            }
+            &::before {
+              content: "";
+              position: absolute;
+              width: 25px;
+              height: 25px;
+              top: -25px;
+              left: 75px;
+              border-left: 15px solid transparent;
+              border-right: 15px solid transparent;
+              border-bottom: 12px solid #fff;
+            }
+          }
           .active {
             visibility: visible;
             opacity: 1;
+            z-index: 200;
+          }
+          .active-log {
+            visibility: visible;
+            opacity: 1;
+            z-index: 200;
           }
           a {
             text-decoration: none;

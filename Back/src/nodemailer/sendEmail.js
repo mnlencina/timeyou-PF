@@ -4,7 +4,7 @@ const transporter = require("../nodemailer/postEmail");
 const sendEmail = (to, subject, html) => {
     console.log("Sending email...");
     let emailOptions = {
-      from: "TIME-YOU",
+      from: "pagetimeyou@gmail.com",
       to,
       subject,
       html:

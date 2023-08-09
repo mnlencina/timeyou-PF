@@ -184,7 +184,7 @@ function FormWatchUpdate(props) {
     
         </div>
         
-          <button className="btnUp" type="button" onClick={putWatches}>Actualizar</button>
+          <button className="btnUp" type="button" onClick={putWatches}>ACTUALIZAR</button>
           
         </Container1>
         
@@ -217,7 +217,7 @@ function FormWatchUpdate(props) {
         </div>
         
       </Formulario>
-      <button className="btnClose" onClick={btnClose}>Close</button>
+      <button className="btnClose" onClick={btnClose}>Cerrar</button>
     </Container>  
     )
   }

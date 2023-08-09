@@ -7,41 +7,50 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
 import { addModel, resetDetail } from "../redux/Actions";
 import { addToCart } from "../redux/Actions";
-import { translateGender } from "../components/helpers/translateGenderWords"
+import { translateGender } from "../components/helpers/translateGenderWords";
 import CommentsList from "../components/comments/CommentsList";
 import AverageRating from "../components/comments/AverageRating";
 import CreateComment from "../components/comments/CreateComment";
 
+import { ContainerLoader } from "../utils/ComponentsStyle";
+import { Loader } from "../components/Loader/Loader";
 
-function DetailPage () {
+function DetailPage() {
   const [color, setColor] = useState(0);
   const [color2, setColor2] = useState(0);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const detailClock = useSelector((state) => state.detailClock);  
+  const detailClock = useSelector((state) => state.detailClock);
   const loading = useSelector((state) => state.detailLoading);
   const user = useSelector((state) => state.user);
   const isLoggedIn = !!user.token;
-  const cart = useSelector(state=> state.Cart);
+  const cart = useSelector((state) => state.Cart);
 
-  console.log(cart)
-  
+  console.log(cart);
+
   const handleAddToCart = () => {
     dispatch(addToCart(detailClock[color]));
   };
 
   const backPag = () => {
-    dispatch(resetDetail())
-  }
+    dispatch(resetDetail());
+  };
 
   useEffect(() => {
     console.log(id);
     dispatch(addModel(id));
-    return backPag()
+    return backPag();
   }, [dispatch]);
 
+  const renderLoader = () => (
+    <ContainerLoader>
+      <Loader />
+    </ContainerLoader>
+  );
+
+ 
   return loading ? (
-    <div>loanding</div>
+    renderLoader()
   ) : (
     <Container>
       <div className="main_container">
@@ -55,9 +64,14 @@ function DetailPage () {
         </header>
         <section className="show-clocks">
           <div className="navVert">
-            {(detailClock[color].image).map((img, i) =>
-              <img onClick={() => setColor2(i)} key={i + 50} src={img} alt="imgB" />
-            )}
+            {detailClock[color].image.map((img, i) => (
+              <img
+                onClick={() => setColor2(i)}
+                key={i + 50}
+                src={img}
+                alt="imgB"
+              />
+            ))}
           </div>
           <picture className="img-box">
             <img src={detailClock[color].image[color2]} alt="imgD" />
@@ -65,9 +79,12 @@ function DetailPage () {
           <article className="show-cart">
             <section className="body-cart">
               <header className="title-body">
-                <h3>{`${detailClock[0].model} - ${detailClock[color].colorName.toUpperCase()}`}</h3>
-                <h1>{`${detailClock[0].brandName.toUpperCase()} | ${detailClock[0].model
-                  }`}</h1>
+                <h3>{`${detailClock[0].model} - ${detailClock[
+                  color
+                ].colorName.toUpperCase()}`}</h3>
+                <h1>{`${detailClock[0].brandName.toUpperCase()} | ${
+                  detailClock[0].model
+                }`}</h1>
               </header>
               <hr />
               <div className="price">
@@ -77,8 +94,12 @@ function DetailPage () {
                   <div className="color">
                     {detailClock.map((wat, i) => (
                       <img
-                        src={wat.image[0]} alt=""
-                        onClick={() => { setColor(i); setColor2(0) }}
+                        src={wat.image[0]}
+                        alt=""
+                        onClick={() => {
+                          setColor(i);
+                          setColor2(0);
+                        }}
                         key={i + wat.colorName}
                       />
                     ))}
@@ -136,32 +157,36 @@ function DetailPage () {
           </article>
         </section>
         <hr />
-          {isLoggedIn ? (
-            <div>
-              <div className="container-reviews">
-                <section className="reviews">
-                  <CreateComment watchId={detailClock[0].id} />
-                </section>
-                <section className="ratings">
-                  <AverageRating watchId={detailClock[0].id} />
-                </section>
-              </div>
+        {isLoggedIn ? (
+          <div>
+            <div className="container-reviews">
+              <section className="reviews">
+                <CreateComment watchId={detailClock[0].id} />
+              </section>
+              <section className="ratings">
+                <AverageRating watchId={detailClock[0].id} />
+              </section>
             </div>
-          ) : (
-            <div>
-              <div className="login">
-              <StyledNavLink to={`/auth?redirect=/product/${detailClock[0].id}`}>Inicia sesión para calificar</StyledNavLink>
-              </div>
-              <div className="container-reviews">
-                <section className="reviews">
-                  <CommentsList watchId={detailClock[0].id} />
-                </section>
-                <section className="ratings">
-                  <AverageRating watchId={detailClock[0].id} />
-                </section>
-              </div>
+          </div>
+        ) : (
+          <div>
+            <div className="login">
+              <StyledNavLink
+                to={`/auth?redirect=/product/${detailClock[0].id}`}
+              >
+                Inicia sesión para calificar
+              </StyledNavLink>
             </div>
-          )}
+            <div className="container-reviews">
+              <section className="reviews">
+                <CommentsList watchId={detailClock[0].id} />
+              </section>
+              <section className="ratings">
+                <AverageRating watchId={detailClock[0].id} />
+              </section>
+            </div>
+          </div>
+        )}
       </div>
     </Container>
   );
@@ -184,11 +209,11 @@ const Container = styled.main`
     opacity: 0.5;
     margin: 20px auto;
   }
-  .navVert{
+  .navVert {
     width: 60px;
     height: 450px;
-    img{
-      width:50px;
+    img {
+      width: 50px;
       padding: 3px;
       cursor: pointer;
     }
@@ -233,7 +258,7 @@ const Container = styled.main`
         justify-content: center;
         overflow: hidden;
         img {
-          width: 350px;
+          height: 100%;
           object-fit: contain;
         }
       }
@@ -305,13 +330,13 @@ const Container = styled.main`
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                
-                img{
-                  width:70px;
+
+                img {
+                  height: 70%;
                   margin: 10px;
                   cursor: pointer;
-                }                                         
-                                              
+                }
+
                 span {
                   position: relative;
                   display: inline-block;
@@ -347,8 +372,7 @@ const Container = styled.main`
             width: 95%;
             height: 180px;
             margin-top: 8px;
-            margin-bottom: 8px;         
-            
+            margin-bottom: 8px;
           }
         }
       }
@@ -356,9 +380,9 @@ const Container = styled.main`
     .descriptions {
       margin: 0 auto;
       width: 90%;
-      height: 250px;
+      height: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       .description {
         width: 50%;
@@ -402,13 +426,15 @@ const Container = styled.main`
           }
         }
         .body-content {
-          width: 100%;
+          width: 65%;
           height: 62%;
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          align-items: flex-start;
           gap: 50px;
-          margin-left: 100px;
+          margin-left: 10%;
+          flex-direction: row;
+          justify-content: space-around;
+          
           .container-mesh {
             width: 20%;
             height: 100%;
@@ -456,37 +482,37 @@ const Container = styled.main`
         }
       }
     }
-   
-  } .login {
+  }
+  .login {
     width: 90%;
     margin: 0 auto;
     display: flex;
     justify-content: flex-end;
-  } 
-  
+  }
+
   .container-reviews {
-     margin: 0 auto;
-     width: 90%;
-     min-height: auto;
-     display: flex;
-     justify-content: space-between;
-    }
-    .reviews {
-      width: 60%;
-      min-height: auto;
-      margin-bottom: 20px; 
-      padding-right: 20px;
-    }
-    .ratings {
-      width: 40%;
-      min-height: auto;
-      margin-bottom: 20px;
-    }
+    margin: 0 auto;
+    width: 90%;
+    min-height: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .reviews {
+    width: 60%;
+    min-height: auto;
+    margin-bottom: 20px;
+    padding-right: 20px;
+  }
+  .ratings {
+    width: 40%;
+    min-height: auto;
+    margin-bottom: 20px;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-  color:#7d7576;
+  color: #7d7576;
   font-size: 1.1rem;
   padding: 20px;
 

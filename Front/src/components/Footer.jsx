@@ -33,8 +33,7 @@ export const Footer = () => {
                 <StyledLink to="/micuenta" target="_top">
                   mi cuenta
                 </StyledLink>
-              ) : (alert('No te equivoques pendejo puto')))}
-              
+              ) : (true))}
             </ul>
           </div>
           <div className="help">

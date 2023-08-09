@@ -9,6 +9,8 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
+  UPDATE_SELECTED_CATEGORIES,
+  CLEAR_FILTERS,
   TOTAL_PRICE,
   UPDATE_PRICE,
   ALL_BRANDS,
@@ -46,6 +48,7 @@ const initialState = {
   searchClocks: [],
   searchActive: false,
   filteredClocks: [],
+  selectedCategories: "",
   Cart: [],
   isLoadingCart: true,
   price: 500,
@@ -103,9 +106,9 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case SEARCH_PRODUCT_SUCCESS:
       return {
         ...state,
-        searchClocks: payload,
+        Clocks: payload,
         isLoading: false,
-        searchActive: payload.length > 0,
+        searchActive: true,
         error: null,
       };
     case SEARCH_PRODUCT_FAILURE:
@@ -199,11 +202,20 @@ export const rootReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        searchClocks: filterBrands,
+        Clocks: filterBrands,
         isLoading: false,
         error: null,
-        searchActive: filterActive,
-        filteredClocks: filteredClocks,
+        searchActive: true,
+      };
+      case CLEAR_FILTERS:
+      return {
+        ...state,
+        selectedCategories: payload, 
+      };
+      case UPDATE_SELECTED_CATEGORIES:
+      return {
+        ...state,
+        selectedCategories: payload + " ",
       };
     case ALL_BRANDS:
       return {
@@ -254,9 +266,9 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case GET_WATCHES_BY_BRAND:
       return {
         ...state,
-        searchClocks: payload,
+        Clocks: payload,
+        searchActive: true,
         isLoading: false,
-        searchActive: payload.length > 0,
         error: null,
       };
     case LOGOUT_USER:

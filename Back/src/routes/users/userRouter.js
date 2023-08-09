@@ -30,11 +30,9 @@ userRouter.post("/login", async (req, res) => {
     const token = await createAccessToken({ id: userSession.id });
 
     const userCredentials = {
-      userName: userSession.userName,
-      email: userSession.email,
+      ...userSession,
       token: token,
-      role: userSession.role,
-      del: userSession.del,
+      provider: provider,
     };
     res.status(200).json(userCredentials);
   } catch (error) {

@@ -3,7 +3,7 @@ import emailjs from "@emailjs/browser";
 import styled from "styled-components";
 import {BTNCarritoDeCompras} from '../utils/ComponentsStyle'
 
-export default function Container() {
+export default function Contacto() {
   const form = useRef();
 
   const sendEmail = (e) => {
