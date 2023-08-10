@@ -16,6 +16,7 @@ module.exports = (sequelize) => {
       provider: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "stripe",
       },
       total: {
         type: DataTypes.INTEGER,
