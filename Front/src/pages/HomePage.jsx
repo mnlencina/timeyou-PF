@@ -20,6 +20,7 @@ export default function HomePage() {
 
 
   const [show, setShow] = useState(false);
+  
   const showOpen = show.toString();
 
   //funciones de paginacion
