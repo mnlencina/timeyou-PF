@@ -44,35 +44,45 @@ function App() {
     const resetTimer = () => {
       clearTimeout(inactivityTimer);
       inactivityTimer = setTimeout(() => {
-        // Implement logout logic here
         setIsActive(false);
       }, 60000); // 1 minutes in milliseconds
 
       setIsActive(true);
     };
-
+    
+    const handleBeforeUnload = () => {
+      dispatch(clearCart())
+      dispatch(logOut())
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('mousemove', resetTimer);
     window.addEventListener('keydown', resetTimer);
     window.addEventListener('click', resetTimer);
 
     return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('mousemove', resetTimer);
       window.removeEventListener('keydown', resetTimer);
       window.removeEventListener('click', resetTimer);
+      
     };
   }, []);
   
-  const handleLogOut = () => {
-    dispatch(clearCart());
-    dispatch(logOut());
-    setIsActive(true)
-    navigate("/");
-    alert("Se cerro session")
+  const handleLogOut = (USER) => {
+  console.log("evalua LOGout");
+    USER.length ?(
+    dispatch(clearCart()),
+    dispatch(logOut()),
+    setIsActive(true),
+    navigate("/"),
+    alert("Se cerro session"))
+    : null
   };
   
   return (
     <div>
-      {!isActive && handleLogOut()}
+      {!isActive && handleLogOut(user.role)}
       <MyRoutes />
     </div>
   );
