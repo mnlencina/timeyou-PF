@@ -135,7 +135,7 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
 
   return (
     <SearchContainer>
-      {!watches.length && sAlert()}
+      {/* {!watches.length && sAlert()} */}
        <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}

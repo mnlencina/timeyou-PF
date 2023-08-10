@@ -45,23 +45,17 @@ function App() {
       clearTimeout(inactivityTimer);
       inactivityTimer = setTimeout(() => {
         setIsActive(false);
-      }, 60000); // 1 minutes in milliseconds
+      }, 600000); // 1 minutes in milliseconds
 
       setIsActive(true);
     };
     
-    const handleBeforeUnload = () => {
-      dispatch(clearCart())
-      dispatch(logOut())
-    };
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('mousemove', resetTimer);
     window.addEventListener('keydown', resetTimer);
     window.addEventListener('click', resetTimer);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      
       window.removeEventListener('mousemove', resetTimer);
       window.removeEventListener('keydown', resetTimer);
       window.removeEventListener('click', resetTimer);

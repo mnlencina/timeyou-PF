@@ -13,6 +13,12 @@ const FormUser =({btnClose})=>{
         password:"",
     })
     
+    const [errors, setErrors] = useState({
+        userName:"",
+        email:"",
+        password:"",
+    })
+    
     const handlerChange = (e)=>{
         const{name,value} = e.target
         console.log(name,value)
@@ -22,6 +28,7 @@ const FormUser =({btnClose})=>{
               [name]: value
             }
           )
+       // if (name === "userName") 
     }
     
     const logUser = async()=>{
@@ -34,11 +41,11 @@ const FormUser =({btnClose})=>{
         <Container>
             <div className="divForm">
                 <h2>Nuevo Usuario</h2>
-                <input onChange={handlerChange} type="text" placeholder="Ingrese el Nombre" name="userName"/>
+                <input onChange={handlerChange} type="text" maxLength={10} placeholder="Ingrese el Nombre" name="userName"/>
                 <input onChange={handlerChange} type="text" placeholder="Ingrese el email" name="email"/>
                 <input onChange={handlerChange} type="password" placeholder="Ingrese Contraseña" name="password" />
                 
-                <button className="btnUp" onClick={logUser}>CARGAR</button>
+                <button type="submit" className="btnUp" onClick={logUser}>CARGAR</button>
             </div>
                 <button className="btnClose" onClick={btnClose}>Cerrar</button>
             
