@@ -14,8 +14,8 @@ export const CardContext = ({ pagination }) => {
     <Container>
       <div className="context-card">
 
-        {pagination && pagination.map((e) => (
-          <Card key={e.id} watch={e} />
+        {pagination && Array.isArray(pagination) && pagination.map((e,i) => (
+          <Card key={i} watch={e} />
         ))}
       </div>
     </Container>
