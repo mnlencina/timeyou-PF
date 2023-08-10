@@ -38,7 +38,7 @@ function App() {
   
   const [isActive, setIsActive] = useState(true);
 
-  useEffect(() => {
+  /* useEffect(() => {
     let inactivityTimer;
 
     const resetTimer = () => {
@@ -61,7 +61,7 @@ function App() {
       window.removeEventListener('click', resetTimer);
       
     };
-  }, []);
+  }, []); */
   
   const handleLogOut = (USER) => {
   console.log("evalua LOGout");
@@ -76,7 +76,7 @@ function App() {
   
   return (
     <div>
-      {!isActive && handleLogOut(user.role)}
+      {/* !isActive && handleLogOut(user.role) */}
       <MyRoutes />
     </div>
   );
