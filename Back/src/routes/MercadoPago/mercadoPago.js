@@ -16,7 +16,7 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
       items: shoppingCart.cart.map((items) => ({
         title: `${items.brandName} - ${items.model}`,
         unit_price: Number(items.price),
-        quantity: Number(shoppingCart.quantity),
+        quantity: 1,
         currency_id: "ARS",
       })),
 
@@ -37,6 +37,7 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
         });
       })
       .catch(function (error) {
+        console.log(error.message);
         res.status(500).json({ Error: error.message });
       });
   } catch (error) {
@@ -46,14 +47,14 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
 
 mercadoPagoRouter.post("/notification", async (req, res) => {
   const transactionId = req.body.data.id;
+  console.log(transactionId);
   const url = `https://api.mercadopago.com/v1/payments/${transactionId}`;
 
-  
   try {
     const { data } = await axios.get(url, {
       headers: { authorization: `Bearer ${MERCADO_PAGO}` },
     });
-    
+
     const {
       id,
       card,
@@ -76,9 +77,9 @@ mercadoPagoRouter.post("/notification", async (req, res) => {
 
     const createCompra = await Buy.create(datosCompra);
 
-    res.status(200).send("OK");
+    return res.status(200).send("OK");
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({ Error: error.message });
   }
 });
