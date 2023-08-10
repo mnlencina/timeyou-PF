@@ -121,20 +121,13 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
     const searchResults = await algoliaIndex.search(searchTerms);
 
     console.log("Algolia search results:", searchResults.hits);
-    if (searchResults.hits.length === 0) {
-      // Si no se encontraron coincidencias, enviar un mensaje al cliente
-      dispatch({
-        type: SEARCH_PRODUCT_SUCCESS,
-        payload: [], // Envía un array vacío como payload para indicar que no se encontraron resultados
-        message: "No se encontraron coincidencias...",
-      });
-    } else {
+    
       // Si se encontraron resultados, envía los hits al estado como antes
       dispatch({
         type: SEARCH_PRODUCT_SUCCESS,
         payload: searchResults.hits,
       });
-    }
+    
   } catch (error) {
     console.error("Algolia search error:", error);
     dispatch(searchProductFailure("Error al realizar la búsqueda."));

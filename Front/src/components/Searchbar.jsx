@@ -82,8 +82,8 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
 
     const searchTerms = searchTerm.toLowerCase().split(" ");
     const filtered = watches.filter((watch) => {
-      return searchTerms.every((term) => {
-        return (
+      return  searchTerms.every((term) => {
+        return  (
           watch.model.toLowerCase().includes(term) ||
           watch.brandName.toLowerCase().includes(term) ||
           watch.colorName.toLowerCase().includes(term) ||
@@ -97,7 +97,7 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
     const allTerms = searchTerms.concat(navbarTerms)
     dispatch(searchProduct(allTerms)); // Actualiza el estado global
     
-    if (filtered.length === 0) {
+    /* if (filtered.length === 0) {
       Swal.fire({
         icon: 'error',
         color: 'black',
@@ -109,8 +109,22 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
       });
       dispatch(getProducts());
     }
+    */
   };
-  
+  const sAlert = ()=> {
+    Swal.fire({
+      icon: 'error',
+      color: 'black',
+      text: 'No se encontraron relojes en la búsqueda.',
+      confirmButtonText: 'Aceptar',
+      customClass: {
+        confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+      }
+    });
+    dispatch(getProducts());
+  }
+
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -121,6 +135,7 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
 
   return (
     <SearchContainer>
+      {!watches.length && sAlert()}
        <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}
