@@ -18,11 +18,11 @@ module.exports = (sequelize) => {
         alloNull: false,
       },
       total: {
-        type: DataTypes.INTEGER,        
+        type: DataTypes.INTEGER,
         alloNull: false,
       },
       card: {
-        type: DataTypes.STRING,        
+        type: DataTypes.JSONB,
         alloNull: false,
       },
     },

@@ -1,39 +1,37 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env;
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
 
-//const sequelize = new Sequelize( 
-//`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-//  {
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/relojes`,
+  {
+    logging: false,
+    native: false,
+  }
+);
+
+// const sequelize = new Sequelize(
+//   DB_DEPLOY,
+//   {
 //     logging: false,
-//     native: false, 
-//  }
-//);
-
-  const sequelize = new Sequelize(
-    DB_DEPLOY,
-    {
-      logging: false,
-      native: false,
-    }
-  );
+//     native: false,
+//   }
+// );
 
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
+fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js'
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
   )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
 // Injectamos la conexion (sequelize) a todos los modelos
@@ -48,7 +46,8 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Para relacionarlos hacemos un destructuring
-const { Watch, User, Brand, Buy, Function, Strap, Style, Color, Comment} = sequelize.models;
+const { Watch, User, Brand, Buy, Function, Strap, Style, Color, Comment } =
+  sequelize.models;
 
 //Product.-
 Watch.belongsTo(Brand, { foreignKey: "brandName", targetKey: "name" });
@@ -63,12 +62,11 @@ Strap.hasMany(Watch, { foreignKey: "strapName", sourceKey: "name" });
 Function.belongsToMany(Watch, { through: "FunctionWatch" });
 Watch.belongsToMany(Function, { through: "FunctionWatch" });
 
-
 Buy.belongsTo(User);
 User.hasMany(Buy);
 
-Comment.belongsTo(Watch, { foreignKey: 'WatchId' });
-Comment.belongsTo(User, { foreignKey: 'UserId' });
+Comment.belongsTo(Watch, { foreignKey: "WatchId" });
+Comment.belongsTo(User, { foreignKey: "UserId" });
 User.hasMany(Comment, { foreignKey: "UserId" });
 Watch.hasMany(Comment, { foreignKey: "WatchId" });
 
