@@ -7,7 +7,7 @@ const createNewWatch = async (userName, model,amount) => {
   const newBuy = await Buy.create({ 
     
             name: model,
-            provider:'provider',
+            provider:'stripe',
             total:amount,
             card:'visa'
 
