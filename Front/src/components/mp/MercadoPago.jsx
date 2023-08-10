@@ -4,23 +4,21 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 //import "./Product.module.css";
 import { BTNCarritoDeCompras } from "../../utils/ComponentsStyle";
-import {SiMercadopago} from 'react-icons/si'
+import { SiMercadopago } from "react-icons/si";
 
-export const ProductMP = ({carrito}) => {
-console.log(carrito);
+export const ProductMP = ({ cart, userBuy }) => {
+  const dataCompra = { cart, userBuy };
+  // console.log(dataCompra);
   const [preferenceId, setPreferenceId] = useState(null);
 
   //eL DATO ENTRE PARENTESIS DEBE SER UNA VARIABLE DE ENTORNO CUANDO ESTE EN PRODUCCION
   initMercadoPago("TEST-6368b1f4-05a9-4581-9bf5-48dbe95009b4");
 
-  const createPreference = async ({cart,userBuy}) => {
+  const createPreference = async () => {
     try {
       const response = await axios.post(
         "http://localhost:3001/MP/create_preference",
-        {
-          cart,
-          userBuy,
-        }
+        dataCompra
       );
 
       const { id } = response.data;
@@ -46,8 +44,12 @@ console.log(carrito);
     },
   };
   return (
-    <div>      
-      {!preferenceId && <BTNCarritoDeCompras alter="true" onClick={handleBuy}><span></span>Pagar con Mercado Pago</BTNCarritoDeCompras>}
+    <div>
+      {!preferenceId && (
+        <BTNCarritoDeCompras alter="true" onClick={handleBuy}>
+          <span></span>Pagar con Mercado Pago
+        </BTNCarritoDeCompras>
+      )}
       {preferenceId && (
         <Wallet
           customization={customization}
