@@ -10,9 +10,10 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import TerminosCondiciones from "../pages/Terminos&Condiciones";
 import Privacidad from "../pages/Privacidad";
 import Preguntas from "../pages/Preguntas";
-import SobreNosotros from '../pages/SobreNosotros/SobreNosotros';
+import SobreNosotros from "../pages/SobreNosotros/SobreNosotros";
 import Contacto from "../pages/Contacto";
 import MiCuenta from "../pages/MiCuenta";
+import { Resumen } from "../components/Resumen";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -20,6 +21,7 @@ import {
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { HeaderCheckout } from "../components/HeaderCheckout";
 import { FooterCheckOut } from "../components/FooterCheckout";
+import { Resumen } from "../components/Resumen";
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -54,9 +56,10 @@ const MyRoutes = () => {
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />
+          <Route path="/shopping/resumen" element={<Resumen />} />
         </Route>
-        <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
-        <Route path="/privacidad" element={<Privacidad/>} />
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
+        <Route path="/privacidad" element={<Privacidad />} />
         <Route path="/preguntas" element={<Preguntas />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/contacto" element={<Contacto />} />
