@@ -21,7 +21,7 @@ export default function HomePage() {
 
   const [show, setShow] = useState(false);
   
-  const showOpen = show.toString();
+  //const showOpen = show.toString();
 
   //funciones de paginacion
   const [page, setPage] = useState(1);
@@ -54,7 +54,7 @@ export default function HomePage() {
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
-        <Drawer show={show} setPage={setPage} />
+        <Drawer show={show.toString()} setPage={setPage} />
       </div>
       <section className="main-card">
         <CardContext pagination={PaginacionRelojes} />
@@ -94,12 +94,11 @@ export default function HomePage() {
 }
 
 const ContainerMostrador = styled.div`
-  width: 100%;
-  min-height: 500px;
-  height: 180vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    min-height: 180vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
   .sidebar {
     width: ${(props) => (props.show === "true" ? "200px" : "0")};
     height: 100%;
@@ -107,11 +106,15 @@ const ContainerMostrador = styled.div`
     transition: all 0.3s ease-in-out;
     position: relative;
     border-radius: 0 10px 10px 0;
+    display: flex;
+    transition: 1s;
+    margin-left: 0px;
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show === "true" ? "200px" : "0px")};
+      right: ${(props) => (props.show === "true" ? "-199px" : "0px")};
       top: 30px;
       transition: all 0.3s ease-in-out;
+      position: relative;
       button {
         width: 40px;
         height: 150px;

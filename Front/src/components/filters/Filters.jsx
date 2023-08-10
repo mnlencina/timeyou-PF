@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
 
-export const FiltersAll = ({ setPage }) => {
+export const FiltersAll = ({ setPage,show }) => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedStyles, setSelectedStyles] = useState([]);
   const [selectedStraps, setSelectedStraps ] = useState([]);
@@ -19,25 +19,28 @@ export const FiltersAll = ({ setPage }) => {
 
   const watches = useSelector((state)=> state.Clocks)
 
-useEffect(()=> {
- dispatch(getBrands())
- dispatch( getColor() )
- dispatch(getFunctions()) 
- dispatch(getStraps())
- dispatch(getStyles())
-}, [])
+  const BRANDS = useSelector((state)=> state.BRANDS)
+  const STYLES = useSelector((state)=> state.STYLES)
+  const COLORS = useSelector((state)=> state.COLORS) 
+  const STRAPS = useSelector((state)=> state.STRAPS) 
+  const FUNCTIONS = useSelector((state)=> state.FUNCTIONS)
 
 
-  const brands= useSelector((state)=> state.allBrands.map(item => item.name));
+  const brands= BRANDS.map(item => item.name);
   const sortedBrands = brands.slice().sort((a, b) => a.localeCompare(b));
-  const styles= useSelector((state)=> state.allStyles.map(item => item.name));
+  
+  const styles= STYLES.map(item => item.name);
   const sortedStyles = styles.slice().sort((a, b) => a.localeCompare(b));
-  const straps= useSelector((state)=> state.allStraps.map(item => item.name));
+  
+  const straps= STRAPS.map(item => item.name);
   const sortedStraps = straps.slice().sort((a, b) => a.localeCompare(b));
-  const colors= useSelector((state)=> state.allColors.map(item => item.name));
+  
+  const colors= COLORS.map(item => item.name);
   const sortedColors = colors.slice().sort((a, b) => a.localeCompare(b));
-  const functions= useSelector((state)=> state.allFunctions.map(item => item.name));
+  
+  const functions= FUNCTIONS.map(item => item.name);
   const sortedFunctions = functions.slice().sort((a, b) => a.localeCompare(b));
+  
   const genders= ["female", "male", "unisex"]
   const sortedGenders = genders.slice().sort((a, b) => a.localeCompare(b));
 
@@ -111,7 +114,7 @@ useEffect(()=> {
 
 
   return (
-    <FilterContainer>
+    <FilterContainer show={show}>
        <FilterGroup>
         <h3>Marcas</h3>
         {sortedBrands.map((brand) => (
@@ -201,26 +204,41 @@ useEffect(()=> {
 
 
 const FilterContainer = styled.div`
-width: 100%;
-min-height: 100%; 
-display: flex;
-flex-direction: column;
-font-size: 15px;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    transition: 1s;
+    ${(props)=>(props.show !== "true" && "position: absolute")};
+    ${(props)=>(props.show !== "true" && "left: -1000px")};
+    
+    //width: 2px;
+      //height: 1px;
+      //position: absolute;
+      //left: -1000px;
 `;
 
 const FilterGroup = styled.div`
-  margin-bottom: 15px;
+    width: 20%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    transition: 1s;
+    margin: 10px;
+   
+     
+    }
 
-  h3 {
-    margin-bottom: 5px;
-    font-size: 1.5em;
-  }
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  gap: 8px;
+    justify-content: space-between;
+    margin: 10px;
+    gap: 8px;
 `;
 
 const Button = styled.button`
@@ -251,7 +269,7 @@ const CheckboxLabel = styled.label`
 `;
 
 const CheckboxInput = styled.input`
-margin-right: 5px;
+margin-right: 2px;
 /* Oculta el checkbox nativo */
 
 
