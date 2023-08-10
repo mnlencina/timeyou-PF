@@ -13,22 +13,14 @@ console.log(carrito);
   //eL DATO ENTRE PARENTESIS DEBE SER UNA VARIABLE DE ENTORNO CUANDO ESTE EN PRODUCCION
   initMercadoPago("TEST-6368b1f4-05a9-4581-9bf5-48dbe95009b4");
 
-  const createPreference = async () => {
+  const createPreference = async ({cart,userBuy}) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/MP/create_preference",
-        [{
-          description: "COMPRA CARRO",
-          price: 1000,
-          quantity: 1,
-          currency_id: "ARS",
-        },
         {
-          description: "SUPER COMPRA",
-          price: 2000,
-          quantity: 2,
-          currency_id: "ARS",
-        }]
+          cart,
+          userBuy,
+        }
       );
 
       const { id } = response.data;

@@ -105,7 +105,7 @@ function Shopping() {
                   <Acordion className={toogle ? "active" : ""}>
                     <div className="MP">
                       <div className="btn">
-                        <ProductMP carrito={cart} />
+                        <ProductMP cart={cart} userBuy={user.id} />
                       </div>
                     </div>
                     <hr />

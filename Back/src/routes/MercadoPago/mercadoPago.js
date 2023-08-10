@@ -13,10 +13,10 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
 
   try {
     let preference = {
-      items: shoppingCart.carrito.map((items) => ({
-        title: items.description, //`${items.brandName} - ${items.model}`,
-        unit_price: items.price, //Number(items.price),
-        quantity: items.quantity, //Number(shoppingCart.quantity),
+      items: shoppingCart.cart.map((items) => ({
+        title: `${items.brandName} - ${items.model}`,
+        unit_price: Number(items.price),
+        quantity: Number(shoppingCart.quantity),
         currency_id: "ARS",
       })),
 
