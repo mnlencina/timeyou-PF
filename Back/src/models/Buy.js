@@ -11,19 +11,19 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        alloNull: false,
+        allowNull: false,
       },
       provider: {
         type: DataTypes.STRING,
-        alloNull: false,
+        allowNull: false,
       },
       total: {
         type: DataTypes.INTEGER,
-        alloNull: false,
+        allowNull: false,
       },
       card: {
         type: DataTypes.JSONB,
-        alloNull: false,
+        allowNull: false,
       },
     },
     { timestamps: false }

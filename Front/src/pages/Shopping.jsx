@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BTNHover } from "../utils/ComponentsStyle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
-import { setCart, totalPrice } from "../redux/Actions";
-import { ProductMP } from "../components/mercadoPago/MercadoPago";
+import { setCart, totalPrice, updateCart } from "../redux/Actions";
+import { ProductMP } from "../components/mp/MercadoPago";
 import { BsStripe } from "react-icons/bs";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
@@ -22,8 +22,11 @@ function Shopping() {
   const user = useSelector((state) => state.user);
   const userName = user.userName;
   const cart = useSelector((state) => state.Cart);
+  let brandCart = cart?.map((e) => e.model);
+  let modelString = brandCart.toString();
 
   const [toogle, setToogle] = useState(false);
+  
 
   const compraTotal = Math.floor(
     cart?.reduce((acc, e) => acc + e.price, 0) * 500
@@ -33,19 +36,26 @@ function Shopping() {
     setToogle(!toogle);
   };
 
-  const handleStripeButton = async (event) => {
+  const handleStripeButton = async () => {
     try {
       const stripe = await stripePromise;
       const response = await axios.post(
-        "http://localhost:3001/api/payment/create-checkout-session"
+        "http://localhost:3001/payment/create-checkout-session",
+        {
+          userName: user.userName,
+          model: modelString,
+          amount: compraTotal,
+        }
       );
       const session = response.data;
       const result = await stripe.redirectToCheckout({
         sessionId: session.sessionId,
       });
-
+      console.log(result);
       if (result.error) {
         console.error(result.error.message);
+      } else {
+        dispatch(updateCart());
       }
     } catch (error) {
       console.error("Error:", error.message);

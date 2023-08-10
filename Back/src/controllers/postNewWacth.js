@@ -1,6 +1,6 @@
 const { Watch, Brand, Function, Strap, Style, Color } = require("../db");
 
-const createNewWatch = async (
+const createNewWatch = async ({
   brand,
   model,
   style,
@@ -13,11 +13,11 @@ const createNewWatch = async (
   functions,
   description,
   stock
-) => {
+}) => {
     
     // evaluamos que recibimos los datos completos para crear el nuevo reloj
     if (!brand || !model || !style || !color || !image || !strap || !price || !gender || !functions || !description || !stock) throw new Error("missing data");
-  
+    
     const comprobacion = await Watch.findOne({
       where: { model: model },
       include: [
@@ -43,6 +43,7 @@ const createNewWatch = async (
       gender,
       review,
       description,
+      stock
     });
   
     const brandModel = await Brand.findOne({ where: { name: brand } });

@@ -48,13 +48,12 @@ mercadoPagoRouter.post("/notification", async (req, res) => {
   const transactionId = req.body.data.id;
   const url = `https://api.mercadopago.com/v1/payments/${transactionId}`;
 
-  // console.log(transactionId);
-  // console.log(url);
+  
   try {
     const { data } = await axios.get(url, {
       headers: { authorization: `Bearer ${MERCADO_PAGO}` },
     });
-    // console.log(data);
+    
     const {
       id,
       card,

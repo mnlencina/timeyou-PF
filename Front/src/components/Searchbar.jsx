@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchProduct , updateSelectedCategories} from "../redux/Actions.js";
-import { useNavigate } from "react-router-dom";
+import { getProducts, searchProduct } from "../redux/Actions.js";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
+import Swal from 'sweetalert2';
 
 import { InstantSearch } from "react-instantsearch-dom";
 import { searchClient } from "../settings_algolia/settingsAlgolia.js";
@@ -68,60 +68,60 @@ const SearchButton = styled.button`
 
 
 export const Searchbar = ({ setShowSearch, setInputHover }) => {
+
   const [searchTerm, setSearchTerm] = useState("");
-  const selectedCategories = useSelector((state)=> state.selectedCategories)
+  const dispatch = useDispatch()
+  const watches = useSelector((state)=> state.Clocks)
 
-  const allTerms = searchTerm.concat(" ", selectedCategories)
-const uniqueCategories = new Set(allTerms.split(" "));
-const allSearch = [...uniqueCategories].join(" ");
+  const navbarTerms = useSelector((state)=> state.selectedCategories)  
+  console.log("navbarTerms" , navbarTerms)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const clocks = useSelector((state) => state.Clocks);
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+    resetSearchTerm();
 
-  console.log("Selected All categories", allSearch)
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.currentTarget.value);
-   // dispatch(updateSelectedCategories(selectedCategories))
+    const searchTerms = searchTerm.toLowerCase().split(" ");
+    const filtered = watches.filter((watch) => {
+      return searchTerms.every((term) => {
+        return (
+          watch.model.toLowerCase().includes(term) ||
+          watch.brandName.toLowerCase().includes(term) ||
+          watch.colorName.toLowerCase().includes(term) ||
+          watch.styleName.toLowerCase().includes(term) ||
+          watch.strapName.toLowerCase().includes(term) ||
+          (watch.Functions && watch.Functions.some((func) => func.name.toLowerCase().includes(term)))
+        );
+      });
+    });
+     
+    const allTerms = searchTerms.concat(navbarTerms)
+    dispatch(searchProduct(allTerms)); // Actualiza el estado global
+    
+    if (filtered.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        color: 'black',
+        text: 'No se encontraron relojes en la búsqueda.',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+        }
+      });
+      dispatch(getProducts());
+    }
   };
   
-
-  useEffect(() => {
-
-    if (allSearch.trim() !== "") {
-      console.log("ALLSEARCH TRIM", allSearch.trim())
-      const searchTerms = allSearch.split(" ");
-      console.log("ALLSEARCH SPLIT", searchTerms)
-      dispatch(searchProduct(searchTerms));
-    }
-  }, [allSearch, dispatch]); 
-
-  const onSearchSubmit = (event) => {
-    event.preventDefault();
-    if (allSearch.trim() === "") {
-      const searchTerms = allSearch.split(" ");
-      dispatch(searchProduct(searchTerms));
-    //  dispatch(updateSelectedCategories(allSearch))
-    }
-    if(searchTerm.length  === 0) {
-      dispatch(updateSelectedCategories(""))
-      alert("Debes ingresar al menos un dato para realizar una búsqueda");
-     return;
-    }
-    
-    navigate("/home");
-   setSearchTerm("");
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const resetSearchTerm = () => {
     setSearchTerm("");
-    
   };
 
   return (
     <SearchContainer>
-      <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
+       <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}
           onMouseEnter={() => setInputHover(true)}
@@ -142,7 +142,7 @@ const allSearch = [...uniqueCategories].join(" ");
             <BsSearch />
           </SearchButton>
         </FormContainer>
-      </InstantSearch>
+        </InstantSearch>
     </SearchContainer>
   );
 };
