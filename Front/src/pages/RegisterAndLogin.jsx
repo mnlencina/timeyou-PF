@@ -205,7 +205,7 @@ function RegisterAndLogin() {
             <AiOutlineLock />
             <input
               type="password"
-              placeholder="ingrese una contraseña"
+              placeholder="ingrese una contraseña..."
               name="password"
               value={registerValues.password}
               onChange={handleChangeRegister}
@@ -234,7 +234,7 @@ function RegisterAndLogin() {
           <div className="input-field">
             <AiOutlineMail />
             <input
-              placeholder="Ingrese su email.."
+              placeholder="Ingrese su email..."
               type="text"
               name="email"
               value={loginAcount.email}
@@ -261,7 +261,7 @@ function RegisterAndLogin() {
               onChange={handleChangeLogin}
             />
           </div>
-          <BTNLogin>Login</BTNLogin>
+          <BTNLogin>Ingresar</BTNLogin>
           <div className="login-btn">
             <button>
               <FaFacebookF />
@@ -280,18 +280,18 @@ function RegisterAndLogin() {
       {renderRegister()}
       <div className={`panel-login${inModeLogin ? " active-login" : ""}`}>
         <div className="panel">
-          <h2>Ya tienes una cuenta</h2>
-          <h4>haz Click para iniciar secion</h4>
-          <button onClick={handleInMode}>ir a login</button>
+          <h2>¿Ya tienes una cuenta?</h2>
+          <h4>Haz Click para iniciar sesion</h4>
+          <button onClick={handleInMode}>iniciar</button>
         </div>
       </div>
       <div
         className={`panel-register${!inModeLogin ? " active-register" : ""}`}
       >
         <div className="panel">
-          <h2>No tienes una cuenta?</h2>
-          <h4>haz Click para registrarte</h4>
-          <button onClick={handleInMode}>register</button>
+          <h2>¿No tienes una cuenta?</h2>
+          <h4>Haz Click para registrarte</h4>
+          <button onClick={handleInMode}>registrate</button>
         </div>
       </div>
       <TransitionDiv inModeLogin={inModeLogin} />
