@@ -10,7 +10,11 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
-  CLEAR_FILTERS,
+  GET_BRANDS,
+  GET_STYLES,
+  GET_STRAPS,
+  GET_COLORS,
+  GET_FUNCTIONS,
   UPDATE_SELECTED_CATEGORIES,
   TOTAL_PRICE,
   UPDATE_PRICE,
@@ -143,48 +147,93 @@ export const searchProductFailure = (error) => ({
 });
 
 // Filters
-export const filtersAll = (filterBrands) => (dispatch, getState) => {
-  const state = getState();
-  console.log("estado:", state, "filterBrands:", filterBrands);
-  const { Clocks } = state;
-
-  const filterActive = Object.values(filterBrands).some((selected) => selected);
-
-  // Realiza el filtrado adicional si hay categorías seleccionadas
-  let filteredClocks = Clocks;
-  if (filterActive) {
-    filteredClocks = Clocks.filter((product) => {
-      let matchesAllCategories = true;
-      for (const fieldName in filterBrands) {
-        const selectedValue = filterBrands[fieldName];
-        if (selectedValue && product[fieldName] !== selectedValue) {
-          matchesAllCategories = false;
-          break;
-        }
-      }
-      return matchesAllCategories;
-    });
-  }
-
-  dispatch({
+export const applyFilters = (filteredWatches) => async (dispatch) => {
+  dispatch({ 
     type: FILTERS,
-    payload: filteredClocks,
-  });
-};
+    payload: filteredWatches
+});
+}
 
-// Acción para limpiar los filtros
-export const clearFilters = () => (dispatch) => {
-  // Aquí dispatch la acción para restablecer los filtros en el estado del Redux
-  dispatch({
-    type: CLEAR_FILTERS,
-    payload: "",
-    });
-};
+export const getBrands = () => {
+  const endpoint = `http://localhost:3001/brands`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+           dispatch({
+        type: GET_BRANDS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getColor = () => {
+  const endpoint = `http://localhost:3001/colors`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+      dispatch({
+        type: GET_COLORS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getStraps = () => {
+  const endpoint = `http://localhost:3001/straps`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+        dispatch({
+        type: GET_STRAPS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getStyles= () => {
+  const endpoint = `http://localhost:3001/styles`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+       dispatch({
+        type: GET_STYLES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getFunctions= () => {
+  const endpoint = `http://localhost:3001/functions`;
+  return async function (dispatch) {
+    try {
+      let { data } = await axios(endpoint);
+       dispatch({
+        type: GET_FUNCTIONS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export const updateSelectedCategories = (selectedCategories) => ({
   type: UPDATE_SELECTED_CATEGORIES,
   payload: selectedCategories,
 });
+
 //TRAER TODOS LAS PROPIEDADES DE RELOJES
 
 export function allPropWatches(prop) {
@@ -224,7 +273,7 @@ export function allPropWatches(prop) {
 }
 
 export function postWatch(watch) {
-  const endpoint = `http://localhost:3001/watches/`;
+  const endpoint = `http://localhost:3001/watches`;
   return async function (dispatch) {
     try {
       let newWatch = await axios.post(endpoint, watch);
@@ -234,9 +283,8 @@ export function postWatch(watch) {
         payload: newWatch,
       });
       alert("La Carga del WATCH fue con Exito!!");
-      //location.reload();
     } catch (error) {
-      alert("Verifique si el MODELO en ese COLOR ya Existe");
+      alert("Verifique los datos",{error});
     }
   };
 }

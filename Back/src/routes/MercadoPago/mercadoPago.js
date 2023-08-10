@@ -47,10 +47,11 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
 
 mercadoPagoRouter.post("/notification", async (req, res) => {
   const transactionId = req.body.data.id;
-
+  console.log("ID transaccion", transactionId);
   try {
-    await dataBuysMP(transactionId);
-
+    const datoBuy = await dataBuysMP(transactionId);
+    console.log(datoBuy);
+    
     res.status(200).send("OK");
   } catch (error) {
     res.status(500).json({ Error: error.message });

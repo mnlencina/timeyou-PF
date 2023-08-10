@@ -9,8 +9,12 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
+  GET_BRANDS,
+  GET_STYLES,
+  GET_STRAPS,
+  GET_COLORS,
+  GET_FUNCTIONS,
   UPDATE_SELECTED_CATEGORIES,
-  CLEAR_FILTERS,
   TOTAL_PRICE,
   UPDATE_PRICE,
   ALL_BRANDS,
@@ -49,6 +53,11 @@ const initialState = {
   searchClocks: [],
   searchActive: false,
   filteredClocks: [],
+  allBrands: [],
+  allColors:[],
+  allStyles: [],
+  allStraps:[],
+  allFunctions:[],
   selectedCategories: "",
   Cart: [],
   isLoadingCart: true,
@@ -174,46 +183,44 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailLoading: true,
         detailClock: [],
       };
-    case FILTERS:
-      // eslint-disable-next-line no-case-declarations
-      const filterBrands = payload || {};
-      console.log("filterBrands", filterBrands);
-
-      // eslint-disable-next-line no-case-declarations
-      const filterActive = Object.values(filterBrands).some(
-        (selected) => selected
-      );
-      console.log(filterActive);
-
-      // eslint-disable-next-line no-case-declarations
-      let filteredClocks = state.allClocks;
-      if (filterActive) {
-        filteredClocks = state.allClocks.filter((product) => {
-          let matchesAllCategories = true;
-          for (const fieldName in filterBrands) {
-            const selectedValue = filterBrands[fieldName];
-            if (selectedValue && product[fieldName] !== selectedValue) {
-              matchesAllCategories = false;
-              break;
-            }
-          }
-          return matchesAllCategories;
-        });
-      }
+      case FILTERS:
 
       return {
         ...state,
-        Clocks: filterBrands,
+        Clocks: payload,
         isLoading: false,
         error: null,
         searchActive: true,
       };
-      case CLEAR_FILTERS:
-      return {
-        ...state,
-        selectedCategories: payload, 
-      };
+      
+      case GET_BRANDS:
+        return {
+          ...state,
+          allBrands: payload
+        }
+      case GET_COLORS:
+         return {
+            ...state,
+            allColors: payload
+          }
+      case GET_STYLES:
+        return {
+              ...state,
+              allStyles: payload
+            }  
+      case GET_STRAPS:
+         return {
+           ...state,
+          allStraps: payload
+              }
+      case GET_FUNCTIONS:
+                return {
+                  ...state,
+                 allFunctions: payload
+                     }
+
       case UPDATE_SELECTED_CATEGORIES:
+       // console.log("navbar terms", payload )
       return {
         ...state,
         selectedCategories: payload + " ",

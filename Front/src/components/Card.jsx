@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export const Card = ({ watch }) => {
+
+  if (!watch || typeof watch !== 'object') {
+    return []; 
+  }
+  
   const navigate = useNavigate();
   const cleanedWatch = {};
   Object.keys(watch).forEach((key) => {

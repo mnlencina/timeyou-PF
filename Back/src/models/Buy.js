@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
         alloNull: false,
       },
       card: {
-        type: DataTypes.STRING,        
+        type: DataTypes.JSONB,        
         alloNull: false,
       },
     },

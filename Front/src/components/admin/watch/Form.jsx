@@ -118,10 +118,11 @@ function FormWatch({btnClose}) {
       && watch.description !== "" 
       && 
         dispatch(postWatch(watch))
-        setWatch({
-          ...watch,
-          image: [],
-        })
+       // setWatch({
+       //   ...watch,
+       //   image: [],
+       // })
+       console.log(watch);
         dispatch(getProducts())
     
   }
