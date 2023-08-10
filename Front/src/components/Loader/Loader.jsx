@@ -34,10 +34,10 @@ const Container = styled.div`
 
     .fijo {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 51%;
+      left: 48%;
       transform: translate(-50%, -50%);
-      width: 100px;
+      width: 110px;
     }
     .movil {
       position: absolute;
