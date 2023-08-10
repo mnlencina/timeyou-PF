@@ -17,8 +17,12 @@ export const SEARCH_PRODUCT_FAILURE = "SEARCH_PRODUCT_FAILURE";
 
 //Filters
 export const FILTERS = "FILTERS";
-export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const UPDATE_SELECTED_CATEGORIES = "UPDATE_SELECTED_CATEGORIES";
+export const GET_BRANDS = "GET_BRANDS"
+export const GET_STYLES = "GET_STYLES"
+export const GET_STRAPS = "GET_STRAPS"
+export const GET_COLORS = "GET_COLORS"
+export const GET_FUNCTIONS = "GET_FUNCTIONS"
 
 //todos los datos de las tablas
 export const ALL_BRANDS = "ALL_BRANDS";
