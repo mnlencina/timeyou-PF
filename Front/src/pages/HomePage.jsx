@@ -95,7 +95,7 @@ export default function HomePage() {
 
 const ContainerMostrador = styled.div`
     width: 100%;
-    min-height: 180vh;
+    height: 100%;
     display: flex;
     align-items: flex-start;
     justify-content: center;

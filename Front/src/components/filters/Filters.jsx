@@ -222,30 +222,26 @@ const FilterContainer = styled.div`
 `;
 
 const FilterGroup = styled.div`
-    width: 20%;
+    width: 100%;
     min-height: 100%;
     display: flex;
     flex-direction: column;
     font-size: 12px;
     transition: 1s;
-    margin: 10px;
-   
-     
-    }
+    //margin: 10px;
 
 `;
 const ButtonContainer = styled.div`
-  display: flex;
+    display: flex;
     justify-content: space-between;
     margin: 10px;
     gap: 8px;
 `;
 
 const Button = styled.button`
-  padding: 0 auto;
-  margin: 0 auto;
-  background-color: #fff
-  color: white;
+  
+  background-color: #d5cece;
+  color: #161515;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -261,15 +257,17 @@ const Button = styled.button`
 `;
 
 const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  cursor: pointer;
-  text-transform: capitalize;
+    display: flex;
+    cursor: pointer;
+    text-transform: capitalize;
+    flex-direction: row;
+    align-items: stretch;
 `;
 
 const CheckboxInput = styled.input`
-margin-right: 2px;
+margin: 2px;
+display: flex;
+
 /* Oculta el checkbox nativo */
 
 

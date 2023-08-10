@@ -38,7 +38,8 @@ const Container = styled.section`
     /* se agrega template row */
     grid-template-rows: repeat(3, 1fr);
     align-items: start;
-    justify-items: center;
+    justify-items: center;    
+    gap: 40px
   }
   @media (max-width: 768px) {
     .context-card {
