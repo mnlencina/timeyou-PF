@@ -46,6 +46,7 @@ const Container = styled.article`
   transition: 0.3s;
   z-index: 20;
   pointer-events: all;
+  cursor: pointer;
   &:hover {
     transform: translateY(-1px) translateX(1px);
     opacity: 1;

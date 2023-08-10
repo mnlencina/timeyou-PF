@@ -142,19 +142,7 @@ function RegisterAndLogin() {
     <ContainerRegister>
       <h1>registrarse</h1>
       <div className="register-container">
-        {/* <div className="container-btn">
-          <div className="content">
-            <p>Registrate con plataformas sociales</p>
-          </div>
-          <div className="btn-controllers">
-            <button>
-              <FaFacebookF />
-            </button>
-            <button onClick={handleOnClick}>
-              <BsGoogle />
-            </button>
-          </div>
-        </div> */}
+        
         <form
           action="POST"
           onSubmit={handleSubmitRegister}
@@ -220,16 +208,9 @@ function RegisterAndLogin() {
   console.log(errorLogin.n1);
   const renderLogin = () => (
     <ContainerLogin>
-      <h1>Iniciar sesion</h1>
       <div className="login-container">
-        {/* <div className="login-btn">
-          <button>
-            <FaFacebookF />
-          </button>
-          <button>
-            <BsGoogle onClick={handleOnClick} />
-          </button>
-        </div> */}
+      <h1 className="iniciar">Iniciar sesion</h1>
+       
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <div className="input-field">
             <AiOutlineMail />
@@ -263,9 +244,9 @@ function RegisterAndLogin() {
           </div>
           <BTNLogin>Ingresar</BTNLogin>
           <div className="login-btn">
-            <button>
+            {/* <button>
               <FaFacebookF />
-            </button>
+            </button> */}
             <button>
               <BsGoogle onClick={handleOnClick} />
             </button>
@@ -509,10 +490,11 @@ const ContainerRegister = styled.div`
 const ContainerLogin = styled.div`
   width: 50%;
   height: 100%;
-  h1 {
-    width: 100%;
-    margin-left: 235px;
-    margin-top: 95px;
+  
+  .iniciar {
+    //width: 100%;
+    //display: flex;
+    margin-top: 10%;
     text-transform: uppercase;
     text-decoration: underline;
   }
@@ -520,6 +502,9 @@ const ContainerLogin = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
     .login-btn {
       bottom: 60px;
       right: 240px;
@@ -546,17 +531,15 @@ const ContainerLogin = styled.div`
       }
     }
     .login {
-      position: absolute;
-      top: 150px;
-      right: 150px;
       width: 350px;
-      height: 350px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-evenly;
-      border-radius: 30px;
-      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 30px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    
       .input-field {
         width: 90%;
         background-color: #f0f0f0;
