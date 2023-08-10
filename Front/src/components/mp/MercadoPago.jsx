@@ -44,19 +44,15 @@ export const ProductMP = ({ cart, userBuy }) => {
     },
   };
   return (
-    <div>
-      {!preferenceId && (
-        <BTNCarritoDeCompras alter="true" onClick={handleBuy}>
-          <span></span>Pagar con Mercado Pago
-        </BTNCarritoDeCompras>
-      )}
+    <>      
+      {!preferenceId && <BTNCarritoDeCompras alter="true" onClick={handleBuy}><span><SiMercadopago/></span>Pagar con MP</BTNCarritoDeCompras>}
       {preferenceId && (
         <Wallet
           customization={customization}
           initialization={{ preferenceId }}
         />
       )}
-    </div>
+    </>
   );
 };
 
