@@ -29,7 +29,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
     res.json({ sessionId: session.id });
 
-    const newBuy = await postNewBuy(userName,model); 
+    const newBuy = await postNewBuy(userName,model,amount); 
 
   } catch (error) {
     console.log(error);
