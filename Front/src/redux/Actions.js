@@ -224,7 +224,7 @@ export function allPropWatches(prop) {
 }
 
 export function postWatch(watch) {
-  const endpoint = `http://localhost:3001/watches/`;
+  const endpoint = `http://localhost:3001/watches`;
   return async function (dispatch) {
     try {
       let newWatch = await axios.post(endpoint, watch);
@@ -234,9 +234,8 @@ export function postWatch(watch) {
         payload: newWatch,
       });
       alert("La Carga del WATCH fue con Exito!!");
-      //location.reload();
     } catch (error) {
-      alert("Verifique si el MODELO en ese COLOR ya Existe");
+      alert("Verifique los datos",{error});
     }
   };
 }
