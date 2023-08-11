@@ -13,7 +13,7 @@ import Preguntas from "../pages/Preguntas";
 import SobreNosotros from "../pages/SobreNosotros/SobreNosotros";
 import Contacto from "../pages/Contacto";
 import MiCuenta from "../pages/MiCuenta";
-import { Resumen } from "../components/Resumen";
+
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
