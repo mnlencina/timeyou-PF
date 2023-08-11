@@ -90,17 +90,14 @@ export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
 
 
   const sAlert = ()=> {
-     Swal.fire({
-      icon: 'error',
-      color: 'black',
-      text: 'No se encontraron relojes en la búsqueda.',
-      confirmButtonText: 'Aceptar',
-      customClass: {
-        confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
-      }
-    });
-    dispatch(getProducts());
-  }
+    Swal.fire({
+     icon: 'error',
+     title: 'No se encontraron relojes en la búsqueda.',
+     showConfirmButton: false,
+     timer: 1500
+   })
+   dispatch(getProducts());
+ }
 
 
   const handleSearch = (e) => {

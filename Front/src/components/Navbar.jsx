@@ -15,12 +15,15 @@ import {
   updateSelectedCategories,
 } from "../redux/Actions.js";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
+import './navbar.css';
 
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [selectedLink, setSelectedLink] = useState(null);
 
   const itemCount = cart?.length;
 
@@ -33,13 +36,14 @@ export const Navbar = () => {
 
   const handleLinkClick = (brand) => {
     const brandLowerCase = brand.toLowerCase();
-
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
       dispatch(updateSelectedCategories([]))
-    } else {
+      setSelectedLink(brand);
+    }else{
       dispatch(getWatchesByBrand(brandLowerCase));
       dispatch(updateSelectedCategories(brandLowerCase))
+      setSelectedLink(brand);
     }
   };
 
@@ -71,28 +75,28 @@ export const Navbar = () => {
       <nav className="navigation">
         <ul className="nav">
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("ver todo")}>
-              ver todo
+            <StyledLink to="/home" onClick={() => handleLinkClick("ver todo")} className={selectedLink === "ver todo" ? "selected" : ""}>
+              Catálogo
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("festina")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("festina")} className={selectedLink === "festina" ? "selected" : ""}>
               festina
             </StyledLink>
           </li>
           <li>
             {" "}
-            <StyledLink to="/home" onClick={() => handleLinkClick("citizen")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("citizen")} className={selectedLink === "citizen" ? "selected" : ""}>
               citizen
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("mistral")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("mistral")} className={selectedLink === "mistral" ? "selected" : ""}>
               mistral
             </StyledLink>
           </li>
           <li>
-            <StyledLink to="/home" onClick={() => handleLinkClick("prune")}>
+            <StyledLink to="/home" onClick={() => handleLinkClick("prune")} className={selectedLink === "prune" ? "selected" : ""}>
               prÜne
             </StyledLink>
           </li>
