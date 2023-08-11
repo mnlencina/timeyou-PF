@@ -25,6 +25,8 @@ function DetailPage() {
   const user = useSelector((state) => state.user);
   const isLoggedIn = !!user.token;
   const cart = useSelector((state) => state.Cart);
+  
+  
 
   console.log(cart);
 

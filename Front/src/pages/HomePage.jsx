@@ -14,6 +14,9 @@ import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 export default function HomePage() {
   const { Clocks, allClocks, searchActive } = useSelector((state) => state);
   const whatches = searchActive ? Clocks : allClocks;
+  
+  const watchDel1 = whatches.filter(watch => watch.stock > 0);
+  const watchDel = watchDel1.filter(watch => watch.del === false);
 
   const loading = useSelector((state) => state.isLoading);
 
@@ -24,15 +27,15 @@ export default function HomePage() {
   //funciones de paginacion
   const [page, setPage] = useState(1);
   const itemPerPage = 12;
-  const totalPages = Math.ceil(whatches && (whatches.length / itemPerPage)) 
+  const totalPages = Math.ceil(watchDel && (watchDel.length / itemPerPage)) 
 
   const paginacion = () => {
     const startIndex = (page - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
-    if (whatches && whatches.length) return whatches.slice(startIndex, endIndex);
+    if (watchDel && watchDel.length) return watchDel.slice(startIndex, endIndex);
   };
 
-  const PaginacionRelojes = paginacion();
+  const PaginacionRelojes = paginacion()
 
   const onNextPage = () => {
     if (page < totalPages) {

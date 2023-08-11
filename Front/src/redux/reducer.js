@@ -103,9 +103,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
       };
     case GET_PRODUCTS_DETAIL:
+      const watchDel1 = payload.filter(watch => watch.stock > 0);
+      const watchDel = watchDel1.filter(watch => watch.del === false);
       return {
         ...state,
-        detailClock: payload,
+        detailClock: watchDel,
         detailLoading: false,
       };
     //Searchbar
