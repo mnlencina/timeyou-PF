@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {buyFinishClear} from "../redux/actions/buys/buyFinishClearCart"
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { updateWatch } from "../redux/actions/admin/updateWatch";
+import { getProducts } from "../redux/Actions";
 
 const Resumen = () => {
   const navigate = useNavigate();
@@ -14,11 +15,12 @@ const Resumen = () => {
   
 
   const handleClick = (e) => {
-    e.preventDefault();
-    
+    e.preventDefault();    
     cart.map((w) => dispatch(updateWatch(w.id,{stock: (w.stock - w.quantity)})));
     dispatch(buyFinishClear())
-    
+    setTimeout(() => {
+      dispatch(getProducts())      
+    }, 2000);
     navigate("/home");
   };
   
