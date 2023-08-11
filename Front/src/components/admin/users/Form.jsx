@@ -57,9 +57,9 @@ const FormUser =({btnClose})=>{
                 <h2>Nuevo Usuario</h2>
                 <input onChange={handlerChange} type="text" maxLength={10} placeholder="Ingrese el Nombre" name="userName"/>
                 {error.nameUser !== "" && <span>{error.nameUser}</span>}
-                <input onChange={handlerChange} type="text" maxLength={20} placeholder="Ingrese el email" name="email"/>
+                <input onChange={handlerChange} type="text" maxLength={35} placeholder="Ingrese el email" name="email"/>
                 
-                <input onChange={handlerChange} type="password" maxLength={8} placeholder="Ingrese Contraseña" name="password" />
+                <input onChange={handlerChange} type="password" maxLength={10} placeholder="Ingrese Contraseña" name="password" />
                 {error.password !== "" && <span>{error.password}</span>}
                 
                 <button type="submit" className="btnUp" onClick={logUser}>CARGAR</button>
