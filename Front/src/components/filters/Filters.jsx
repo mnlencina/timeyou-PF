@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { applyFilters, getBrands, getColor, getFunctions, getStraps, getStyles, getProducts, updateSelectedCategories} from "../../redux/Actions.js";
+import {
+  applyFilters,
+  getBrands,
+  getColor,
+  getFunctions,
+  getStraps,
+  getStyles,
+  getProducts,
+  updateSelectedCategories,
+} from "../../redux/Actions.js";
 import { translateGender } from "../helpers/translateGenderWords.jsx";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
 export const FiltersAll = ({ setPage, show }) => {
+  const dispatch = useDispatch();
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedStyles, setSelectedStyles] = useState([]);
   const [selectedStraps, setSelectedStraps] = useState([]);
@@ -13,9 +23,14 @@ export const FiltersAll = ({ setPage, show }) => {
   const [selectedGenders, setSelectedGenders] = useState([]);
   const [selectedFunctions, setSelectedFunctions] = useState([]);
 
-
-const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps, ...selectedColors , ...selectedGenders, ...selectedFunctions]
-
+  const filterSelections = [
+    ...selectedBrands,
+    ...selectedStyles,
+    ...selectedStraps,
+    ...selectedColors,
+    ...selectedGenders,
+    ...selectedFunctions,
+  ];
 
   const watches = useSelector((state) => state.Clocks);
 
@@ -103,62 +118,67 @@ const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps
         confirmButtonText: "Aceptar",
       });
       dispatch(getProducts());
+      setPage(1);
     }
 
     // Pasa las selecciones de filtros a la acción applyFilters
     setPage(1);
     dispatch(applyFilters(filteredWatches));
-    dispatch(updateSelectedCategories(filterSelections))
+    dispatch(updateSelectedCategories(filterSelections));
   };
-    const handleClearFilters = () => {
-      dispatch(updateSelectedCategories([]))
-      dispatch(getProducts());
-      setPage(1);
-      setSelectedBrands([]);
-      setSelectedStyles([]);
-      setSelectedStraps([]);
-      setSelectedColors([]);
-      setSelectedGenders([]);
-      setSelectedFunctions([]);
-    };
+  const handleClearFilters = () => {
+    dispatch(updateSelectedCategories([]));
+    dispatch(getProducts());
+    setPage(1);
+    setSelectedBrands([]);
+    setSelectedStyles([]);
+    setSelectedStraps([]);
+    setSelectedColors([]);
+    setSelectedGenders([]);
+    setSelectedFunctions([]);
+  };
 
   return (
     <FilterContainer show={show}>
-      <FilterGroup>
+      <div className="Marcas">
         <div className="title">
           <h3>Marcas</h3>
         </div>
-        <div className="content">
+        <ul className="content">
           {sortedBrands.map((brand) => (
-            <CheckboxLabel key={brand}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedBrands.includes(brand)}
-                onChange={() => handleBrandChange(brand)}
-              />
-              {brand}
-            </CheckboxLabel>
+            <li key={brand}>
+              <CheckboxLabel>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedBrands.includes(brand)}
+                  onChange={() => handleBrandChange(brand)}
+                />
+                {brand}
+              </CheckboxLabel>
+            </li>
           ))}
-        </div>
-      </FilterGroup>
-      <FilterGroup>
+        </ul>
+      </div>
+      <div className="Estilos">
         <div className="title">
           <h3>Estilos</h3>
         </div>
-        <div className="content">
+        <ul className="content">
           {sortedStyles.map((style) => (
-            <CheckboxLabel key={style}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedStyles.includes(style)}
-                onChange={() => handleStyleChange(style)}
-              />
-              {style}
-            </CheckboxLabel>
+            <li key={style}>
+              <CheckboxLabel>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedStyles.includes(style)}
+                  onChange={() => handleStyleChange(style)}
+                />
+                {style}
+              </CheckboxLabel>
+            </li>
           ))}
-        </div>
-      </FilterGroup>
-      <FilterGroup>
+        </ul>
+      </div>
+      <div className="Color">
         <div className="title">
           <h3>Color</h3>
         </div>
@@ -174,24 +194,26 @@ const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps
             </CheckboxLabel>
           ))}
         </div>
-      </FilterGroup>
-      <FilterGroup>
+      </div>
+      <div className="Malla">
         <div className="title">
           <h3>Malla</h3>
         </div>
-        <div className="content">
+        <ul className="content">
           {sortedStraps.map((strap) => (
-            <CheckboxLabel key={strap}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedStraps.includes(strap)}
-                onChange={() => handleStrapChange(strap)}
-              />
-              {strap}
-            </CheckboxLabel>
+            <li key={strap}>
+              <CheckboxLabel>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedStraps.includes(strap)}
+                  onChange={() => handleStrapChange(strap)}
+                />
+                {strap}
+              </CheckboxLabel>
+            </li>
           ))}
-        </div>
-      </FilterGroup>
+        </ul>
+      </div>
       <div className="generos">
         <div className="title">
           <h3>Género</h3>
@@ -209,22 +231,24 @@ const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps
           ))}
         </div>
       </div>
-      <div className="funciones">
+      <div className="Funciones">
         <div className="title">
           <h3>Funciones</h3>
         </div>
-        <div className="content">
-          {sortedFunctions.map((func) => (
-            <CheckboxLabel key={func}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedFunctions.includes(func)}
-                onChange={() => handleFunctionChange(func)}
-              />
-              {func}
-            </CheckboxLabel>
+        <ul className="content">
+          {sortedFunctions.slice(0, 10).map((func) => (
+            <li key={func}>
+              <CheckboxLabel>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedFunctions.includes(func)}
+                  onChange={() => handleFunctionChange(func)}
+                />
+                {func}
+              </CheckboxLabel>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
       <ButtonContainer>
         <Button onClick={handleClearFilters}>Borrar filtros</Button>
@@ -240,7 +264,8 @@ const FilterContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(7, 1fr);
   overflow: hidden;
-
+  position: relative;
+  transition: 0.5s ease-in-out;
   .generos {
     border-bottom: #fff;
     width: 100%;
@@ -249,6 +274,7 @@ const FilterContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #fff;
     .title {
       width: 100%;
       height: 40px;
@@ -270,13 +296,17 @@ const FilterContainer = styled.div`
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      color: #fff;
     }
   }
-  .funciones {
+  .Marcas {
     width: 100%;
-    height: 350px;
+    height: 230px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #fff;
     .title {
       width: 100%;
       height: 40px;
@@ -292,50 +322,157 @@ const FilterContainer = styled.div`
       }
     }
     .content {
-      width: 100%;
-      height: 310px;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      align-content: start;
+      justify-items: center;
+      list-style: none;
+      color: #fff;
     }
   }
-`;
-
-const FilterGroup = styled.div`
-  width: 100%;
-  height: 259px;
-  display: flex;
-  flex-direction: column;
-  .title {
+  .Estilos {
     width: 100%;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
+    height: 300px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    h3 {
+    border-bottom: 1px solid #fff;
+    .title {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        color: #fff;
+        text-align: uppercase;
+        text-decoration: underline;
+      }
+    }
+    .content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      align-items: center;
+      justify-items: center;
+      list-style: none;
       color: #fff;
-      text-align: uppercase;
-      text-decoration: underline;
     }
   }
-  .content {
+  .Color {
     width: 100%;
-    height: calc(259px - 40px);
+    height: 350px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
-    color: #fff;
+    justify-content: center;
+    border-bottom: 1px solid #fff;
+    .title {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        color: #fff;
+        text-align: uppercase;
+        text-decoration: underline;
+      }
+    }
+    .content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      align-items: center;
+      justify-items: center;
+      list-style: none;
+      color: #fff;
+    }
+  }
+  .Funciones {
+    width: 100%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #fff;
+    .title {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        color: #fff;
+        text-align: uppercase;
+        text-decoration: underline;
+      }
+    }
+    .content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      align-items: center;
+      justify-items: center;
+      list-style: none;
+      color: #fff;
+    }
+  }
+  .Malla {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #fff;
+    .title {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        color: #fff;
+        text-align: uppercase;
+        text-decoration: underline;
+      }
+    }
+    .content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      align-items: center;
+      justify-items: center;
+      list-style: none;
+      color: #fff;
+    }
   }
 `;
+
 const ButtonContainer = styled.div`
+  width: 100%;
+  height: 100px;
   display: flex;
-  justify-content: space-between;
-  margin: 10px;
-  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 `;
 
-const Button = styled.button`
+const Button = styled.button` 
+  width: 90px;
+  height: 40px
   background-color: #d5cece;
   color: #161515;
   border: none;
@@ -343,6 +480,7 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 1em;
+  z-index: 9000 ;
   &:hover {
     background-color: gray;
     color: #fff;
@@ -350,10 +488,11 @@ const Button = styled.button`
 `;
 
 const CheckboxLabel = styled.label`
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: flex-start;
   line-height: 16px;
-
   width: 90px;
 `;
 

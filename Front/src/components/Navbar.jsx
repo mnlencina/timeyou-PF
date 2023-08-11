@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser, BiUserX } from "react-icons/bi";
@@ -36,10 +36,10 @@ export const Navbar = () => {
 
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
-      dispatch(updateSelectedCategories([]))
+      dispatch(updateSelectedCategories([]));
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
-      dispatch(updateSelectedCategories(brandLowerCase))
+      dispatch(updateSelectedCategories(brandLowerCase));
     }
   };
 

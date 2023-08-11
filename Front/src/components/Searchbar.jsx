@@ -87,6 +87,7 @@ export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
 
   
     dispatch(searchProduct(searchTerms)); // Actualiza el estado global
+    setShowSearch(!setShowSearch);
     
     /* if (filtered.length === 0) {
       Swal.fire({
@@ -130,12 +131,7 @@ export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
        <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}
-          onMouseEnter={() => setInputHover(true)}
-          onMouseLeave={() => setInputHover(false)}
-          onBlur={() => {
-            setShowSearch(false);
-            setInputHover(false);
-          }}
+         
         >
           <SearchInput
             type="text"
