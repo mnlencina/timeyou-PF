@@ -6,6 +6,7 @@ const express = require("express");
 const mercadopago = require("mercadopago");
 // const dataBuysMP = require("../../controllers/postNotificationMP");
 const mercadoPagoRouter = express.Router();
+const updateWatch = require("../../controllers/putAdminWatch");
 
 mercadoPagoRouter.post("/create_preference", (req, res) => {
   const shoppingCart = req.body;
@@ -80,9 +81,10 @@ mercadoPagoRouter.post("/notification", async (req, res) => {
     };
     console.log(datosCompra);
     
-    const updateWatch = external_reference.product.map(async(w)=> 
+    const upWatch = external_reference.product.map(async(w)=> 
       await updateWatch(w.id, {stock: w.stock - w.quantity})
     )
+    console.log(upWatch);
     
     const createCompra = await Buy.create(datosCompra);
 
