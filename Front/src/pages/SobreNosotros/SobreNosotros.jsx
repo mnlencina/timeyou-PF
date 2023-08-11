@@ -18,10 +18,10 @@ const Carta = ({ imagen, titulo, linkedin, github }) => {
         </div>
         <div className="links">
           <Link to={linkedin}>
-            <AiOutlineLinkedin size={30}/>
+            <AiOutlineLinkedin size={30} color="gray"/>
           </Link>
           <Link to={github}>
-            <AiOutlineGithub size={30}/>
+            <AiOutlineGithub size={30} color="gray"/>
           </Link>
         </div>
       </div>

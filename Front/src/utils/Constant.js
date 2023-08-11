@@ -13,10 +13,8 @@ const casio = {url: 'https://watchlandsa.vtexassets.com/arquivos/brand1.png', br
 const gShock = {url:'https://watchlandsa.vtexassets.com/arquivos/brand2.png' , brand: 'g-shock'};
 const mistral = {url: 'https://watchlandsa.vtexassets.com/arquivos/brand3.png', brand: 'mistral'};
 const prune = {url: 'https://watchlandsa.vtexassets.com/arquivos/brand4.png', brand: 'prune'};
-const momax = {url: 'https://watchlandsa.vtexassets.com/arquivos/brand5.png', brand: 'momax'};
-const prototype = {url: 'https://watchlandsa.vtexassets.com/arquivos/brand6.png', brand: 'prototype'};
 const festina = {url: 'https://res.cloudinary.com/pagetimeyou/image/upload/c_pad,h_104,o_65,q_100,z_0.1/v1691114334/Logos%20(Logo%20Slider)/template_primary444_bpm744.png', brand: 'festina'}
 const edifice = {url: 'https://res.cloudinary.com/pagetimeyou/image/upload/bo_0px_solid_rgb:000,c_scale,h_104,o_63,q_100,r_0/v1691113195/Logos%20(Logo%20Slider)/template_primary111_wftsaw.png', brand: 'edifice'}
 const citizen = {url:'https://res.cloudinary.com/pagetimeyou/image/upload/bo_1px_solid_rgb:808080,c_pad,h_101,o_60,q_100,r_10/v1691106659/Logos%20(Logo%20Slider)/template_primary_ikyhyb.jpg', brand:'citizen'}
 
-export const imageCarrouselMarcas = [casio, festina, gShock, mistral, citizen, prune, momax, prototype, edifice];
+export const imageCarrouselMarcas = [casio, festina, gShock, mistral, citizen, prune, edifice];

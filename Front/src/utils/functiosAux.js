@@ -38,3 +38,20 @@ export const validateInputLogin = (input) => {
   }
   return errors
 };
+
+export const validateInputNewPass = (input) => {
+  const errors = {};
+  if (input.length > 10) {
+    errors.e1 = 'Máxima cantidad de caracteres excedida!';
+  }
+  if (input.length === 0) {
+    errors.e2 = 'Este campo no puede estar vacío!';
+  }
+  if (input.includes(' ')) {
+    errors.e3 = 'El caracter " " no está permitido!';
+  }
+  if (!input.includes('1' || '2' ||'3' || '4' || '5' || '6' || '7' || '8' || '9' || '0')) {
+    errors.e4 = 'La contraseña debe contener un número!';
+  }
+  return errors;
+}

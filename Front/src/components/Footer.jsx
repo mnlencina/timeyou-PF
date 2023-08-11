@@ -54,13 +54,13 @@ export const Footer = () => {
             <h3>Seguinos</h3>
             <ul>
               <StyledLink to="https://www.facebook.com/soyhenryok/">
-                <AiOutlineFacebook size={30} />
+                <AiOutlineFacebook size={24} />
               </StyledLink>
               <StyledLink to="https://www.instagram.com/soyhenry_ok/">
-                <AiOutlineInstagram size={30}/>
+                <AiOutlineInstagram size={24}/>
               </StyledLink>
               <StyledLink to="https://twitter.com/soyhenry_ok">
-                <AiOutlineTwitter size={30}/>
+                <AiOutlineTwitter size={24}/>
               </StyledLink>
             </ul>
           </div>
