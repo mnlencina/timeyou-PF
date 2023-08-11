@@ -307,7 +307,7 @@ const dispatch = useDispatch()
       }
       .content {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 50% 50%;
         grid-template-rows: repeat(4, 1fr);
         align-content: start;
         justify-items: center;
