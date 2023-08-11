@@ -21,12 +21,7 @@ mercadoPagoRouter.post("/create_preference", (req, res) => {
         currency_id: "ARS",
       })),
 
-      external_reference: {user: shoppingCart.userBuy, 
-        product: shoppingCart.cart.map((items) => ({
-        watchID: items.id,
-        quantity: items.quantity,
-        stock: items.stock
-      }))},
+      external_reference: shoppingCart.userBuy,
 
       back_urls: {
         success: "http://localhost:5173/home",
@@ -76,15 +71,10 @@ mercadoPagoRouter.post("/notification", async (req, res) => {
       name: description,
       provider: order.type,
       card: { card, payment_method },
-      UserId: external_reference.user.id,
+      UserId: external_reference,
       total: transaction_amount,
     };
     console.log(datosCompra);
-    
-    const upWatch = external_reference.product.map(async(w)=> 
-      await updateWatch(w.id, {stock: w.stock - w.quantity})
-    )
-    console.log(upWatch);
     
     const createCompra = await Buy.create(datosCompra);
 
