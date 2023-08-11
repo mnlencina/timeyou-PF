@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { BTNHover } from "../utils/ComponentsStyle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
-import { setCart, totalPrice } from "../redux/Actions";
-import { ProductMP } from "../components/mercadoPago/MercadoPago";
+import { setCart, totalPrice, updateCart } from "../redux/Actions";
+import { ProductMP } from "../components/mp/MercadoPago";
 import { BsStripe } from "react-icons/bs";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
@@ -20,32 +20,40 @@ function Shopping() {
   const loading = useSelector((state) => state.isLoadingCart);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const userName = user.userName;
   const cart = useSelector((state) => state.Cart);
-
+  let brandCart = cart?.map((e) => e.model);
+  let modelString = brandCart.toString();
+  const customRef = useRef();
   const [toogle, setToogle] = useState(false);
 
   const compraTotal = Math.floor(
-    cart?.reduce((acc, e) => acc + e.price, 0) * 500
+    cart?.reduce((acc, e) => acc + (e.price * e.quantity), 0) * 500
   );
 
   const toogleState = () => {
     setToogle(!toogle);
   };
 
-  const handleStripeButton = async (event) => {
+  const handleStripeButton = async () => {
     try {
       const stripe = await stripePromise;
       const response = await axios.post(
-        "http://localhost:3001/api/payment/create-checkout-session"
+        "http://localhost:3001/payment/create-checkout-session",
+        {
+          userName: user.userName,
+          model: modelString,
+          amount: compraTotal,
+        }
       );
       const session = response.data;
       const result = await stripe.redirectToCheckout({
         sessionId: session.sessionId,
       });
-
+      console.log(result);
       if (result.error) {
         console.error(result.error.message);
+      } else {
+        dispatch(updateCart());
       }
     } catch (error) {
       console.error("Error:", error.message);
@@ -54,6 +62,33 @@ function Shopping() {
 
   const renderCart = () => (
     <Container>
+      <Acordion className={toogle ? "active" : ""}>
+        <div className="content-box">
+          <div className="MP">
+            <div className="btn">
+              <ProductMP cart={cart} userBuy={user.id} />
+              <p>Todos tus datos están protegidos</p>
+            </div>
+          </div>
+
+          <div className="Stripe">
+            <div className="btn">
+              <BTNCarritoDeCompras alter="true" onClick={handleStripeButton}>
+                <span className="icon-stripe">
+                  <BsStripe />
+                </span>
+                Pagar con Stripe
+              </BTNCarritoDeCompras>
+              <p>Todos tus datos están protegidos</p>
+            </div>
+          </div>
+        </div>
+        <div className="btn">
+          <BTNCarritoDeCompras onClick={toogleState}>
+            Cerrar pasarela
+          </BTNCarritoDeCompras>
+        </div>
+      </Acordion>
       <div className="btn-goback">
         <BTNHover alter="true" onClick={() => navigate(-1)}>
           {"<"}
@@ -92,28 +127,7 @@ function Shopping() {
                       Total: <span>${compraTotal}</span>{" "}
                     </h2>
                   </div>
-                  <Acordion className={toogle ? "active" : ""}>
-                    <div className="MP">
-                      <div className="btn">
-                        <ProductMP carrito={cart} />
-                      </div>
-                    </div>
-                    <hr />
-                    <div className="Stripe">
-                      <div className="btn">
-                        <BTNCarritoDeCompras
-                          alter="true"
-                          onClick={handleStripeButton}
-                        >
-                          <span className="icon-stripe">
-                            <BsStripe />
-                          </span>
-                          Pagar con Stripe
-                        </BTNCarritoDeCompras>
-                        <p>All your details are protected</p>
-                      </div>
-                    </div>
-                  </Acordion>
+
                   <div className="btn-checkout">
                     <div className="btn-check">
                       <BTNCarritoDeCompras alter="false" onClick={toogleState}>
@@ -145,13 +159,19 @@ export default Shopping;
 
 const Container = styled.main`
   width: 100vw;
-  min-height: 100vh;
   height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 100;
+
+  .active {
+    visibility: visible;
+    top: 0;
+    z-index: 200;
+    overflow-y: hidden !important;
+  }
   .btn-goback {
     position: absolute;
     top: 80px;
@@ -251,12 +271,7 @@ const Container = styled.main`
               justify-content: space-between;
             }
           }
-          .active {
-            visibility: visible;
-            bottom: -18px;
-            transition: 0.5s ease-in;
-            z-index: 200;
-          }
+
           .btn-checkout {
             width: 100%;
             height: calc(100% / 3);
@@ -288,96 +303,97 @@ const ContainerEmpty = styled.div`
 `;
 
 const Acordion = styled.div`
-  width: 300px;
-  height: 180px;
-  background-color: #fff;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  right: 145px;
-  bottom: 180px;
-  z-index: -100;
-  visibility: hidden;
-  border-radius: 10px;
-  transition: all 0.5s ease-in-out;
-  display: grid;
-  grid-template-rows: 45% 10% 45%;
-  place-items: center;
-  overflow: hidden;
-  .MP {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .btn {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      button {
-        width: 100% !important;
-        height: 50px;
-        text-transform: none;
-        background-color: rgba(0, 0, 0, 0.9);
-        transition: 0.3s ease-in-out;
-        font-size: 18px;
-        letter-spacing: 1px;
-        display: grid;
-        grid-template-columns: 100%;
-        place-content: center;
-        border-radius: 5px !important;
-        &:hover {
-          transform: none;
-          background-color: rgba(0, 0, 0, 0.7);
-        }
-      }
-    }
-  }
-  hr {
-    width: 90%;
-    height: 1px;
-    margin: 0 auto;
-    background-color: #111;
-    opacity: 0.5;
-  }
-  .Stripe {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: -3500px;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 300;
+  transition: 1s ease-in-out;
+  gap: 10px;
 
-    .btn {
+  .btn {
+    width: 250px;
+    height: 50px;
+  }
+  .content-box {
+    width: 600px;
+    height: 250px;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    place-content: center;
+    border-radius: 15px;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1), transparent);
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.5);
+
+    .MP {
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      .btn {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      button {
+        margin: 0 auto;
+        width: 95% !important;
+        height: 50px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       p {
         width: 100%;
         text-align: center;
         font-size: 10px;
-        opacity: 0.6;
+        opacity: 0.8;
       }
-      button {
-        height: 50px;
-        text-transform: none;
-        background-color: rgba(0, 0, 0, 0.9);
-        transition: 0.3s ease-in-out;
-        font-size: 18px;
-        letter-spacing: 1px;
-        display: grid;
-        grid-template-columns: 15% 75%;
-        place-items: center;
-        border-radius: 5px !important;
-        &:hover {
-          transform: none;
-          background-color: rgba(0, 0, 0, 0.7);
+    }
+    .Stripe {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .btn {
+        width: 90%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        button {
+          width: 100% !important;
+          height: 50px !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        }
+        p {
+          width: 100%;
+          text-align: center;
+          font-size: 10px;
+          opacity: 0.8;
         }
       }
     }

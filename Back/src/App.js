@@ -14,13 +14,15 @@ const { MERCADO_PAGO } = process.env;
 //server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 //server.use(bodyParser.json({ limit: "50mb" }));
 //server.use(cookieParser());
-const cors = require('cors');
+const cors = require("cors");
 
-server.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true // Si es necesario, habilita el envío de cookies o credenciales
-}));
+server.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Si es necesario, habilita el envío de cookies o credenciales
+  })
+);
 
 server.use(
   session({
@@ -80,8 +82,7 @@ server.use((req, res, next) => {
 
 // ESTO DEBE SER UNA VARIABLE DE ENTORNO EN PRODUCCION "NO OLVIDAR"
 mercadopago.configure({
-  access_token:
-    "TEST-5174571250804826-080209-a98c6644fc34e88aa289363ea5e52e10-425132488",
+  access_token: MERCADO_PAGO,
 });
 server.use("/", router);
 

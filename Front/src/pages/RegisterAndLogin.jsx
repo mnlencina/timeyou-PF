@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 /* iconos */
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
+import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 /* styled  editing */
 import { BTNLogin } from "../utils/ComponentsStyle";
@@ -23,6 +24,7 @@ function RegisterAndLogin() {
   const dispatch = useDispatch();
   /* Estados locales */
   const [inModeLogin, setInModeLogin] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [registerSubmitted, setRegisterSubmitted] = useState(false);
   const [loginSubmitted, setLoginSubmitted] = useState(false);
@@ -42,6 +44,7 @@ function RegisterAndLogin() {
   /* Controladores */
   const handleInMode = () => {
     setInModeLogin(!inModeLogin);
+    setToggle(false);
   };
 
   const handleChangeRegister = (e) => {
@@ -109,6 +112,9 @@ function RegisterAndLogin() {
       navigate("/auth");
     }
   };
+  const handleToggle = () => {
+    setToggle(!toggle);
+  };
 
   useEffect(() => {
     if (USER.role !== "") {
@@ -142,19 +148,6 @@ function RegisterAndLogin() {
     <ContainerRegister>
       <h1>registrarse</h1>
       <div className="register-container">
-        {/* <div className="container-btn">
-          <div className="content">
-            <p>Registrate con plataformas sociales</p>
-          </div>
-          <div className="btn-controllers">
-            <button>
-              <FaFacebookF />
-            </button>
-            <button onClick={handleOnClick}>
-              <BsGoogle />
-            </button>
-          </div>
-        </div> */}
         <form
           action="POST"
           onSubmit={handleSubmitRegister}
@@ -168,6 +161,7 @@ function RegisterAndLogin() {
               value={registerValues.userName}
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
+              maxLength={20}
             />
 
             {registerSubmitted && errorRegister.n1 && (
@@ -189,6 +183,7 @@ function RegisterAndLogin() {
               name="email"
               value={registerValues.email}
               onChange={handleChangeRegister}
+              maxLength={30}
             />
             {registerSubmitted && errorRegister.e1 && (
               <ContainerError>
@@ -204,12 +199,16 @@ function RegisterAndLogin() {
           <div className="input-field">
             <AiOutlineLock />
             <input
-              type="password"
-              placeholder="ingrese una contraseña"
+              type={toggle ? "text" : "password"}
+              placeholder="ingrese una contraseña..."
               name="password"
               value={registerValues.password}
               onChange={handleChangeRegister}
+              maxLength={15}
             />
+            <div className="toggle" onClick={handleToggle}>
+              {toggle ? <PiEyeBold size={25} /> : <PiEyeClosedBold size={25} />}
+            </div>
           </div>
 
           <BTNLogin alter="false"> enviar</BTNLogin>
@@ -220,25 +219,19 @@ function RegisterAndLogin() {
   console.log(errorLogin.n1);
   const renderLogin = () => (
     <ContainerLogin>
-      <h1>Iniciar sesion</h1>
       <div className="login-container">
-        {/* <div className="login-btn">
-          <button>
-            <FaFacebookF />
-          </button>
-          <button>
-            <BsGoogle onClick={handleOnClick} />
-          </button>
-        </div> */}
+        <h1 className="iniciar">Iniciar sesion</h1>
+
         <form action="GET" onSubmit={handleSubmitLogin} className="login">
           <div className="input-field">
             <AiOutlineMail />
             <input
-              placeholder="Ingrese su email.."
+              placeholder="Ingrese su email..."
               type="text"
               name="email"
               value={loginAcount.email}
               onChange={handleChangeLogin}
+              maxLength={30}
             />
             {loginSubmitted && errorLogin.e1 && (
               <ContainerErrorLogin>
@@ -255,17 +248,21 @@ function RegisterAndLogin() {
             <AiOutlineLock />
             <input
               placeholder="Ingrese su contraseña..."
-              type="password"
+              type={toggle ? "text" : "password"}
               name="password"
               value={loginAcount.password}
               onChange={handleChangeLogin}
+              maxLength={15}
             />
+            <div className="inicioSesion" onClick={handleToggle}>
+              {toggle ? <PiEyeBold size={25} /> : <PiEyeClosedBold size={25} />}
+            </div>
           </div>
-          <BTNLogin>Login</BTNLogin>
+          <BTNLogin>Ingresar</BTNLogin>
           <div className="login-btn">
-            <button>
+            {/* <button>
               <FaFacebookF />
-            </button>
+            </button> */}
             <button>
               <BsGoogle onClick={handleOnClick} />
             </button>
@@ -280,18 +277,18 @@ function RegisterAndLogin() {
       {renderRegister()}
       <div className={`panel-login${inModeLogin ? " active-login" : ""}`}>
         <div className="panel">
-          <h2>Ya tienes una cuenta</h2>
-          <h4>haz Click para iniciar secion</h4>
-          <button onClick={handleInMode}>ir a login</button>
+          <h2>¿Ya tienes una cuenta?</h2>
+          <h4>Haz Click para iniciar sesion</h4>
+          <button onClick={handleInMode}>iniciar</button>
         </div>
       </div>
       <div
         className={`panel-register${!inModeLogin ? " active-register" : ""}`}
       >
         <div className="panel">
-          <h2>No tienes una cuenta?</h2>
-          <h4>haz Click para registrarte</h4>
-          <button onClick={handleInMode}>register</button>
+          <h2>¿No tienes una cuenta?</h2>
+          <h4>Haz Click para registrarte</h4>
+          <button onClick={handleInMode}>registrate</button>
         </div>
       </div>
       <TransitionDiv inModeLogin={inModeLogin} />
@@ -494,6 +491,11 @@ const ContainerRegister = styled.div`
           font-size: 1rem;
           color: #333;
         }
+        .toggle {
+          position: absolute;
+          margin-left: 250px;
+        }
+
         svg {
           text-align: center;
           line-height: 55px;
@@ -509,10 +511,11 @@ const ContainerRegister = styled.div`
 const ContainerLogin = styled.div`
   width: 50%;
   height: 100%;
-  h1 {
-    width: 100%;
-    margin-left: 235px;
-    margin-top: 95px;
+
+  .iniciar {
+    //width: 100%;
+    //display: flex;
+    margin-top: 10%;
     text-transform: uppercase;
     text-decoration: underline;
   }
@@ -520,6 +523,9 @@ const ContainerLogin = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
     .login-btn {
       bottom: 60px;
       right: 240px;
@@ -546,9 +552,6 @@ const ContainerLogin = styled.div`
       }
     }
     .login {
-      position: absolute;
-      top: 150px;
-      right: 150px;
       width: 350px;
       height: 350px;
       display: flex;
@@ -557,6 +560,7 @@ const ContainerLogin = styled.div`
       justify-content: space-evenly;
       border-radius: 30px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+
       .input-field {
         width: 90%;
         background-color: #f0f0f0;
@@ -580,6 +584,10 @@ const ContainerLogin = styled.div`
           font-weight: 600;
           font-size: 1rem;
           color: #333;
+        }
+        .inicioSesion {
+          position: absolute;
+          margin-left: 250px;
         }
         svg {
           text-align: center;

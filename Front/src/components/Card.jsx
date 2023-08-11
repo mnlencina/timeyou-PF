@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export const Card = ({ watch }) => {
+
+  if (!watch || typeof watch !== 'object') {
+    return []; 
+  }
+  
   const navigate = useNavigate();
   const cleanedWatch = {};
   Object.keys(watch).forEach((key) => {
@@ -41,6 +46,7 @@ const Container = styled.article`
   transition: 0.3s;
   z-index: 20;
   pointer-events: all;
+  cursor: pointer;
   &:hover {
     transform: translateY(-1px) translateX(1px);
     opacity: 1;

@@ -5,40 +5,43 @@ import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 
-
-export const CardContext = ({ pagination }) => {
+export const CardContext = ({ pagination, show }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.isLoading);
 
   return (
-    <Container>
+    <Container show={show}>
       <div className="context-card">
-
-        {pagination && pagination.map((e) => (
-          <Card key={e.id} watch={e} />
-        ))}
+        {pagination &&
+          Array.isArray(pagination) &&
+          pagination.map((e, i) => <Card key={i} watch={e} />)}
       </div>
     </Container>
   );
 };
 
 const Container = styled.section`
-  width: 90%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 20px;
   .context-card {
     margin-top: 20px;
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: ${(props) =>
+      props.show ? "repeat(3, 1fr)" : "repeat(4,1fr)"};
     /* se agrega template row */
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows:${(props) =>
+      props.show ? "repeat(4, 1fr)" : "repeat(3,1fr)"};
     align-items: start;
     justify-items: center;
+    gap: 40px;
+    transition: all 0.3s ease-in-out;
   }
   @media (max-width: 768px) {
     .context-card {

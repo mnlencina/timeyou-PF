@@ -12,7 +12,6 @@ import {
   getProducts,
   getWatchesByBrand,
   clearCart,
-  clearFilters,
   updateSelectedCategories,
 } from "../redux/Actions.js";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
@@ -20,7 +19,6 @@ import { BTNCarritoDeCompras } from "../utils/ComponentsStyle.jsx";
 export const Navbar = () => {
   const cart = useSelector((state) => state.Cart);
   const user = useSelector((state) => state.user);
-  const selectedCategories = useSelector((state) => state.selectedCategories);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,15 +33,13 @@ export const Navbar = () => {
 
   const handleLinkClick = (brand) => {
     const brandLowerCase = brand.toLowerCase();
-    console.log("estoy aca");
 
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
-      dispatch(clearFilters());
-      dispatch(updateSelectedCategories(""));
+      dispatch(updateSelectedCategories([]))
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
-      dispatch(updateSelectedCategories(` ${brandLowerCase}`));
+      dispatch(updateSelectedCategories(brandLowerCase))
     }
   };
 
@@ -110,6 +106,7 @@ export const Navbar = () => {
                   <Searchbar
                     setInputHover={setInputHover}
                     setShowSearch={setShowSearch}
+                    inputHover={inputHover}
                   />
                 </li>
               </ul>
@@ -118,7 +115,7 @@ export const Navbar = () => {
               {user.token.trim() === "" ? (
                 <BiUser onClick={() => navigate("/auth")} />
               ) : (
-                <BiUserX title="Out" onClick={handleShowLogout} />
+                <BiUserX title={user.email} onClick={handleShowLogout} />
               )}
               {user.token && (
                 <ul className={`logout ${showLogout ? " active-log" : ""}`}>

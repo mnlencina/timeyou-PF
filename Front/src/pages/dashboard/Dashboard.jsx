@@ -30,7 +30,7 @@ const Dashboard = ()=>{
     const [updateW, setUpdateW] = useState(false)
     const [editRole, setEditRole] = useState(false)
     const [wUpdate, setWUpdate] = useState({})
-    const [view, setView] = useState("watches");
+    const [view, setView] = useState("home");
     const [searchClock, setSearchClock] = useState(allClocks)
     const [searchUser, setSearchUser] = useState(allUsers)
     const dispatch = useDispatch()

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchProduct , updateSelectedCategories} from "../redux/Actions.js";
-import { useNavigate } from "react-router-dom";
+import { getProducts, searchProduct } from "../redux/Actions.js";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
+import Swal from 'sweetalert2';
 
 import { InstantSearch } from "react-instantsearch-dom";
 import { searchClient } from "../settings_algolia/settingsAlgolia.js";
@@ -67,61 +67,67 @@ const SearchButton = styled.button`
 `;
 
 
-export const Searchbar = ({ setShowSearch, setInputHover }) => {
+export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
+
   const [searchTerm, setSearchTerm] = useState("");
-  const selectedCategories = useSelector((state)=> state.selectedCategories)
+  const dispatch = useDispatch()
+  const watches = useSelector((state)=> state.Clocks)
 
-  const allTerms = searchTerm.concat(" ", selectedCategories)
-const uniqueCategories = new Set(allTerms.split(" "));
-const allSearch = [...uniqueCategories].join(" ");
+  const selectedCategories = useSelector((state)=> state.selectedCategories)  
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const clocks = useSelector((state) => state.Clocks);
 
-  console.log("Selected All categories", allSearch)
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+    resetSearchTerm();
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.currentTarget.value);
-   // dispatch(updateSelectedCategories(selectedCategories))
-  };
+    const searchTerms = selectedCategories ? searchTerm.concat(" ", selectedCategories).split(" ") : searchTerm.split(" ")
+    console.log("searchTerms", searchTerms)
+    const deleteDuplicates= (new Set(searchTerms))
+    console.log("deleteDuplicates", deleteDuplicates)
+
   
-
-  useEffect(() => {
-
-    if (allSearch.trim() !== "") {
-      console.log("ALLSEARCH TRIM", allSearch.trim())
-      const searchTerms = allSearch.split(" ");
-      console.log("ALLSEARCH SPLIT", searchTerms)
-      dispatch(searchProduct(searchTerms));
-    }
-  }, [allSearch, dispatch]); 
-
-  const onSearchSubmit = (event) => {
-    event.preventDefault();
-    if (allSearch.trim() === "") {
-      const searchTerms = allSearch.split(" ");
-      dispatch(searchProduct(searchTerms));
-    //  dispatch(updateSelectedCategories(allSearch))
-    }
-    if(searchTerm.length  === 0) {
-      dispatch(updateSelectedCategories(""))
-      alert("Debes ingresar al menos un dato para realizar una búsqueda");
-     return;
-    }
+    dispatch(searchProduct(searchTerms)); // Actualiza el estado global
     
-    navigate("/home");
-   setSearchTerm("");
+    /* if (filtered.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        color: 'black',
+        text: 'No se encontraron relojes en la búsqueda.',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+        }
+      });
+      dispatch(getProducts());
+    }
+    */
+  };
+  const sAlert = ()=> {
+    Swal.fire({
+      icon: 'error',
+      color: 'black',
+      text: 'No se encontraron relojes en la búsqueda.',
+      confirmButtonText: 'Aceptar',
+      customClass: {
+        confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+      }
+    });
+    dispatch(getProducts());
+  }
+
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const resetSearchTerm = () => {
     setSearchTerm("");
-    
   };
 
   return (
     <SearchContainer>
-      <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
+      {!watches.length && inputHover && setSearchTerm !== "" && sAlert()}
+       <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}
           onMouseEnter={() => setInputHover(true)}
@@ -142,7 +148,7 @@ const allSearch = [...uniqueCategories].join(" ");
             <BsSearch />
           </SearchButton>
         </FormContainer>
-      </InstantSearch>
+        </InstantSearch>
     </SearchContainer>
   );
 };

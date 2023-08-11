@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Router } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
@@ -7,12 +7,13 @@ import Checkout from "../pages/Checkout";
 import RegisterAndLogin from "../pages/RegisterAndLogin";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/dashboard/Dashboard";
-import TerminosCondiciones from "../pages/Terminos&Condiciones";;
-import Privacidad from "../pages/Privacidad";;
-import Preguntas from "../pages/Preguntas";;
-import SobreNosotros from '../pages/SobreNosotros/SobreNosotros';
+import TerminosCondiciones from "../pages/Terminos&Condiciones";
+import Privacidad from "../pages/Privacidad";
+import Preguntas from "../pages/Preguntas";
+import SobreNosotros from "../pages/SobreNosotros/SobreNosotros";
 import Contacto from "../pages/Contacto";
 import MiCuenta from "../pages/MiCuenta";
+import Resumen from "../components/Resumen";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -24,6 +25,7 @@ import { FooterCheckOut } from "../components/FooterCheckout";
 const MyRoutes = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
+  //const cart = useSelector((state) => state.Cart);
   //mostrar NavBar
   const showNav =
     location.pathname !== "/admin/dashboard" &&
@@ -41,6 +43,8 @@ const MyRoutes = () => {
   const showCheckoutFoot =
     location.pathname === "/shopping" ||
     location.pathname === "/shopping/checkout";
+    
+  
 
   return (
     <>
@@ -54,9 +58,10 @@ const MyRoutes = () => {
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />
+          <Route path="/shopping/resumen" element={<Resumen/>} />
         </Route>
-        <Route path="/terminosycondiciones" element={<TerminosCondiciones/>} />
-        <Route path="/privacidad" element={<Privacidad/>} />
+        <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
+        <Route path="/privacidad" element={<Privacidad />} />
         <Route path="/preguntas" element={<Preguntas />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/contacto" element={<Contacto />} />

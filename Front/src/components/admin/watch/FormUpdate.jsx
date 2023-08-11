@@ -42,6 +42,21 @@ function FormWatchUpdate(props) {
     const {name, value} = e.target
     console.log(name, value);
     if(name !== "Functions"){
+      
+      if(name === "price" || name === "stock"){
+        const newValue = value//.replace(/\D/g, ''); // Elimina caracteres no numéricos
+        
+        if (newValue.length <= 5) { // Límite de 5 dígitos
+          return setWatch(
+            {
+              ...watch,
+              [name]: newValue
+            }
+          )
+        }
+        return 
+      }
+    
       setWatch(
         {
           ...watch,
@@ -130,7 +145,7 @@ function FormWatchUpdate(props) {
         <Container1>
         <div className="optionDiv">
           <h3>Modelo:</h3>
-          <input name="model" type="text" defaultValue={watch.model} onChange={handleChange}/>     
+          <input name="model" type="text" maxLength={15} defaultValue={watch.model} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="brandName" value={watch.brandName}>
@@ -172,12 +187,12 @@ function FormWatchUpdate(props) {
         </div>
         <div className="optionDiv">
           <h3>Cantidad:</h3>
-          <input name="stock" type="text" defaultValue={watch.stock} onChange={handleChange}/>     
+          <input name="stock" type="number" value={watch.stock} onChange={handleChange}/>     
         </div>        
         
         <div className="optionDiv">
           <h3>Precio en u$s:</h3>
-          <input name="price" type="text" defaultValue={watch.price} onChange={handleChange}/>     
+          <input name="price" type="number" value={watch.price} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
         <h3>Descripción</h3>

@@ -22,18 +22,23 @@ export const Container = styled.main`
   }
   
     .divForm{
+        width: 25%;
         display: flex;
         background-color: rgb(250,250,250,0.7);
-        width: 400px;
-        height: 230px;
         border-radius: 20px;
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        padding: 20px;
         
         input{
             width: 180px;
             border-radius: 5px;
+        }
+        
+        span{
+          font-size: 10px;
+          color: red;
         }
         .btnUp {
         background-image: linear-gradient(to bottom, rgb(100,100,200), rgb(0,0,200), black);

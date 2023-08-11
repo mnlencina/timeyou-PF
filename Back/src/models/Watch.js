@@ -1,48 +1,51 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('Watch', {
-
-    id : {
+  sequelize.define(
+    "Watch",
+    {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4, // Or DataTypes.UUIDV1
         primaryKey: true,
-    },
-    model: {
+      },
+      model: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    price: {
+      },
+      price: {
         type: DataTypes.FLOAT,
         allowNull: false,
-    },
-    gender: {
-        type: DataTypes.ENUM('male','female','unisex'),
-        defaultValue:'unisex',
-    },
-    review: {
-        type: DataTypes.ENUM('0','1','2','3','4','5'),
-        defaultValue:'0',
-    },
-    del: {
+      },
+      gender: {
+        type: DataTypes.ENUM("male", "female", "unisex"),
+        defaultValue: "unisex",
+      },
+      review: {
+        type: DataTypes.ENUM("0", "1", "2", "3", "4", "5"),
+        defaultValue: "0",
+      },
+      del: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-    },
-    description: {
+      },
+      description: {
         type: DataTypes.TEXT,
         allowNull: false,
-    },
-    image: {
+      },
+      image: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
-    },
-    stock: {
-        type: DataTypes.NUMBER,
+      },
+      stock: {
+        type: DataTypes.INTEGER,
         defaultValue: 1,
+      },
+    },
+    {
+      timestamps: false, // Desactivar timestamps
     }
-  },{
-    timestamps: false, // Desactivar timestamps
-  });
+  );
 };
