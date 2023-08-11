@@ -2,16 +2,21 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import {useDispatch, useSelector} from 'react-redux';
 import { updateUser } from "../redux/actions/admin/updateUser";
-import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
+import { AppendBTN, BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { updateUserName } from "../redux/actions/user/updateUserName";
+import { useNavigate } from "react-router-dom";
+import { validateInputNewPass } from "../utils/functiosAux";
 
 export default function MiCuenta() {
 const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [ userName, setUserName ] = useState(user.userName);
   const [ password, setPassword ] = useState("");
-  const [editUser, setEditUser] = useState(false)
-  const [editPass, setEditPass] = useState(false)
+  const [ editUser, setEditUser] = useState(false);
+  const [ editPass, setEditPass] = useState(false);
+  const [ inputSubmited, setInputSubmited] = useState(false)
+  const [ errorInputPass, setErrorInputPass] = useState({})
+
 
   
   const newUser = async () => {
@@ -26,18 +31,29 @@ const dispatch = useDispatch();
     setEditPass(false)
     alert('Contraseña nueva creada!');
   }
+  const reset = () => {
+    setEditUser(false);
+    setEditPass(false);
+  }
 
   const handleChangeUser = (e) => {
     const { value } = e.target;
     if(value === ''){
-      setUserName(user.userName)
+      setUserName(user.userName);
     } else setUserName(value);
   }
   
   const handleChangePass = (e) => {
     const { value } = e.target;
+    setErrorInputPass(
+      validateInputNewPass(value));
+      if (Object.keys(errorInputPass).length > 0){
+        alert('Error de input');
+      }  
     setPassword(value);
   }
+
+
 
   return (
     <Container>
@@ -56,8 +72,13 @@ const dispatch = useDispatch();
               <BTNCarritoDeCompras onClick={()=>setEditPass(true)}>Cambiar Contraseña</BTNCarritoDeCompras>
             </div>
           )}
-          {editUser && 
+          {editUser &&  
             <div>
+              <div className="reset">
+                <AppendBTN alter="true" onClick={reset}>
+                  {"X"}
+                </AppendBTN>
+              </div>
               <div className="titulos">Nuevo nombre de Usuario</div>
               <input type="text" onChange={handleChangeUser}/>
               <div className="btn">
@@ -67,9 +88,14 @@ const dispatch = useDispatch();
           }
           {editPass && 
             <div>
+              <div className="reset">
+                <AppendBTN alter="true" onClick={reset}>
+                  {"X"}
+                </AppendBTN>
+              </div>
               < div className="titulos">Nueva Contraseña</div>
               <input type="text" onChange={handleChangePass}/>
-              { !password.length? <button className="btn"></button> : <div className="btn">
+              { !password.length? <></> : <div className="btn">
                 <BTNCarritoDeCompras onClick={newPass}>Actualizar</BTNCarritoDeCompras>
               </div>}
             </div>            
@@ -134,8 +160,13 @@ const Container = styled.section`
         display: flex;
         margin: 100px auto;      
       }
-        .btn {
-          font-size: 16px;
-        }
+      .btn {
+        font-size: 16px;
+      }
+      .reset {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+      }
     }  
 `;

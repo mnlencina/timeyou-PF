@@ -38,3 +38,12 @@ export const validateInputLogin = (input) => {
   }
   return errors
 };
+
+export const validateInputNewPass = (input) => {
+  const errors = {};
+  if (input.length > 9) {
+    errors.e1 = 'La contraseña debe ser máximo de 10 caracteres';
+    console.log('pasa');
+  }
+  return errors;
+}
