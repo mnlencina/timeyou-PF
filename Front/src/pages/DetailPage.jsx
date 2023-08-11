@@ -12,6 +12,7 @@ import { translateGender } from "../components/helpers/translateGenderWords";
 import CommentsList from "../components/comments/CommentsList";
 import AverageRating from "../components/comments/AverageRating";
 import CreateComment from "../components/comments/CreateComment";
+import detailTY from "../../public/logoDetaild_Ty.svg";
 
 import { ContainerLoader } from "../utils/ComponentsStyle";
 import { Loader } from "../components/Loader/Loader";
@@ -21,7 +22,7 @@ function DetailPage() {
   const [color2, setColor2] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
@@ -29,8 +30,6 @@ function DetailPage() {
   const user = useSelector((state) => state.user);
   const isLoggedIn = !!user.token;
   const cart = useSelector((state) => state.Cart);
-  
-  
 
   console.log(cart);
 
@@ -42,7 +41,6 @@ function DetailPage() {
   const backPag = () => {
     dispatch(resetDetail());
   };
-
 
   useEffect(() => {
     console.log(id);
@@ -65,7 +63,6 @@ function DetailPage() {
     </ContainerLoader>
   );
 
- 
   return loading ? (
     renderLoader()
   ) : (
@@ -83,7 +80,10 @@ function DetailPage() {
           <div className="navVert">
             {detailClock[color].image.map((img, i) => (
               <img
-              onClick={() => {setColor2(i); setSelectedImageIndex(i)} }
+                onClick={() => {
+                  setColor2(i);
+                  setSelectedImageIndex(i);
+                }}
                 key={i + 50}
                 src={img}
                 alt="imgB"
@@ -106,7 +106,7 @@ function DetailPage() {
               </header>
               <hr />
               <div className="price">
-                <h1>$ {detailClock[0].price * 500}.- </h1>
+                <h1>$ {parseInt(detailClock[0].price * 500)}.- </h1>
                 <div className="colors">
                   <h3>Colores:</h3>
                   <div className="color">
@@ -134,56 +134,60 @@ function DetailPage() {
                   Agregar al carrito
                 </BTNCarritoDeCompras>
               </div>
-              <div className="detail-compra"></div>
+              <div className="detail-compra">
+                <img src={detailTY} alt="" />
+              </div>
             </section>
           </article>
         </section>
         <section className="descriptions">
-        <div className="description-container">
-          <article className="description">
-            <div className="title-description">
-              <h3>Descripción</h3>
-            </div>
-            <p className="scrollable-description">{detailClock[0].description}</p>
-          </article>
-          <article className="ficha-tecnica">
-            <div className="title-description">
-              <h3>Ficha Técnica</h3>
-            </div>
-            <div className="body-content">
-            <div className="gender">
+          <div className="description-container">
+            <article className="description">
+              <div className="title-description">
+                <h3>Descripción</h3>
+              </div>
+              <p className="scrollable-description">
+                {detailClock[0].description}
+              </p>
+            </article>
+            <article className="ficha-tecnica">
+              <div className="title-description">
+                <h3>Ficha Técnica</h3>
+              </div>
+              <div className="body-content">
+                <div className="gender">
                   <h3>*Género</h3>
                   <ul>
                     <li>{translateGender(detailClock[0].gender)}</li>
                   </ul>
-              </div>
-              <div className="container-mesh">
-                <div className="mesh">
-                  <h3>*Malla</h3>
+                </div>
+                <div className="container-mesh">
+                  <div className="mesh">
+                    <h3>*Malla</h3>
+                    <ul>
+                      <li>{detailClock[0].strapName}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="container-functions">
+                  <h3>*Funciones</h3>
                   <ul>
-                    <li>{detailClock[0].strapName}</li>
+                    {detailClock[0].Functions.map((fun, i) => (
+                      <li key={i + fun}>{fun.name}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
-              <div className="container-functions">
-                <h3>*Funciones</h3>
-                <ul>
-                  {detailClock[0].Functions.map((fun, i) => (
-                    <li key={i + fun}>{fun.name}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </article>
+            </article>
           </div>
         </section>
         {isLoggedIn ? (
           <div>
             <div className="container-reviews">
-            <section className="reviews">
-              <CommentsList watchId={detailClock[0].id} />
+              <section className="reviews">
+                <CommentsList watchId={detailClock[0].id} />
               </section>
-              <section className= "ratings">
+              <section className="ratings">
                 <CreateComment watchId={detailClock[0].id} />
               </section>
             </div>
@@ -194,7 +198,7 @@ function DetailPage() {
               <StyledNavLink
                 to={`/auth?redirect=/product/${detailClock[0].id}`}
               >
-                <BiUser/> Inicia sesión para calificar
+                <BiUser /> Inicia sesión para calificar
               </StyledNavLink>
             </div>
             <hr />
@@ -324,7 +328,7 @@ const Container = styled.main`
             height: 1px;
             background: #111;
             opacity: 0.5;
-            margin: 0
+            margin: 0;
           }
           .price {
             width: 90%;
@@ -359,11 +363,11 @@ const Container = styled.main`
                   height: 70%;
                   margin: 10px;
                   cursor: pointer;
-                  border: 2px solid transparent; 
+                  border: 2px solid transparent;
                 }
                 .selected {
-                  border-color: #e4dbda;   
-                }            
+                  border-color: #e4dbda;
+                }
                 span {
                   position: relative;
                   display: inline-block;
@@ -396,10 +400,19 @@ const Container = styled.main`
             justify-content: center;
           }
           .detail-compra {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             width: 95%;
             height: 180px;
             margin-top: 8px;
             margin-bottom: 8px;
+
+            img {
+              opacity: 0.2;
+              height: 80%;
+            }
           }
         }
       }
@@ -439,8 +452,8 @@ const Container = styled.main`
           }
         }
         .scrollable-description {
-          max-height: 12em; 
-          overflow: auto; 
+          max-height: 12em;
+          overflow: auto;
         }
         p {
           width: 90%;
@@ -479,34 +492,34 @@ const Container = styled.main`
           .container-mesh,
           .gender,
           .container-functions {
-    /* Estilos comunes para las tres secciones */
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              justify-content: space-around;
-              h3 {
-                text-transform: uppercase;
-                font-size: 1em
-              }
-              ul {
-                margin-top: 12px;
-                margin-left: 10px;
+            /* Estilos comunes para las tres secciones */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            h3 {
+              text-transform: uppercase;
+              font-size: 1em;
+            }
+            ul {
+              margin-top: 12px;
+              margin-left: 10px;
+              list-style: none;
+              li {
+                opacity: 0.9;
+                text-transform: capitalize;
                 list-style: none;
-                li {
-                  opacity: 0.9;
-                  text-transform: capitalize;
-                  list-style: none;
-                  font-size: 0.9em
-                }
+                font-size: 0.9em;
               }
+            }
             .mesh,
             .gender,
             .container-functions {
               margin-right: 0;
               h3 {
                 text-transform: uppercase;
-                font-size: 1em
+                font-size: 1em;
               }
               ul {
                 margin-top: 12px;
@@ -515,7 +528,7 @@ const Container = styled.main`
                   opacity: 0.8;
                   text-transform: capitalize;
                   list-style: none;
-                  font-size: 0.9em
+                  font-size: 0.9em;
                 }
               }
             }
