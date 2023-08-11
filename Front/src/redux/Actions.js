@@ -348,12 +348,12 @@ export const getWatchesByBrand = (brand) => async (dispatch) => {
   const URL = `http://localhost:3001/brands/${brand}`;
   try {
     let { data } = await axios.get(URL);
-    console.log("data.Watches", data.Watches);
+   // console.log("data.Watches", data.Watches);
     dispatch({
       type: GET_WATCHES_BY_BRAND,
       payload: data.Watches,
     });
-    console.log(data);
+    //console.log(data);
   } catch (error) {
     console.log(error);
   }
