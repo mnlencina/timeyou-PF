@@ -38,6 +38,22 @@ function FormWatch({btnClose}) {
     const {name, value} = e.target
     console.log(name, value);
     if(name !== "functions"){
+      
+      if(name === "price" || name === "stock"){
+        const newValue = value//.replace(/\D/g, ''); // Elimina caracteres no numéricos
+        
+        if (newValue.length <= 5) { // Límite de 5 dígitos
+          return setWatch(
+            {
+              ...watch,
+              [name]: newValue
+            }
+          )
+        }
+        return 
+      }
+      
+      
       setWatch(
         {
           ...watch,
@@ -118,10 +134,11 @@ function FormWatch({btnClose}) {
       && watch.description !== "" 
       && 
         dispatch(postWatch(watch))
-        setWatch({
-          ...watch,
-          image: [],
-        })
+       // setWatch({
+       //   ...watch,
+       //   image: [],
+       // })
+       console.log(watch);
         dispatch(getProducts())
     
   }
@@ -135,7 +152,7 @@ function FormWatch({btnClose}) {
         <Container1>
         <div className="optionDiv">
           <h3>Modelo:</h3>
-          <input name="model" type="text" onChange={handleChange}/>     
+          <input name="model" type="text" maxLength={15} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
           <select onChange={handleChange} name="brand" value={watch.brand}>
@@ -178,12 +195,12 @@ function FormWatch({btnClose}) {
         
         <div className="optionDiv">
           <h3>Cantidad:</h3>
-          <input name="stock" type="text" defaultValue={watch.stock} onChange={handleChange}/>     
+          <input name="stock" type="number" value={watch.stock} maxLength={4} defaultValue={watch.stock} onChange={handleChange}/>     
         </div>
         
         <div className="optionDiv">
           <h3>Precio en usd:</h3>
-          <input name="price" type="text" onChange={handleChange}/>     
+          <input name="price" type="number" value={watch.price} maxLength={6} onChange={handleChange}/>     
         </div>        
         <div className="optionDiv">
         <h3>Descripción:</h3>

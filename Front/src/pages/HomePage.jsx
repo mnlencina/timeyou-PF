@@ -12,28 +12,30 @@ import { Loader } from "../components/Loader/Loader.jsx";
 import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 
 export default function HomePage() {
-
   const { Clocks, allClocks, searchActive } = useSelector((state) => state);
-  const whatches = searchActive ?  Clocks : allClocks;
+  const whatches = searchActive ? Clocks : allClocks;
+  
+  const watchDel1 = whatches.filter(watch => watch.stock > 0);
+  const watchDel = watchDel1.filter(watch => watch.del === false);
 
   const loading = useSelector((state) => state.isLoading);
 
-
   const [show, setShow] = useState(false);
-  const showOpen = show.toString();
+
+  //const showOpen = show.toString();
 
   //funciones de paginacion
   const [page, setPage] = useState(1);
   const itemPerPage = 12;
-  const totalPages = Math.ceil(whatches.length / itemPerPage);
+  const totalPages = Math.ceil(watchDel && (watchDel.length / itemPerPage)) 
 
   const paginacion = () => {
     const startIndex = (page - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
-    if (whatches.length) return whatches.slice(startIndex, endIndex);
+    if (watchDel && watchDel.length) return watchDel.slice(startIndex, endIndex);
   };
 
-  const PaginacionRelojes = paginacion();
+  const PaginacionRelojes = paginacion()
 
   const onNextPage = () => {
     if (page < totalPages) {
@@ -48,15 +50,15 @@ export default function HomePage() {
   };
 
   const renderMostrador = () => (
-    <ContainerMostrador show={show.toString()}>
+    <ContainerMostrador show={show}>
       <div className="sidebar">
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
-        <Drawer show={show} setPage={setPage} />
+         <Drawer show={show} setPage={setPage} />
       </div>
       <section className="main-card">
-        <CardContext pagination={PaginacionRelojes} />
+        <CardContext pagination={PaginacionRelojes} show={show} />
       </section>
     </ContainerMostrador>
   );
@@ -94,23 +96,24 @@ export default function HomePage() {
 
 const ContainerMostrador = styled.div`
   width: 100%;
-  min-height: 500px;
-  height: 180vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   .sidebar {
-    width: ${(props) => (props.show === "true" ? "200px" : "0")};
-    height: 100%;
-    background: #111;
-    transition: all 0.3s ease-in-out;
+    width: ${(props) => (props.show ? "400px" : "0")};
+    height: ${props => props.show ? "1600px":"1100px"};
+    background-color: #111;
+    transition: 0.5s ease-in-out;
     position: relative;
     border-radius: 0 10px 10px 0;
+    display: flex;
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show === "true" ? "200px" : "0px")};
+      left: ${(props) => (props.show ? "400px" : "0px")};
       top: 30px;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.5s ease-in-out;
       button {
         width: 40px;
         height: 150px;
@@ -121,7 +124,6 @@ const ContainerMostrador = styled.div`
         writing-mode: vertical-lr;
         text-transform: uppercase;
         letter-spacing: 3px;
-
         transition: 0.3s;
         &:hover {
           transform: scale(1.1);
@@ -131,20 +133,11 @@ const ContainerMostrador = styled.div`
     }
   }
   .main-card {
-    width: ${(props) =>
-      props.show === "true" ? "calc(100% - 200px)" : "100%"};
+    width:/* 100%; */ ${(props) => (props.show ? "calc(100% - 400px)" : "100%")};
     min-height: 500px;
     height: 100%;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  @media (max-width: 768px) {
-    height: 1600px;
-  }
-  @media (max-width: 500px) {
-    height: 2400px;
+    transition: all 0.5s ease-in-out;
+    display: grid;
+    place-content: center;
   }
 `;

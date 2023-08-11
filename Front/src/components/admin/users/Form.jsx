@@ -13,6 +13,12 @@ const FormUser =({btnClose})=>{
         password:"",
     })
     
+    const [error, setError] = useState({
+        nameUser:"",
+        password: ""
+    })
+       
+    
     const handlerChange = (e)=>{
         const{name,value} = e.target
         console.log(name,value)
@@ -22,23 +28,41 @@ const FormUser =({btnClose})=>{
               [name]: value
             }
           )
+        if(upUser.userName.length >= 6 ) {
+            setError({...error, nameUser: ""});
+         } 
+        if(upUser.password.length >= 6) { 
+            setError({...error, password:""})
+         }
+       
     }
     
     const logUser = async()=>{
-        const NEW = await dispatch(createUser(upUser))
-        console.log(NEW);
-        dispatch(addUsers())
+        if(upUser.userName.length < 6 ) {
+           return setError({...error, nameUser:"El Nombre debe tener mas de 6 caracteres"});
+        } 
+        if(upUser.password.length < 6) { 
+            return setError({...error, password:"La contraseña debe tener mas de 6 caracteres"})
+        } 
+        if(error.nameUser !== "" && error.password !== "") {
+            const NEW = await dispatch(createUser(upUser))
+            console.log(NEW)
+            dispatch(addUsers())        
+        }
     }
  
     return(
         <Container>
             <div className="divForm">
                 <h2>Nuevo Usuario</h2>
-                <input onChange={handlerChange} type="text" placeholder="Ingrese el Nombre" name="userName"/>
-                <input onChange={handlerChange} type="text" placeholder="Ingrese el email" name="email"/>
-                <input onChange={handlerChange} type="password" placeholder="Ingrese Contraseña" name="password" />
+                <input onChange={handlerChange} type="text" maxLength={10} placeholder="Ingrese el Nombre" name="userName"/>
+                {error.nameUser !== "" && <span>{error.nameUser}</span>}
+                <input onChange={handlerChange} type="text" maxLength={35} placeholder="Ingrese el email" name="email"/>
                 
-                <button className="btnUp" onClick={logUser}>CARGAR</button>
+                <input onChange={handlerChange} type="password" maxLength={10} placeholder="Ingrese Contraseña" name="password" />
+                {error.password !== "" && <span>{error.password}</span>}
+                
+                <button type="submit" className="btnUp" onClick={logUser}>CARGAR</button>
             </div>
                 <button className="btnClose" onClick={btnClose}>Cerrar</button>
             

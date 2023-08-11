@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -9,8 +10,12 @@ import {
   SEARCH_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_FAILURE,
   FILTERS,
+  GET_BRANDS,
+  GET_STYLES,
+  GET_STRAPS,
+  GET_COLORS,
+  GET_FUNCTIONS,
   UPDATE_SELECTED_CATEGORIES,
-  CLEAR_FILTERS,
   TOTAL_PRICE,
   UPDATE_PRICE,
   ALL_BRANDS,
@@ -36,6 +41,7 @@ import {
   SET_CART,
   UPDATE_CART,
   UPDATE_USERNAME,
+  FINISH_BUY_CLEAR_CART,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -49,7 +55,12 @@ const initialState = {
   searchClocks: [],
   searchActive: false,
   filteredClocks: [],
-  selectedCategories: "",
+  allBrands: [],
+  allColors:[],
+  allStyles: [],
+  allStraps:[],
+  allFunctions:[],
+  selectedCategories: [],
   Cart: [],
   isLoadingCart: true,
   price: 500,
@@ -92,9 +103,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
       };
     case GET_PRODUCTS_DETAIL:
+      const watchDel1 = payload.filter(watch => watch.stock > 0);
+      const watchDel = watchDel1.filter(watch => watch.del === false);
       return {
         ...state,
-        detailClock: payload,
+        detailClock: watchDel,
         detailLoading: false,
       };
     //Searchbar
@@ -128,15 +141,40 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case ADD_TO_CART:
       const existingItem = state.Cart.find((item) => item.id === payload.id);
       if (existingItem) {
-        return state;
-      } else {
-        const updatedCart = [...state.Cart, payload];
-        saveCartToLocalStorage(updatedCart, state.user.userName);
+        let paylodCuant1 = {...payload, quantity: payload.quantity + existingItem.quantity};
+        
+        if(existingItem.stock < paylodCuant1.quantity ){ 
+          alert("supera Stock disponible")
+          return state 
+        }
+        
+        const filtered = state.Cart.filter((item) => item.id !== payload.id)
+        const updatedCart1 = [...filtered, paylodCuant1];
+        
+        saveCartToLocalStorage(updatedCart1, state.user.userName);
+        
         return {
           ...state,
-          Cart: updatedCart,
+          Cart: updatedCart1,
+        };
+        
+      } else {
+      
+        
+        const updatedCart2 = [...state.Cart, payload];
+        saveCartToLocalStorage(updatedCart2, state.user.userName);
+        return {
+          ...state,
+          Cart: updatedCart2,
         };
       }
+    case FINISH_BUY_CLEAR_CART:
+      saveCartToLocalStorage([], state.user.userName);
+      return {
+        ...state,
+        Cart: [],
+      };
+    
     case REMOVE_FROM_CART:
       const filteredCart = state.Cart.filter((item) => item.id !== payload);
       saveCartToLocalStorage(filteredCart, userName);
@@ -174,49 +212,46 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailLoading: true,
         detailClock: [],
       };
-    case FILTERS:
-      // eslint-disable-next-line no-case-declarations
-      const filterBrands = payload || {};
-      console.log("filterBrands", filterBrands);
-
-      // eslint-disable-next-line no-case-declarations
-      const filterActive = Object.values(filterBrands).some(
-        (selected) => selected
-      );
-      console.log(filterActive);
-
-      // eslint-disable-next-line no-case-declarations
-      let filteredClocks = state.allClocks;
-      if (filterActive) {
-        filteredClocks = state.allClocks.filter((product) => {
-          let matchesAllCategories = true;
-          for (const fieldName in filterBrands) {
-            const selectedValue = filterBrands[fieldName];
-            if (selectedValue && product[fieldName] !== selectedValue) {
-              matchesAllCategories = false;
-              break;
-            }
-          }
-          return matchesAllCategories;
-        });
-      }
-
+      case FILTERS:
       return {
         ...state,
-        Clocks: filterBrands,
+        Clocks: payload,
         isLoading: false,
         error: null,
         searchActive: true,
       };
-      case CLEAR_FILTERS:
-      return {
-        ...state,
-        selectedCategories: payload, 
-      };
+      
+      case GET_BRANDS:
+        return {
+          ...state,
+          allBrands: payload
+        }
+      case GET_COLORS:
+         return {
+            ...state,
+            allColors: payload
+          }
+      case GET_STYLES:
+        return {
+              ...state,
+              allStyles: payload
+            }  
+      case GET_STRAPS:
+         return {
+           ...state,
+          allStraps: payload
+              }
+      case GET_FUNCTIONS:
+                return {
+                  ...state,
+                 allFunctions: payload
+                     }
+
       case UPDATE_SELECTED_CATEGORIES:
+       // console.log("navbar terms", payload )
       return {
         ...state,
-        selectedCategories: payload + " ",
+        selectedCategories: [payload],
       };
     case ALL_BRANDS:
       return {
