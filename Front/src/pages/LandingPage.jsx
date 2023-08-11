@@ -44,7 +44,6 @@ export default function LandingPage() {
       <div className="contentBox">
        {slideContainer()}
        <LogoSlider />
-        <CardSlider />
         {bannerFoto()}
         <CardSlider />
       </div>
