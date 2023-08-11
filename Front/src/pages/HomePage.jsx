@@ -113,8 +113,8 @@ const ContainerMostrador = styled.div`
   align-items: flex-start;
   justify-content: center;
   .sidebar {
-    width: ${(props) => (props.show ? "400px" : "0")};
-    height: ${props => props.show ? "1600px":"1100px"};
+    width: ${(props) => (props.show ? "300px" : "0")};
+    height: ${props => props.show ? "1800px":"1100px"};
     background-color: #111;
     transition: 0.5s ease-in-out;
     position: relative;
@@ -122,7 +122,7 @@ const ContainerMostrador = styled.div`
     display: flex;
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show ? "400px" : "0px")};
+      left: ${(props) => (props.show ? "300px" : "0px")};
       top: 30px;
       transition: all 0.5s ease-in-out;
       button {
@@ -144,7 +144,7 @@ const ContainerMostrador = styled.div`
     }
   }
   .main-card {
-    width:/* 100%; */ ${(props) => (props.show ? "calc(100% - 400px)" : "100%")};
+    width:${(props) => (props.show ? "calc(100% - 300px)" : "100%")};
     min-height: 500px;
     height: 100%;
     transition: all 0.5s ease-in-out;

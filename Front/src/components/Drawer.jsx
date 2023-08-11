@@ -16,5 +16,5 @@ const Container = styled.aside`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition-delay: 0.4ms;
+  transition-delay: 0.3s;
 `;
