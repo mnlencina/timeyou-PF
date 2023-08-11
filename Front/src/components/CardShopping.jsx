@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { AppendBTN } from "../utils/ComponentsStyle";
-import { removeFromCart } from "../redux/Actions";
+import { addToCart, removeFromCart } from "../redux/Actions";
 import { useDispatch } from "react-redux";
 
 export const CardShopping = ({reloj}) => {
 const dispatch = useDispatch()
+
   const handleRemove =() =>{
     dispatch(removeFromCart(reloj.id))
   }
+  
+  
   return (
     <Container>
       <div className="section-card">
@@ -28,12 +31,17 @@ const dispatch = useDispatch()
         <section className="content">
           <h4>${reloj.price * 500}</h4>
           <div className="inputs">
-            <AppendBTN alter="true">-</AppendBTN>
-            <span className="visor">1</span>
-            <AppendBTN alter="true">+</AppendBTN>
+            <AppendBTN
+              onClick={()=>dispatch(addToCart(reloj, -1))}
+              alter="true">-</AppendBTN>
+            <span className="visor">{reloj.quantity}</span>
+            <AppendBTN 
+              onClick={()=>dispatch(addToCart(reloj, 1))}
+              alter="true">+</AppendBTN>
           </div>
         </section>
         <div className="clear">
+          {reloj.quantity <= 0 && handleRemove() }
           <AppendBTN alter="true" onClick={handleRemove}>X</AppendBTN>
         </div>
       </div>

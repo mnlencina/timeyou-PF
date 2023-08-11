@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Router } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "../components/index";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
@@ -13,7 +13,7 @@ import Preguntas from "../pages/Preguntas";
 import SobreNosotros from "../pages/SobreNosotros/SobreNosotros";
 import Contacto from "../pages/Contacto";
 import MiCuenta from "../pages/MiCuenta";
-
+import Resumen from "../components/Resumen";
 import {
   ProtectedRoutes,
   ProtectedRoutesAdmin,
@@ -21,7 +21,6 @@ import {
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { HeaderCheckout } from "../components/HeaderCheckout";
 import { FooterCheckOut } from "../components/FooterCheckout";
-import { Resumen } from "../components/Resumen";
 
 const MyRoutes = () => {
   const location = useLocation();

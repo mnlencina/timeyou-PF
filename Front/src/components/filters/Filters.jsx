@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  applyFilters,
-  getBrands,
-  getColor,
-  getFunctions,
-  getStraps,
-  getStyles,
-  getProducts,
-} from "../../redux/Actions.js";
+import { applyFilters, getBrands, getColor, getFunctions, getStraps, getStyles, getProducts, updateSelectedCategories} from "../../redux/Actions.js";
 import { translateGender } from "../helpers/translateGenderWords.jsx";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -21,7 +13,9 @@ export const FiltersAll = ({ setPage, show }) => {
   const [selectedGenders, setSelectedGenders] = useState([]);
   const [selectedFunctions, setSelectedFunctions] = useState([]);
 
-  const dispatch = useDispatch();
+
+const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps, ...selectedColors , ...selectedGenders, ...selectedFunctions]
+
 
   const watches = useSelector((state) => state.Clocks);
 
@@ -114,18 +108,19 @@ export const FiltersAll = ({ setPage, show }) => {
     // Pasa las selecciones de filtros a la acción applyFilters
     setPage(1);
     dispatch(applyFilters(filteredWatches));
+    dispatch(updateSelectedCategories(filterSelections))
   };
-
-  const handleClearFilters = () => {
-    dispatch(getProducts());
-    setPage(1);
-    setSelectedBrands([]);
-    setSelectedStyles([]);
-    setSelectedStraps([]);
-    setSelectedColors([]);
-    setSelectedGenders([]);
-    setSelectedFunctions([]);
-  };
+    const handleClearFilters = () => {
+      dispatch(updateSelectedCategories([]))
+      dispatch(getProducts());
+      setPage(1);
+      setSelectedBrands([]);
+      setSelectedStyles([]);
+      setSelectedStraps([]);
+      setSelectedColors([]);
+      setSelectedGenders([]);
+      setSelectedFunctions([]);
+    };
 
   return (
     <FilterContainer show={show}>

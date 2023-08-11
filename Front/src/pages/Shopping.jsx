@@ -27,7 +27,7 @@ function Shopping() {
   const [toogle, setToogle] = useState(false);
 
   const compraTotal = Math.floor(
-    cart?.reduce((acc, e) => acc + e.price, 0) * 500
+    cart?.reduce((acc, e) => acc + (e.price * e.quantity), 0) * 500
   );
 
   const toogleState = () => {

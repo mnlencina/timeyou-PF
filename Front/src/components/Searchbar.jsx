@@ -73,29 +73,20 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
   const dispatch = useDispatch()
   const watches = useSelector((state)=> state.Clocks)
 
-  const navbarTerms = useSelector((state)=> state.selectedCategories)  
-  console.log("navbarTerms" , navbarTerms)
+  const selectedCategories = useSelector((state)=> state.selectedCategories)  
+
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
     resetSearchTerm();
 
-    const searchTerms = searchTerm.toLowerCase().split(" ");
-    const filtered = watches.filter((watch) => {
-      return  searchTerms.every((term) => {
-        return  (
-          watch.model.toLowerCase().includes(term) ||
-          watch.brandName.toLowerCase().includes(term) ||
-          watch.colorName.toLowerCase().includes(term) ||
-          watch.styleName.toLowerCase().includes(term) ||
-          watch.strapName.toLowerCase().includes(term) ||
-          (watch.Functions && watch.Functions.some((func) => func.name.toLowerCase().includes(term)))
-        );
-      });
-    });
-     
-    const allTerms = searchTerms.concat(navbarTerms)
-    dispatch(searchProduct(allTerms)); // Actualiza el estado global
+    const searchTerms = selectedCategories ? searchTerm.concat(" ", selectedCategories).split(" ") : searchTerm.split(" ")
+    console.log("searchTerms", searchTerms)
+    const deleteDuplicates= (new Set(searchTerms))
+    console.log("deleteDuplicates", deleteDuplicates)
+
+  
+    dispatch(searchProduct(searchTerms)); // Actualiza el estado global
     
     /* if (filtered.length === 0) {
       Swal.fire({
@@ -135,7 +126,7 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
 
   return (
     <SearchContainer>
-      {/* {!watches.length && sAlert()} */}
+      {!watches.length && setSearchTerm !== "" && sAlert()}
        <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}

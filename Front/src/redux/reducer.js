@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -40,6 +41,7 @@ import {
   SET_CART,
   UPDATE_CART,
   UPDATE_USERNAME,
+  FINISH_BUY_CLEAR_CART,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -58,7 +60,7 @@ const initialState = {
   allStyles: [],
   allStraps:[],
   allFunctions:[],
-  selectedCategories: "",
+  selectedCategories: [],
   Cart: [],
   isLoadingCart: true,
   price: 500,
@@ -137,15 +139,40 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case ADD_TO_CART:
       const existingItem = state.Cart.find((item) => item.id === payload.id);
       if (existingItem) {
-        return state;
-      } else {
-        const updatedCart = [...state.Cart, payload];
-        saveCartToLocalStorage(updatedCart, state.user.userName);
+        let paylodCuant1 = {...payload, quantity: payload.quantity + existingItem.quantity};
+        
+        if(existingItem.stock < paylodCuant1.quantity ){ 
+          alert("supera Stock disponible")
+          return state 
+        }
+        
+        const filtered = state.Cart.filter((item) => item.id !== payload.id)
+        const updatedCart1 = [...filtered, paylodCuant1];
+        
+        saveCartToLocalStorage(updatedCart1, state.user.userName);
+        
         return {
           ...state,
-          Cart: updatedCart,
+          Cart: updatedCart1,
+        };
+        
+      } else {
+      
+        
+        const updatedCart2 = [...state.Cart, payload];
+        saveCartToLocalStorage(updatedCart2, state.user.userName);
+        return {
+          ...state,
+          Cart: updatedCart2,
         };
       }
+    case FINISH_BUY_CLEAR_CART:
+      saveCartToLocalStorage([], state.user.userName);
+      return {
+        ...state,
+        Cart: [],
+      };
+    
     case REMOVE_FROM_CART:
       const filteredCart = state.Cart.filter((item) => item.id !== payload);
       saveCartToLocalStorage(filteredCart, userName);
@@ -184,7 +211,6 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailClock: [],
       };
       case FILTERS:
-
       return {
         ...state,
         Clocks: payload,
@@ -223,7 +249,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
        // console.log("navbar terms", payload )
       return {
         ...state,
-        selectedCategories: payload + " ",
+        selectedCategories: [payload],
       };
     case ALL_BRANDS:
       return {

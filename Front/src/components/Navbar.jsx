@@ -36,6 +36,7 @@ export const Navbar = () => {
 
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
+      dispatch(updateSelectedCategories([]))
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
       dispatch(updateSelectedCategories(brandLowerCase))
@@ -113,7 +114,7 @@ export const Navbar = () => {
               {user.token.trim() === "" ? (
                 <BiUser onClick={() => navigate("/auth")} />
               ) : (
-                <BiUserX title="Out" onClick={handleShowLogout} />
+                <BiUserX title={user.email} onClick={handleShowLogout} />
               )}
               {user.token && (
                 <ul className={`logout ${showLogout ? " active-log" : ""}`}>
