@@ -106,6 +106,7 @@ export const Navbar = () => {
                   <Searchbar
                     setInputHover={setInputHover}
                     setShowSearch={setShowSearch}
+                    inputHover={inputHover}
                   />
                 </li>
               </ul>

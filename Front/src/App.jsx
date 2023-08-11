@@ -38,14 +38,14 @@ function App() {
   
   const [isActive, setIsActive] = useState(true);
 
-  /* useEffect(() => {
+   useEffect(() => {
     let inactivityTimer;
 
     const resetTimer = () => {
       clearTimeout(inactivityTimer);
       inactivityTimer = setTimeout(() => {
         setIsActive(false);
-      }, 600000); // 1 minutes in milliseconds
+      }, 3000000); // 1/2 hr in milliseconds
 
       setIsActive(true);
     };
@@ -61,7 +61,7 @@ function App() {
       window.removeEventListener('click', resetTimer);
       
     };
-  }, []); */
+  }, []);
   
   const handleLogOut = (USER) => {
   console.log("evalua LOGout");
@@ -69,14 +69,15 @@ function App() {
     dispatch(clearCart()),
     dispatch(logOut()),
     setIsActive(true),
-    navigate("/"),
-    alert("Se cerro session"))
+    navigate("/")
+    //alert("Se cerro session")
+    )
     : null
   };
   
   return (
     <div>
-      {/* !isActive && handleLogOut(user.role) */}
+      {!isActive && handleLogOut(user.token)}
       <MyRoutes />
     </div>
   );

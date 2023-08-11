@@ -67,7 +67,7 @@ const SearchButton = styled.button`
 `;
 
 
-export const Searchbar = ({ setShowSearch, setInputHover }) => {
+export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch()
@@ -126,7 +126,7 @@ export const Searchbar = ({ setShowSearch, setInputHover }) => {
 
   return (
     <SearchContainer>
-      {!watches.length && setSearchTerm !== "" && sAlert()}
+      {!watches.length && inputHover && setSearchTerm !== "" && sAlert()}
        <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
         <FormContainer
           onSubmit={onSearchSubmit}
