@@ -21,7 +21,7 @@ import {
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { HeaderCheckout } from "../components/HeaderCheckout";
 import { FooterCheckOut } from "../components/FooterCheckout";
-import { Resumen } from "../components/Resumen";
+
 
 const MyRoutes = () => {
   const location = useLocation();

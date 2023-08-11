@@ -156,6 +156,7 @@ function RegisterAndLogin() {
               value={registerValues.userName}
               onChange={handleChangeRegister}
               placeholder="ingrese su nombre de usuario..."
+              maxLength={20}
             />
 
             {registerSubmitted && errorRegister.n1 && (
@@ -177,6 +178,7 @@ function RegisterAndLogin() {
               name="email"
               value={registerValues.email}
               onChange={handleChangeRegister}
+              maxLength={30}
             />
             {registerSubmitted && errorRegister.e1 && (
               <ContainerError>
@@ -197,6 +199,7 @@ function RegisterAndLogin() {
               name="password"
               value={registerValues.password}
               onChange={handleChangeRegister}
+              maxLength={15}
             />
           </div>
 
@@ -220,6 +223,7 @@ function RegisterAndLogin() {
               name="email"
               value={loginAcount.email}
               onChange={handleChangeLogin}
+              maxLength={30}
             />
             {loginSubmitted && errorLogin.e1 && (
               <ContainerErrorLogin>
@@ -240,6 +244,7 @@ function RegisterAndLogin() {
               name="password"
               value={loginAcount.password}
               onChange={handleChangeLogin}
+              maxLength={15}
             />
           </div>
           <BTNLogin>Ingresar</BTNLogin>

@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -137,13 +138,26 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case ADD_TO_CART:
       const existingItem = state.Cart.find((item) => item.id === payload.id);
       if (existingItem) {
-        return state;
-      } else {
-        const updatedCart = [...state.Cart, payload];
-        saveCartToLocalStorage(updatedCart, state.user.userName);
+        let paylodCuant1 = {...payload, quantity: payload.quantity + existingItem.quantity};
+        
+        const filtered = state.Cart.filter((item) => item.id !== payload.id)
+        const updatedCart1 = [...filtered, paylodCuant1];
+        
+        saveCartToLocalStorage(updatedCart1, state.user.userName);
+        
         return {
           ...state,
-          Cart: updatedCart,
+          Cart: updatedCart1,
+        };
+        
+      } else {
+      
+        
+        const updatedCart2 = [...state.Cart, payload];
+        saveCartToLocalStorage(updatedCart2, state.user.userName);
+        return {
+          ...state,
+          Cart: updatedCart2,
         };
       }
     case REMOVE_FROM_CART:
