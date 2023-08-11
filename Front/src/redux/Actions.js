@@ -122,7 +122,7 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
     const algoliaIndex = searchClient.initIndex("timeyou_PF"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
     const searchResults = await algoliaIndex.search(searchTerms);
 
-    console.log("Algolia search results:", searchResults.hits);
+   // console.log("Algolia search results:", searchResults.hits);
     
       // Si se encontraron resultados, envía los hits al estado como antes
       dispatch({
@@ -131,7 +131,7 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
       });
     
   } catch (error) {
-    console.error("Algolia search error:", error);
+   // console.error("Algolia search error:", error);
     dispatch(searchProductFailure("Error al realizar la búsqueda."));
   }
 };

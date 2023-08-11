@@ -5,12 +5,14 @@ import { getLoggedUserId } from '../../redux/actions/comments/getLoggedUserId.js
 
 
 
+import Swal from 'sweetalert2';
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
+
 const Form = styled.form`
-  width: 550px;
-  margin: 0;
+  width: 400px;
+  margin: 27px;
   padding: 0;
   background-color: #fff;
   border-radius: 8px;
@@ -49,10 +51,13 @@ const Button = styled.button`
   font-size: 1rem;
   margin-top: 30px;
 `;
-const Title = styled.h2`
-  text-align: left;
-  padding:20px;
-  margin-bottom: 20px;
+const Title = styled.h3`
+text-align: left;
+margin-bottom: 50px;
+margin-left: 2px;
+text-transform: uppercase;
+font-size: 27px;
+padding-top: 2px;
 `;
 
 const RatingContainer = styled.div`
@@ -95,8 +100,14 @@ const SuccessMessage = styled.div`
   border: none;
 `;
 
-
-
+const ErrorMessage = styled.div`
+  color: #f46b11;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding:0;
+  margin-top: 0;
+`
 
 const CreateComment = ({ watchId }) => {
 
@@ -111,19 +122,24 @@ const CreateComment = ({ watchId }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [hoveredRating, setHoveredRating] = useState(0);
 
+  const [userNameError, setUserNameError] = useState(false);
+  const [commentTextError, setCommentTextError] = useState(false);
+  const [calificationError, setCalificationError] = useState(false);
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [temporaryCommentBody, setTemporaryCommentBody] = useState(null);
+
+
   
 const email = useSelector((state)=> state.user.email)
 const userId = useSelector((state)=>state.userLoggedId)
 //console.log("USER LOGGED email" , email, "USER ID", userId)
 
 const filterWatchIdComments = comments.filter(watchIdComment => watchIdComment.WatchId == watchId)
-console.log("FILTERWATCHID FROM COMMENTS", filterWatchIdComments)
 
 const filterUserIdFromWatch = filterWatchIdComments.filter(userIdComment => userIdComment.UserId == userId)
-console.log("FILTERUSERID POST FROM COMMENTS", filterUserIdFromWatch)
+
 
 useEffect(() => {
-  console.log("Antes de llamar a la acción getLoggedUserId");
   dispatch(getLoggedUserId(email))
 }, [dispatch, email]);
  
@@ -146,6 +162,10 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setUserNameError(false);
+    setCommentTextError(false);
+    setCalificationError(false);
+
     if (!watchId) {
       console.error('Error: watchId no válidos');
       return; 
@@ -155,9 +175,20 @@ useEffect(() => {
     }
     if (!userName) {
       console.error('Error: debe ingresar un nombre de usuario');
+      setUserNameError(true);
       return;
     }
-   
+    if (!calification) {
+      console.error('Error: debe seleccionar una puntuación');
+      setCalificationError(true);
+      return;
+    }
+    if (!commentText.trim()) {
+      console.error('Error: debe ingresar un comentario');
+      setCommentTextError(true);
+      return;
+    }
+
     const commentBody = {
       userId,
       watchId,
@@ -165,24 +196,46 @@ useEffect(() => {
       calification: parseInt(calification),
       userName, 
     };
+ 
+    setShowConfirmationDialog(true);
+    setTemporaryCommentBody(commentBody);
 
     if (commentText.trim() !== '') {
-      if(filterUserIdFromWatch.length > 0) {
-        alert("Ya realizaste un comentario en este producto")
+     if(filterUserIdFromWatch.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        color: 'black',
+        text: 'Ups! Ya realizaste un comentario sobre este producto.',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+        }
+      });
         setShowSuccessMessage(false);
         setCommentText('');
         setCalification('');
         setUserName('');
         setSelectedRating(0); 
         setHoveredRating(0);
+        setShowConfirmationDialog(false);
       } else {
+        setShowConfirmationDialog(true);
         dispatch(createComment(commentBody));
+        Swal.fire({
+          icon: 'success',
+          color: 'black',
+          text: 'Mensaje enviado con éxito',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
+          }
+        });
         setShowSuccessMessage(true);
         setCommentText('');
         setCalification('');
         setUserName('');
         setSelectedRating(0); 
-        setHoveredRating(0);   
+        setHoveredRating(0); 
       }    
     }
   };
@@ -197,8 +250,8 @@ useEffect(() => {
           id="userName"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
-          required
         />
+        {userNameError && <ErrorMessage>Ingrese un nombre de usuario</ErrorMessage>}
       </div>
       <div>
         <Label>Puntuación:</Label>
@@ -215,6 +268,7 @@ useEffect(() => {
           ))}
         </StarsContainer>
           <RatingText>{`(${selectedRating})`}</RatingText> 
+          {calificationError && <ErrorMessage>Seleccione una puntuación</ErrorMessage>}
         </RatingContainer>
       </div>
       <div>
@@ -225,8 +279,8 @@ useEffect(() => {
           id="commenttext"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
-          required
         />
+         {commentTextError && <ErrorMessage>Ingrese un comentario</ErrorMessage>}
       </div>
       {showSuccessMessage && <SuccessMessage>Mensaje enviado con éxito!</SuccessMessage>}
       <Button type="submit">Enviar</Button>

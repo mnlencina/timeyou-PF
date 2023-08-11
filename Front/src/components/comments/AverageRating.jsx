@@ -8,24 +8,33 @@ import { FaStar } from 'react-icons/fa';
 
 
 const RatingWrapper = styled.div`
+border-collapse: collapse;
+  width: 100%;
      margin: 0 auto;
-     min-height: auto;
-     padding-top: 110px;
+     min-height: 0 auto;
+     padding-top: 120px;
      padding-left: 50px;
      display: flex;
     flex-direction: column;
     margin-bottom: 80px;
+    margin-right: 30px;
 `;
 
 const RatingRow = styled.div`
+text-align: left;
+border: none;
   display: flex;
   align-items: center;
   width: 100%;
   margin-bottom: 8px;
   flex-wrap: nowrap;
+  ${({ itemWidth }) => `
+    width: ${itemWidth}px;
+  `}
 `;
 
 const NumberColumn = styled.span`
+width: 10%;
    min-width: 30px;
   padding-right: 20px;
   padding-left: 3px;
@@ -41,6 +50,7 @@ const NumberColumn = styled.span`
 `;
 
 const NumberColumn2 = styled.span`
+width: 10%;
    min-width: 30px;
   padding-right: 20px;
   padding-left: 3px;
@@ -49,7 +59,7 @@ const NumberColumn2 = styled.span`
   span {
     color: #7d7576;
     margin: 0;
-    padding-left: 20px;
+    padding-left: 2px;
     font-size: 0.9rem;
   }
 `;
@@ -62,6 +72,7 @@ const StarIcon = styled(FaStar)`
 
 
 const BarColumn = styled.div`
+width: 50%;
   flex-basis: 250px;
   height: 12px;
   background-color: #e4e4e4;
@@ -87,6 +98,7 @@ const BarColumn = styled.div`
 
 
 const PercentageColumn = styled.span`
+width: 20%;
   color: #acb2b1;
   font-weight: bold;
   margin: 4px auto;
@@ -139,11 +151,11 @@ const AverageRating = ({watchId}) => {
   return (
     <RatingWrapper>
       {Object.entries(percentageValues).map(([num, percentage]) => (
-        <RatingRow key={num}>
+        <RatingRow key={num} >
           <NumberColumn>
             <span>{num}</span>
-            <StarIcon />
           </NumberColumn>
+          <StarIcon />
           <BarColumn percentage={percentage} />
           <PercentageColumn>
             {percentage}% 

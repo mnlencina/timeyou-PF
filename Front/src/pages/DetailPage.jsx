@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
+import { BiUser } from "react-icons/bi";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
@@ -18,6 +19,9 @@ import { Loader } from "../components/Loader/Loader";
 function DetailPage() {
   const [color, setColor] = useState(0);
   const [color2, setColor2] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  
   const dispatch = useDispatch();
   const { id } = useParams();
   const detailClock = useSelector((state) => state.detailClock);
@@ -32,17 +36,28 @@ function DetailPage() {
 
   const handleAddToCart = () => {
     dispatch(addToCart(detailClock[color], 1));
+    setShowSuccessMessage(true);
   };
 
   const backPag = () => {
     dispatch(resetDetail());
   };
 
+
   useEffect(() => {
     console.log(id);
     dispatch(addModel(id));
     return backPag();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (showSuccessMessage) {
+      const timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000); // El mensaje se mostrará durante 3 segundos
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessMessage]);
 
   const renderLoader = () => (
     <ContainerLoader>
@@ -59,7 +74,7 @@ function DetailPage() {
         <header className="title">
           <h3>
             <span>
-              TimesYou {">"} {detailClock[0].brandName} {">"}
+              TimeYou {">"} {detailClock[0].brandName} {">"}
             </span>{" "}
             {`${detailClock[0].model}`}
           </h3>
@@ -68,10 +83,11 @@ function DetailPage() {
           <div className="navVert">
             {detailClock[color].image.map((img, i) => (
               <img
-                onClick={() => setColor2(i)}
+              onClick={() => {setColor2(i); setSelectedImageIndex(i)} }
                 key={i + 50}
                 src={img}
                 alt="imgB"
+                className={selectedImageIndex === i ? "selected-image" : ""}
               />
             ))}
           </div>
@@ -101,8 +117,10 @@ function DetailPage() {
                         onClick={() => {
                           setColor(i);
                           setColor2(0);
+                          setSelectedImageIndex(0);
                         }}
                         key={i + wat.colorName}
+                        className={color === i ? "selected" : ""}
                       />
                     ))}
                   </div>
@@ -113,42 +131,42 @@ function DetailPage() {
                   <span>
                     <FiShoppingCart />
                   </span>
-                  agregar al carrito
+                  Agregar al carrito
                 </BTNCarritoDeCompras>
               </div>
               <div className="detail-compra"></div>
             </section>
           </article>
         </section>
-        <hr />
         <section className="descriptions">
+        <div className="description-container">
           <article className="description">
             <div className="title-description">
-              <h3>Descripcion</h3>
+              <h3>Descripción</h3>
             </div>
-            <p>{detailClock[0].description}</p>
+            <p className="scrollable-description">{detailClock[0].description}</p>
           </article>
           <article className="ficha-tecnica">
             <div className="title-description">
-              <h3>ficha tecnica</h3>
+              <h3>Ficha Técnica</h3>
             </div>
             <div className="body-content">
+            <div className="gender">
+                  <h3>*Género</h3>
+                  <ul>
+                    <li>{translateGender(detailClock[0].gender)}</li>
+                  </ul>
+              </div>
               <div className="container-mesh">
                 <div className="mesh">
-                  <h3>Malla</h3>
+                  <h3>*Malla</h3>
                   <ul>
                     <li>{detailClock[0].strapName}</li>
                   </ul>
                 </div>
-                <div className="gender">
-                  <h3>genero</h3>
-                  <ul>
-                    <li>{translateGender(detailClock[0].gender)}</li>
-                  </ul>
-                </div>
               </div>
               <div className="container-functions">
-                <h3>funciones</h3>
+                <h3>*Funciones</h3>
                 <ul>
                   {detailClock[0].Functions.map((fun, i) => (
                     <li key={i + fun}>{fun.name}</li>
@@ -157,16 +175,16 @@ function DetailPage() {
               </div>
             </div>
           </article>
+          </div>
         </section>
-        <hr />
         {isLoggedIn ? (
           <div>
             <div className="container-reviews">
-              <section className="reviews">
-                <CreateComment watchId={detailClock[0].id} />
+            <section className="reviews">
+              <CommentsList watchId={detailClock[0].id} />
               </section>
-              <section className="ratings">
-                <AverageRating watchId={detailClock[0].id} />
+              <section className= "ratings">
+                <CreateComment watchId={detailClock[0].id} />
               </section>
             </div>
           </div>
@@ -176,9 +194,10 @@ function DetailPage() {
               <StyledNavLink
                 to={`/auth?redirect=/product/${detailClock[0].id}`}
               >
-                Inicia sesión para calificar
+                <BiUser/> Inicia sesión para calificar
               </StyledNavLink>
             </div>
+            <hr />
             <div className="container-reviews">
               <section className="reviews">
                 <CommentsList watchId={detailClock[0].id} />
@@ -200,7 +219,6 @@ const Container = styled.main`
   width: 100vw;
   height: auto;
   display: flex;
-  //flex-direction: column;
   align-items: center;
   justify-content: center;
   background: linear-gradient(to bottom #f1f1f1, #fff);
@@ -218,6 +236,10 @@ const Container = styled.main`
       width: 50px;
       padding: 3px;
       cursor: pointer;
+    }
+    .selected-image {
+      border: 2px solid #e4dbda;
+      border-radius: 3px;
     }
   }
   .main_container {
@@ -258,6 +280,7 @@ const Container = styled.main`
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid #e4e4e4;
         overflow: hidden;
         img {
           height: 100%;
@@ -274,7 +297,6 @@ const Container = styled.main`
           width: 80%;
           height: 100%;
           border-radius: 30px;
-          box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -292,8 +314,8 @@ const Container = styled.main`
               font-weight: 400;
             }
             h1 {
-              font-size: 1.4rem;
-              font-weight: 600;
+              font-size: 1.6rem;
+              font-weight: 700;
               text-transform: uppercase;
             }
           }
@@ -302,7 +324,7 @@ const Container = styled.main`
             height: 1px;
             background: #111;
             opacity: 0.5;
-            margin-bottom: 10px;
+            margin: 0
           }
           .price {
             width: 90%;
@@ -323,8 +345,8 @@ const Container = styled.main`
               flex-direction: column;
               justify-content: space-around;
               h3 {
+                margin-top: 10px;
                 font-size: 1rem;
-                text-decoration: underline;
               }
               .color {
                 width: 100%;
@@ -337,8 +359,11 @@ const Container = styled.main`
                   height: 70%;
                   margin: 10px;
                   cursor: pointer;
+                  border: 2px solid transparent; 
                 }
-
+                .selected {
+                  border-color: #e4dbda;   
+                }            
                 span {
                   position: relative;
                   display: inline-block;
@@ -380,12 +405,21 @@ const Container = styled.main`
       }
     }
     .descriptions {
-      margin: 0 auto;
+      margin: 50px auto;
+      padding-top: 0 auto;
       width: 90%;
-      height: 100%;
+      height: 360px;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
+      background-color: #e4e4e4;
+
+      .description-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
       .description {
         width: 50%;
         height: 100%;
@@ -404,8 +438,13 @@ const Container = styled.main`
             text-transform: uppercase;
           }
         }
+        .scrollable-description {
+          max-height: 12em; 
+          overflow: auto; 
+        }
         p {
           width: 90%;
+          margin-top: 10px;
           margin-bottom: 20px;
         }
       }
@@ -416,6 +455,7 @@ const Container = styled.main`
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
+        margin-bottom: 30px;
         .title-description {
           width: 90%;
           height: 35px;
@@ -432,53 +472,51 @@ const Container = styled.main`
           height: 62%;
           display: flex;
           align-items: flex-start;
-          gap: 50px;
-          margin-left: 40%;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          
-          .container-mesh {
-            width: 20%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: space-around;
-            gap: 20px;
-            .mesh,
-            .gender {
+          justify-content: space-between;
+          gap: 15px;
+          margin-top: 20px;
+          margin-left: 80px;
+          .container-mesh,
+          .gender,
+          .container-functions {
+    /* Estilos comunes para las tres secciones */
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: space-around;
               h3 {
-                text-transform: capitalize;
+                text-transform: uppercase;
+                font-size: 1em
               }
               ul {
+                margin-top: 12px;
+                margin-left: 10px;
+                list-style: none;
                 li {
-                  opacity: 0.8;
-                  text-transform: uppercase;
+                  opacity: 0.9;
+                  text-transform: capitalize;
+                  list-style: none;
+                  font-size: 0.9em
                 }
               }
-            }
-          }
-          .container-functions {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            h3 {
-              text-transform: capitalize;
-            }
-            ul {
-              margin-top: 2px;
-              width: 50%;
-              height: auto;
-              display: grid;
-              grid-template-columns: repeat(2, 1fr);
-              align-items: center;
-              justify-items: center;
-              gap: 10px;
-              li {
+            .mesh,
+            .gender,
+            .container-functions {
+              margin-right: 0;
+              h3 {
                 text-transform: uppercase;
-                margin: 0 auto;
+                font-size: 1em
+              }
+              ul {
+                margin-top: 12px;
+                list-style: none;
+                li {
+                  opacity: 0.8;
+                  text-transform: capitalize;
+                  list-style: none;
+                  font-size: 0.9em
+                }
               }
             }
           }
@@ -494,6 +532,7 @@ const Container = styled.main`
   }
 
   .container-reviews {
+    padding-top: 0 auto;
     margin: 0 auto;
     width: 90%;
     min-height: auto;
@@ -507,17 +546,19 @@ const Container = styled.main`
     padding-right: 20px;
   }
   .ratings {
-    width: 40%;
+    width: 50%;
     min-height: auto;
+    padding: 0 auto;
     margin-bottom: 20px;
+    margin-left: 20px;
   }
 `;
 
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-  color: #7d7576;
-  font-size: 1.1rem;
-  padding: 20px;
+  color: #1e1616;
+  font-size: 1rem;
+  padding: 0;
 
   &:hover {
     font-weight: bolder;
