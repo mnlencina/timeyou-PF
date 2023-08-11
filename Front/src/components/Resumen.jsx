@@ -1,24 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {buyFinishClear} from "../redux/actions/buys/buyFinishClearCart"
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { updateWatch } from "../redux/actions/admin/updateWatch";
 
-const Resumen = ({user,cart}) => {
+const Resumen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.Cart);
+  
 
-  const handleClick = async(e) => {
+  const handleClick = (e) => {
     e.preventDefault();
     
-    const resulta = await cart.map( (w) => dispatch(updateWatch(w.id,{stock: w.stock - w.quantity})));
+    cart.map((w) => dispatch(updateWatch(w.id,{stock: (w.stock - w.quantity)})));
+    dispatch(buyFinishClear())
     
     navigate("/home");
-    dispatch(buyFinishClear())
   };
-  // useEffect(() => {}, []);
+  
+  
 
   return (
     <Container>
