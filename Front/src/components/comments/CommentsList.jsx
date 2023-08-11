@@ -7,16 +7,23 @@ import { FaEllipsisH } from 'react-icons/fa';
 
 const CommentListContainer = styled.div`
   max-width: 800px;
-  margin: 2px auto;
-  padding: 2px auto;
+  margin: 30px auto;
+  padding: 5px auto;
    min-height: auto;
    margin-bottom: 80px; 
+
+   div{
+    margin-left:7px;
+   }
 `;
 
-const Title = styled.h2`
+const Title = styled.h3`
   text-align: left;
   margin-bottom: 50px;
-`;
+  margin-left: 27px;
+  text-transform: uppercase;
+  font-size: 25px;
+  `;
 
 const ShowMoreButton = styled.button`
   background-color: transparent;
@@ -70,6 +77,7 @@ const CommentsList = ({watchId}) => {
   return (
     <CommentListContainer>
       <Title>Comentarios</Title>
+      <div>
       {comments.length == 0 && <div>Todavía no existen calificaciones para este producto... </div>}
       {comments.length > 0 && comments.slice(0, visibleComments).map((comment) => (
         <>
@@ -91,6 +99,7 @@ const CommentsList = ({watchId}) => {
       {comments.length > 3 && allCommentsShown && (
         <ShowMoreButton onClick={handleShowLess}>Ocultar...</ShowMoreButton>
       )}
+      </div>
     </CommentListContainer>
   );
 };

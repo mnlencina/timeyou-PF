@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, searchProduct } from "../redux/Actions.js";
 import { BsSearch } from "react-icons/bs";
@@ -74,36 +74,23 @@ export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
   const watches = useSelector((state)=> state.Clocks)
 
   const selectedCategories = useSelector((state)=> state.selectedCategories)  
-
-
-  const onSearchSubmit = (e) => {
-    e.preventDefault();
-    resetSearchTerm();
-
-    const searchTerms = selectedCategories ? searchTerm.concat(" ", selectedCategories).split(" ") : searchTerm.split(" ")
-    console.log("searchTerms", searchTerms)
-    const deleteDuplicates= (new Set(searchTerms))
-    console.log("deleteDuplicates", deleteDuplicates)
+ 
 
   
-    dispatch(searchProduct(searchTerms)); // Actualiza el estado global
-    
-    /* if (filtered.length === 0) {
-      Swal.fire({
-        icon: 'error',
-        color: 'black',
-        text: 'No se encontraron relojes en la búsqueda.',
-        confirmButtonText: 'Aceptar',
-        customClass: {
-          confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
-        }
-      });
-      dispatch(getProducts());
-    }
-    */
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+    const searchTerms = selectedCategories ? searchTerm.concat(" ", selectedCategories).split(" ") : searchTerm.split(" ")
+    console.log("searchTerms", searchTerms)
+    const deleteDuplicates= [...new Set(searchTerms)]
+    console.log("deleteDuplicates", deleteDuplicates)
+
+    dispatch(searchProduct(deleteDuplicates)); // Actualiza el estado global 
+    resetSearchTerm("");
   };
+
+
   const sAlert = ()=> {
-    Swal.fire({
+     Swal.fire({
       icon: 'error',
       color: 'black',
       text: 'No se encontraron relojes en la búsqueda.',
@@ -126,8 +113,8 @@ export const Searchbar = ({ setShowSearch, setInputHover, inputHover}) => {
 
   return (
     <SearchContainer>
-      {!watches.length && inputHover && setSearchTerm !== "" && sAlert()}
-       <InstantSearch searchClient={searchClient} indexName="timeyou_PF">
+      {!watches.length && inputHover && searchTerm !== "" && sAlert()}
+       <InstantSearch searchClient={searchClient} indexName="TimeYou2">
         <FormContainer
           onSubmit={onSearchSubmit}
           onMouseEnter={() => setInputHover(true)}

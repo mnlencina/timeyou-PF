@@ -15,7 +15,7 @@ export const FiltersAll = ({ setPage, show }) => {
 
 
 const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps, ...selectedColors , ...selectedGenders, ...selectedFunctions]
-
+const dispatch = useDispatch()
 
   const watches = useSelector((state) => state.Clocks);
 
@@ -108,7 +108,7 @@ const filterSelections = [...selectedBrands,...selectedStyles, ...selectedStraps
     // Pasa las selecciones de filtros a la acción applyFilters
     setPage(1);
     dispatch(applyFilters(filteredWatches));
-    dispatch(updateSelectedCategories(filterSelections))
+    dispatch(updateSelectedCategories(filterSelections[0].split(',')))
   };
     const handleClearFilters = () => {
       dispatch(updateSelectedCategories([]))
