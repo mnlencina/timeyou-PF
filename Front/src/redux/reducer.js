@@ -41,6 +41,7 @@ import {
   SET_CART,
   UPDATE_CART,
   UPDATE_USERNAME,
+  FINISH_BUY_CLEAR_CART,
 } from "./actionTypes";
 
 // Obtenemos el carrito almacenado en el localStorage (si existe)
@@ -165,6 +166,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           Cart: updatedCart2,
         };
       }
+    case FINISH_BUY_CLEAR_CART:
+      saveCartToLocalStorage([], state.user.userName);
+      return {
+        ...state,
+        Cart: [],
+      };
+    
     case REMOVE_FROM_CART:
       const filteredCart = state.Cart.filter((item) => item.id !== payload);
       saveCartToLocalStorage(filteredCart, userName);

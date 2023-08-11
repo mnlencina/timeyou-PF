@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import {buyFinishClear} from "../redux/actions/buys/buyFinishClearCart"
+import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 
 const Resumen = () => {
   const navigate = useNavigate();
@@ -10,37 +12,56 @@ const Resumen = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    dispatch(buyFinishClear())
     navigate("/home");
   };
   // useEffect(() => {}, []);
 
   return (
     <Container>
-      <h1>
-        ¡Hola {user.userName}! ¡Gracias por habernos elegido para tu compra!
-        Esperamos que la disfrutes. ¡Tu satisfacción es nuestra prioridad
-      </h1>
-      <button onClick={handleClick}>Ir al Catalogo</button>
+      <div className="divResumen">
+        <h1>
+          ¡Hola {user.userName}! 
+        </h1>
+        <h1>Gracias por habernos elegido para tu compra.</h1>
+        <h1>Esperamos que la disfrutes.</h1>
+        <h1>¡Tu satisfacción es nuestra prioridad!</h1>
+        
+        <BTNCarritoDeCompras onClick={handleClick}>Ir al Catalogo</BTNCarritoDeCompras>
+      </div>
     </Container>
   );
 };
 
 const Container = styled.div`
-  h1 {
-    text-align: center;
+  position: fixed;
+    z-index: 1;
+    left: 0;
+    top:0;
+    width: 100%;   
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    background-color: rgb(0,0,0,0.7);
+    justify-content: center;
+  .divResumen {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px;
+    border-radius: 20px;
+    padding: 25px;
+    background-color: rgb(255,255,255,0.8);
+    align-items: center;
+  h1{
+    font-size: 100%;
   }
-  button {
-    width: 200px;
-    height: 40px;
-    margin-bottom: 15px;
-    margin-left: 200px;
-    cursor: pointer;
-    border-radius: 8px;
-    text-align: center;
-    text-align: center;
-    padding: 10px 20px;
-    font-weight: bold;
   }
+ 
 `;
 
 export default Resumen;
