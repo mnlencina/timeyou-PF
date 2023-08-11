@@ -140,6 +140,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       if (existingItem) {
         let paylodCuant1 = {...payload, quantity: payload.quantity + existingItem.quantity};
         
+        if(existingItem.stock < paylodCuant1.quantity ){ 
+          alert("supera Stock disponible")
+          return state 
+        }
+        
         const filtered = state.Cart.filter((item) => item.id !== payload.id)
         const updatedCart1 = [...filtered, paylodCuant1];
         
