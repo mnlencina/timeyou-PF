@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import {
   CardContext,
   Drawer,
-  BannerSlider,
   Pagination,
-  CardSlider,
 } from "../components/index.js";
 import { useSelector } from "react-redux";
 import { Loader } from "../components/Loader/Loader.jsx";
 import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function HomePage() {
+  
+  const navigate = useNavigate();
+  
+  const user = useSelector((state)=> state.user)
   const { Clocks, allClocks, searchActive } = useSelector((state) => state);
   const whatches = searchActive ? Clocks : allClocks;
   
@@ -68,6 +73,10 @@ export default function HomePage() {
       <Loader />
     </ContainerLoader>
   );
+  
+  if (user.del) {
+    navigate("/home/loginout")   
+  }
 
   return (
     <>
@@ -90,6 +99,8 @@ export default function HomePage() {
           />
         </>
       )}
+      
+      
     </>
   );
 }
