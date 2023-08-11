@@ -50,16 +50,18 @@ export const CardSlider = () => {
 };
 
 const Container = styled.div`
-  width: 100vw;
-  height: 400px;
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
   .bodyContainer {
-    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
     .bodyCard {
       width: 100%;
       height: 100%;
@@ -67,20 +69,18 @@ const Container = styled.div`
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: 25px;
       border-radius: 20px;
       position: relative;
       transition: 0.5s ease-in-out;
       .controles {
         position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        z-index: 10;
+        z-index: 100;
         pointer-events: all;
       }
       .controles :hover{

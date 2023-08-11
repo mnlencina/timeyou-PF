@@ -20,6 +20,8 @@ export default function LandingPage() {
     </ContainerSlide>
   );
 
+
+
   const bannerFoto = () => (
     <BannersFotos>
       <Link id="1" to={"/home"} onClick={() => handleLinkClick("mistral")}>
@@ -38,18 +40,20 @@ export default function LandingPage() {
   );
 
   return (
-    <>
-      {slideContainer()}
-      <LogoSlider />
-      <CardSlider />
-      {bannerFoto()}
-      <CardSlider />
-    </>
+    <Container>
+      <div className="contentBox">
+       {slideContainer()}
+       <LogoSlider />
+        <CardSlider />
+        {bannerFoto()}
+        <CardSlider />
+      </div>
+    </Container>
   );
 }
 
 const BannersFotos = styled.section`
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   .banner {
     width: 100%;
@@ -62,6 +66,7 @@ const ContainerSlide = styled.section`
   width: 100vw;
   height: 70vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   .slide-container {
@@ -72,5 +77,21 @@ const ContainerSlide = styled.section`
     justify-content: center;
     border-radius: 20px;
     overflow: hidden;
+  }
+`;
+
+const Container = styled.main`
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .contentBox {
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;

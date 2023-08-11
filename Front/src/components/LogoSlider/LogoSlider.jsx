@@ -11,7 +11,6 @@ export const LogoSlider = () => {
   const slideShow = useRef(null);
   const timerRef = useRef(null);
 
- 
   const handleNext = () => {
     resetTimer();
     if (slideShow.current.children.length > 0) {
@@ -21,7 +20,7 @@ export const LogoSlider = () => {
 
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
 
-      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 43}px)`;
 
       const transicion = () => {
         slideShow.current.style.transition = "none";
@@ -32,7 +31,6 @@ export const LogoSlider = () => {
       slideShow.current.addEventListener("transitionend", transicion);
     }
   };
-
 
   const startTimer = () => {
     timerRef.current = setInterval(() => {
@@ -65,7 +63,7 @@ export const LogoSlider = () => {
 
       slideShow.current.style.transition = "none";
       const tamañoSlide = slideShow.current.children[0].offsetWidth;
-      slideShow.current.style.transform = `translateX(-${tamañoSlide + 21}px)`;
+      slideShow.current.style.transform = `translateX(-${tamañoSlide + 43}px)`;
 
       setTimeout(() => {
         slideShow.current.style.transition = "800ms ease-out all";
@@ -77,22 +75,21 @@ export const LogoSlider = () => {
   const dispatch = useDispatch();
   const handleLinkClick = async (brand) => {
     const brandLowerCase = brand.toLowerCase();
-      await dispatch(getWatchesByBrand(brandLowerCase));
+    await dispatch(getWatchesByBrand(brandLowerCase));
   };
-
 
   return (
     <Container>
       <div className="containerHider">
-      <div className="container-slide" ref={slideShow}>
-        {imageCarrouselMarcas.map((brand, index ) => (
-          <div key={index} className="slide">
-            <Link to={"/home"} onClick={() => handleLinkClick(brand.brand)}>
-              <img src={brand.url} />
-            </Link>
-          </div>
-        ))}
-      </div>
+        <div className="container-slide" ref={slideShow}>
+          {imageCarrouselMarcas.map((brand, index) => (
+            <div key={index} className="slide">
+              <Link to={"/home"} onClick={() => handleLinkClick(brand.brand)}>
+                <img src={brand.url} />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* <div className="controles">
