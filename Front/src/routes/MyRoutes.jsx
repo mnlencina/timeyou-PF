@@ -25,6 +25,7 @@ import { FooterCheckOut } from "../components/FooterCheckout";
 const MyRoutes = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   //mostrar NavBar
   const showNav =
     location.pathname !== "/admin/dashboard" &&
@@ -55,7 +56,7 @@ const MyRoutes = () => {
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />
-          <Route path="/shopping/resumen" element={<Resumen />} />
+          <Route path="/shopping/resumen" element={<Resumen user={user} cart={cart} />} />
         </Route>
         <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
         <Route path="/privacidad" element={<Privacidad />} />
