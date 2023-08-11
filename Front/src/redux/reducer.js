@@ -60,7 +60,7 @@ const initialState = {
   allStyles: [],
   allStraps:[],
   allFunctions:[],
-  selectedCategories: "",
+  selectedCategories: [],
   Cart: [],
   isLoadingCart: true,
   price: 500,
@@ -211,7 +211,6 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         detailClock: [],
       };
       case FILTERS:
-
       return {
         ...state,
         Clocks: payload,
@@ -250,7 +249,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
        // console.log("navbar terms", payload )
       return {
         ...state,
-        selectedCategories: payload + " ",
+        selectedCategories: [payload],
       };
     case ALL_BRANDS:
       return {

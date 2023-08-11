@@ -26,12 +26,12 @@ export default function HomePage() {
   //funciones de paginacion
   const [page, setPage] = useState(1);
   const itemPerPage = 12;
-  const totalPages = Math.ceil(whatches.length / itemPerPage);
+  const totalPages = Math.ceil(whatches && (whatches.length / itemPerPage)) 
 
   const paginacion = () => {
     const startIndex = (page - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
-    if (whatches.length) return whatches.slice(startIndex, endIndex);
+    if (whatches && whatches.length) return whatches.slice(startIndex, endIndex);
   };
 
   const PaginacionRelojes = paginacion();
