@@ -120,7 +120,7 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
-    const algoliaIndex = searchClient.initIndex("timeyou_PF"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
+    const algoliaIndex = searchClient.initIndex("TimeYou2"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
     const searchResults = await algoliaIndex.search(searchTerms);
 
    // console.log("Algolia search results:", searchResults.hits);
