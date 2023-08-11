@@ -203,13 +203,10 @@ useEffect(() => {
     if (commentText.trim() !== '') {
      if(filterUserIdFromWatch.length > 0) {
       Swal.fire({
-        icon: 'error',
-        color: 'black',
-        text: 'Ups! Ya realizaste un comentario sobre este producto.',
-        confirmButtonText: 'Aceptar',
-        customClass: {
-          confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
-        }
+        icon: 'warning',
+        title: 'Ups! Parece que ya realizaste un comentario sobre este producto.',
+        showConfirmButton: false,
+        timer: 1500
       });
         setShowSuccessMessage(false);
         setCommentText('');
@@ -223,12 +220,9 @@ useEffect(() => {
         dispatch(createComment(commentBody));
         Swal.fire({
           icon: 'success',
-          color: 'black',
           text: 'Mensaje enviado con éxito',
-          confirmButtonText: 'Aceptar',
-          customClass: {
-            confirmButton: 'custom-alert-button' // Aplica la clase personalizada al botón
-          }
+          showConfirmButton: false,
+          timer: 1500
         });
         setShowSuccessMessage(true);
         setCommentText('');

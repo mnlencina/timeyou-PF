@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../redux/Actions";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const CheckoutForm = () => {
   const navigate = useNavigate();
@@ -76,7 +77,12 @@ export const CheckoutForm = () => {
         colorName: cart.items.map((e) => e.color).join(),
       });
       if (response.status === 200) {
-        alert("compra registrada con exito");
+        Swal.fire({
+          icon: 'success',
+          title: 'Compra registrada con exito',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       elemets.getElement(CardElement).clear();
       dispatch(clearCart());

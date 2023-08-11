@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { validateInputLogin } from "../utils/functiosAux";
+import Swal from 'sweetalert2';
 
 export default function Contacto() {
   const form = useRef();
@@ -40,8 +41,13 @@ export default function Contacto() {
       )
       .then(
         (result) => {
-          console.log(result.text);
-          alert("mensaje enviado con éxito");
+         // console.log(result.text);
+          Swal.fire({
+            icon: 'success',
+            title: 'Mensaje enviado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
         (error) => {
           console.log(error.text);

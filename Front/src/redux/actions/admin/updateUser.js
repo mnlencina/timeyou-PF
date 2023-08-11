@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UPDATE_USER } from "../../actionTypes";
+import Swal from 'sweetalert2';
 
 export function updateUser(id,upUser) {
     const endpoint = `http://localhost:3001/admin/updateUser/${id}`;
@@ -12,7 +13,13 @@ export function updateUser(id,upUser) {
           payload: update,
         });
       } catch (error) {
-        alert("Verifique los datos");
+        Swal.fire({
+          icon: 'error',
+          title: `Verifique los datos, ${error}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
+
       }
     };
   }
