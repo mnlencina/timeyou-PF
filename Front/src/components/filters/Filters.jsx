@@ -122,264 +122,387 @@ const dispatch = useDispatch()
       setSelectedFunctions([]);
     };
 
-  return (
-    <FilterContainer show={show}>
-      <FilterGroup>
-        <div className="title">
-          <h3>Marcas</h3>
+    return (
+      <FilterContainer show={show}>
+        <div className="Marcas">
+          <div className="title">
+            <h3>Marcas</h3>
+          </div>
+          <ul className="content">
+            {sortedBrands.map((brand) => (
+              <li key={brand}>
+                <CheckboxLabel>
+                  <CheckboxInput
+                    type="checkbox"
+                    checked={selectedBrands.includes(brand)}
+                    onChange={() => handleBrandChange(brand)}
+                  />
+                  {brand}
+                </CheckboxLabel>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="content">
-          {sortedBrands.map((brand) => (
-            <CheckboxLabel key={brand}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedBrands.includes(brand)}
-                onChange={() => handleBrandChange(brand)}
-              />
-              {brand}
-            </CheckboxLabel>
-          ))}
+        <div className="Estilos">
+          <div className="title">
+            <h3>Estilos</h3>
+          </div>
+          <ul className="content">
+            {sortedStyles.map((style) => (
+              <li key={style}>
+                <CheckboxLabel>
+                  <CheckboxInput
+                    type="checkbox"
+                    checked={selectedStyles.includes(style)}
+                    onChange={() => handleStyleChange(style)}
+                  />
+                  {style}
+                </CheckboxLabel>
+              </li>
+            ))}
+          </ul>
         </div>
-      </FilterGroup>
-      <FilterGroup>
-        <div className="title">
-          <h3>Estilos</h3>
+        <div className="Color">
+          <div className="title">
+            <h3>Color</h3>
+          </div>
+          <div className="content">
+            {sortedColors.map((color) => (
+              <CheckboxLabel key={color}>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedColors.includes(color)}
+                  onChange={() => handleColorChange(color)}
+                />
+                {color}
+              </CheckboxLabel>
+            ))}
+          </div>
         </div>
-        <div className="content">
-          {sortedStyles.map((style) => (
-            <CheckboxLabel key={style}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedStyles.includes(style)}
-                onChange={() => handleStyleChange(style)}
-              />
-              {style}
-            </CheckboxLabel>
-          ))}
+        <div className="Malla">
+          <div className="title">
+            <h3>Malla</h3>
+          </div>
+          <ul className="content">
+            {sortedStraps.map((strap) => (
+              <li key={strap}>
+                <CheckboxLabel>
+                  <CheckboxInput
+                    type="checkbox"
+                    checked={selectedStraps.includes(strap)}
+                    onChange={() => handleStrapChange(strap)}
+                  />
+                  {strap}
+                </CheckboxLabel>
+              </li>
+            ))}
+          </ul>
         </div>
-      </FilterGroup>
-      <FilterGroup>
-        <div className="title">
-          <h3>Color</h3>
+        <div className="generos">
+          <div className="title">
+            <h3>Género</h3>
+          </div>
+          <div className="content">
+            {sortedGenders.map((gender) => (
+              <CheckboxLabel key={gender}>
+                <CheckboxInput
+                  type="checkbox"
+                  checked={selectedGenders.includes(gender)}
+                  onChange={() => handleGenderChange(gender)}
+                />
+                {translateGender(gender)}
+              </CheckboxLabel>
+            ))}
+          </div>
         </div>
-        <div className="content">
-          {sortedColors.map((color) => (
-            <CheckboxLabel key={color}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedColors.includes(color)}
-                onChange={() => handleColorChange(color)}
-              />
-              {color}
-            </CheckboxLabel>
-          ))}
+        <div className="Funciones">
+          <div className="title">
+            <h3>Funciones</h3>
+          </div>
+          <ul className="content">
+            {sortedFunctions.slice(0, 10).map((func) => (
+              <li key={func}>
+                <CheckboxLabel>
+                  <CheckboxInput
+                    type="checkbox"
+                    checked={selectedFunctions.includes(func)}
+                    onChange={() => handleFunctionChange(func)}
+                  />
+                  {func}
+                </CheckboxLabel>
+              </li>
+            ))}
+          </ul>
         </div>
-      </FilterGroup>
-      <FilterGroup>
-        <div className="title">
-          <h3>Malla</h3>
-        </div>
-        <div className="content">
-          {sortedStraps.map((strap) => (
-            <CheckboxLabel key={strap}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedStraps.includes(strap)}
-                onChange={() => handleStrapChange(strap)}
-              />
-              {strap}
-            </CheckboxLabel>
-          ))}
-        </div>
-      </FilterGroup>
-      <div className="generos">
-        <div className="title">
-          <h3>Género</h3>
-        </div>
-        <div className="content">
-          {sortedGenders.map((gender) => (
-            <CheckboxLabel key={gender}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedGenders.includes(gender)}
-                onChange={() => handleGenderChange(gender)}
-              />
-              {translateGender(gender)}
-            </CheckboxLabel>
-          ))}
-        </div>
-      </div>
-      <div className="funciones">
-        <div className="title">
-          <h3>Funciones</h3>
-        </div>
-        <div className="content">
-          {sortedFunctions.map((func) => (
-            <CheckboxLabel key={func}>
-              <CheckboxInput
-                type="checkbox"
-                checked={selectedFunctions.includes(func)}
-                onChange={() => handleFunctionChange(func)}
-              />
-              {func}
-            </CheckboxLabel>
-          ))}
-        </div>
-      </div>
-      <ButtonContainer>
-        <Button onClick={handleClearFilters}>Borrar filtros</Button>
-        <Button onClick={handleApplyFilters}>Aplicar filtros</Button>
-      </ButtonContainer>
-    </FilterContainer>
-  );
-};
-
-const FilterContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: repeat(7, 1fr);
-  overflow: hidden;
-
-  .generos {
-    border-bottom: #fff;
+        <ButtonContainer>
+          <Button onClick={handleClearFilters}>Borrar filtros</Button>
+          <Button onClick={handleApplyFilters}>Aplicar filtros</Button>
+        </ButtonContainer>
+      </FilterContainer>
+    );
+  };
+  
+  const FilterContainer = styled.div`
     width: 100%;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    .title {
+    height: 100%;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    overflow: hidden;
+    position: relative;
+    transition: 0.5s ease-in-out;
+    .generos {
+      border-bottom: #fff;
       width: 100%;
-      height: 40px;
-      text-align: center;
-      line-height: 40px;
+      height: 150px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      h3 {
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         color: #fff;
-        text-align: uppercase;
-        text-decoration: underline;
       }
     }
-    .content {
+    .Marcas {
       width: 100%;
-      height: 80px;
+      height: 230px;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-  }
-  .funciones {
-    width: 100%;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    .title {
-      width: 100%;
-      height: 40px;
-      text-align: center;
-      line-height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      h3 {
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        align-content: start;
+        justify-items: center;
+        list-style: none;
         color: #fff;
-        text-align: uppercase;
-        text-decoration: underline;
       }
     }
-    .content {
+    .Estilos {
       width: 100%;
-      height: 310px;
+      height: 300px;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        align-items: center;
+        justify-items: center;
+        list-style: none;
+        color: #fff;
+      }
     }
-  }
-`;
-
-const FilterGroup = styled.div`
-  width: 100%;
-  height: 259px;
-  display: flex;
-  flex-direction: column;
-  .title {
+    .Color {
+      width: 100%;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        align-items: center;
+        justify-items: center;
+        list-style: none;
+        color: #fff;
+      }
+    }
+    .Funciones {
+      width: 100%;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        align-items: center;
+        justify-items: center;
+        list-style: none;
+        color: #fff;
+      }
+    }
+    .Malla {
+      width: 100%;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #fff;
+      .title {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          color: #fff;
+          text-align: uppercase;
+          text-decoration: underline;
+        }
+      }
+      .content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        align-items: center;
+        justify-items: center;
+        list-style: none;
+        color: #fff;
+      }
+    }
+  `;
+  
+  const ButtonContainer = styled.div`
     width: 100%;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    h3 {
+    gap: 30px;
+  `;
+  
+  const Button = styled.button` 
+    width: 90px;
+    height: 50px;
+    background-color: #d5cece;
+    color: #161515;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1em;
+    z-index: 9000 ;
+    &:hover {
+      background-color: gray;
       color: #fff;
-      text-align: uppercase;
-      text-decoration: underline;
     }
-  }
-  .content {
-    width: 100%;
-    height: calc(259px - 40px);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    color: #fff;
-  }
-`;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px;
-  gap: 8px;
-`;
-
-const Button = styled.button`
-  background-color: #d5cece;
-  color: #161515;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1em;
-  &:hover {
-    background-color: gray;
-    color: #fff;
-  }
-`;
-
-const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: flex-start;
-  line-height: 16px;
-
-  width: 90px;
-`;
-
-const CheckboxInput = styled.input`
-  /* Oculta el checkbox nativo */
-
-  /* Anula el estilo de fondo por defecto del navegador */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  /* Estilos para el casillero personalizado */
-  &:before {
-    content: "";
-    display: inline-block;
+  `;
+  
+  const CheckboxLabel = styled.label`
     width: 14px;
     height: 14px;
-    border: 1px solid #ccc;
-    background-color: white;
-    margin-right: 5px;
-    border-radius: 2px;
-  }
-
-  /* Cambia el color de fondo al tildar */
-  &:checked:before {
-    background-color: gray; /* Cambia el color a gris */
-    border-color: gray; /* Cambia el color del borde a gris */
-  }
-`;
+    display: flex;
+    align-items: flex-start;
+    line-height: 16px;
+    width: 90px;
+  `;
+  
+  const CheckboxInput = styled.input`
+    /* Oculta el checkbox nativo */
+  
+    /* Anula el estilo de fondo por defecto del navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  
+    /* Estilos para el casillero personalizado */
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #ccc;
+      background-color: white;
+      margin-right: 5px;
+      border-radius: 2px;
+    }
+  
+    /* Cambia el color de fondo al tildar */
+    &:checked:before {
+      background-color: gray; /* Cambia el color a gris */
+      border-color: gray; /* Cambia el color del borde a gris */
+    }
+  `;
