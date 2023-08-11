@@ -21,6 +21,7 @@ import {
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { HeaderCheckout } from "../components/HeaderCheckout";
 import { FooterCheckOut } from "../components/FooterCheckout";
+import LoginDelUser from "../pages/user/LoginDel";
 
 const MyRoutes = () => {
   const location = useLocation();
@@ -59,6 +60,7 @@ const MyRoutes = () => {
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />
           <Route path="/shopping/resumen" element={<Resumen/>} />
+          <Route path="/home/loginout" element={<LoginDelUser user={user}/>} />
         </Route>
         <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
         <Route path="/privacidad" element={<Privacidad />} />
