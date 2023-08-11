@@ -66,7 +66,7 @@ function Shopping() {
         <div className="content-box">
           <div className="MP">
             <div className="btn">
-              <ProductMP cart={cart} userBuy={user.id} />
+              <ProductMP cart={cart} userBuy={user} />
               <p>Todos tus datos están protegidos</p>
             </div>
           </div>
