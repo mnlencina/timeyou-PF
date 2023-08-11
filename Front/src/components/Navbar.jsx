@@ -36,6 +36,7 @@ export const Navbar = () => {
 
     if (brandLowerCase === "ver todo") {
       dispatch(getProducts());
+      dispatch(updateSelectedCategories([]))
     } else {
       dispatch(getWatchesByBrand(brandLowerCase));
       dispatch(updateSelectedCategories(brandLowerCase))

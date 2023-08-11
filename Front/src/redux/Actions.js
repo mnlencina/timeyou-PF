@@ -113,7 +113,6 @@ export const searchProductRequest = () => ({
 });
 
 export const searchProduct = (searchTerms) => async (dispatch) => {
-  console.log("SE HIZO EL DISPATCH DE LA SEARCHBAR","Search terms:", searchTerms);
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
