@@ -29,7 +29,7 @@ function DetailPage() {
   console.log(cart);
 
   const handleAddToCart = () => {
-    dispatch(addToCart(detailClock[color]));
+    dispatch(addToCart(detailClock[color], 1));
   };
 
   const backPag = () => {

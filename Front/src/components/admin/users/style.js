@@ -37,7 +37,7 @@ export const Container = styled.main`
         }
         
         span{
-          font-size: 8px;
+          font-size: 10px;
           color: red;
         }
         .btnUp {

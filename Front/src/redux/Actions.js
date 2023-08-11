@@ -85,9 +85,12 @@ export const updateCart = () => ({
   type: UPDATE_CART,
 });
 
-export const addToCart = (sesionData) => ({
+export const addToCart = (watchBuy, cant) => ({
   type: ADD_TO_CART,
-  payload: sesionData,
+  payload: {
+            ...watchBuy,
+            quantity: cant
+            }
 });
 
 export const removeFromCart = (productId) => ({
