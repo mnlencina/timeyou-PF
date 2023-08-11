@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UPDATE_WATCH } from "../../actionTypes";
+import Swal from 'sweetalert2';
 
 export function updateWatch(id,upWatch) {
     const endpoint = `http://localhost:3001/admin/update-watch/${id}`;
@@ -11,9 +12,19 @@ export function updateWatch(id,upWatch) {
           type: UPDATE_WATCH,
           payload: update,
         });
-        alert("Update OK!")
+        Swal.fire({
+          icon: 'success',
+          title: 'Actualización exitosa!',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (error) {
-        alert("Verifique los datos");
+        Swal.fire({
+          icon: 'error',
+          title: 'Verifique los datos',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     };
   }

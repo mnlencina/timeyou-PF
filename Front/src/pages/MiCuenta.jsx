@@ -5,6 +5,7 @@ import { updateUser } from "../redux/actions/admin/updateUser";
 import { AppendBTN, BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { updateUserName } from "../redux/actions/user/updateUserName";
 import { validateInputNewPass } from "../utils/functiosAux";
+import Swal from 'sweetalert2';
 
 export default function MiCuenta() {
   const dispatch = useDispatch();
@@ -26,7 +27,12 @@ export default function MiCuenta() {
       setEditUser(false);
       setUserName("");
       setErrorInput({});
-      alert("Nombre de usuario actualizado!");
+      Swal.fire({
+        icon: 'success',
+        title: 'Nombre de usuario actualizado!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 
@@ -39,7 +45,12 @@ export default function MiCuenta() {
       setEditPass(false);
       setPassword("");
       setErrorInput({});
-      alert("Contraseña nueva creada!");
+      Swal.fire({
+        icon: 'success',
+        title: 'Contraseña nueva creada!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 

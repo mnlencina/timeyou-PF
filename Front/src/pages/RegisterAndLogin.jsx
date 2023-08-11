@@ -17,6 +17,7 @@ import {
   validateInputLogin,
   validateInputRegister,
 } from "../utils/functiosAux";
+import Swal from 'sweetalert2';
 
 function RegisterAndLogin() {
   const USER = useSelector((state) => state.user);
@@ -72,7 +73,12 @@ function RegisterAndLogin() {
     setRegisterSubmitted(true);
     if (Object.keys(errorRegister).length > 0) {
       /* Agregar alerta! */
-      alert("no se registraron datos");
+      Swal.fire({
+        icon: 'error',
+        title: 'No se registraron datos',
+        showConfirmButton: false,
+        timer: 1500
+      })
       return;
     } else {
       dispatch(createUser(registerValues));
@@ -99,7 +105,12 @@ function RegisterAndLogin() {
     setLoginSubmitted(true);
     if (Object.keys(errorLogin).length > 0) {
       /* agregar alertas!!!! */
-      alert("Usuario o contraseña incorrectos");
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario o contraseña incorrectos',
+        showConfirmButton: false,
+        timer: 1500
+      })
       return;
     }
     dispatch(loginUser(loginAcount));
