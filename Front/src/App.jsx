@@ -69,8 +69,13 @@ function App() {
     dispatch(clearCart()),
     dispatch(logOut()),
     setIsActive(true),
-    navigate("/")
-    //alert("Se cerro session")
+    navigate("/"),
+    Swal.fire({
+      icon: 'warning',
+      title: 'Se cerró sessión',
+      showConfirmButton: false,
+      timer: 1500
+    })
     )
     : null
   };

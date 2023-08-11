@@ -98,9 +98,10 @@ const dispatch = useDispatch()
 
     if (filteredWatches.length === 0) {
       Swal.fire({
-        text: "No se encontraron coincidencias con los filtros seleccionados.",
         icon: "warning",
-        confirmButtonText: "Aceptar",
+        title: "No se encontraron coincidencias con los filtros seleccionados.",
+        showConfirmButton: false,
+        timer: 1500
       });
       dispatch(getProducts());
     }

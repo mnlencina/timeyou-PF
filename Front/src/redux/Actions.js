@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from 'sweetalert2';
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_DETAIL,
@@ -119,7 +120,7 @@ export const searchProduct = (searchTerms) => async (dispatch) => {
   dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
   try {
-    const algoliaIndex = searchClient.initIndex("timeyou_PF"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
+    const algoliaIndex = searchClient.initIndex("TimeYou2"); // Reemplaza 'timeyou_PF' con el nombre de tu índice en Algolia
     const searchResults = await algoliaIndex.search(searchTerms);
 
    // console.log("Algolia search results:", searchResults.hits);
@@ -277,9 +278,19 @@ export function postWatch(watch) {
         type: POST_WATCH,
         payload: newWatch,
       });
-      alert("La Carga del WATCH fue con Exito!!");
+      Swal.fire({
+        icon: 'success',
+        title: 'Carga del reloj exitosa.',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } catch (error) {
-      alert("Verifique los datos",{error});
+      Swal.fire({
+        icon: 'error',
+        title: `Verifique los datos", ${error}`,
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 }
@@ -295,9 +306,19 @@ export const createUser = (user) => async (dispatch) => {
       type: CREATE_USER,
       payload: newUser,
     });
-    alert("usuario creado con exito");
+    Swal.fire({
+      icon: 'success',
+      title: 'Usuario creado con exito',
+      showConfirmButton: false,
+      timer: 1500
+    })
   } catch (error) {
-    alert("no pudo crearse el usuario");
+    Swal.fire({
+      icon: 'error',
+      title: 'No pudo crearse el usuario',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 };
 
@@ -327,12 +348,12 @@ export const getWatchesByBrand = (brand) => async (dispatch) => {
   const URL = `http://localhost:3001/brands/${brand}`;
   try {
     let { data } = await axios.get(URL);
-    console.log("data.Watches", data.Watches);
+   // console.log("data.Watches", data.Watches);
     dispatch({
       type: GET_WATCHES_BY_BRAND,
       payload: data.Watches,
     });
-    console.log(data);
+    //console.log(data);
   } catch (error) {
     console.log(error);
   }
