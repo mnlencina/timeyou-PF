@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { BTNHover } from "../utils/ComponentsStyle";
+import { BTNHover, ContainerLoader } from "../utils/ComponentsStyle";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CardShopping } from "../components/CardShopping";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { ProductMP } from "../components/mp/MercadoPago";
 import { BsStripe } from "react-icons/bs";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { Loader } from "../components/Loader/Loader";
 
 const stripePromise = loadStripe(
   "pk_test_51NVgnTAYvuvU8SQ49gIo7GAYFVsJvzbxM4nYtK4dTWvvmSTBQgssGmwQbzqlWvznnEtmq7AMt8eVMuG3ZDy5Ex4L00Pkqqwp0w"
@@ -104,7 +105,7 @@ function Shopping() {
             <div className="main-products">
               <div className="products">
                 {loading ? (
-                  <h1>cargandoo</h1>
+                  <ContainerLoader> <Loader/> </ContainerLoader>
                 ) : (
                   cart.map((e, index) => <CardShopping key={index} reloj={e} />)
                 )}
