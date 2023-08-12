@@ -80,7 +80,7 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        z-index: 100;
+        z-index: 10;
         pointer-events: all;
       }
       .controles :hover{
