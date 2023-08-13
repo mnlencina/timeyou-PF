@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { applyFilters, getBrands, getColor, getFunctions, getStraps, getStyles, getProducts, updateSelectedCategories} from "../../redux/Actions.js";
+import { applyFilters, getProducts, updateSelectedCategories} from "../../redux/Actions.js";
 import { translateGender } from "../helpers/translateGenderWords.jsx";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -130,6 +130,7 @@ const dispatch = useDispatch()
             <h3>Marcas</h3>
           </div>
           <ul className="content">
+          
             {sortedBrands.map((brand) => (
               <li key={brand}>
                 <CheckboxLabel>
@@ -142,6 +143,7 @@ const dispatch = useDispatch()
                 </CheckboxLabel>
               </li>
             ))}
+            
           </ul>
         </div>
         <div className="Estilos">

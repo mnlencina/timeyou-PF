@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { Loader } from "../components/Loader/Loader.jsx";
 import { ContainerLoader } from "../utils/ComponentsStyle.jsx";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/sidebar/Sidebar.jsx";
 
 
 
@@ -56,12 +57,13 @@ export default function HomePage() {
 
   const renderMostrador = () => (
     <ContainerMostrador show={show}>
-      <div className="sidebar">
+    
+      {/* <div className="sidebar">
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
          <Drawer show={show} setPage={setPage} />
-      </div>
+      </div> */}
       <section className="main-card">
         <CardContext pagination={PaginacionRelojes} show={show} />
       </section>
@@ -84,6 +86,7 @@ export default function HomePage() {
         renderLoader()
       ) : (
         <>
+          
           <Pagination
             totalPages={totalPages}
             page={page}
@@ -97,6 +100,7 @@ export default function HomePage() {
             onPrev={onPreviusPage}
             onNext={onNextPage}
           />
+          <Sidebar setPage={setPage}/>
         </>
       )}
       
