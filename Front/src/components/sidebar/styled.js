@@ -22,6 +22,7 @@ font-size:20px;
 width:150px;
 overflow:visible;
 opacity: 1;
+transition: 0.8s;
 
     ul{
        transition: 3s;
@@ -35,6 +36,7 @@ opacity: 1;
     
     div{
         overflow: auto;
+        
     }
     
 }
@@ -46,7 +48,7 @@ border-right:1px solid #e5e5e5;
 position:absolute;
 top:0;
 bottom:0;
-height:1250px;
+height:800px;
 left:0;
 width:30px;
 overflow:hidden;
@@ -54,11 +56,12 @@ overflow:hidden;
 transition:width .05s linear;
 -webkit-transform:translateZ(0) scale(1,1);
 z-index:1000;
-transition: 1s;
+transition: 3s;
 opacity: 0.8;
 border-radius: 0 10px 10px 0 ;
 div{
-    height: 1150px; /* Altura fija del contenedor */
+  transition: 3s;
+    height: 710px; /* Altura fija del contenedor */
   max-height: 100%; /* Altura máxima del contenedor */
   overflow-y: scroll; /* Habilitar la barra de desplazamiento vertical */
   overflow: hidden;
@@ -85,6 +88,7 @@ div{
 .main-menu ul {
     margin-top: 20px;    
     opacity: 0;
+    transition: 1.5s;
     
     span{
         color: #fff;
