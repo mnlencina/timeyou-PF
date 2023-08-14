@@ -58,14 +58,14 @@ export default function HomePage() {
   const renderMostrador = () => (
     <ContainerMostrador show={show}>
     
-      {/* <div className="sidebar">
+      <div className="sidebar">
         <div className="btn-filter">
           <button onClick={() => setShow(!show)}>filtros</button>
         </div>
-         <Drawer show={show} setPage={setPage} />
-      </div> */}
+         {/* <Drawer show={show} setPage={setPage} /> */}
+      </div>
       <section className="main-card">
-        <CardContext pagination={PaginacionRelojes} show={show} />
+        <CardContext pagination={PaginacionRelojes}  />
       </section>
     </ContainerMostrador>
   );
@@ -116,31 +116,40 @@ const ContainerMostrador = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  
   .sidebar {
-    width: ${(props) => (props.show ? "300px" : "0")};
-    height: ${props => props.show ? "1800px":"1100px"};
+    width: 0;
+    
     background-color: #111;
     transition: 0.5s ease-in-out;
     position: relative;
     border-radius: 0 10px 10px 0;
     display: flex;
+    
     .btn-filter {
       position: absolute;
-      left: ${(props) => (props.show ? "300px" : "0px")};
-      top: 30px;
+      left: 0px;
+      top: 0px;
       transition: all 0.5s ease-in-out;
+      
+      transition: 3s;
       button {
-        width: 40px;
+        
+        width: 35px;
         height: 150px;
-        background-color: #111;
+        background-color: #000000;
         border: none;
         border-radius: 0 10px 10px 0;
         color: #fff;
         writing-mode: vertical-lr;
         text-transform: uppercase;
-        letter-spacing: 3px;
+        letter-spacing: 7px;
         transition: 0.3s;
+        
         &:hover {
+          left: 100px;
+          transition: all 0.5s ease-in-out;
+          //opacity: 0;
           transform: scale(1.1);
           border-right: none;
         }
@@ -148,7 +157,7 @@ const ContainerMostrador = styled.div`
     }
   }
   .main-card {
-    width:${(props) => (props.show ? "calc(100% - 300px)" : "100%")};
+    width:100%;
     min-height: 500px;
     height: 100%;
     transition: all 0.5s ease-in-out;

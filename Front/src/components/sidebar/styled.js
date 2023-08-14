@@ -44,7 +44,7 @@ transition: 0.8s;
 .main-menu {
 margin-top: 9%;
 background:black;
-border-right:1px solid #e5e5e5;
+//border-right:1px solid #e5e5e5;
 position:absolute;
 top:0;
 bottom:0;
@@ -57,7 +57,7 @@ transition:width .05s linear;
 -webkit-transform:translateZ(0) scale(1,1);
 z-index:1000;
 transition: 3s;
-opacity: 0.8;
+opacity: 0.3;
 border-radius: 0 8px 8px 0 ;
 padding: 3px;
 div{
