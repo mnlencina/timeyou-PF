@@ -58,7 +58,8 @@ transition:width .05s linear;
 z-index:1000;
 transition: 3s;
 opacity: 0.8;
-border-radius: 0 10px 10px 0 ;
+border-radius: 0 8px 8px 0 ;
+padding: 3px;
 div{
   transition: 3s;
     height: 710px; /* Altura fija del contenedor */
@@ -68,10 +69,12 @@ div{
   
   &::-webkit-scrollbar {
   width: 8px;
+  
 }
 
 &::-webkit-scrollbar-track {
     border-radius: 20px;
+    
   background: #212121;
 }
 
