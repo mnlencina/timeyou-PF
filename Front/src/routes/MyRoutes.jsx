@@ -31,21 +31,23 @@ const MyRoutes = () => {
   const showNav =
     location.pathname !== "/admin/dashboard" &&
     location.pathname !== "/shopping" &&
-    location.pathname !== "/shopping/checkout";
+    location.pathname !== "/shopping/checkout" &&
+    location.pathname !== "/shopping/resumen";
 
   const showFoot =
     location.pathname !== "/admin/dashboard" &&
     location.pathname !== "/shopping" &&
-    location.pathname !== "/shopping/checkout";
+    location.pathname !== "/shopping/checkout" &&
+    location.pathname !== "/shopping/resumen";
 
   const ShowCheckoutNav =
     location.pathname === "/shopping" ||
-    location.pathname === "/shopping/checkout";
+    location.pathname === "/shopping/checkout" ||
+    location.pathname === "/shopping/resumen";
   const showCheckoutFoot =
     location.pathname === "/shopping" ||
-    location.pathname === "/shopping/checkout";
-    
-  
+    location.pathname === "/shopping/checkout" ||
+    location.pathname === "/shopping/resumen";
 
   return (
     <>
@@ -59,8 +61,8 @@ const MyRoutes = () => {
         <Route element={<ProtectedRoutes user={user} redirectTo={"/auth"} />}>
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/shopping/checkout" element={<Checkout />} />
-          <Route path="/shopping/resumen" element={<Resumen/>} />
-          <Route path="/home/loginout" element={<LoginDelUser user={user}/>} />
+          <Route path="/shopping/resumen" element={<Resumen />} />
+          <Route path="/home/loginout" element={<LoginDelUser user={user} />} />
         </Route>
         <Route path="/terminosycondiciones" element={<TerminosCondiciones />} />
         <Route path="/privacidad" element={<Privacidad />} />

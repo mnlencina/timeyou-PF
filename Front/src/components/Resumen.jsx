@@ -6,6 +6,7 @@ import { BTNCarritoDeCompras } from "../utils/ComponentsStyle";
 import { updateWatch } from "../redux/actions/admin/updateWatch";
 import { getProducts } from "../redux/Actions";
 import { ResumenCard } from "./ResumenCard";
+import html2canvas from "html2canvas";
 
 const Resumen = () => {
   const navigate = useNavigate();
@@ -17,23 +18,34 @@ const Resumen = () => {
   const TotalPrice =
     cart.reduce((acc, e) => acc + e.price * e.quantity, 0) * 500;
 
-  console.log(TotalPrice);
+  const handleClick = () => {
+    const captureElement = document.querySelector("#capture");
+    const canvasWidth = 1050; // Ancho deseado en píxeles
+    const canvasHeight = 650; // Alto deseado en píxeles
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    cart.map((w) =>
-      dispatch(updateWatch(w.id, { stock: w.stock - w.quantity }))
-    );
+    html2canvas(captureElement, {
+      width: canvasWidth,
+      height: canvasHeight,
+    }).then((canvas) => {
+      const pdfUrl = canvas.toDataURL("image/jpeg");
+
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = "resumen.jpeg";
+      link.click();
+    });
+  };
+
+  const handleToHome = () => {
+    dispatch(updateWatch());
     dispatch(buyFinishClear());
-    setTimeout(() => {
-      dispatch(getProducts());
-    }, 2000);
+    dispatch(getProducts());
     navigate("/home");
   };
 
   return (
     <ContainerMain>
-      <div className="resumenContainer">
+      <div className="resumenContainer" id="capture">
         <div className="canvan">
           <div className="title">
             <h2>Resumen de su pedido</h2>
@@ -44,10 +56,14 @@ const Resumen = () => {
             ))}
             <div className="controles">
               <div className="btn">
-                <BTNCarritoDeCompras>Descargar resumen</BTNCarritoDeCompras>
+                <BTNCarritoDeCompras onClick={handleClick}>
+                  Descargar resumen
+                </BTNCarritoDeCompras>
               </div>
               <div className="btn">
-                <BTNCarritoDeCompras>ir a Catalogo</BTNCarritoDeCompras>
+                <BTNCarritoDeCompras onClick={handleToHome}>
+                  ir a Catalogo
+                </BTNCarritoDeCompras>
               </div>
             </div>
           </div>
@@ -66,7 +82,7 @@ const Resumen = () => {
     </ContainerMain>
   );
 };
-
+export default Resumen;
 const Container = styled.div`
   position: fixed;
   z-index: 1;
@@ -117,7 +133,7 @@ const ContainerMain = styled.div`
       border-radius: 30px;
       align-items: center;
       justify-items: center;
-      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid #111;
       .title {
         width: 90%;
         height: auto;
@@ -137,15 +153,15 @@ const ContainerMain = styled.div`
         grid-template-columns: repeat(2, 1fr);
         align-items: start;
         justify-items: center;
-        .controles{
+        .controles {
           position: absolute;
-          bottom:0;
+          bottom: 0;
           display: flex;
           width: 100%;
           align-items: center;
           justify-content: center;
           gap: 20px;
-          .btn{
+          .btn {
             width: 40%;
           }
         }
@@ -160,13 +176,12 @@ const ContainerMain = styled.div`
         p {
           font-size: 12px;
           opacity: 0.5;
+          width: 100%;
         }
       }
     }
   }
 `;
-
-export default Resumen;
 
 /* <Container>
       <div className="divResumen">
