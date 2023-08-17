@@ -1,3 +1,5 @@
+
+
 export const getCartItemsCount = () => {
   const storedCart = localStorage.getItem("cart");
   if (storedCart) {
@@ -55,3 +57,7 @@ export const validateInputNewPass = (input) => {
   }
   return errors;
 }
+
+
+
+
